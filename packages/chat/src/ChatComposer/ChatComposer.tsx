@@ -1,4 +1,4 @@
-import { formatBytes, Button, IconButton, cn, useOs, useDropzone } from '@gntik-ai/ui';
+import { formatBytes, Button, IconButton, cn, useOs, useDropzone, FileTrigger } from '@gntik-ai/ui';
 import { ArrowUp, Paperclip, Square, Upload, X } from 'lucide-react';
 import {
   useCallback,
@@ -7,7 +7,6 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-  type ChangeEvent,
   type ClipboardEvent,
   type DragEvent,
   type FormEvent,
@@ -148,7 +147,6 @@ export function ChatComposer({
       pendingCaret.current = null;
     }
   });
-  const fileInput = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<string[]>([]);
   const canAttach = onAttach !== undefined && !disabled && !readOnly;
 
@@ -230,11 +228,6 @@ export function ChatComposer({
     setErrors([...new Set(rejections.map((r) => r.message))]);
     if (rejections.length) onReject?.(rejections);
     if (accepted.length) onAttach(accepted);
-  };
-
-  const onFiles = (e: ChangeEvent<HTMLInputElement>) => {
-    addFiles(Array.from(e.target.files ?? []));
-    e.target.value = '';
   };
 
   const onPaste = (e: ClipboardEvent<HTMLTextAreaElement>) => {
@@ -352,24 +345,13 @@ export function ChatComposer({
         <div className={s.toolbar}>
           <div className={s.tools}>
             {onAttach && !readOnly && (
-              <>
-                <IconButton
-                  size="sm"
-                  icon={Paperclip}
-                  label={t('chat.attach')}
-                  disabled={disabled}
-                  onClick={() => fileInput.current?.click()}
-                />
-                <input
-                  ref={fileInput}
-                  type="file"
-                  multiple
-                  hidden
-                  accept={accept}
-                  aria-label={t('chat.attach')}
-                  onChange={onFiles}
-                />
-              </>
+              <FileTrigger
+                accept={accept}
+                multiple
+                disabled={disabled}
+                onSelect={addFiles}
+                render={<IconButton size="sm" icon={Paperclip} label={t('chat.attach')} disabled={disabled} />}
+              />
             )}
             {tools}
           </div>

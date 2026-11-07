@@ -6,5 +6,5 @@ export const meta: BlockMeta = {
   status: 'stable',
   description:
     'Profile header with a large avatar and change action, name, role badge, headline, meta row and edit button.',
-  uses: ['Avatar', 'Badge', 'IconButton', 'Button'],
+  uses: ['Avatar', 'Badge', 'IconButton', 'Button', 'FileTrigger'],
 };

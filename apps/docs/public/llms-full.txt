@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 132 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 133 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -3864,6 +3864,61 @@ export default function FieldValidation() {
       <div>
         <Button type="submit">Save</Button>
       </div>
+    </form>
+  );
+}
+```
+
+### FileInput (`file-input`)
+
+Compact file selection with a file icon, name and localized size, or a count for several files. clearable defaults to false; renderValue replaces the single-file or count display and truncates long text. accept and maxSize use shared file validation; mixed picks keep accepted files and report rejected files through onReject. Field supplies the label, disabled/invalid state and descriptions (use FieldError match for an externally invalid field). FileTrigger opens a picker from a render element, defaulting to a secondary Button; onSelect receives File[]. DOM render elements receive native or non-native button semantics automatically; pass nativeButton=false for a custom React component or render function that returns a non-button. useFileDialog({ accept, multiple, directory, capture, disabled, onChange }) returns { open, reset, files }, renders nothing and creates its attached hidden input only in an effect. reset clears hook files without firing onChange. When opened, the picker moves into the activating dialog or popover surface so its click cannot dismiss the overlay; pass open as an event handler, or focus the trigger before calling open() directly. If that surface closes while the hook stays mounted, the same picker returns to the portal container or document body. Picker inputs are unnamed, reset before opening and removed on unmount; cancellation preserves values. With name, FileInput maintains a separate form input. Native FormData submission requires constructible DataTransfer and writable input.files; without them controlled display and callbacks still work, but use the value to submit files yourself. Form reset restores defaultValue for uncontrolled fields and re-syncs a controlled value. directory maps to webkitdirectory; pair it with multiple to retain the whole folder. Without multiple only the first accepted file is selected. capture is user or environment. These picker helpers live with FileInput, outside the hooks entry point. ProfileHeader and ChatComposer use FileTrigger, so their picker is attached outside the block container and exists only while its action is shown.
+
+- Package: `@gntik-ai/ui` · export `FileInput` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/FileInput/FileInput.doc.ts
+- Primitive: `@base-ui/react/field + @base-ui/react/button`
+- ARIA pattern: Button
+- Registry dependencies: button, input, thumbnail, ui-utils
+- Install: `gntik-ui add file-input`; own the source with `gntik-ui eject file-input`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Move between the control, optional clear button and adjacent controls; hidden inputs are skipped. |
+| Enter / Space | Open the picker from FileInput or FileTrigger; activate clear to empty the value and return focus. |
+
+Tokens: background, foreground, border, secondary, muted-foreground, primary, destructive, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { useI18n } from '@gntik-ai/ui';
+import { Button } from '@gntik-ai/ui';
+import { Field, FieldLabel } from '@gntik-ai/ui';
+import { FileInput } from '@gntik-ai/ui';
+
+export default function FileInputCertificate() {
+  const { t } = useI18n();
+  const [file, setFile] = useState<File | null>(() => new File(['certificate'], 'certificate.pem'));
+  return (
+    <form className="w-full max-w-sm space-y-3" onSubmit={(event) => event.preventDefault()}>
+      <Field>
+        <FieldLabel>{t('fileInput.example.certificate')}</FieldLabel>
+        <FileInput
+          id="certificate-file"
+          name="certificate"
+          size="sm"
+          value={file}
+          onValueChange={setFile}
+          accept=".pem,.crt"
+          clearable
+          placeholder={t('fileInput.example.customPlaceholder')}
+        />
+      </Field>
+      <Button type="reset" variant="secondary">
+        {t('fileInput.example.reset')}
+      </Button>
     </form>
   );
 }
@@ -11363,7 +11418,7 @@ Profile header with a large avatar and change action, name, role badge, headline
 
 - Package: `@gntik-ai/blocks` · export `ProfileHeader` · group team · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/team/ProfileHeader/block.meta.ts
-- Composes: Avatar, Badge, IconButton, Button
+- Composes: Avatar, Badge, IconButton, Button, FileTrigger
 - Preview: /preview.html?kind=block&id=profile-header
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add profile-header`
 

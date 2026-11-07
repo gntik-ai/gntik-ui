@@ -1,3 +1,5 @@
+import { fileInputEn } from './file-input-messages';
+import { uploadEn } from './upload-messages';
 import { fieldSizesEn } from './field-size-messages';
 import { treeListEn } from './tree-list-messages';
 import { toolCallEn } from './tool-call-en';
@@ -18,6 +20,8 @@ import { navigationEn } from './navigation-messages';
 import { logoCloudEn } from './logo-cloud-messages';
 import { hookExampleEn } from './hook-example-messages';
 export const en = {
+  ...fileInputEn,
+  ...uploadEn,
   ...fieldSizesEn,
   ...toolCallEn,
   ...treeListEn,
@@ -543,27 +547,6 @@ export const en = {
   'common.clearItem': 'Clear {label}',
   'dropzone.label': 'Drop files here',
   'dropzone.reject': 'These files are not accepted',
-  'upload.label': 'Upload files',
-  'upload.files': 'Files',
-  'upload.failed': 'Upload failed',
-  'upload.typeRejected': 'File type not accepted',
-  'upload.tooLarge': 'Exceeds the {size} limit',
-  'upload.drop': 'Drag files here or',
-  'upload.uploading': 'Uploading {name}',
-  'upload.notUploaded': '{error} · not uploaded',
-  'upload.uploaded': '{size} · uploaded',
-  'upload.ready': '{size} · ready to upload',
-  'upload.cancel': 'Cancel upload of {name}',
-  'upload.cancelled': 'Upload of {name} cancelled.',
-  'upload.removeFailed': '{name} could not be removed.',
-  'upload.retry': 'Retry {name}',
-  'upload.browse': 'Browse files',
-  'upload.hint': '{types} · max {size} per file',
-  'upload.done': '{name} uploaded.',
-  'upload.error': '{name} failed to upload.',
-  'upload.added': '{count, plural, one {# file added.} other {# files added.}}',
-  'upload.rejected': '{count} rejected.',
-  'upload.removed': '{name} removed.',
   'comments.label': 'Comments',
   'comments.placeholder': 'Add a comment…',
   'comments.submit': 'Comment',

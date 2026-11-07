@@ -84,8 +84,8 @@ describe('ChatComposer', () => {
   it('passes picked files to onAttach', async () => {
     const onAttach = vi.fn();
     const user = userEvent.setup();
-    const { container } = render(<ChatComposer onSubmit={() => {}} onAttach={onAttach} />);
-    const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+    render(<ChatComposer onSubmit={() => {}} onAttach={onAttach} />);
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     const file = new File(['a,b'], 'data.csv', { type: 'text/csv' });
     await user.upload(input, file);
     expect(onAttach).toHaveBeenCalledWith([file]);

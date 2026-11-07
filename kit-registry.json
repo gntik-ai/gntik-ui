@@ -4076,6 +4076,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4130,6 +4134,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4219,6 +4227,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4273,6 +4285,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4443,6 +4459,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4497,6 +4517,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4589,6 +4613,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4643,6 +4671,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4731,6 +4763,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4785,6 +4821,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4904,6 +4944,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4958,6 +5002,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5047,6 +5095,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -5101,6 +5153,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5250,6 +5306,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -5304,6 +5364,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5422,6 +5486,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -5476,6 +5544,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5852,6 +5924,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -5906,6 +5982,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6055,6 +6135,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6109,6 +6193,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6209,6 +6297,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6263,6 +6355,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6450,6 +6546,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6504,6 +6604,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6621,6 +6725,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6675,6 +6783,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6781,6 +6893,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6835,6 +6951,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6950,6 +7070,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7004,6 +7128,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7101,6 +7229,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7155,6 +7287,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7251,6 +7387,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7305,6 +7445,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7418,6 +7562,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7472,6 +7620,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7574,6 +7726,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7628,6 +7784,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7731,6 +7891,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7785,6 +7949,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7876,6 +8044,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7930,6 +8102,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8027,6 +8203,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -8081,6 +8261,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8178,6 +8362,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -8232,6 +8420,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8311,6 +8503,172 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Field/Field.doc.ts"
+    },
+    {
+      "id": "file-input",
+      "kind": "component",
+      "name": "FileInput",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "beta",
+      "description": "Compact file selection with a file icon, name and localized size, or a count for several files. clearable defaults to false; renderValue replaces the single-file or count display and truncates long text. accept and maxSize use shared file validation; mixed picks keep accepted files and report rejected files through onReject. Field supplies the label, disabled/invalid state and descriptions (use FieldError match for an externally invalid field). FileTrigger opens a picker from a render element, defaulting to a secondary Button; onSelect receives File[]. DOM render elements receive native or non-native button semantics automatically; pass nativeButton=false for a custom React component or render function that returns a non-button. useFileDialog({ accept, multiple, directory, capture, disabled, onChange }) returns { open, reset, files }, renders nothing and creates its attached hidden input only in an effect. reset clears hook files without firing onChange. When opened, the picker moves into the activating dialog or popover surface so its click cannot dismiss the overlay; pass open as an event handler, or focus the trigger before calling open() directly. If that surface closes while the hook stays mounted, the same picker returns to the portal container or document body. Picker inputs are unnamed, reset before opening and removed on unmount; cancellation preserves values. With name, FileInput maintains a separate form input. Native FormData submission requires constructible DataTransfer and writable input.files; without them controlled display and callbacks still work, but use the value to submit files yourself. Form reset restores defaultValue for uncontrolled fields and re-syncs a controlled value. directory maps to webkitdirectory; pair it with multiple to retain the whole folder. Without multiple only the first accepted file is selected. capture is user or environment. These picker helpers live with FileInput, outside the hooks entry point. ProfileHeader and ChatComposer use FileTrigger, so their picker is attached outside the block container and exists only while its action is shown.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/FileInput/FileInput.tsx",
+          "target": "components/ui/file-input/FileInput.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/FileInput/FileTrigger.tsx",
+          "target": "components/ui/file-input/FileTrigger.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/FileInput/file-input.variants.ts",
+          "target": "components/ui/file-input/file-input.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/FileInput/index.ts",
+          "target": "components/ui/file-input/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/FileInput/useFileDialog.ts",
+          "target": "components/ui/file-input/useFileDialog.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/index.ts",
+          "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
+          "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
+          "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
+          "target": "components/i18n/messages/tool-call-en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
+          "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "target": "components/i18n/time-zone.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "thumbnail",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/FileInput/FileInput.doc.ts"
     },
     {
       "id": "grid",
@@ -8421,6 +8779,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -8475,6 +8837,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8564,6 +8930,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -8618,6 +8988,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8750,6 +9124,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -8804,6 +9182,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8900,6 +9282,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -8954,6 +9340,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9043,6 +9433,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9097,6 +9491,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9194,6 +9592,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9248,6 +9650,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9339,6 +9745,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9393,6 +9803,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9496,6 +9910,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9550,6 +9968,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9639,6 +10061,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9693,6 +10119,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9786,6 +10216,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9840,6 +10274,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10012,6 +10450,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -10066,6 +10508,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10161,6 +10607,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -10215,6 +10665,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10430,6 +10884,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -10484,6 +10942,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10617,6 +11079,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -10671,6 +11137,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10771,6 +11241,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -10825,6 +11299,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10958,6 +11436,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11012,6 +11494,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11111,6 +11597,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11165,6 +11655,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11254,6 +11748,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11308,6 +11806,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11400,6 +11902,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11454,6 +11960,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11547,6 +12057,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11601,6 +12115,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11694,6 +12212,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11748,6 +12270,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11859,6 +12385,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11913,6 +12443,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12005,6 +12539,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12059,6 +12597,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12149,6 +12691,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12203,6 +12749,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12300,6 +12850,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12354,6 +12908,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12482,6 +13040,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12536,6 +13098,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12736,6 +13302,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12790,6 +13360,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12888,6 +13462,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12942,6 +13520,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -13071,6 +13653,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -13125,6 +13711,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -13218,6 +13808,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -13272,6 +13866,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -13403,6 +14001,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -13457,6 +14059,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -13636,6 +14242,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -13690,6 +14300,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -13802,6 +14416,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -13856,6 +14474,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14038,6 +14660,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -14092,6 +14718,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14247,6 +14877,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -14301,6 +14935,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14390,6 +15028,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -14444,6 +15086,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14540,6 +15186,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -14594,6 +15244,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14794,6 +15448,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -14848,6 +15506,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14944,6 +15606,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -14998,6 +15664,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15103,6 +15773,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -15157,6 +15831,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15250,6 +15928,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -15304,6 +15986,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15396,6 +16082,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -15450,6 +16140,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15539,6 +16233,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -15593,6 +16291,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15713,6 +16415,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -15767,6 +16473,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15868,6 +16578,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -15922,6 +16636,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16087,6 +16805,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -16141,6 +16863,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16229,6 +16955,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -16283,6 +17013,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16379,6 +17113,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -16433,6 +17171,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16537,6 +17279,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -16591,6 +17337,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16750,6 +17500,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -16804,6 +17558,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16892,6 +17650,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -16946,6 +17708,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -17155,6 +17921,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -17209,6 +17979,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -17310,6 +18084,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -17364,6 +18142,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -17452,6 +18234,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -17506,6 +18292,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -17602,6 +18392,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -17656,6 +18450,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -17737,6 +18535,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -17791,6 +18593,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -17881,6 +18687,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -17935,6 +18745,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -18026,6 +18840,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18080,6 +18898,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -18175,6 +18997,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18229,6 +19055,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -18321,6 +19151,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18375,6 +19209,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -18463,6 +19301,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18517,6 +19359,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -18607,6 +19453,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18661,6 +19511,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -18752,6 +19606,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18806,6 +19664,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -18903,6 +19765,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18957,6 +19823,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -19048,6 +19918,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -19102,6 +19976,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -19194,6 +20072,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -19248,6 +20130,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -19338,6 +20224,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -19392,6 +20282,10 @@
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",

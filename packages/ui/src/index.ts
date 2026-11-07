@@ -182,3 +182,4 @@ export {
 export * from './components/Dropzone';
 
 export * from './components/EditableText';
+export * from './components/FileInput';
