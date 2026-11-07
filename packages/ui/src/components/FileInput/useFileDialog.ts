@@ -37,7 +37,16 @@ export function useFileDialog({
     picker.addEventListener('change', change);
     (container ?? document.body).append(picker);
     input.current = picker;
+    // A page-owned hook can outlive the overlay that temporarily hosts its picker.
+    // Restore that same input so a chooser still open when the overlay closes can finish.
+    const observer = new MutationObserver(() => {
+      if (!picker.isConnected) {
+        (container?.isConnected ? container : picker.ownerDocument.body).append(picker);
+      }
+    });
+    observer.observe(picker.ownerDocument, { childList: true, subtree: true });
     return () => {
+      observer.disconnect();
       picker.removeEventListener('change', change);
       picker.remove();
       input.current = null;

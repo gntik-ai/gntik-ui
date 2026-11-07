@@ -5,7 +5,7 @@ import { cn } from '../../utils/cn';
 import { validateFiles, type FileRejection } from '../../utils/accept-files';
 import { IconButton } from '../Button/Button';
 import { X } from 'lucide-react';
-import { inputVariants } from '../Input/input.variants';
+import { INPUT_ICON_SIZE, inputVariants } from '../Input/input.variants';
 import { FILE_ICON, fileKind } from '../Thumbnail/file-kind';
 import { fileInputVariants } from './file-input.variants';
 import { useFileDialog, type UseFileDialogOptions } from './useFileDialog';
@@ -73,7 +73,7 @@ export function FileInput(props: FileInputProps) {
     };
     form.addEventListener('reset', reset);
     return () => form.removeEventListener('reset', reset);
-  }, [props.name]);
+  }, []);
   const s = fileInputVariants();
   const first = files[0];
   const FileIcon = first ? FILE_ICON[fileKind(first.name, first.type)] : undefined;
@@ -124,7 +124,9 @@ export function FileInput(props: FileInputProps) {
                     t('fileInput.count', { count: files.length })
                   ) : (
                     <>
-                      {FileIcon && <FileIcon size={15} aria-hidden className={s.icon()} />}
+                      {FileIcon && (
+                        <FileIcon size={INPUT_ICON_SIZE[props.size ?? 'auto']} aria-hidden className={s.icon()} />
+                      )}
                       <span className={s.name()}>{first?.name}</span>
                       <span className={s.size()}>{formatBytes(first?.size ?? 0)}</span>
                     </>
@@ -149,6 +151,7 @@ export function FileInput(props: FileInputProps) {
               <IconButton
                 type="button"
                 icon={X}
+                size={props.size}
                 label={t('fileInput.clear')}
                 disabled={p.disabled || props.disabled}
                 onClick={() => {

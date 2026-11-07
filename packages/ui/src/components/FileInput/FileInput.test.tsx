@@ -32,6 +32,17 @@ it('shows the empty placeholder without a size and names an unlabelled control',
   expect(screen.queryByText(/kB/)).not.toBeInTheDocument();
 });
 
+it.each([
+  ['sm', 'size-8', '14'],
+  ['md', 'size-9', '15'],
+] as const)('sizes the clear action and file icon with the %s control', (size, clearSize, iconSize) => {
+  render(<FileInput size={size} defaultValue={json} clearable />);
+  expect(screen.getByRole('button', { name: 'Clear file' })).toHaveClass(clearSize);
+  const icon = screen.getByRole('button', { name: /Choose file/ }).querySelector('svg');
+  expect(icon).toHaveAttribute('width', iconSize);
+  expect(icon).toHaveAttribute('height', iconSize);
+});
+
 it('accepts the same file twice, preserves cancellations, and clears with focus', async () => {
   const user = userEvent.setup();
   const onValueChange = vi.fn();

@@ -5,6 +5,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
 import { FileInput } from './FileInput';
 import { FileTrigger } from './FileTrigger';
 import { useFileDialog } from './useFileDialog';
+import { PortalContainerContext } from '../../utils/portal';
 
 function HookTrigger({ onSelect }: { onSelect: (files: File[]) => void }) {
   const { open } = useFileDialog({ onChange: onSelect });
@@ -14,6 +15,64 @@ function HookTrigger({ onSelect }: { onSelect: (files: File[]) => void }) {
     </button>
   );
 }
+
+it.each(['body', 'portal container'])(
+  'keeps a page-owned hook picker attached to %s after its activating Popover closes',
+  async (host) => {
+    const onSelect = vi.fn();
+    const container = host === 'portal container' ? document.createElement('div') : undefined;
+    if (container) document.body.append(container);
+    function Page() {
+      const { open, files } = useFileDialog({ onChange: onSelect });
+      return (
+        <>
+          <output aria-label="Selected file">{files[0]?.name}</output>
+          <Popover>
+            <PopoverTrigger>Open files</PopoverTrigger>
+            <PopoverContent aria-label="Files">
+              <button type="button" onClick={open}>
+                Import files
+              </button>
+            </PopoverContent>
+          </Popover>
+        </>
+      );
+    }
+    const view = render(
+      <PortalContainerContext.Provider value={container}>
+        <Page />
+      </PortalContainerContext.Provider>,
+    );
+    const picker = document.querySelector<HTMLInputElement>('input[type=file]')!;
+    expect(picker.parentElement).toBe(container ?? document.body);
+    await userEvent.click(screen.getByRole('button', { name: 'Open files' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Import files' }));
+    expect(screen.getByRole('dialog', { name: 'Files' })).toContainElement(picker);
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Files' })).not.toBeInTheDocument());
+    await waitFor(() => expect(picker).toBeInTheDocument());
+    expect(picker.parentElement).toBe(container ?? document.body);
+    expect(document.querySelectorAll('input[type=file]')).toHaveLength(1);
+    // A chooser can finish after the overlay closes while the hook remains mounted.
+    const first = new File(['first'], 'first.json');
+    fireEvent.change(picker, { target: { files: [first] } });
+    expect(screen.getByRole('status', { name: 'Selected file' })).toHaveTextContent('first.json');
+    expect(onSelect).toHaveBeenCalledExactlyOnceWith([first]);
+    await userEvent.click(screen.getByRole('button', { name: 'Open files' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Import files' }));
+    const second = new File(['second'], 'second.json');
+    fireEvent.change(picker, { target: { files: [second] } });
+    expect(screen.getByRole('status', { name: 'Selected file' })).toHaveTextContent('second.json');
+    expect(onSelect).toHaveBeenCalledTimes(2);
+    expect(onSelect).toHaveBeenLastCalledWith([second]);
+    expect(document.querySelector('input[type=file]')).toBe(picker);
+    view.unmount();
+    // Let queued mutation callbacks run: cleanup must not resurrect the picker.
+    await Promise.resolve();
+    expect(picker).not.toBeInTheDocument();
+    container?.remove();
+  },
+);
 
 describe.each(['Popover', 'non-modal Dialog', 'modal Dialog'])('%s', (overlay) => {
   it.each(['FileInput', 'FileTrigger', 'useFileDialog'])(

@@ -69,7 +69,7 @@ FileInput SHALL inherit Field disabled and invalid states and descriptions. Disa
 
 ### Requirement: FileTrigger and useFileDialog expose attached picker behavior
 
-FileTrigger SHALL support click, Enter and Space, custom render elements, onSelect, accept, multiple, directory and capture without submitting a surrounding form. useFileDialog SHALL return open, reset and files, create one hidden tabIndex -1 picker only in an effect in the portal container or document body, render nothing and remove the picker on unmount.
+FileTrigger SHALL support click, Enter and Space, custom render elements, onSelect, accept, multiple, directory and capture without submitting a surrounding form. useFileDialog SHALL return open, reset and files, create one hidden tabIndex -1 picker only in an effect in the portal container or document body, keep it attached while mounted, render nothing and remove the picker on unmount.
 
 #### Scenario: Modal and SSR
 
@@ -83,6 +83,14 @@ FileTrigger SHALL support click, Enter and Space, custom render elements, onSele
 - **WHEN** its trigger opens the picker and the user selects a file
 - **THEN** the overlay stays open and the selection callback receives the file
 - **AND** the picker stays outside the control or block container, inside the activating dialog surface
+
+#### Scenario: Hook owner outlives the activating overlay
+
+- **GIVEN** useFileDialog is mounted outside the Popover that activates its picker
+- **WHEN** the Popover closes while the hook stays mounted
+- **THEN** the same picker returns to the portal container or document body
+- **AND** pending and later selections still update files and notify onChange
+- **AND** unmounting the hook removes the picker permanently
 
 ### Requirement: Consumer actions own their picker lifecycle
 
