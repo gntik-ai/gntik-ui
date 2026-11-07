@@ -1,15 +1,14 @@
 import { NoResultsEmpty, PageHeader, SectionHeader } from '@gntik-ai/blocks';
-import { Search } from '@gntik-ai/icons';
 import {
   matchText,
   Checkbox,
   CheckboxGroup,
   Grid,
   GridItem,
-  Input,
   Kbd,
   Link,
   Page,
+  SearchField,
   Stack,
   useI18n,
   type BreadcrumbItem,
@@ -123,11 +122,9 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
         }
       >
         <div role="search" aria-label="Workspace search">
-          <Input
-            type="search"
+          <SearchField
             aria-label="Search the workspace"
             aria-describedby={`${id}-hint`}
-            leadingIcon={Search}
             value={query}
             onValueChange={(v) => changeQuery(String(v))}
             onKeyDown={(e) => {

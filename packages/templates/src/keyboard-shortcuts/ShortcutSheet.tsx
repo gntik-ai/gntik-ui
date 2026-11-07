@@ -1,6 +1,6 @@
 import { useI18n, useOs } from '@gntik-ai/ui';
-import { Keyboard, Search } from '@gntik-ai/icons';
-import { EmptyState, Grid, Heading, Input, KbdCombo, Stack, Text } from '@gntik-ai/ui';
+import { Keyboard } from '@gntik-ai/icons';
+import { EmptyState, Grid, Heading, KbdCombo, SearchField, Stack, Text } from '@gntik-ai/ui';
 import { useId, useState } from 'react';
 import { filterShortcuts, type ShortcutGroup } from './data';
 
@@ -24,12 +24,11 @@ export function ShortcutSheet({ groups, headingLevel = 2, columns = 2, autoFocus
   return (
     <Stack gap={5}>
       <Stack gap={2}>
-        <Input
-          type="search"
+        <SearchField
           aria-label="Search shortcuts"
           aria-describedby={countId}
           placeholder="Search shortcuts…"
-          leadingIcon={Search}
+          shortcut="/"
           value={query}
           onValueChange={setQuery}
           autoFocus={autoFocus}

@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 134 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 135 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -4887,6 +4887,54 @@ export default function SearchableSelectActions() {
 }
 ```
 
+### SearchField (`search-field`)
+
+Search input: a thin preset of Input with type="search", a decorative leading search icon, a clear button and Escape-to-clear (Input `clearable` and `clearOnEscape`, both on by default). The name comes from `aria-label`, `aria-labelledby` or a Field/FormField label, and is `Search` otherwise; the placeholder defaults to the catalog `Search…`. `onValueChange(value)` runs on every keystroke. `onSearch(value, source)` reports a committed search: `enter`, `clear` (button or Escape, with an empty value) or, when `debounceMs` is set, `type` once typing has paused. A pending debounce is cancelled by Enter, a clear and unmount, and controlled value changes from the parent never call `onSearch`. `onClear` runs after a clear. Enter never blocks an enclosing form submit and is ignored during IME composition or when a consumer `onKeyDown` prevented it. `pending` replaces the search icon with a decorative Spinner and sets `aria-busy`; typing stays enabled. `shortcut` takes a single combination (`/`, `mod+k`; sequences are not supported because `aria-keyshortcuts` cannot express them): it focuses the field and selects its text, sets `aria-keyshortcuts` and shows an `aria-hidden` key hint while the field is empty and unfocused (`mod` resolves to the platform key). Character shortcuts such as `/` ignore keystrokes inside other inputs and, like every global character shortcut, inside an open modal, so a Dialog that holds a SearchField registers its own scoped `useHotkeys` binding; `setCharacterHotkeysEnabled(false)` disables them but does not hide the hint. Combinations with a modifier such as `mod+k` also fire while typing elsewhere and can collide with an app command palette binding. A disabled field does not respond to the shortcut. The native WebKit cancel button is hidden so every browser shows the kit clear button only. Other Input props (sizes `auto`, `sm`, `md`, `variant`, `aria-describedby`, `autoFocus`, `onKeyDown`) pass through. Inside a Field the label names the input; outside one, a native `<label>` loses to the default `aria-label`, so pass `aria-label` yourself.
+
+- Package: `@gntik-ai/ui` · export `SearchField` · group Forms · status stable
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/SearchField/SearchField.doc.ts
+- Primitive: `@base-ui/react/input`
+- ARIA pattern: searchbox
+- Registry dependencies: input, spinner, ui-hooks, ui-utils
+- Install: `gntik-ui add search-field`; own the source with `gntik-ui eject search-field`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Enter | Calls onSearch(value, "enter") and lets an enclosing form submit; ignored during IME composition |
+| Escape | On a non-empty editable field: clears it, reports the clear and stops propagation; otherwise propagates so a Dialog closes |
+| / (shortcut) | With `shortcut`, focuses the field and selects its text from outside an editable element |
+| Tab | Moves focus into the input, then to the clear button while it shows |
+
+Tokens: background, border, foreground, muted-foreground, secondary, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { Field, FieldDescription, FieldLabel } from '@gntik-ai/ui';
+import { SearchField } from '@gntik-ai/ui';
+
+export default function SearchFieldBasic() {
+  const [last, setLast] = useState('');
+  return (
+    <div className="grid max-w-sm gap-4">
+      <Field>
+        <FieldLabel>Search deployments</FieldLabel>
+        <SearchField defaultValue="api" onSearch={(value, source) => setLast(`${source}: ${value || '(empty)'}`)} />
+        <FieldDescription>
+          {last ? `Last search — ${last}` : 'Press Enter to search, Escape or × to clear.'}
+        </FieldDescription>
+      </Field>
+      <SearchField aria-label="Search logs" size="sm" />
+      <SearchField aria-label="Search disabled" disabled defaultValue="api" />
+      <SearchField aria-label="Search read-only" readOnly defaultValue="api" />
+    </div>
+  );
+}
+```
+
 ### SecretField (`secret-field`)
 
 A secret value (API key, token, connection string) on Input: masked by default (fixed-length mask, optional visible prefix/suffix), a reveal toggle (aria-pressed), a CopyButton that copies the real value and announces it, an optional Rotate action behind an AlertDialog confirmation, and optional created / last-used meta. Optional showLabel, hideLabel, copyLabel and copiedAnnouncement override i18n defaults. Read-only by default (`editable` turns it into a password field). While masked and read-only the secret is not in the DOM, and it is never put in a title or tooltip. `maskSecret` is exported too. Size lg renders a 44px field, 36px reveal and copy controls with 17px icons, and a large Rotate button. Auto (default), sm and md retain their existing metrics. See SecretFieldLarge.
@@ -5283,7 +5331,7 @@ Two lists, available and selected, for picking and ordering a subset (columns, s
 - Package: `@gntik-ai/ui` · export `TransferList` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/TransferList/TransferList.doc.ts
 - ARIA pattern: two multi-select listboxes (aria-activedescendant) + action buttons
-- Registry dependencies: button, input, ui-utils, virtual-list
+- Registry dependencies: button, search-field, ui-utils, virtual-list
 - Install: `gntik-ui add transfer-list`; own the source with `gntik-ui eject transfer-list`
 
 Keyboard:

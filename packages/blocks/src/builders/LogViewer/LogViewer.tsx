@@ -1,8 +1,8 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode, type UIEvent } from 'react';
-import { Check, Copy, Eye, Search, X } from '@gntik-ai/icons';
+import { Check, Copy, Eye, X } from '@gntik-ai/icons';
 import {
   IconButton,
-  Input,
+  SearchField,
   Switch,
   Toggle,
   ToggleGroup,
@@ -245,12 +245,10 @@ export function LogViewer({
               </Toggle>
             ))}
           </ToggleGroup>
-          <Input
+          <SearchField
             size="sm"
-            type="search"
             aria-label={labels?.searchLabel ?? t('logViewer.searchLabel')}
             placeholder={labels?.searchPlaceholder ?? t('logViewer.searchPlaceholder')}
-            leadingIcon={Search}
             value={query}
             onValueChange={(v) => setQuery(String(v))}
             className="w-full sm:w-48"

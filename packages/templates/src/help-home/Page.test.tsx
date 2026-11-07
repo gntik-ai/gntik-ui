@@ -30,4 +30,14 @@ describe('HelpHomePage', () => {
     expect(screen.getByText('1 article')).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Browse by topic' })).not.toBeInTheDocument();
   });
+
+  it('clears the search with Escape and brings the topics back', { timeout: 15000 }, async () => {
+    render(<HelpHomePage />);
+    const search = screen.getByRole('searchbox', { name: 'Search help articles' });
+    await userEvent.type(search, 'webhook');
+    expect(screen.queryByRole('heading', { name: 'Browse by topic' })).not.toBeInTheDocument();
+    await userEvent.keyboard('{Escape}');
+    expect(search).toHaveValue('');
+    expect(screen.getByRole('heading', { name: 'Browse by topic' })).toBeInTheDocument();
+  });
 });

@@ -1,8 +1,7 @@
-import { ListFilter, Plus, Search } from '@gntik-ai/icons';
+import { ListFilter, Plus } from '@gntik-ai/icons';
 import {
   Button,
   cn,
-  Input,
   Menu,
   MenuCheckboxItem,
   MenuContent,
@@ -10,6 +9,7 @@ import {
   MenuGroupLabel,
   MenuSeparator,
   MenuTrigger,
+  SearchField,
   SimpleSelect,
   Token,
   useI18n,
@@ -75,7 +75,7 @@ export interface FilterBarProps {
 const same = (a: ActiveFilter, b: ActiveFilter) => a.field === b.field && a.value === b.value;
 
 /**
- * Filter bar: search Input, saved views Select, an "Add filter" Menu (multi-select per field),
+ * Filter bar: SearchField, saved views Select, an "Add filter" Menu (multi-select per field),
  * removable filter chips (Token) and Clear all.
  */
 export function FilterBar({
@@ -137,11 +137,9 @@ export function FilterBar({
       className={cn('flex flex-col gap-3', className)}
     >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-        <Input
+        <SearchField
           aria-label={searchLabel}
-          type="search"
           size="sm"
-          leadingIcon={Search}
           placeholder={placeholder}
           value={query}
           onValueChange={(v) => setQuery(String(v))}

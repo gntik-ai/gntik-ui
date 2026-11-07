@@ -7,10 +7,10 @@ import {
   EmptyState,
   Grid,
   Heading,
-  Input,
   Link,
   Logo,
   NavList,
+  SearchField,
   Stack,
   Text,
   ThemeSwitcher,
@@ -86,12 +86,10 @@ export default function HelpHomePage(props: Partial<HelpHomeProps>) {
           </Heading>
           <Text tone="muted">{description}</Text>
           <form role="search" aria-label="Help articles" onSubmit={submit} className="max-w-xl">
-            <Input
-              type="search"
+            <SearchField
               aria-label="Search help articles"
               aria-describedby={`${ids}-count`}
               placeholder="Search articles…"
-              leadingIcon={Search}
               value={query}
               onValueChange={setQuery}
             />
