@@ -15,7 +15,7 @@ import {
   TokenInput,
 } from '@gntik-ai/ui';
 import { UserPlus } from '@gntik-ai/icons';
-import { useState, type ReactElement } from 'react';
+import { useEffect, useRef, useState, type ReactElement } from 'react';
 import { EMAIL_RE, memberRoles, type RoleOption } from './fixtures';
 
 export type { RoleOption } from './fixtures';
@@ -87,6 +87,12 @@ export function InviteMembersDialog({
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Bumped whenever an opening ends, so a submit that settles later can't touch a reopened dialog.
+  const opening = useRef(0);
+  useEffect(() => {
+    opening.current += 1;
+  }, [open]);
+
   const invalidCount = emails.filter((e) => emailError(e)).length;
   const emailsProblem =
     emails.length === 0
@@ -97,6 +103,7 @@ export function InviteMembersDialog({
   const showEmailError = submitted && emailsProblem != null;
 
   const reset = () => {
+    opening.current += 1;
     setEmails([]);
     setRole(defaultRole);
     setMessage('');
@@ -105,10 +112,13 @@ export function InviteMembersDialog({
   };
 
   const send = async () => {
+    const current = opening.current;
     try {
       await onInvite?.({ emails, role, message: message.trim() });
     } catch (e) {
-      setError(e instanceof Error ? e.message : (labels?.fallbackError ?? t('inviteMembers.fallbackError')));
+      if (current === opening.current) {
+        setError(e instanceof Error ? e.message : (labels?.fallbackError ?? t('inviteMembers.fallbackError')));
+      }
       return false;
     }
   };

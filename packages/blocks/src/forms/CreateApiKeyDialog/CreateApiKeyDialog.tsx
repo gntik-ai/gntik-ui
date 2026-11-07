@@ -19,7 +19,7 @@ import {
   SelectTrigger,
 } from '@gntik-ai/ui';
 import { KeyRound } from '@gntik-ai/icons';
-import { Children, cloneElement, useState, type ReactElement, type ReactNode } from 'react';
+import { Children, cloneElement, useEffect, useRef, useState, type ReactElement, type ReactNode } from 'react';
 import { apiKeyExpiries, apiKeyScopes, generateDemoSecret, type ApiKeyExpiry, type ApiKeyScope } from './fixtures';
 
 export type { ApiKeyExpiry, ApiKeyScope } from './fixtures';
@@ -87,12 +87,18 @@ export function CreateApiKeyDialog({
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [secret, setSecret] = useState<string | null>(null);
+  // Bumped whenever an opening ends, so a submit that settles later can't touch a reopened dialog.
+  const opening = useRef(0);
+  useEffect(() => {
+    opening.current += 1;
+  }, [open]);
   const nameInvalid = submitted && name.trim() === '';
   const scopesInvalid = submitted && selected.length === 0;
   const formTitle = labels?.title ?? t('createApiKey.title');
 
   // Reset runs once the dialog has closed, so the secret stays until the exit animation ends.
   const reset = () => {
+    opening.current += 1;
     setName('');
     setSelected([]);
     setExpiry(defaultExpiry);
@@ -102,10 +108,14 @@ export function CreateApiKeyDialog({
   };
 
   const create = async () => {
+    const current = opening.current;
     try {
-      setSecret(await onCreate({ name: name.trim(), scopes: selected, expiry }));
+      const created = await onCreate({ name: name.trim(), scopes: selected, expiry });
+      if (current === opening.current) setSecret(created);
     } catch (e) {
-      setError(e instanceof Error ? e.message : (labels?.fallbackError ?? t('createApiKey.fallbackError')));
+      if (current === opening.current) {
+        setError(e instanceof Error ? e.message : (labels?.fallbackError ?? t('createApiKey.fallbackError')));
+      }
     }
     return false;
   };

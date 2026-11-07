@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { I18nProvider } from '../../i18n';
 import { Button } from '../Button';
+import { DialogClose } from '../Dialog';
+import { DrawerClose } from '../Drawer';
 import { Input } from '../Input';
 import { FormDialog, type FormDialogProps, type FormDialogResult } from './FormDialog';
 import { doc } from './FormDialog.doc';
@@ -274,6 +276,40 @@ describe('FormDialog', () => {
       await act(async () => gate.resolve());
     });
 
+    it('blocks a custom footer DialogClose/DrawerClose while pending and honours it afterwards', async () => {
+      const user = userEvent.setup();
+      const gate = deferred<false>();
+      const Close = extra.variant === 'drawer' ? DrawerClose : DialogClose;
+      const onOpenChange = vi.fn();
+      render(
+        <FormDialog
+          title="New quota"
+          trigger={<Button />}
+          onSubmit={() => gate.promise}
+          onOpenChange={onOpenChange}
+          footer={
+            <>
+              <Button type="submit">Go</Button>
+              <Close render={<Button type="button" />}>Dismiss</Close>
+            </>
+          }
+          {...extra}
+        >
+          <Input name="name" aria-label="Quota name" />
+        </FormDialog>,
+      );
+      await openDialog(user);
+      onOpenChange.mockClear();
+      await user.click(screen.getByRole('button', { name: 'Go' }));
+      await user.click(screen.getByRole('button', { name: 'Dismiss' }));
+      expect(screen.getByRole('dialog', { name: 'New quota' })).toBeInTheDocument();
+      expect(onOpenChange).not.toHaveBeenCalled();
+      await act(async () => gate.resolve(false));
+      await user.click(screen.getByRole('button', { name: 'Dismiss' }));
+      await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+      expect(onOpenChange).toHaveBeenCalledWith(false);
+    });
+
     it('shows an Error rejection, re-enables the controls and clears the alert on the next submit', async () => {
       const user = userEvent.setup();
       const outcomes = [() => Promise.reject(new Error('Timeout')), () => Promise.resolve(false)];
@@ -434,6 +470,39 @@ describe('FormDialog', () => {
     await user.keyboard('{Escape}');
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
     expect(screen.getByRole('button', { name: 'New quota' })).toHaveFocus();
+  });
+
+  it.each(variants)('traps Tab and Shift+Tab inside the %s', async (_variant, extra) => {
+    const user = userEvent.setup();
+    render(
+      <>
+        {setup({ ...extra })}
+        <button type="button">Outside</button>
+      </>,
+    );
+    const dialog = await openDialog(user);
+    await waitFor(() => expect(dialog).toContainElement(document.activeElement as HTMLElement));
+    const isGuard = (el: Element | null) => el?.hasAttribute('data-base-ui-focus-guard') === true;
+    const outside = () => [
+      screen.getByRole('button', { name: 'Outside', hidden: true }),
+      screen.getByRole('button', { name: 'New quota', hidden: true }),
+    ];
+    const visited = new Set<Element | null>();
+    // Forward: the cycle runs through every control, parks on a guard and wraps back into the dialog.
+    for (let i = 0; i < 10; i++) {
+      await user.tab();
+      const active = document.activeElement;
+      visited.add(active);
+      expect(isGuard(active) || active === document.body || dialog.contains(active)).toBe(true);
+      for (const el of outside()) expect(el).not.toHaveFocus();
+    }
+    expect(visited.has(screen.getByRole('textbox', { name: 'Limit' }))).toBe(true);
+    expect(visited.has(screen.getByRole('button', { name: 'Save' }))).toBe(true);
+    // Backward: leaving the first control parks on a guard rather than on the page behind the dialog.
+    screen.getByRole('textbox', { name: 'Quota name' }).focus();
+    await user.tab({ shift: true });
+    expect(isGuard(document.activeElement) || dialog.contains(document.activeElement)).toBe(true);
+    for (const el of outside()) expect(el).not.toHaveFocus();
   });
 
   it('documents every keyboard row', () => {

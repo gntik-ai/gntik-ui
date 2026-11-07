@@ -55,4 +55,26 @@ describe('InviteMembersDialog lifecycle', () => {
     await screen.findByLabelText(/Email addresses/);
     expect(screen.queryByText('avery@example.com')).not.toBeInTheDocument();
   });
+
+  it('drops a rejection that arrives after a parent-driven close', async () => {
+    const user = userEvent.setup();
+    let fail!: (reason: Error) => void;
+    const onInvite = vi.fn(() => new Promise<void>((_resolve, reject) => (fail = reject)));
+    const api: { setOpen: (open: boolean) => void } = { setOpen: () => undefined };
+    function Parent() {
+      const [open, setOpen] = useState(true);
+      api.setOpen = setOpen;
+      return <InviteMembersDialog open={open} onOpenChange={setOpen} onInvite={onInvite} trigger={null} />;
+    }
+    render(<Parent />);
+    await user.type(await screen.findByLabelText(/Email addresses/), 'avery@example.com,');
+    await user.click(screen.getByRole('button', { name: 'Send invitation' }));
+    act(() => api.setOpen(false));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    await act(async () => fail(new Error('Stale seat limit')));
+    act(() => api.setOpen(true));
+    await screen.findByLabelText(/Email addresses/);
+    expect(screen.queryByText('Stale seat limit')).not.toBeInTheDocument();
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
 });

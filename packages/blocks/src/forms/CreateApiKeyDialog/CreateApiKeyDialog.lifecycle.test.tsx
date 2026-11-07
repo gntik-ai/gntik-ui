@@ -80,4 +80,44 @@ describe('CreateApiKeyDialog lifecycle', () => {
     await screen.findByRole('dialog', { name: 'API key created' });
     expect(screen.getByRole('button', { name: 'Create API key', hidden: true })).toBeInTheDocument();
   });
+
+  it('discards a secret that arrives after a parent-driven close', async () => {
+    const user = userEvent.setup();
+    let release!: (secret: string) => void;
+    const onCreate = vi.fn(() => new Promise<string>((resolve) => (release = resolve)));
+    const api: { setOpen: (open: boolean) => void } = { setOpen: () => undefined };
+    function Parent() {
+      const [open, setOpen] = useState(true);
+      api.setOpen = setOpen;
+      return <CreateApiKeyDialog open={open} onOpenChange={setOpen} onCreate={onCreate} trigger={null} />;
+    }
+    render(<Parent />);
+    await fillAndSubmit(user);
+    act(() => api.setOpen(false));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    await act(async () => release('sk_stale_secret'));
+    act(() => api.setOpen(true));
+    expect(await screen.findByRole('dialog', { name: 'Create API key' })).toBeInTheDocument();
+    expect(screen.queryByText('sk_stale_secret')).not.toBeInTheDocument();
+  });
+
+  it('drops a rejection that arrives after a parent-driven close', async () => {
+    const user = userEvent.setup();
+    let fail!: (reason: Error) => void;
+    const onCreate = vi.fn(() => new Promise<string>((_resolve, reject) => (fail = reject)));
+    const api: { setOpen: (open: boolean) => void } = { setOpen: () => undefined };
+    function Parent() {
+      const [open, setOpen] = useState(true);
+      api.setOpen = setOpen;
+      return <CreateApiKeyDialog open={open} onOpenChange={setOpen} onCreate={onCreate} trigger={null} />;
+    }
+    render(<Parent />);
+    await fillAndSubmit(user);
+    act(() => api.setOpen(false));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    await act(async () => fail(new Error('Stale failure')));
+    act(() => api.setOpen(true));
+    await screen.findByRole('dialog', { name: 'Create API key' });
+    expect(screen.queryByText('Stale failure')).not.toBeInTheDocument();
+  });
 });
