@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { SimpleSelect } from '../../components/Select';
 import { Textarea } from '../../components/Textarea';
 import { useI18n } from '../../i18n';
-import { Form, FormField, schemaResolver } from '..';
+import { Form, FormField, FormSubmit, schemaResolver } from '..';
 
 const inviteSchema = z.object({
   name: z.string().trim().min(1, 'Enter a name.'),
@@ -32,7 +31,15 @@ export default function FormInviteMember() {
     defaultValues: { name: '', email: '', note: '' },
   });
   return (
-    <Form form={form} onSubmit={setSent} className="grid w-full max-w-md gap-5" aria-label={t('forms.invite.title')}>
+    <Form
+      form={form}
+      onSubmit={async (values) => {
+        await new Promise<void>((resolve) => setTimeout(resolve, 500));
+        setSent(values);
+      }}
+      className="grid w-full max-w-md gap-5"
+      aria-label={t('forms.invite.title')}
+    >
       <FormField<InviteInput, 'name'> name="name" label="Full name" required>
         {(field) => <Input {...field} autoComplete="name" />}
       </FormField>
@@ -46,7 +53,7 @@ export default function FormInviteMember() {
         {(field) => <Textarea {...field} rows={3} />}
       </FormField>
       <div className="flex items-center gap-3">
-        <Button type="submit">Send invitation</Button>
+        <FormSubmit>{t('forms.invite.submit')}</FormSubmit>
         <p role="status" className="text-[12px] text-muted-foreground">
           {sent ? `Invitation sent to ${sent.email}.` : ''}
         </p>

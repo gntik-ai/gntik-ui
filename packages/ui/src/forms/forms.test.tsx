@@ -1,8 +1,10 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { StrictMode } from 'react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 import { expectNoAxeViolations } from '../test/a11y';
+import { I18nProvider } from '../i18n';
 import { Button } from '../components/Button';
 import { Field, FieldError, FieldLabel } from '../components/Field';
 import { DatePicker } from '../components/DatePicker';
@@ -14,7 +16,16 @@ import { Switch } from '../components/Switch';
 import { SimpleSelect } from '../components/Select';
 import { toValueProps, toCheckedProps } from './bindings';
 import { Input } from '../components/Input';
-import { Form, FormField, issuesToErrors, schemaResolver, useFieldProps } from '.';
+import {
+  Form,
+  FormField,
+  FormSubmit,
+  FormReset,
+  useFormActions,
+  issuesToErrors,
+  schemaResolver,
+  useFieldProps,
+} from '.';
 import FormInviteMember from './examples/FormInviteMember';
 
 describe('@gntik-ai/ui/forms', () => {
@@ -363,4 +374,330 @@ it.each(['date', 'time'] as const)('normalizes an undefined %s default without c
   else expect(screen.getByRole('combobox', { name: 'Date' })).toHaveValue('');
   expect(errors.mock.calls.flat().join(' ')).not.toMatch(/uncontrolled|controlled/i);
   errors.mockRestore();
+});
+
+it('guards simultaneous native submissions and Enter until the request settles', async () => {
+  let finish!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    finish = resolve;
+  });
+  const submit = vi.fn(() => pending);
+  function Pending() {
+    const form = useForm({ defaultValues: { name: 'Billing API' } });
+    return (
+      <Form form={form} onSubmit={submit} aria-label="Settings">
+        <FormField name="name" label="Name">
+          {(p) => <Input {...p} />}
+        </FormField>
+        <Button type="submit">Save</Button>
+      </Form>
+    );
+  }
+  const user = userEvent.setup();
+  render(<Pending />);
+  const element = screen.getByRole('form', { name: 'Settings' }) as HTMLFormElement;
+  act(() => {
+    element.requestSubmit();
+    element.requestSubmit();
+  });
+  await waitFor(() => expect(submit).toHaveBeenCalledTimes(1));
+  await user.dblClick(screen.getByRole('button', { name: 'Save' }));
+  await user.click(screen.getByRole('textbox', { name: 'Name' }));
+  await user.keyboard('{Enter}');
+  expect(submit).toHaveBeenCalledTimes(1);
+  await act(async () => finish());
+  await user.click(screen.getByRole('button', { name: 'Save' }));
+  await waitFor(() => expect(submit).toHaveBeenCalledTimes(2));
+});
+
+it('announces pending submission, shows a spinner and keeps the submit button focused', async () => {
+  let finish!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    finish = resolve;
+  });
+  function Pending() {
+    const form = useForm({ defaultValues: { name: 'Billing API' } });
+    return (
+      <Form form={form} onSubmit={() => pending}>
+        <FormSubmit>Send invitation</FormSubmit>
+      </Form>
+    );
+  }
+  const user = userEvent.setup();
+  render(<Pending />);
+  const button = screen.getByRole('button', { name: 'Send invitation' });
+  await user.click(button);
+  expect(button).toHaveAttribute('aria-busy', 'true');
+  expect(button.querySelector('svg')).toBeInTheDocument();
+  expect(button).toHaveFocus();
+  expect(screen.getByRole('status')).toHaveAttribute('aria-live', 'polite');
+  expect(screen.getByRole('status')).toHaveClass('sr-only');
+  expect(screen.getByRole('status')).toHaveTextContent('Submitting…');
+  await act(async () => finish());
+  await waitFor(() => expect(button).not.toHaveAttribute('aria-busy'));
+  expect(button).toBeEnabled();
+  expect(screen.getByRole('status')).toBeEmptyDOMElement();
+});
+
+it('disables an opt-in edit submit only while its input matches the defaults', async () => {
+  function Edit() {
+    const form = useForm({ defaultValues: { name: 'Billing API' } });
+    return (
+      <Form form={form} onSubmit={() => {}}>
+        <FormField name="name" label="Name">
+          {(p) => <Input {...p} />}
+        </FormField>
+        <FormSubmit disableWhenClean />
+        <FormSubmit>Always save</FormSubmit>
+      </Form>
+    );
+  }
+  const user = userEvent.setup();
+  render(<Edit />);
+  const save = screen.getByRole('button', { name: 'Save' });
+  expect(save).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'Always save' })).toBeEnabled();
+  const input = screen.getByRole('textbox', { name: 'Name' });
+  await user.type(input, ' v2');
+  expect(save).toBeEnabled();
+  await user.keyboard('{Backspace}{Backspace}{Backspace}');
+  expect(input).toHaveValue('Billing API');
+  expect(save).toBeDisabled();
+});
+
+function ActionControls() {
+  const { submit, reset, isDirty, isSubmitting } = useFormActions();
+  const { formState } = useFormContext<{ name: string }>();
+  return (
+    <>
+      <Button onClick={submit}>Save via actions</Button>
+      <Button onClick={reset}>Discard via actions</Button>
+      <span aria-label="Dirty">{String(isDirty)}</span>
+      <span aria-label="Submitting">{String(isSubmitting)}</span>
+      <span aria-label="Default name">{formState.defaultValues?.name}</span>
+    </>
+  );
+}
+
+it('submits through a native event and exposes live state and reset through useFormActions', async () => {
+  let finish!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    finish = resolve;
+  });
+  const submit = vi.fn(() => pending);
+  const nativeSubmit = vi.fn();
+  function Edit() {
+    const form = useForm({ defaultValues: { name: 'Billing API' } });
+    return (
+      <Form form={form} onSubmit={submit} onSubmitCapture={nativeSubmit}>
+        <FormField name="name" label="Name">
+          {(p) => <Input {...p} />}
+        </FormField>
+        <FormSubmit />
+        <ActionControls />
+      </Form>
+    );
+  }
+  const user = userEvent.setup();
+  render(<Edit />);
+  expect(screen.getByLabelText('Dirty')).toHaveTextContent('false');
+  await user.type(screen.getByRole('textbox', { name: 'Name' }), ' v2');
+  expect(screen.getByLabelText('Dirty')).toHaveTextContent('true');
+  await user.dblClick(screen.getByRole('button', { name: 'Save via actions' }));
+  expect(nativeSubmit).toHaveBeenCalledTimes(2);
+  expect(submit).toHaveBeenCalledTimes(1);
+  expect(screen.getByLabelText('Submitting')).toHaveTextContent('true');
+  await act(async () => finish());
+  await waitFor(() => expect(screen.getByLabelText('Submitting')).toHaveTextContent('false'));
+  // The default afterSubmit='keep' preserves edits and the original defaults.
+  expect(screen.getByLabelText('Dirty')).toHaveTextContent('true');
+  await user.click(screen.getByRole('button', { name: 'Discard via actions' }));
+  expect(screen.getByRole('textbox', { name: 'Name' })).toHaveValue('Billing API');
+  expect(screen.getByLabelText('Dirty')).toHaveTextContent('false');
+});
+
+function SavePolicyForm({
+  onSubmit,
+  afterSubmit,
+}: {
+  onSubmit: (values: { name: number }) => void | Promise<void>;
+  afterSubmit?: 'keep' | 'rebase' | 'reset';
+}) {
+  const schema = z.object({
+    name: z
+      .string()
+      .trim()
+      .min(1, 'Enter a name.')
+      .transform((name) => name.length),
+  });
+  const form = useForm<{ name: string }, unknown, { name: number }>({
+    defaultValues: { name: 'Billing API' },
+    resolver: schemaResolver(schema),
+  });
+  return (
+    <Form form={form} onSubmit={onSubmit} afterSubmit={afterSubmit}>
+      <FormField name="name" label="Name">
+        {(p) => <Input {...p} />}
+      </FormField>
+      <FormSubmit />
+      <FormReset />
+      <ActionControls />
+    </Form>
+  );
+}
+
+it('rebases to raw inputs only after a transformed submission resolves', async () => {
+  let finish!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    finish = resolve;
+  });
+  const submit = vi.fn(() => pending);
+  const user = userEvent.setup();
+  render(<SavePolicyForm onSubmit={submit} afterSubmit="rebase" />);
+  const input = screen.getByRole('textbox', { name: 'Name' });
+  await user.clear(input);
+  await user.type(input, '  Billing API v2  ');
+  await user.click(screen.getByRole('button', { name: 'Save via actions' }));
+  expect(submit).toHaveBeenCalledWith({ name: 14 }, expect.anything());
+  expect(screen.getByLabelText('Dirty')).toHaveTextContent('true');
+  expect(screen.getByLabelText('Default name')).toHaveTextContent('Billing API');
+  await act(async () => finish());
+  await waitFor(() => expect(screen.getByLabelText('Dirty')).toHaveTextContent('false'));
+  expect(input).toHaveValue('  Billing API v2  ');
+  expect(screen.getByLabelText('Default name').textContent).toBe('  Billing API v2  ');
+  await user.type(input, ' edit');
+  await user.click(screen.getByRole('button', { name: 'Discard via actions' }));
+  expect(input).toHaveValue('  Billing API v2  ');
+});
+
+it('restores original defaults after a successful reset-policy submission', async () => {
+  const user = userEvent.setup();
+  const submit = vi.fn();
+  render(<SavePolicyForm onSubmit={submit} afterSubmit="reset" />);
+  const input = screen.getByRole('textbox', { name: 'Name' });
+  await user.type(input, ' v2');
+  await user.click(screen.getByRole('button', { name: 'Save' }));
+  await waitFor(() => expect(screen.getByLabelText('Submitting')).toHaveTextContent('false'));
+  expect(submit).toHaveBeenCalledWith({ name: 14 }, expect.anything());
+  expect(input).toHaveValue('Billing API');
+  expect(screen.getByLabelText('Dirty')).toHaveTextContent('false');
+});
+
+it('discards edits and validation messages and stays disabled while clean or submitting', async () => {
+  let finish!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    finish = resolve;
+  });
+  const submit = vi.fn(() => pending);
+  const user = userEvent.setup();
+  render(<SavePolicyForm onSubmit={submit} />);
+  const input = screen.getByRole('textbox', { name: 'Name' });
+  const discard = screen.getByRole('button', { name: 'Discard' });
+  expect(discard).toHaveAttribute('type', 'button');
+  expect(discard).toBeDisabled();
+  expect(discard).toHaveClass('text-muted-foreground');
+  await user.clear(input);
+  await user.click(screen.getByRole('button', { name: 'Save' }));
+  expect(await screen.findByText('Enter a name.')).toBeInTheDocument();
+  await waitFor(() => expect(input).toHaveFocus());
+  expect(submit).not.toHaveBeenCalled();
+  expect(screen.getByLabelText('Submitting')).toHaveTextContent('false');
+  expect(screen.getByRole('button', { name: 'Save' })).not.toHaveAttribute('aria-busy');
+  await user.click(discard);
+  expect(input).toHaveValue('Billing API');
+  expect(screen.queryByText('Enter a name.')).not.toBeInTheDocument();
+  expect(discard).toBeDisabled();
+  await user.type(input, ' v2');
+  await user.click(screen.getByRole('button', { name: 'Save' }));
+  expect(submit).toHaveBeenCalledTimes(1);
+  expect(discard).toBeDisabled();
+  await act(async () => finish());
+  await waitFor(() => expect(discard).toBeEnabled());
+});
+
+it('falls back to a plain submit button outside Form and warns once only in development', () => {
+  const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+  try {
+    vi.stubEnv('NODE_ENV', 'development');
+    const view = render(
+      <StrictMode>
+        <FormSubmit disableWhenClean />
+      </StrictMode>,
+    );
+    const button = screen.getByRole('button', { name: 'Save' });
+    expect(button).toHaveAttribute('type', 'submit');
+    expect(button).toBeEnabled();
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    view.rerender(
+      <StrictMode>
+        <FormSubmit disableWhenClean>Send</FormSubmit>
+      </StrictMode>,
+    );
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('FormSubmit'));
+    view.unmount();
+    warn.mockClear();
+    vi.stubEnv('NODE_ENV', 'production');
+    render(<FormSubmit />);
+    expect(warn).not.toHaveBeenCalled();
+  } finally {
+    warn.mockRestore();
+    vi.unstubAllEnvs();
+  }
+});
+
+it.each(['rebase', 'reset'] as const)(
+  'propagates a rejected %s save, preserves edits, and permits retry',
+  async (afterSubmit) => {
+    const failure = new Error('Save rejected');
+    const submit = vi.fn().mockRejectedValueOnce(failure).mockResolvedValue(undefined);
+    const observed: unknown[] = [];
+    let receive!: (reason: unknown) => void;
+    const propagated = new Promise<unknown>((resolve) => {
+      receive = resolve;
+    });
+    // React DOM does not consume async event-handler promises. Observe the host's rejection
+    // boundary to verify the existing propagation contract without leaking it to other tests.
+    const onRejection = (reason: unknown) => {
+      observed.push(reason);
+      receive(reason);
+    };
+    process.on('unhandledRejection', onRejection);
+    try {
+      const user = userEvent.setup();
+      render(<SavePolicyForm onSubmit={submit} afterSubmit={afterSubmit} />);
+      const input = screen.getByRole('textbox', { name: 'Name' });
+      await user.type(input, ' v2');
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+      expect(await propagated).toBe(failure);
+      await waitFor(() => expect(screen.getByLabelText('Submitting')).toHaveTextContent('false'));
+      expect(input).toHaveValue('Billing API v2');
+      expect(screen.getByLabelText('Dirty')).toHaveTextContent('true');
+      expect(screen.getByLabelText('Default name').textContent).toBe('Billing API');
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+      await waitFor(() => expect(submit).toHaveBeenCalledTimes(2));
+      expect(observed).toEqual([failure]);
+    } finally {
+      process.off('unhandledRejection', onRejection);
+    }
+  },
+);
+
+it('localizes the default actions and pending announcement in Spanish', async () => {
+  let finish!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    finish = resolve;
+  });
+  const user = userEvent.setup();
+  render(
+    <I18nProvider locale="es">
+      <SavePolicyForm onSubmit={() => pending} />
+    </I18nProvider>,
+  );
+  expect(screen.getByRole('button', { name: 'Descartar' })).toBeDisabled();
+  const save = screen.getByRole('button', { name: 'Guardar' });
+  await user.click(save);
+  expect(screen.getByRole('status')).toHaveTextContent('Enviando…');
+  await act(async () => finish());
+  await waitFor(() => expect(save).not.toHaveAttribute('aria-busy'));
 });

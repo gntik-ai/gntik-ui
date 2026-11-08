@@ -1,4 +1,4 @@
-import { createContext, useContext, type FormHTMLAttributes, type ReactNode } from 'react';
+import { createContext, useContext, useRef, type FormEvent, type FormHTMLAttributes, type ReactNode } from 'react';
 import type {
   FieldPath,
   FieldPathValue,
@@ -8,7 +8,8 @@ import type {
   SubmitHandler,
   UseFormReturn,
 } from 'react-hook-form';
-import { FormProvider } from 'react-hook-form';
+import { FormProvider, useFormState } from 'react-hook-form';
+import { FormActionsContext } from './FormActions';
 import { cn } from '../utils/cn';
 import { toValueProps, toCheckedProps, type ValueBindingProps, type CheckedBindingProps } from './bindings';
 import { Field, FieldDescription, FieldError, FieldLabel } from '../components/Field';
@@ -115,6 +116,8 @@ export interface FormProps<TValues extends FieldValues, TTransformed = TValues> 
   form: UseFormReturn<TValues, unknown, TTransformed>;
   onSubmit: SubmitHandler<TTransformed>;
   onInvalid?: SubmitErrorHandler<TValues>;
+  /** After a successful save: keep state (default), rebase raw inputs, or restore defaults. */
+  afterSubmit?: 'keep' | 'rebase' | 'reset';
   /** Adds form-wide disabled/readOnly props to fields by name. Undefined leaves props unchanged. */
   enhanceFieldProps?: EnhanceFieldProps;
   children?: ReactNode;
@@ -128,17 +131,49 @@ export function Form<TValues extends FieldValues, TTransformed = TValues>({
   form,
   onSubmit,
   onInvalid,
+  afterSubmit = 'keep',
   enhanceFieldProps,
   children,
   ...props
 }: FormProps<TValues, TTransformed>) {
+  const { isDirty, isSubmitting } = useFormState({ control: form.control });
+  const formElement = useRef<HTMLFormElement>(null);
+  const inFlight = useRef(false);
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (inFlight.current) return;
+    inFlight.current = true;
+    try {
+      await form.handleSubmit(async (values, event) => {
+        await onSubmit(values, event);
+        if (afterSubmit === 'rebase') form.reset(form.getValues());
+        else if (afterSubmit === 'reset') form.reset();
+      }, onInvalid)(event);
+    } finally {
+      inFlight.current = false;
+    }
+  };
   const provider = form as unknown as FormProviderProps<TValues, unknown, TTransformed>;
   return (
     <FormProvider {...provider}>
       <FieldEnhancerContext.Provider value={enhanceFieldProps}>
-        <form noValidate {...props} onSubmit={form.handleSubmit(onSubmit, onInvalid)}>
-          {children}
-        </form>
+        <FormActionsContext.Provider
+          value={{
+            isDirty,
+            isSubmitting,
+            submit: () => {
+              const element = formElement.current;
+              if (!element) return;
+              if (typeof element.requestSubmit === 'function') element.requestSubmit();
+              else element.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+            },
+            reset: () => form.reset(),
+          }}
+        >
+          <form noValidate {...props} ref={formElement} onSubmit={submit}>
+            {children}
+          </form>
+        </FormActionsContext.Provider>
       </FieldEnhancerContext.Provider>
     </FormProvider>
   );

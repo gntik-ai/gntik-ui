@@ -5,6 +5,7 @@ import { expectNoAxeViolations } from '../test/a11y';
 import FormBindingsHelpers from './examples/FormBindingsHelpers';
 import FormBindings from './examples/FormBindings';
 import FormDialogForm from './examples/FormDialogForm';
+import FormEditSettings from './examples/FormEditSettings';
 import FormInviteMember from './examples/FormInviteMember';
 
 it.each(['dark', 'light', 'high_contrast'])('form examples have no axe violations in %s', async (theme) => {
@@ -97,4 +98,21 @@ it.each(['dark', 'light', 'high_contrast'])('the form dialog example has no axe 
   await expectNoAxeViolations(dialog);
   view.unmount();
   document.documentElement.className = '';
+});
+
+it.each(['dark', 'light', 'high_contrast'])('the edit settings actions have no axe violations in %s', async (theme) => {
+  document.documentElement.className = theme === 'light' ? '' : theme;
+  const user = userEvent.setup();
+  render(<FormEditSettings />);
+  await expectNoAxeViolations();
+  const save = screen.getByRole('button', { name: 'Save' });
+  expect(save).toBeDisabled();
+  await user.type(screen.getByRole('textbox', { name: 'Name' }), ' v2');
+  await user.click(save);
+  expect(save).toHaveAttribute('aria-busy', 'true');
+  await expectNoAxeViolations();
+  await screen.findByText('Settings saved.');
+  await waitFor(() => expect(save).toBeDisabled());
+  expect(save).not.toHaveAttribute('aria-busy');
+  await expectNoAxeViolations();
 });

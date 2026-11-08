@@ -428,6 +428,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -640,6 +645,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -1177,6 +1187,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -1407,6 +1422,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -1616,6 +1636,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -1828,6 +1853,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -2151,6 +2181,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -2362,6 +2397,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -2703,6 +2743,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -2900,6 +2945,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -3172,6 +3222,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -3916,6 +3971,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -4307,6 +4367,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -4529,6 +4594,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -5047,6 +5117,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -5562,6 +5637,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -6023,6 +6103,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -6267,6 +6352,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -6522,6 +6612,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -6766,6 +6861,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -7053,6 +7153,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -7270,6 +7375,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -7510,6 +7620,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -7756,6 +7871,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -7961,6 +8081,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -8185,6 +8310,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -8404,6 +8534,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -9009,6 +9144,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -9451,6 +9591,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -9963,6 +10108,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -10270,6 +10420,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -10611,6 +10766,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -10924,6 +11084,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -11136,6 +11301,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -11346,6 +11516,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -11569,6 +11744,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -11830,6 +12010,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -12127,6 +12312,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -12337,6 +12527,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -12556,6 +12751,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -13067,6 +13267,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -13319,6 +13524,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -13846,6 +14056,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -14260,6 +14475,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -14478,6 +14698,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -14830,6 +15055,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -15047,6 +15277,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -15256,6 +15491,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -15475,6 +15715,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -15669,6 +15914,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -15991,6 +16241,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -16241,6 +16496,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -16597,6 +16857,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -16803,6 +17068,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -17109,6 +17379,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -17330,6 +17605,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -17613,6 +17893,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -18072,6 +18357,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -18571,6 +18861,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -19127,6 +19422,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -19443,6 +19743,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -19702,6 +20007,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -19918,6 +20228,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -20225,6 +20540,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -20675,6 +20995,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -21240,6 +21565,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -21853,6 +22183,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -22156,6 +22491,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -22348,6 +22688,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -22694,6 +23039,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -23118,6 +23468,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -23462,6 +23817,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -23896,6 +24256,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -24105,6 +24470,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -24328,6 +24698,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -24708,6 +25083,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -24918,6 +25298,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -25150,6 +25535,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -25406,6 +25796,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -25623,6 +26018,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -25834,6 +26234,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -26092,6 +26497,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -26357,6 +26767,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -26686,6 +27101,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -26899,6 +27319,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -27160,6 +27585,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -27382,6 +27812,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -27734,6 +28169,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -27925,6 +28365,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -28411,6 +28856,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -28705,6 +29155,11 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/form-dialog-messages.ts"
@@ -28914,6 +29369,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -29175,6 +29635,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
@@ -29457,6 +29922,11 @@
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",

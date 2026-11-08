@@ -1,3 +1,4 @@
+import { formActionsEs } from './form-action-messages';
 import { dateRangeExamplesEs } from './date-range-example-messages';
 import { fileInputEs } from './file-input-messages';
 import { uploadEs } from './upload-messages';
@@ -194,7 +195,7 @@ export const es: Messages = {
   'virtualOptions.description': 'Detalles adicionales del nodo',
   'virtualOptions.note':
     'Solo se montan las filas visibles. La búsqueda y el teclado siguen accediendo a todas las opciones.',
-  'forms.invite.title': 'Invitar a un miembro',
+  ...formActionsEs,
   'forms.bindings.width.xs': 'Muy pequeño',
   'forms.bindings.width.sm': 'Pequeño',
   'forms.bindings.width.md': 'Mediano',
