@@ -239,6 +239,36 @@ describe('DatePicker presets', () => {
     });
   });
 
+  it('hands each preset its own copy of today, so one callback cannot shift the next', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    const mutating: DatePreset[] = [
+      {
+        id: 'in-7',
+        label: 'In 7 days',
+        date: (t) => {
+          t.setDate(t.getDate() + 7);
+          return t;
+        },
+      },
+      { id: 'in-30', label: 'In 30 days', date: (t) => addDays(t, 30) },
+    ];
+    render(
+      <DatePicker
+        aria-label="Expiry"
+        locale="en-US"
+        today={today}
+        max={new Date(2026, 2, 31)}
+        presets={mutating}
+        onValueChange={onValueChange}
+      />,
+    );
+    await open(user);
+    expect(preset('In 30 days')).toBeEnabled();
+    await user.click(preset('In 30 days'));
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 2, 31), { reason: 'preset', presetId: 'in-30' });
+  });
+
   it('the expiry example has no axe violations closed or open and fills the field from a preset', async () => {
     const user = userEvent.setup();
     const { container } = render(<DatePickerExpiryPresets />);

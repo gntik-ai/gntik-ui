@@ -22,14 +22,14 @@ export interface DatePresetState {
   pressed: boolean;
 }
 
-/** Day, disabled and pressed state of a preset; `today` and `value` are local-midnight proxy days. */
+/** Day, disabled and pressed state of a preset; `today` and `value` are local-midnight proxy days; each callback gets its own copy of `today`. */
 export function presetState(
   preset: DatePreset,
   today: Date,
   value: Date | null,
   { min, max, isDateDisabled }: DatePresetBounds,
 ): DatePresetState {
-  const result = preset.date(today);
+  const result = preset.date(new Date(today.getTime()));
   if (!result) return { day: null, disabled: false, pressed: value === null };
   const day = startOfDay(result);
   return {
