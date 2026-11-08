@@ -22,6 +22,8 @@ it('caps both ends only while pending, rejects a disabled click and accepts Ente
   await user.click(day(17));
   expect(onValueChange).toHaveBeenCalledTimes(1);
   expect(onValueChange).toHaveBeenLastCalledWith({ start: date(10), end: null });
+  await user.keyboard('{Enter}');
+  expect(onValueChange).toHaveBeenCalledTimes(1);
   await user.keyboard('{ArrowLeft}{Enter}');
   expect(onValueChange).toHaveBeenLastCalledWith({ start: date(10), end: date(16) });
   expect(day(17)).not.toHaveAttribute('aria-disabled');
@@ -120,6 +122,45 @@ describe('calendar-day limits across Madrid DST', () => {
     await user.click(day(26));
     expect(screen.getByRole('button', { name: 'Wednesday, April 1, 2026' })).not.toHaveAttribute('aria-disabled');
     expect(screen.getByRole('button', { name: 'Thursday, April 2, 2026' })).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('allows a seven-day minimum across the short spring day', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    expect(date(26).getTimezoneOffset()).toBe(-60);
+    expect(new Date(2026, 3, 1).getTimezoneOffset()).toBe(-120);
+    render(
+      <Calendar
+        mode="range"
+        locale="en-US"
+        today={date(26)}
+        minRange={7}
+        numberOfMonths={2}
+        onValueChange={onValueChange}
+      />,
+    );
+    await user.click(day(26));
+    expect(day(31)).toHaveAttribute('aria-disabled', 'true');
+    const end = screen.getByRole('button', { name: 'Wednesday, April 1, 2026' });
+    expect(end).not.toHaveAttribute('aria-disabled');
+    await user.click(end);
+    expect(onValueChange).toHaveBeenLastCalledWith({ start: date(26), end: new Date(2026, 3, 1) });
+  });
+
+  it('allows a seven-day maximum across the long autumn day', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    const start = new Date(2026, 9, 22);
+    const end = new Date(2026, 9, 28);
+    expect(start.getTimezoneOffset()).toBe(-120);
+    expect(end.getTimezoneOffset()).toBe(-60);
+    render(<Calendar mode="range" locale="en-US" today={start} maxRange={7} onValueChange={onValueChange} />);
+    await user.click(screen.getByRole('button', { name: 'Thursday, October 22, 2026' }));
+    expect(screen.getByRole('button', { name: 'Thursday, October 29, 2026' })).toHaveAttribute('aria-disabled', 'true');
+    const endDay = screen.getByRole('button', { name: 'Wednesday, October 28, 2026' });
+    expect(endDay).not.toHaveAttribute('aria-disabled');
+    await user.click(endDay);
+    expect(onValueChange).toHaveBeenLastCalledWith({ start, end });
   });
 });
 
