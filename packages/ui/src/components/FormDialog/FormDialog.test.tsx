@@ -604,13 +604,24 @@ describe('FormDialog', () => {
       screen.getByRole('button', { name: 'Outside', hidden: true }),
       screen.getByRole('button', { name: 'New quota', hidden: true }),
     ];
+    const describeFocus = (el: Element | null, index: number) => {
+      if (!el) return `Tab ${index}: no focused element`;
+      const data = Array.from(el.attributes)
+        .filter((attr) => attr.name.startsWith('data-'))
+        .map((attr) => `${attr.name}="${attr.value}"`)
+        .join(' ');
+      const name = el.getAttribute('aria-label') ?? el.textContent?.trim().slice(0, 60) ?? '';
+      return `Tab ${index}: focus left the dialog on <${el.tagName.toLowerCase()}> role=${el.getAttribute('role') ?? '(none)'} name="${name}" ${data} insideDialogPortal=${dialog.contains(el)} insideBody=${document.body.contains(el)}`;
+    };
     const visited = new Set<Element | null>();
     // Forward: the cycle runs through every control, parks on a guard and wraps back into the dialog.
     for (let i = 0; i < 10; i++) {
       await user.tab();
       const active = document.activeElement;
       visited.add(active);
-      expect(isGuard(active) || active === document.body || dialog.contains(active)).toBe(true);
+      expect(isGuard(active) || active === document.body || dialog.contains(active), describeFocus(active, i)).toBe(
+        true,
+      );
       for (const el of outside()) expect(el).not.toHaveFocus();
     }
     expect(visited.has(screen.getByRole('textbox', { name: 'Limit' }))).toBe(true);
