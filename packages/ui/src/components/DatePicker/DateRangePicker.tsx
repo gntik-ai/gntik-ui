@@ -4,7 +4,14 @@ import { Button } from '../Button';
 import { useRef, useState, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { Calendar, type CalendarRangeProps } from '../Calendar/Calendar';
-import { formatDateRange, startOfDay, toISODate, type DateRange } from '../Calendar/calendar-utils';
+import {
+  formatDateRange,
+  outsideRangeLimits,
+  startOfDay,
+  toISODate,
+  validRangeLimit,
+  type DateRange,
+} from '../Calendar/calendar-utils';
 import { Popover, PopoverContent } from '../Popover';
 import { focusCalendarDay } from './DatePicker';
 import { DateTrigger } from './DateTrigger';
@@ -14,7 +21,16 @@ import { datePickerVariants, type DatePickerVariantProps } from './date-picker.v
 
 type CalendarPassThrough = Pick<
   CalendarRangeProps,
-  'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'numberOfMonths' | 'maxView' | 'captionLayout'
+  | 'locale'
+  | 'weekStartsOn'
+  | 'min'
+  | 'max'
+  | 'isDateDisabled'
+  | 'numberOfMonths'
+  | 'maxView'
+  | 'captionLayout'
+  | 'maxRange'
+  | 'minRange'
 >;
 
 export interface DateRangePickerProps extends CalendarPassThrough, DatePickerVariantProps, ClearableProps {
@@ -25,6 +41,8 @@ export interface DateRangePickerProps extends CalendarPassThrough, DatePickerVar
   defaultValue?: DateRange;
   /** Fires with complete ranges, or an empty range when cleared. */
   onValueChange?: (range: DateRange) => void;
+  /** Fires on every calendar pick, including the partial `{ start, end: null }`. Presets do not fire it. */
+  onCalendarChange?: (range: DateRange) => void;
   /** Quick ranges shown beside the calendar; pass `[]` to hide them. */
   presets?: DateRangePreset[];
   /** "Today" for the presets and the marker. Defaults to the current date. */
@@ -56,6 +74,7 @@ export function DateRangePicker({
   value,
   defaultValue,
   onValueChange,
+  onCalendarChange,
   presets = DEFAULT_DATE_RANGE_PRESETS,
   today: todayProp,
   formatOptions,
@@ -78,6 +97,8 @@ export function DateRangePicker({
   weekStartsOn,
   min,
   max,
+  maxRange,
+  minRange,
   isDateDisabled,
   maxView,
   captionLayout,
@@ -93,11 +114,22 @@ export function DateRangePicker({
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [draft, setDraft] = useState<DateRange>(value ?? inner);
   const [customActive, setCustomActive] = useState(false);
+  const [announceLimit, setAnnounceLimit] = useState(false);
+  const maximum = validRangeLimit(maxRange);
   const [now] = useState(() => startOfDay(new Date()));
   const today = todayProp ? startOfDay(todayProp) : now;
   const calendarRef = useRef<HTMLDivElement | null>(null);
   const range = value ?? inner;
   const open = openProp ?? innerOpen;
+  const [previousOpen, setPreviousOpen] = useState(open);
+  if (previousOpen !== open) {
+    setPreviousOpen(open);
+    setAnnounceLimit(false);
+    if (open) {
+      setDraft(range);
+      setCustomActive(false);
+    }
+  }
   const s = datePickerVariants({ size });
   const active = customActive
     ? presets.find((p) => !p.range)
@@ -105,10 +137,6 @@ export function DateRangePicker({
 
   const setOpen = (next: boolean) => {
     if (next && (readOnly || disabled)) return;
-    if (next) {
-      setDraft(range);
-      setCustomActive(false);
-    }
     setInnerOpen(next);
     onOpenChange?.(next);
   };
@@ -169,20 +197,38 @@ export function DateRangePicker({
         initialFocus={() => focusCalendarDay(calendarRef.current)}
       >
         <FieldVariantProvider variant="outline">
+          {maximum !== undefined && (
+            <span className="sr-only" aria-live="polite" aria-atomic="true">
+              {announceLimit && open ? t('datePicker.rangeLimit', { count: maximum }) : ''}
+            </span>
+          )}
           <div className={s.panel()}>
             {presets.length > 0 && (
               <div role="group" aria-label={t('datePicker.presets')} className={s.presets()}>
-                {presets.map((p) => (
-                  <button
-                    key={p.id}
-                    type="button"
-                    aria-pressed={active?.id === p.id}
-                    className={cn(s.preset())}
-                    onClick={() => pickPreset(p)}
-                  >
-                    {p.label}
-                  </button>
-                ))}
+                {presets.map((p) => {
+                  const presetRange =
+                    maximum !== undefined || validRangeLimit(minRange) !== undefined ? p.range?.(today) : undefined;
+                  const presetDisabled =
+                    !!presetRange?.start &&
+                    !!presetRange.end &&
+                    outsideRangeLimits(presetRange.start, presetRange.end, minRange, maxRange);
+                  return (
+                    <button
+                      key={p.id}
+                      type="button"
+                      disabled={presetDisabled}
+                      aria-pressed={active?.id === p.id}
+                      className={cn(
+                        s.preset(),
+                        presetDisabled &&
+                          'disabled:cursor-disabled disabled:text-muted-foreground disabled:hover:bg-transparent',
+                      )}
+                      onClick={() => pickPreset(p)}
+                    >
+                      {p.label}
+                    </button>
+                  );
+                })}
               </div>
             )}
             <Calendar
@@ -193,6 +239,8 @@ export function DateRangePicker({
               value={draft}
               onValueChange={(r) => {
                 setDraft(r);
+                setAnnounceLimit(!!r.start && !r.end);
+                onCalendarChange?.(r);
                 setCustomActive(true);
                 if (r.start && r.end) apply(r);
               }}
@@ -206,6 +254,8 @@ export function DateRangePicker({
               weekStartsOn={weekStartsOn}
               min={min}
               max={max}
+              maxRange={maxRange}
+              minRange={minRange}
               isDateDisabled={isDateDisabled}
               maxView={maxView}
               captionLayout={captionLayout}

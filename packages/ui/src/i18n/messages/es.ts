@@ -1,3 +1,4 @@
+import { dateRangeExamplesEs } from './date-range-example-messages';
 import { fileInputEs } from './file-input-messages';
 import { uploadEs } from './upload-messages';
 import { fieldSizesEs } from './field-size-messages';
@@ -22,6 +23,7 @@ import { logoCloudEs } from './logo-cloud-messages';
 import { hookExampleEs } from './hook-example-messages';
 import type { Messages } from './en';
 export const es: Messages = {
+  ...dateRangeExamplesEs,
   ...fileInputEs,
   ...uploadEs,
   ...fieldSizesEs,
@@ -382,6 +384,7 @@ export const es: Messages = {
   'periodPicker.placeholder': 'Elige un periodo',
   'periodPicker.choose': 'Elegir periodo',
   'datePicker.placeholder': 'Elige una fecha',
+  'datePicker.rangeLimit': 'El rango puede abarcar hasta {count, plural, one {{count} día} other {{count} días}}.',
   'datePicker.rangePlaceholder': 'Elige un rango de fechas',
   'datePicker.choose': 'Elegir fecha',
   'datePicker.chooseRange': 'Elegir rango de fechas',
