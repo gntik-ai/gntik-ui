@@ -772,6 +772,9 @@ export const en = {
   'datePicker.examples.endOfQuarter': 'End of quarter',
   'datePicker.examples.noExpiry': 'No expiry',
   'datePicker.examples.hint': 'Pick a shortcut or an exact day.',
+  'datePicker.examples.expiresAt': 'Expires at',
+  'datePicker.examples.limitsHint':
+    'Presets keep the time and the popup stays open until Done. In 30 days is disabled: it falls after the latest allowed day.',
   'datePicker.examples.pickedPreset': 'Picked the "{id}" shortcut.',
   'datePicker.utcDateExampleLabel': 'UTC date',
   'datePicker.done': 'Done',

@@ -4,6 +4,7 @@ import { I18nProvider } from '../../i18n/I18nProvider';
 import { addDays } from '../Calendar/calendar-utils';
 import { expectNoAxeViolations } from '../../test/a11y';
 import DatePickerExpiryPresets from './examples/DatePickerExpiryPresets';
+import DatePickerPresetsTimeLimits from './examples/DatePickerPresetsTimeLimits';
 import { DatePicker, type DatePickerChangeDetails } from './DatePicker';
 import { type DatePreset } from './date-presets';
 
@@ -281,5 +282,17 @@ describe('DatePicker presets', () => {
     await expectNoAxeViolations(document.body);
     await user.click(preset('End of quarter'));
     expect(screen.getByRole('combobox')).toHaveValue('Mar 31, 2026');
+  });
+  it('the time-and-limits example keeps the time with the popup open and disables the preset past max', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<DatePickerPresetsTimeLimits />);
+    await expectNoAxeViolations(container);
+    await user.click(screen.getByRole('combobox'));
+    const dialog = await screen.findByRole('dialog');
+    expect(preset('In 30 days')).toBeDisabled();
+    await expectNoAxeViolations(document.body);
+    await user.click(preset('In 7 days'));
+    expect(screen.getByRole('combobox')).toHaveValue('Mar 8, 2026, 14:30');
+    expect(dialog).toBeInTheDocument();
   });
 });

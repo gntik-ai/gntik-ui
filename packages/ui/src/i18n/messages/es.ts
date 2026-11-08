@@ -771,6 +771,9 @@ export const es: Messages = {
   'datePicker.examples.endOfQuarter': 'Fin del trimestre',
   'datePicker.examples.noExpiry': 'Sin caducidad',
   'datePicker.examples.hint': 'Elige un atajo o un día exacto.',
+  'datePicker.examples.expiresAt': 'Caduca a las',
+  'datePicker.examples.limitsHint':
+    'Los atajos conservan la hora y el panel sigue abierto hasta Listo. En 30 días está desactivado: cae después del último día permitido.',
   'datePicker.examples.pickedPreset': 'Atajo «{id}» elegido.',
   'datePicker.utcDateExampleLabel': 'Fecha UTC',
   'datePicker.done': 'Listo',
