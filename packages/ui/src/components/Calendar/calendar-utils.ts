@@ -29,6 +29,21 @@ export const isSameMonth = (a: Date, b: Date) => a.getFullYear() === b.getFullYe
 
 export const compareDay = (a: Date, b: Date) => startOfDay(a).getTime() - startOfDay(b).getTime();
 
+/** Inclusive calendar-day span; UTC date parts avoid daylight-saving length changes. */
+export function calendarDaySpan(a: Date, b: Date): number {
+  const utc = (d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
+  return Math.abs(utc(b) - utc(a)) / 86400000 + 1;
+}
+
+/** Invalid range limits are ignored. */
+export const validRangeLimit = (limit?: number): number | undefined =>
+  limit !== undefined && Number.isInteger(limit) && limit > 0 ? limit : undefined;
+
+export function outsideRangeLimits(a: Date, b: Date, minRange?: number, maxRange?: number): boolean {
+  const span = calendarDaySpan(a, b);
+  return span < (validRangeLimit(minRange) ?? 1) || span > (validRangeLimit(maxRange) ?? Infinity);
+}
+
 /** Months between two dates, ignoring days (Mar → May = 2). */
 export const monthDiff = (a: Date, b: Date) => (b.getFullYear() - a.getFullYear()) * 12 + (b.getMonth() - a.getMonth());
 

@@ -23,6 +23,7 @@ import {
   monthOutsideBounds,
   monthWeeks,
   normalizeRange,
+  outsideRangeLimits,
   startOfDay,
   startOfMonth,
   startOfWeek,
@@ -54,8 +55,8 @@ interface CalendarCommonProps {
   min?: Date;
   /** Latest selectable day. */
   max?: Date;
-  /** Marks extra days as unavailable (weekends, blackout dates…). */
-  isDateDisabled?: (date: Date) => boolean;
+  /** Marks extra days as unavailable. Context contains the start only while a range end is pending; otherwise null. */
+  isDateDisabled?: (date: Date, context: { rangeStart: Date | null }) => boolean;
   /** Visible month (controlled). */
   month?: Date;
   /** Initially visible month. Defaults to the selection, else today. */
@@ -86,6 +87,10 @@ export interface CalendarRangeProps extends CalendarCommonProps {
   defaultValue?: DateRange;
   /** Fires on each click: first with `{ start, end: null }`, then with the complete range. */
   onValueChange?: (range: DateRange) => void;
+  /** Inclusive calendar-day maximum while the end is pending. Non-positive or non-integer values are ignored. If minRange > maxRange, no end is selectable. */
+  maxRange?: number;
+  /** Inclusive calendar-day minimum while the end is pending. Non-positive or non-integer values are ignored. If minRange > maxRange, no end is selectable. */
+  minRange?: number;
 }
 
 export type CalendarProps = CalendarSingleProps | CalendarRangeProps;
@@ -174,8 +179,14 @@ export function Calendar(props: CalendarProps) {
     const diff = monthDiff(visibleMonth, d);
     return diff >= 0 && diff < numberOfMonths;
   };
+  const rangeStart = range.start && !range.end ? range.start : null;
+  const isRangeLimited = (d: Date) =>
+    !!rangeStart && props.mode === 'range' && outsideRangeLimits(rangeStart, d, props.minRange, props.maxRange);
   const isDisabled = (d: Date) =>
-    (!!min && compareDay(d, min) < 0) || (!!max && compareDay(d, max) > 0) || !!isDateDisabled?.(d);
+    (!!min && compareDay(d, min) < 0) ||
+    (!!max && compareDay(d, max) > 0) ||
+    !!isDateDisabled?.(d, { rangeStart }) ||
+    isRangeLimited(d);
 
   // The one day in the tab order: the focused day if visible, else selection, today, or day 1.
   const tabbable =
@@ -272,7 +283,10 @@ export function Calendar(props: CalendarProps) {
     moveFocus(move());
   };
 
-  const previewRange = isRange && range.start && !range.end && preview ? normalizeRange(range.start, preview) : null;
+  const previewRange =
+    isRange && range.start && !range.end && preview && !isRangeLimited(preview)
+      ? normalizeRange(range.start, preview)
+      : null;
   const shownRange = range.start && range.end ? range : previewRange;
   const inRange = (d: Date) =>
     !!shownRange?.start &&

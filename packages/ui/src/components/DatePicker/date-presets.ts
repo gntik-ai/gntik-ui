@@ -1,3 +1,4 @@
+import type { CalendarSingleProps } from '../Calendar/Calendar';
 import { compareDay, isSameDay, startOfDay } from '../Calendar/calendar-utils';
 
 export interface DatePreset {
@@ -10,7 +11,7 @@ export interface DatePreset {
 export interface DatePresetBounds {
   min?: Date;
   max?: Date;
-  isDateDisabled?: (date: Date) => boolean;
+  isDateDisabled?: CalendarSingleProps['isDateDisabled'];
 }
 
 export interface DatePresetState {
@@ -34,7 +35,10 @@ export function presetState(
   const day = startOfDay(result);
   return {
     day,
-    disabled: (!!min && compareDay(day, min) < 0) || (!!max && compareDay(day, max) > 0) || !!isDateDisabled?.(day),
+    disabled:
+      (!!min && compareDay(day, min) < 0) ||
+      (!!max && compareDay(day, max) > 0) ||
+      !!isDateDisabled?.(day, { rangeStart: null }),
     pressed: isSameDay(day, value),
   };
 }

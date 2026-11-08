@@ -1,3 +1,4 @@
+import { dateRangeExamplesEn } from './date-range-example-messages';
 import { fileInputEn } from './file-input-messages';
 import { uploadEn } from './upload-messages';
 import { fieldSizesEn } from './field-size-messages';
@@ -21,6 +22,7 @@ import { navigationEn } from './navigation-messages';
 import { logoCloudEn } from './logo-cloud-messages';
 import { hookExampleEn } from './hook-example-messages';
 export const en = {
+  ...dateRangeExamplesEn,
   ...fileInputEn,
   ...uploadEn,
   ...fieldSizesEn,
@@ -349,6 +351,7 @@ export const en = {
   'periodPicker.placeholder': 'Pick a period',
   'periodPicker.choose': 'Choose period',
   'datePicker.placeholder': 'Pick a date',
+  'datePicker.rangeLimit': 'The range can span up to {count, plural, one {{count} day} other {{count} days}}.',
   'datePicker.rangePlaceholder': 'Pick a date range',
   'datePicker.choose': 'Choose date',
   'datePicker.chooseRange': 'Choose date range',
