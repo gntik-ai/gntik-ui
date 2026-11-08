@@ -439,6 +439,59 @@ it('announces pending submission, shows a spinner and keeps the submit button fo
   expect(screen.getByRole('status')).toBeEmptyDOMElement();
 });
 
+it('guards every submit route during async validation and permits retry after invalid input', async () => {
+  let finishValidation!: () => void;
+  const validation = new Promise<void>((resolve) => {
+    finishValidation = resolve;
+  });
+  const submit = vi.fn();
+  const invalid = vi.fn();
+  const schema = z.object({
+    name: z.string().refine(async (name) => {
+      await validation;
+      return name.length > 0;
+    }, 'Enter a name.'),
+  });
+  function AsyncValidation() {
+    const form = useForm({ defaultValues: { name: '' }, resolver: schemaResolver(schema) });
+    return (
+      <Form form={form} onSubmit={submit} onInvalid={invalid}>
+        <FormField name="name" label="Name">
+          {(props) => <Input {...props} />}
+        </FormField>
+        <FormSubmit />
+        <ActionControls />
+      </Form>
+    );
+  }
+  const user = userEvent.setup();
+  render(<AsyncValidation />);
+  const save = screen.getByRole('button', { name: 'Save' });
+  const input = screen.getByRole('textbox', { name: 'Name' });
+  await user.dblClick(save);
+  expect(save).toHaveAttribute('aria-busy', 'true');
+  expect(screen.getByRole('status')).toHaveTextContent('Submitting…');
+  await user.click(input);
+  await user.keyboard('{Enter}');
+  await user.dblClick(screen.getByRole('button', { name: 'Save via actions' }));
+  expect(submit).not.toHaveBeenCalled();
+  expect(invalid).not.toHaveBeenCalled();
+
+  await act(async () => finishValidation());
+  expect(await screen.findByText('Enter a name.')).toBeVisible();
+  await waitFor(() => expect(input).toHaveFocus());
+  expect(invalid).toHaveBeenCalledTimes(1);
+  expect(submit).not.toHaveBeenCalled();
+  expect(save).toBeEnabled();
+  expect(save).not.toHaveAttribute('aria-busy');
+  expect(screen.getByRole('status')).toBeEmptyDOMElement();
+
+  await user.type(input, 'Billing API');
+  await user.click(save);
+  await waitFor(() => expect(submit).toHaveBeenCalledTimes(1));
+  expect(submit).toHaveBeenCalledWith({ name: 'Billing API' }, expect.anything());
+});
+
 it('disables an opt-in edit submit only while its input matches the defaults', async () => {
   function Edit() {
     const form = useForm({ defaultValues: { name: 'Billing API' } });
