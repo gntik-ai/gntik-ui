@@ -1,12 +1,31 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import CalendarRangeLimits from './examples/CalendarRangeLimits';
+import CalendarViews from './examples/CalendarViews';
 import { Calendar } from './Calendar';
 
 const date = (day: number) => new Date(2026, 2, day);
 const day = (n: number) =>
   screen.getByRole('button', { name: new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(date(n)) });
+
+it('keeps the views and caption controls reachable alongside the range-limit examples in the docs', async () => {
+  const user = userEvent.setup();
+  render(
+    <>
+      <CalendarRangeLimits />
+      <CalendarViews />
+    </>,
+  );
+  const calendar = screen.getAllByRole('group', { name: 'Calendar' })[0]!;
+  const example = calendar.parentElement!;
+  await user.click(within(calendar).getByRole('button', { name: 'March 2026, choose a month' }));
+  expect(within(calendar).getByRole('button', { name: 'March 2026' })).toHaveFocus();
+  await user.click(within(calendar).getByRole('button', { name: '2026, choose a year' }));
+  expect(within(calendar).getByRole('button', { name: '2026' })).toHaveFocus();
+  await user.click(within(example).getByRole('combobox', { name: 'Year' }));
+  expect(await screen.findByRole('listbox', { name: 'Year' })).toBeVisible();
+});
 
 it('caps both ends only while pending, rejects a disabled click and accepts Enter at the inclusive maximum', async () => {
   const user = userEvent.setup();

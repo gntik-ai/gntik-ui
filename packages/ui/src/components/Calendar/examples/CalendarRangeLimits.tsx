@@ -9,11 +9,18 @@ export default function CalendarRangeLimits() {
     <div className="flex flex-wrap gap-6">
       <div className="space-y-2">
         <p className="text-sm text-muted-foreground">{t('calendar.examples.rangeLimits')}</p>
-        <Calendar mode="range" today={today} minRange={3} maxRange={7} />
+        <Calendar
+          aria-label={t('calendar.examples.rangeLimits')}
+          mode="range"
+          today={today}
+          minRange={3}
+          maxRange={7}
+        />
       </div>
       <div className="space-y-2">
         <p className="text-sm text-muted-foreground">{t('calendar.examples.sameMonth')}</p>
         <Calendar
+          aria-label={t('calendar.examples.sameMonth')}
           mode="range"
           today={today}
           numberOfMonths={2}
