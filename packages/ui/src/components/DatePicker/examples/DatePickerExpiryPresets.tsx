@@ -1,11 +1,29 @@
+import {
+  DatePicker,
+  Field,
+  FieldDescription,
+  FieldLabel,
+  useI18n,
+  type DatePickerChangeDetails,
+  type DatePreset,
+} from '@gntik-ai/ui';
 import { useState } from 'react';
-import { useI18n } from '../../../i18n/I18nProvider';
-import { addDays, endOfQuarter, toISODate } from '../../Calendar/calendar-utils';
-import { Field, FieldDescription, FieldLabel } from '../../Field';
-import { DatePicker, type DatePickerChangeDetails } from '../DatePicker';
-import { type DatePreset } from '../date-presets';
 
 const today = new Date(2026, 2, 1);
+
+function addDays(date: Date, days: number): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);
+}
+
+function endOfQuarter(date: Date): Date {
+  return new Date(date.getFullYear(), Math.floor(date.getMonth() / 3) * 3 + 3, 0);
+}
+
+function toISODate(date: Date): string {
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${date.getFullYear()}-${month}-${day}`;
+}
 
 export default function DatePickerExpiryPresets() {
   const { t } = useI18n();
