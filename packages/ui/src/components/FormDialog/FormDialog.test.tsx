@@ -604,13 +604,72 @@ describe('FormDialog', () => {
       screen.getByRole('button', { name: 'Outside', hidden: true }),
       screen.getByRole('button', { name: 'New quota', hidden: true }),
     ];
+    const portalRoot = (el: Element) => {
+      let node = el;
+      while (node.parentElement && node.parentElement !== document.body) node = node.parentElement;
+      return node;
+    };
+    const implicitRole = (el: Element) => {
+      const tag = el.tagName.toLowerCase();
+      if (tag === 'input') {
+        const type = (el.getAttribute('type') ?? 'text').toLowerCase();
+        const byType: Record<string, string> = {
+          button: 'button',
+          submit: 'button',
+          reset: 'button',
+          checkbox: 'checkbox',
+          radio: 'radio',
+          range: 'slider',
+          number: 'spinbutton',
+          search: 'searchbox',
+        };
+        return byType[type] ?? 'textbox';
+      }
+      const byTag: Record<string, string> = {
+        button: 'button',
+        textarea: 'textbox',
+        select: 'combobox',
+        dialog: 'dialog',
+        a: el.hasAttribute('href') ? 'link' : '',
+      };
+      return byTag[tag] || '(none)';
+    };
+    const accessibleName = (el: Element) => {
+      const labelledBy = el
+        .getAttribute('aria-labelledby')
+        ?.split(/\s+/)
+        .map((id) => document.getElementById(id)?.textContent?.trim() ?? '')
+        .filter(Boolean)
+        .join(' ');
+      if (labelledBy) return labelledBy;
+      const ariaLabel = el.getAttribute('aria-label')?.trim();
+      if (ariaLabel) return ariaLabel;
+      const labels = 'labels' in el ? Array.from((el as HTMLInputElement).labels ?? []) : [];
+      const labelText = labels
+        .map((label) => label.textContent?.trim() ?? '')
+        .filter(Boolean)
+        .join(' ');
+      if (labelText) return labelText;
+      return (el.textContent?.trim() || el.getAttribute('title') || '').slice(0, 60);
+    };
+    const describeFocus = (el: Element | null, index: number) => {
+      if (!el) return `Tab ${index}: no focused element`;
+      const data = Array.from(el.attributes)
+        .filter((attr) => attr.name.startsWith('data-'))
+        .map((attr) => `${attr.name}="${attr.value}"`)
+        .join(' ');
+      const role = el.getAttribute('role') ?? implicitRole(el);
+      return `Tab ${index}: focus left the dialog on <${el.tagName.toLowerCase()}> role=${role} name="${accessibleName(el)}" ${data} insideDialogPortal=${portalRoot(dialog).contains(el)} insideDialog=${dialog.contains(el)} insideBody=${document.body.contains(el)}`;
+    };
     const visited = new Set<Element | null>();
     // Forward: the cycle runs through every control, parks on a guard and wraps back into the dialog.
     for (let i = 0; i < 10; i++) {
       await user.tab();
       const active = document.activeElement;
       visited.add(active);
-      expect(isGuard(active) || active === document.body || dialog.contains(active)).toBe(true);
+      expect(isGuard(active) || active === document.body || dialog.contains(active), describeFocus(active, i)).toBe(
+        true,
+      );
       for (const el of outside()) expect(el).not.toHaveFocus();
     }
     expect(visited.has(screen.getByRole('textbox', { name: 'Limit' }))).toBe(true);

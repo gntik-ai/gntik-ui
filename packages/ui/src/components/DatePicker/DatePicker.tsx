@@ -2,7 +2,7 @@ import { FieldVariantProvider } from '../../field-variant/FieldVariantProvider';
 import { type ClearableProps } from '../../utils/clear-control';
 import { useId, useRef, useState, type Ref } from 'react';
 import { Calendar, type CalendarSingleProps } from '../Calendar/Calendar';
-import { formatDate, toISODate } from '../Calendar/calendar-utils';
+import { formatDate, startOfDay, toISODate } from '../Calendar/calendar-utils';
 import { Button } from '../Button';
 import { Popover, PopoverContent } from '../Popover';
 import { TimePicker } from '../TimePicker/TimePicker';
@@ -11,11 +11,16 @@ import { DateTrigger } from './DateTrigger';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { formatTimeZoneLabel, fromZonedParts, isValidTimeZone, zonedParts } from '../../i18n/time-zone';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
+import { presetState, type DatePreset } from './date-presets';
+import { cn } from '../../utils/cn';
 
 type CalendarPassThrough = Pick<
   CalendarSingleProps,
   'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'today' | 'maxView' | 'captionLayout'
 >;
+
+/** Second argument of `onValueChange`: what produced the value. */
+export type DatePickerChangeDetails = { reason: 'calendar' | 'preset' | 'time'; presetId?: string };
 
 export interface DatePickerProps extends CalendarPassThrough, DatePickerVariantProps, ClearableProps {
   readOnly?: boolean;
@@ -23,7 +28,12 @@ export interface DatePickerProps extends CalendarPassThrough, DatePickerVariantP
   ref?: Ref<HTMLInputElement>;
   value?: Date | null;
   defaultValue?: Date | null;
-  onValueChange?: (date: Date | null) => void;
+  onValueChange?: (date: Date | null, details?: DatePickerChangeDetails) => void;
+  /**
+   * App-defined quick dates in the popup. A preset's `date` receives today (00:00 of the effective day) and
+   * returns the day to pick, or `null` to clear. Presets outside min/max/isDateDisabled are disabled.
+   */
+  presets?: DatePreset[];
   /** Intl options for the field text. */
   formatOptions?: Intl.DateTimeFormatOptions;
   /** Display and edit in this IANA zone. Defaults to the provider zone, then the browser zone. */
@@ -70,6 +80,7 @@ export function DatePicker({
   value,
   defaultValue,
   onValueChange,
+  presets = [],
   formatOptions,
   timeZone: timeZoneProp,
   hideTimeZone = false,
@@ -111,6 +122,7 @@ export function DatePicker({
   const placeholder = placeholderProp ?? t(withTime ? 'datePicker.dateTimePlaceholder' : 'datePicker.placeholder');
   const [inner, setInner] = useState<Date | null>(defaultValue ?? null);
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
+  const [now] = useState(() => new Date());
   const calendarRef = useRef<HTMLDivElement | null>(null);
   const timeLabelId = useId();
   const date = value !== undefined ? value : inner;
@@ -127,9 +139,10 @@ export function DatePicker({
     onOpenChange?.(next);
   };
 
-  const change = (d: Date | null) => {
+  const change = (d: Date | null, details?: DatePickerChangeDetails) => {
     setInner(d);
-    onValueChange?.(d);
+    if (details) onValueChange?.(d, details);
+    else onValueChange?.(d);
   };
   const clear = () => {
     change(null);
@@ -201,6 +214,81 @@ export function DatePicker({
       hidden += `T${formatTimeOfDay(time, withSeconds)}${offset < 0 ? '-' : '+'}${pad(Math.floor(Math.abs(offset) / 60))}:${pad(Math.abs(offset) % 60)}`;
     }
   }
+  // Applies a calendar (proxy) day: keeps the time with `withTime` and leaves the popup open there.
+  const pickDay = (d: Date, details: DatePickerChangeDetails) => {
+    if (withTime) {
+      if (zone === 'system') {
+        change(withTimeOfDay(d, date ? timeOfDay(date) : { hours: 0, minutes: 0, seconds: 0 }), details);
+      } else {
+        change(
+          fromZonedParts(
+            {
+              year: d.getFullYear(),
+              month: d.getMonth() + 1,
+              day: d.getDate(),
+              hour: time?.hours ?? 0,
+              minute: time?.minutes ?? 0,
+              second: time?.seconds ?? 0,
+            },
+            zone,
+            'compatible',
+          ),
+          details,
+        );
+      }
+      return;
+    }
+    change(
+      zone === 'system'
+        ? d
+        : fromZonedParts(
+            {
+              year: d.getFullYear(),
+              month: d.getMonth() + 1,
+              day: d.getDate(),
+              hour: 0,
+              minute: 0,
+            },
+            zone,
+            'compatible',
+          ),
+      details,
+    );
+    setOpen(false);
+  };
+  const pickPreset = (preset: DatePreset, day: Date | null) => {
+    const details: DatePickerChangeDetails = { reason: 'preset', presetId: preset.id };
+    if (day) pickDay(day, details);
+    else {
+      change(null, details);
+      if (!withTime) setOpen(false);
+    }
+  };
+  // The presets' "today" is fixed per mount so pressed and disabled states don't flip mid-session.
+  const presetToday = zone === 'system' ? startOfDay(today ?? now) : proxyDay(today ?? now);
+  const presetValue = zone === 'system' || !date ? date : proxyDay(date);
+  const presetBounds = {
+    min: zone === 'system' || !min ? min : proxyDay(min),
+    max: zone === 'system' || !max ? max : proxyDay(max),
+    isDateDisabled,
+  };
+  const calendar = (
+    <Calendar
+      key={String(open)}
+      ref={calendarRef}
+      aria-label={t('datePicker.choose')}
+      value={presetValue}
+      onValueChange={(d) => pickDay(d, { reason: 'calendar' })}
+      locale={locale}
+      weekStartsOn={weekStartsOn}
+      min={presetBounds.min}
+      max={presetBounds.max}
+      isDateDisabled={isDateDisabled}
+      maxView={maxView}
+      captionLayout={captionLayout}
+      today={zone === 'system' ? today : proxyDay(today ?? new Date())}
+    />
+  );
   const s = datePickerVariants({ size });
 
   return (
@@ -231,59 +319,30 @@ export function DatePicker({
         initialFocus={() => focusCalendarDay(calendarRef.current)}
       >
         <FieldVariantProvider variant="outline">
-          <Calendar
-            key={String(open)}
-            ref={calendarRef}
-            aria-label={t('datePicker.choose')}
-            value={zone === 'system' || !date ? date : proxyDay(date)}
-            onValueChange={(d) => {
-              if (withTime) {
-                if (zone === 'system') {
-                  change(withTimeOfDay(d, date ? timeOfDay(date) : { hours: 0, minutes: 0, seconds: 0 }));
-                } else {
-                  change(
-                    fromZonedParts(
-                      {
-                        year: d.getFullYear(),
-                        month: d.getMonth() + 1,
-                        day: d.getDate(),
-                        hour: time?.hours ?? 0,
-                        minute: time?.minutes ?? 0,
-                        second: time?.seconds ?? 0,
-                      },
-                      zone,
-                      'compatible',
-                    ),
+          {presets.length > 0 ? (
+            <div className={s.panel()}>
+              <div role="group" aria-label={t('datePicker.quickDates')} className={s.presets()}>
+                {presets.map((preset) => {
+                  const state = presetState(preset, presetToday, presetValue, presetBounds);
+                  return (
+                    <button
+                      key={preset.id}
+                      type="button"
+                      disabled={state.disabled}
+                      aria-pressed={state.pressed}
+                      className={cn(s.preset())}
+                      onClick={() => pickPreset(preset, state.day)}
+                    >
+                      {preset.label}
+                    </button>
                   );
-                }
-                return;
-              }
-              change(
-                zone === 'system'
-                  ? d
-                  : fromZonedParts(
-                      {
-                        year: d.getFullYear(),
-                        month: d.getMonth() + 1,
-                        day: d.getDate(),
-                        hour: 0,
-                        minute: 0,
-                      },
-                      zone,
-                      'compatible',
-                    ),
-              );
-              setOpen(false);
-            }}
-            locale={locale}
-            weekStartsOn={weekStartsOn}
-            min={zone === 'system' || !min ? min : proxyDay(min)}
-            max={zone === 'system' || !max ? max : proxyDay(max)}
-            isDateDisabled={isDateDisabled}
-            maxView={maxView}
-            captionLayout={captionLayout}
-            today={zone === 'system' ? today : proxyDay(today ?? new Date())}
-          />
+                })}
+              </div>
+              {calendar}
+            </div>
+          ) : (
+            calendar
+          )}
           {!withTime && clearAction && <div className={s.timeRow()}>{clearAction}</div>}
           {withTime && (
             <div className={s.timeRow()}>
@@ -310,6 +369,7 @@ export function DatePicker({
                             zone,
                             'compatible',
                           ),
+                      { reason: 'time' },
                     );
                   }
                 }}
