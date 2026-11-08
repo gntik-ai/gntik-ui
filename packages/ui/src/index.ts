@@ -121,6 +121,7 @@ export * from './components/RadioGroup';
 export * from './components/Resizable';
 export * from './components/ScheduleInput';
 export * from './components/ScrollArea';
+export * from './components/SearchField';
 export * from './components/SecretField';
 export * from './components/Section';
 export * from './components/Select';

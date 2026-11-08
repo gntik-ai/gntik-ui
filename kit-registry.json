@@ -13946,6 +13946,164 @@
       "docs": "packages/ui/src/components/ScrollArea/ScrollArea.doc.ts"
     },
     {
+      "id": "search-field",
+      "kind": "component",
+      "name": "SearchField",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "stable",
+      "description": "Search input: a thin preset of Input with type=\"search\", a decorative leading search icon, a clear button and Escape-to-clear (Input `clearable` and `clearOnEscape`, both on by default). The name comes from `aria-label`, `aria-labelledby` or a Field/FormField label, and is `Search` otherwise; the placeholder defaults to the catalog `Search…`. `onValueChange(value)` runs on every keystroke. `onSearch(value, source)` reports a committed search: `enter`, `clear` (button or Escape, with an empty value) or, when `debounceMs` is set, `type` once typing has paused. A pending debounce is cancelled by Enter, a clear and unmount, and controlled value changes from the parent never call `onSearch`. `onClear` runs after a clear. Enter never blocks an enclosing form submit and is ignored during IME composition or when a consumer `onKeyDown` prevented it. `pending` replaces the search icon with a decorative Spinner and sets `aria-busy`; typing stays enabled. `shortcut` takes a single combination (`/`, `mod+k`; sequences are not supported because `aria-keyshortcuts` cannot express them): it focuses the field and selects its text, sets `aria-keyshortcuts` and shows an `aria-hidden` key hint while the field is empty and unfocused (`mod` resolves to the platform key). Character shortcuts such as `/` ignore keystrokes inside other inputs and, like every global character shortcut, inside an open modal, so a Dialog that holds a SearchField registers its own scoped `useHotkeys` binding; `setCharacterHotkeysEnabled(false)` disables them but does not hide the hint. Combinations with a modifier such as `mod+k` also fire while typing elsewhere and can collide with an app command palette binding. A disabled field does not respond to the shortcut. The native WebKit cancel button is hidden so every browser shows the kit clear button only. Other Input props (sizes `auto`, `sm`, `md`, `variant`, `aria-describedby`, `autoFocus`, `onKeyDown`) pass through. Inside a Field the label names the input; outside one, a native `<label>` loses to the default `aria-label`, so pass `aria-label` yourself.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/SearchField/SearchField.tsx",
+          "target": "components/ui/search-field/SearchField.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/SearchField/index.ts",
+          "target": "components/ui/search-field/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/SearchField/search-field.variants.ts",
+          "target": "components/ui/search-field/search-field.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
+          "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
+          "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
+          "target": "components/i18n/messages/tool-call-en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
+          "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "target": "components/i18n/time-zone.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "input",
+        "spinner",
+        "ui-hooks",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/SearchField/SearchField.doc.ts"
+    },
+    {
       "id": "searchable-select",
       "kind": "component",
       "name": "SearchableSelect",
@@ -17637,7 +17795,7 @@
       ],
       "registryDependencies": [
         "button",
-        "input",
+        "search-field",
         "ui-utils",
         "virtual-list"
       ],
@@ -18198,6 +18356,10 @@
         {
           "path": "packages/ui/src/utils/highlight.tsx",
           "target": "components/utils/highlight.tsx"
+        },
+        {
+          "path": "packages/ui/src/utils/in-field-context.ts",
+          "target": "components/utils/in-field-context.ts"
         },
         {
           "path": "packages/ui/src/utils/input-size-context.ts",
@@ -21991,7 +22153,6 @@
       "dependencies": [
         "@gntik-ai/blocks",
         "@gntik-ai/charts",
-        "@gntik-ai/icons",
         "@gntik-ai/ui"
       ],
       "registryDependencies": [],

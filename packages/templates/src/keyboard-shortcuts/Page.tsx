@@ -38,8 +38,6 @@ export default function KeyboardShortcutsPage(props: Partial<KeyboardShortcutsPr
     currentHref = '/help/shortcuts',
     shell,
   } = props;
-  const sheet = useRef<HTMLDivElement>(null);
-  useHotkeys({ '/': () => sheet.current?.querySelector('input')?.focus() });
   return (
     <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref} {...shell}>
       <Page
@@ -55,9 +53,7 @@ export default function KeyboardShortcutsPage(props: Partial<KeyboardShortcutsPr
           />
         }
       >
-        <div ref={sheet}>
-          <ShortcutSheet groups={groups} />
-        </div>
+        <ShortcutSheet groups={groups} />
         <KeyboardShortcutsDialog groups={groups} title={title} trigger={null} />
       </Page>
     </ConsoleShell>

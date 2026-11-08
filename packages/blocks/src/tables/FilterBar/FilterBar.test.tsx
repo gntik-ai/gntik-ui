@@ -40,4 +40,16 @@ describe('FilterBar', () => {
     expect(screen.getByRole('button', { name: 'Remove filter Status: Degraded' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Remove filter Status: Running' })).toBeNull();
   });
+
+  it('clears the search with its button and reports the empty query', async () => {
+    const user = userEvent.setup();
+    const onQueryChange = vi.fn();
+    render(<FilterBar onQueryChange={onQueryChange} />);
+    const search = screen.getByRole('searchbox', { name: 'Search' });
+    await user.type(search, 'api');
+    await user.click(screen.getByRole('button', { name: 'Clear Search' }));
+    expect(search).toHaveValue('');
+    expect(search).toHaveFocus();
+    expect(onQueryChange).toHaveBeenLastCalledWith('');
+  });
 });

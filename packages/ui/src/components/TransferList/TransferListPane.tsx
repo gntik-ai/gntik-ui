@@ -1,10 +1,10 @@
 import { useI18n } from '../../i18n/I18nProvider';
 import { matchText } from '../../utils/match-text';
-import { Check, Search } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { useEffect, useEffectEvent, useLayoutEffect, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
 import { useMeasuredRows } from '../VirtualList/use-measured-rows';
-import { Input } from '../Input';
+import { SearchField } from '../SearchField';
 import { transferListVariants } from './transfer-list.variants';
 
 export interface TransferListItem {
@@ -168,10 +168,8 @@ export function TransferListPane({
       </div>
       {searchable && (
         <div className={s.search()}>
-          <Input
+          <SearchField
             size="sm"
-            type="search"
-            leadingIcon={Search}
             aria-label={searchLabel}
             placeholder={searchPlaceholder}
             value={query}
