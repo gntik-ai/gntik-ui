@@ -47,12 +47,12 @@ describe('DatePicker zoned wall clock', () => {
     );
     await user.click(screen.getByRole('combobox'));
     await user.click(await screen.findByRole('button', { name: 'Tuesday, January 20, 2026' }));
-    expect(onValueChange).toHaveBeenLastCalledWith(new Date('2026-01-20T02:00:00Z'));
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date('2026-01-20T02:00:00Z'), { reason: 'calendar' });
     await user.click(screen.getByRole('spinbutton', { name: 'Hours' }));
     await user.keyboard('09');
     await user.click(screen.getByRole('spinbutton', { name: 'Minutes' }));
     await user.keyboard('30');
-    expect(onValueChange).toHaveBeenLastCalledWith(new Date('2026-01-20T09:30:00Z'));
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date('2026-01-20T09:30:00Z'), { reason: 'time' });
     expect(container.querySelector('input[name="runAt"]')).toHaveValue('2026-01-20T09:30+00:00');
   });
 
@@ -76,7 +76,7 @@ describe('DatePicker zoned wall clock', () => {
     expect(selected.closest('[role=gridcell], td')).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('button', { name: 'Wednesday, March 4, 2026' })).toHaveAttribute('aria-disabled', 'true');
     await user.click(screen.getByRole('button', { name: 'Tuesday, March 3, 2026' }));
-    expect(onValueChange).toHaveBeenLastCalledWith(new Date('2026-03-03T00:00:00Z'));
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date('2026-03-03T00:00:00Z'), { reason: 'calendar' });
     expect(container.querySelector('input[name="day"]')).toHaveValue('2026-03-03');
   });
 
@@ -100,7 +100,7 @@ describe('DatePicker zoned wall clock', () => {
     await user.click(screen.getByRole('combobox'));
     await user.click(await screen.findByRole('spinbutton', { name: 'Hours' }));
     await user.keyboard('02');
-    expect(onValueChange).toHaveBeenLastCalledWith(new Date(expected));
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date(expected), { reason: 'time' });
   });
 
   it('marks today in Tokyo rather than the browser calendar day', async () => {
@@ -173,7 +173,7 @@ describe('DatePicker zoned wall clock', () => {
     await user.click(screen.getByRole('combobox'));
     await user.click(await screen.findByRole('spinbutton', { name: 'Hours' }));
     await user.keyboard('09');
-    expect(onValueChange).toHaveBeenLastCalledWith(new Date('2026-01-15T08:00:00Z'));
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date('2026-01-15T08:00:00Z'), { reason: 'time' });
     expect(container.querySelector('input[name="runAt"]')).toHaveValue('2026-01-15T09:00');
   });
 

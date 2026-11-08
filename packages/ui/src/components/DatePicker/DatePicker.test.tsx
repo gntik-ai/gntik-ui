@@ -47,7 +47,7 @@ describe('DatePicker', () => {
     const dialog = await screen.findByRole('dialog');
     await waitFor(() => expect(within(dialog).getByRole('button', { name: 'Friday, March 20, 2026' })).toHaveFocus());
     await user.keyboard('{ArrowRight}{Enter}');
-    expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 2, 21));
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 2, 21), { reason: 'calendar' });
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
     expect(field).toHaveValue('Mar 21, 2026');
     await waitFor(() => expect(field).toHaveFocus());
@@ -134,13 +134,13 @@ describe('DatePicker', () => {
     const dialog = await screen.findByRole('dialog');
     await waitFor(() => expect(within(dialog).getByRole('button', { name: 'Friday, March 20, 2026' })).toHaveFocus());
     await user.keyboard('{ArrowRight}{Enter}');
-    expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 2, 21, 14, 30));
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 2, 21, 14, 30), { reason: 'calendar' });
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     await user.tab();
     const hours = within(dialog).getByRole('spinbutton', { name: 'Hours' });
     expect(hours).toHaveFocus();
     await user.keyboard('{ArrowUp}');
-    expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 2, 21, 15, 30));
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 2, 21, 15, 30), { reason: 'time' });
     await user.click(within(dialog).getByRole('button', { name: 'Done' }));
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
     expect(field).toHaveValue('Mar 21, 2026, 15:30');

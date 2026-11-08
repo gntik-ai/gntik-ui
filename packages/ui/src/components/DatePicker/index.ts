@@ -1,4 +1,5 @@
-export { DatePicker, type DatePickerProps } from './DatePicker';
+export { DatePicker, type DatePickerProps, type DatePickerChangeDetails } from './DatePicker';
+export { type DatePreset } from './date-presets';
 export {
   DateRangePicker,
   DateRangeInput,
