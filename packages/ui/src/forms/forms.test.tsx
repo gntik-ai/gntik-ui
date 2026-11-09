@@ -691,6 +691,10 @@ it('falls back to a plain submit button outside Form and warns once only in deve
     view.unmount();
     warn.mockClear();
     vi.stubEnv('NODE_ENV', 'production');
+    const production = render(<FormSubmit />);
+    expect(warn).not.toHaveBeenCalled();
+    production.unmount();
+    vi.stubEnv('NODE_ENV', 'test');
     render(<FormSubmit />);
     expect(warn).not.toHaveBeenCalled();
   } finally {
@@ -735,6 +739,10 @@ it.each(['rebase', 'reset'] as const)(
     }
   },
 );
+
+it('requires Form for useFormActions', () => {
+  expect(() => render(<ActionControls />)).toThrow('useFormActions must be used inside a Form.');
+});
 
 it('localizes the default actions and pending announcement in Spanish', async () => {
   let finish!: () => void;

@@ -31,7 +31,7 @@ export function FormSubmit({ children, loading, disabled, disableWhenClean = fal
   const { t } = useI18n();
   const warned = useRef(false);
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'production' && !actions && !warned.current) {
+    if (process.env.NODE_ENV === 'development' && !actions && !warned.current) {
       warned.current = true;
       console.warn('FormSubmit: use inside Form to bind pending and dirty state. Rendering a plain submit Button.');
     }
