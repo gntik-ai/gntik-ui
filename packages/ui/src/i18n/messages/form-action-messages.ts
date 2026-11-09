@@ -1,0 +1,31 @@
+export const formActionsEn = {
+  'forms.edit.title': 'Edit settings',
+  'forms.edit.defaultName': 'Billing API',
+  'forms.edit.afterSubmit': 'After saving',
+  'forms.edit.keep': 'Keep edits',
+  'forms.edit.rebase': 'Rebase defaults',
+  'forms.edit.reset': 'Restore defaults',
+  'forms.edit.saveAction': 'Save from toolbar',
+  'forms.edit.discardAction': 'Discard from toolbar',
+  'forms.edit.requiredName': 'Enter a name.',
+  'forms.edit.saved': 'Settings saved.',
+  'forms.invite.submit': 'Send invitation',
+  'forms.invite.title': 'Invite a member',
+  'form.submitting': 'Submitting…',
+} as const;
+
+export const formActionsEs = {
+  'forms.edit.title': 'Editar ajustes',
+  'forms.edit.defaultName': 'API de facturación',
+  'forms.edit.afterSubmit': 'Después de guardar',
+  'forms.edit.keep': 'Conservar cambios',
+  'forms.edit.rebase': 'Actualizar valores iniciales',
+  'forms.edit.reset': 'Restaurar valores iniciales',
+  'forms.edit.saveAction': 'Guardar desde la barra',
+  'forms.edit.discardAction': 'Descartar desde la barra',
+  'forms.edit.requiredName': 'Introduce un nombre.',
+  'forms.edit.saved': 'Ajustes guardados.',
+  'forms.invite.submit': 'Enviar invitación',
+  'forms.invite.title': 'Invitar a un miembro',
+  'form.submitting': 'Enviando…',
+} as const;

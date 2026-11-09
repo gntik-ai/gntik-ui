@@ -1,3 +1,4 @@
+import { formActionsEn } from './form-action-messages';
 import { dateRangeExamplesEn } from './date-range-example-messages';
 import { fileInputEn } from './file-input-messages';
 import { uploadEn } from './upload-messages';
@@ -185,7 +186,7 @@ export const en = {
   'virtualOptions.node': 'node-{index}',
   'virtualOptions.description': 'Additional node details',
   'virtualOptions.note': 'Only visible rows are mounted. Search and keyboard navigation still reach every option.',
-  'forms.invite.title': 'Invite a member',
+  ...formActionsEn,
   'forms.bindings.width.xs': 'Extra small',
   'forms.bindings.width.sm': 'Small',
   'forms.bindings.width.md': 'Medium',

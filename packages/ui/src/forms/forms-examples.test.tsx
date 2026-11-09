@@ -5,6 +5,7 @@ import { expectNoAxeViolations } from '../test/a11y';
 import FormBindingsHelpers from './examples/FormBindingsHelpers';
 import FormBindings from './examples/FormBindings';
 import FormDialogForm from './examples/FormDialogForm';
+import FormEditSettings from './examples/FormEditSettings';
 import FormInviteMember from './examples/FormInviteMember';
 
 it.each(['dark', 'light', 'high_contrast'])('form examples have no axe violations in %s', async (theme) => {
@@ -97,4 +98,45 @@ it.each(['dark', 'light', 'high_contrast'])('the form dialog example has no axe 
   await expectNoAxeViolations(dialog);
   view.unmount();
   document.documentElement.className = '';
+});
+
+it('saves and discards settings through the toolbar actions', async () => {
+  const user = userEvent.setup();
+  render(<FormEditSettings />);
+  const input = screen.getByRole('textbox', { name: 'Name' });
+  const save = screen.getByRole('button', { name: 'Save from toolbar' });
+  const discard = screen.getByRole('button', { name: 'Discard from toolbar' });
+  expect(save).toBeDisabled();
+  expect(discard).toBeDisabled();
+  await user.type(input, ' v2');
+  await user.click(discard);
+  expect(input).toHaveValue('Billing API');
+  expect(save).toBeDisabled();
+  await user.type(input, ' v2');
+  await user.dblClick(save);
+  expect(save).toHaveAttribute('aria-busy', 'true');
+  expect(discard).toBeDisabled();
+  await screen.findByText('Settings saved.');
+  await waitFor(() => expect(save).toBeDisabled());
+  await user.type(input, ' edit');
+  await user.click(discard);
+  expect(input).toHaveValue('Billing API v2');
+  expect(discard).toBeDisabled();
+});
+
+it.each(['dark', 'light', 'high_contrast'])('the edit settings actions have no axe violations in %s', async (theme) => {
+  document.documentElement.className = theme === 'light' ? '' : theme;
+  const user = userEvent.setup();
+  render(<FormEditSettings />);
+  await expectNoAxeViolations();
+  const save = screen.getByRole('button', { name: 'Save' });
+  expect(save).toBeDisabled();
+  await user.type(screen.getByRole('textbox', { name: 'Name' }), ' v2');
+  await user.click(save);
+  expect(save).toHaveAttribute('aria-busy', 'true');
+  await expectNoAxeViolations();
+  await screen.findByText('Settings saved.');
+  await waitFor(() => expect(save).toBeDisabled());
+  expect(save).not.toHaveAttribute('aria-busy');
+  await expectNoAxeViolations();
 });

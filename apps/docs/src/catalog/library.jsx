@@ -75,7 +75,7 @@ const forFormsProduct = (code) =>
       .replace(/from '\.\.\/(FieldArray|FormField|useFieldProps|schemaResolver)'/g, "from '@gntik-ai/ui/forms'"),
   );
 
-// Form and its bindings share FormField.doc.ts; FieldArray owns its prefixed examples.
+// Form bindings share FormField.doc.ts; actions and FieldArray own their examples.
 const docNameOf = (path) =>
   path
     .split('/')
@@ -83,6 +83,7 @@ const docNameOf = (path) =>
     .replace(/\.doc\.ts$/, '');
 const exampleOwnerOf = (path, folders) => {
   const base = path.split('/').pop();
+  if (base === 'FormEditSettings.tsx' && folders.includes('FormActions')) return 'FormActions';
   if (base.startsWith('Form') && folders.includes('FormField')) return 'FormField';
   const named = folders.filter((f) => base.startsWith(f)).sort((a, b) => b.length - a.length);
   return named[0] ?? [...folders].sort()[0];
@@ -135,6 +136,7 @@ const COMPONENTS = sortEntries([
 ]);
 
 const entryImports = {
+  FormActions: 'FormSubmit, FormReset, useFormActions',
   ChoiceCard: 'ClickableCard, SelectableCardGroup, SelectableCard',
   Resizable: 'ResizablePanelGroup, ResizablePanel, ResizeHandle',
   Toast: 'ToastProvider, Toaster, useToast',
