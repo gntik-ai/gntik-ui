@@ -4092,6 +4092,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4253,6 +4257,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -4499,6 +4507,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4665,6 +4677,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4825,6 +4841,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -5020,6 +5040,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -5181,6 +5205,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -5406,6 +5434,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -5596,6 +5628,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -6048,6 +6084,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6271,6 +6311,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6443,6 +6487,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -6706,6 +6754,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6897,6 +6949,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7075,6 +7131,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -7270,6 +7330,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7441,6 +7505,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7609,6 +7677,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -7798,6 +7870,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7972,6 +8048,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -8151,6 +8231,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -8314,6 +8398,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -8487,6 +8575,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -8656,6 +8748,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -8898,6 +8994,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9062,6 +9162,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -9265,6 +9369,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9426,6 +9534,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -9634,6 +9746,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9804,6 +9920,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9965,6 +10085,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -10138,6 +10262,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -10301,6 +10429,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -10480,6 +10612,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -10641,6 +10777,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -10808,6 +10948,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -11056,6 +11200,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11223,6 +11371,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -11514,6 +11666,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11721,6 +11877,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11893,6 +12053,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -12102,6 +12266,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12275,6 +12443,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12436,6 +12608,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -12602,6 +12778,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -12771,6 +12951,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12936,6 +13120,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -13123,6 +13311,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -13289,6 +13481,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -13451,6 +13647,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -13622,6 +13822,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -13824,6 +14028,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -14100,6 +14308,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -14270,6 +14482,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -14471,6 +14687,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -14641,6 +14861,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -14806,6 +15030,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -15011,6 +15239,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -15266,6 +15498,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -15450,6 +15686,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -15708,6 +15948,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -15937,6 +16181,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -16098,6 +16346,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -16268,6 +16520,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -16544,6 +16800,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -16712,6 +16972,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -16893,6 +17157,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -17058,6 +17326,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -17226,6 +17498,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -17387,6 +17663,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -17583,6 +17863,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -17756,6 +18040,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -17997,6 +18285,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18157,6 +18449,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -18327,6 +18623,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -18505,6 +18805,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -18740,6 +19044,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18900,6 +19208,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -19189,6 +19501,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -19364,6 +19680,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -19524,6 +19844,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -19696,6 +20020,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -19849,6 +20177,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -20015,6 +20347,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -20178,6 +20514,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -20349,6 +20689,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -20515,6 +20859,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -20675,6 +21023,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -20841,6 +21193,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -21004,6 +21360,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -21177,6 +21537,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -21340,6 +21704,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -21508,6 +21876,10 @@
           "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -21670,6 +22042,10 @@
         {
           "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
           "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-server-error-messages.ts",
+          "target": "components/i18n/messages/form-server-error-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",

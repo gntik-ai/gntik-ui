@@ -6,6 +6,8 @@ export {
   type FormFieldStateProps,
 } from './useFieldProps';
 export { FormField, Form, type FormFieldProps, type FormProps } from './FormField';
+export { FormRootError, type FormRootErrorProps } from './FormRootError';
+export type { FormServerErrors } from './serverErrors';
 export { schemaResolver, issuesToErrors, type ParseableSchema, type SchemaIssue } from './schemaResolver';
 export { useFormDialog, type UseFormDialogResult } from './useFormDialog';
 export { FieldArray, type FieldArrayProps, type FieldArrayRow } from './FieldArray';
