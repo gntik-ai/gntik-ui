@@ -1,5 +1,4 @@
 import { formActionsEn } from './form-action-messages';
-import { formServerErrorsEn } from './form-server-error-messages';
 import { dateRangeExamplesEn } from './date-range-example-messages';
 import { fileInputEn } from './file-input-messages';
 import { uploadEn } from './upload-messages';
@@ -188,7 +187,6 @@ export const en = {
   'virtualOptions.description': 'Additional node details',
   'virtualOptions.note': 'Only visible rows are mounted. Search and keyboard navigation still reach every option.',
   ...formActionsEn,
-  ...formServerErrorsEn,
   'forms.bindings.width.xs': 'Extra small',
   'forms.bindings.width.sm': 'Small',
   'forms.bindings.width.md': 'Medium',

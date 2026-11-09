@@ -1,7 +1,7 @@
 import { StrictMode, type ReactNode } from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useForm, type UseFormProps, type UseFormReturn } from 'react-hook-form';
+import { useForm, type Resolver, type ResolverResult, type UseFormProps, type UseFormReturn } from 'react-hook-form';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
 import { Form, FormField, FormReset, FormRootError, FormSubmit, type FormServerErrors } from '.';
@@ -14,6 +14,8 @@ interface Values {
 interface Deferred {
   promise: Promise<void>;
   release: () => void;
+  /** How many validations of Name have started (and are held until release). */
+  started: number;
 }
 
 function deferred(): Deferred {
@@ -21,16 +23,22 @@ function deferred(): Deferred {
   const promise = new Promise<void>((resolve) => {
     release = resolve;
   });
-  return { promise, release };
+  return { promise, release, started: 0 };
 }
+
+type Validator = 'rules.validate' | 'resolver';
 
 const clientMessage = 'Client: use at least 3 characters.';
 
 interface HarnessProps {
   errors?: FormServerErrors;
   mode?: UseFormProps<Values>['mode'];
-  /** Holds every validation of Name until released; Name then fails with the client message. */
+  /** Holds every validation of Name until released; Name then fails with the client message unless `pass`. */
   gate?: Deferred;
+  /** Where the held validation lives: a field rule (default) or the form resolver. */
+  validator?: Validator;
+  /** The held validation accepts every value. */
+  pass?: boolean;
   /** Holds every validation of Name and revalidates it whenever Email changes. */
   gateWithDeps?: Deferred;
   watch?: boolean;
@@ -40,11 +48,32 @@ interface HarnessProps {
   children?: ReactNode;
 }
 
-function Harness({ errors, mode, gate, gateWithDeps, watch, onSubmit, onForm, afterSubmit, children }: HarnessProps) {
-  const form = useForm<Values>({ mode, defaultValues: { name: '', email: '' } });
+function Harness({
+  errors,
+  mode,
+  gate,
+  validator = 'rules.validate',
+  pass,
+  gateWithDeps,
+  watch,
+  onSubmit,
+  onForm,
+  afterSubmit,
+  children,
+}: HarnessProps) {
+  const resolver: Resolver<Values> | undefined =
+    gate && validator === 'resolver'
+      ? async (values): Promise<ResolverResult<Values>> => {
+          gate.started += 1;
+          await gate.promise;
+          if (pass || values.name.length >= 3) return { values, errors: {} };
+          return { values: {}, errors: { name: { type: 'validate', message: clientMessage } } };
+        }
+      : undefined;
+  const form = useForm<Values>({ mode, resolver, defaultValues: { name: '', email: '' } });
   if (watch) form.watch();
   onForm?.(form);
-  const held = gate ?? gateWithDeps;
+  const held = gateWithDeps ?? (validator === 'rules.validate' ? gate : undefined);
   return (
     <>
       <a href="#outside">Outside link</a>
@@ -62,8 +91,9 @@ function Harness({ errors, mode, gate, gateWithDeps, watch, onSubmit, onForm, af
             held
               ? {
                   validate: async (value) => {
+                    held.started += 1;
                     await held.promise;
-                    return value.length >= 3 || clientMessage;
+                    return pass || value.length >= 3 || clientMessage;
                   },
                 }
               : undefined
@@ -242,17 +272,19 @@ describe('Form errors prop', () => {
   });
 });
 
-describe('server errors and asynchronous validation', () => {
+describe.each<Validator>(['rules.validate', 'resolver'])('server errors and a held %s', (validator) => {
   const taken = 'Taken.';
+  const held = (gate: Deferred, count = 1) => waitFor(() => expect(gate.started).toBeGreaterThanOrEqual(count));
 
   it('a new errors object wins over a validation that resolves afterwards', async () => {
     const user = userEvent.setup();
     const gate = deferred();
-    const view = render(<Harness errors={{ name: 'Old.' }} gate={gate} mode="onBlur" />);
+    const view = render(<Harness errors={{ name: 'Old.' }} gate={gate} validator={validator} mode="onBlur" />);
     await screen.findByText('Old.');
     await user.click(name());
     await user.tab();
-    view.rerender(<Harness errors={{ name: taken }} gate={gate} mode="onBlur" />);
+    await held(gate);
+    view.rerender(<Harness errors={{ name: taken }} gate={gate} validator={validator} mode="onBlur" />);
     await screen.findByText(taken);
     await act(async () => gate.release());
     expect(screen.getByText(taken)).toBeInTheDocument();
@@ -262,9 +294,10 @@ describe('server errors and asynchronous validation', () => {
   it('a submit clears server errors and a validation that resolves afterwards does not restore them', async () => {
     const user = userEvent.setup();
     const gate = deferred();
-    render(<Harness errors={{ name: taken }} gate={gate} />);
+    render(<Harness errors={{ name: taken }} gate={gate} validator={validator} />);
     await screen.findByText(taken);
     await user.click(screen.getByRole('button', { name: 'Save' }));
+    await held(gate);
     await waitFor(() => expect(screen.queryByText(taken)).not.toBeInTheDocument());
     await act(async () => gate.release());
     expect(screen.queryByText(taken)).not.toBeInTheDocument();
@@ -276,10 +309,19 @@ describe('server errors and asynchronous validation', () => {
     const user = userEvent.setup();
     const gate = deferred();
     let form: UseFormReturn<Values> | undefined;
-    render(<Harness errors={{ name: taken }} gate={gate} mode="onBlur" onForm={(value) => (form = value)} />);
+    render(
+      <Harness
+        errors={{ name: taken }}
+        gate={gate}
+        validator={validator}
+        mode="onBlur"
+        onForm={(value) => (form = value)}
+      />,
+    );
     await screen.findByText(taken);
     await user.click(name());
     await user.tab();
+    await held(gate);
     await act(async () => gate.release());
     expect(screen.getByText(taken)).toBeInTheDocument();
     expect(screen.queryByText(clientMessage)).not.toBeInTheDocument();
@@ -293,10 +335,11 @@ describe('server errors and asynchronous validation', () => {
   ])('%s clears server errors and a pending validation does not restore them', async (_label, button) => {
     const user = userEvent.setup();
     const gate = deferred();
-    render(<Harness errors={{ name: taken }} gate={gate} mode="onBlur" />);
+    render(<Harness errors={{ name: taken }} gate={gate} validator={validator} mode="onBlur" />);
     await screen.findByText(taken);
     await user.click(name());
     await user.tab();
+    await held(gate);
     await user.click(screen.getByRole('button', { name: button }));
     await waitFor(() => expect(screen.queryByText(taken)).not.toBeInTheDocument());
     await act(async () => gate.release());
@@ -307,10 +350,12 @@ describe('server errors and asynchronous validation', () => {
   it('FormReset clears server errors and a pending validation does not restore them', async () => {
     const user = userEvent.setup();
     const gate = deferred();
-    render(<Harness errors={{ name: taken }} gate={gate} mode="onBlur" />);
+    render(<Harness errors={{ name: taken }} gate={gate} validator={validator} mode="onBlur" />);
     await screen.findByText(taken);
-    await user.type(email(), 'x');
+    await user.click(name());
     await user.tab();
+    await held(gate);
+    await user.type(email(), 'x');
     await user.click(screen.getByRole('button', { name: 'Discard' }));
     await waitFor(() => expect(screen.queryByText(taken)).not.toBeInTheDocument());
     await act(async () => gate.release());
@@ -321,33 +366,39 @@ describe('server errors and asynchronous validation', () => {
   it('keeps the server error when another field is edited under mode all with an active watch', async () => {
     const user = userEvent.setup();
     const gate = deferred();
-    render(<Harness errors={{ name: taken }} gate={gate} mode="all" watch />);
+    render(<Harness errors={{ name: taken }} gate={gate} validator={validator} mode="all" watch />);
     await screen.findByText(taken);
     await user.type(email(), 'x');
+    await held(gate);
     await act(async () => gate.release());
     expect(screen.getByText(taken)).toBeInTheDocument();
     expect(name()).toHaveAttribute('aria-invalid', 'true');
   });
 
-  it('keeps the server error when another field is edited and its rules.deps revalidate Name', async () => {
+  it('keeps a message cleared by an edit cleared when the value returns to the snapshot', async () => {
     const user = userEvent.setup();
     const gate = deferred();
-    render(<Harness errors={{ name: taken }} gateWithDeps={gate} mode="onChange" />);
+    render(<Harness errors={{ name: taken }} gate={gate} validator={validator} mode="onChange" pass />);
     await screen.findByText(taken);
-    await user.type(email(), 'x');
+    await user.type(name(), 'a');
+    await held(gate);
+    await user.type(name(), '{Backspace}');
+    await held(gate, 2);
     await act(async () => gate.release());
-    expect(screen.getByText(taken)).toBeInTheDocument();
-    expect(name()).toHaveAttribute('aria-invalid', 'true');
+    expect(name()).toHaveValue('');
+    expect(screen.queryByText(taken)).not.toBeInTheDocument();
+    expect(name()).not.toHaveAttribute('aria-invalid');
   });
 
   it('shows a new errors object that arrives while a change validation is pending', async () => {
     const user = userEvent.setup();
     const gate = deferred();
-    const view = render(<Harness errors={{ name: 'Old.' }} gate={gate} mode="onChange" />);
+    const view = render(<Harness errors={{ name: 'Old.' }} gate={gate} validator={validator} mode="onChange" />);
     await screen.findByText('Old.');
     await user.type(name(), 'a');
+    await held(gate);
     expect(screen.queryByText('Old.')).not.toBeInTheDocument();
-    view.rerender(<Harness errors={{ name: taken }} gate={gate} mode="onChange" />);
+    view.rerender(<Harness errors={{ name: taken }} gate={gate} validator={validator} mode="onChange" />);
     await screen.findByText(taken);
     await act(async () => gate.release());
     expect(screen.getByText(taken)).toBeInTheDocument();
@@ -355,8 +406,68 @@ describe('server errors and asynchronous validation', () => {
   });
 });
 
+describe('server errors and rules.deps', () => {
+  it('keeps the server error when another field is edited and its rules.deps revalidate Name', async () => {
+    const user = userEvent.setup();
+    const gate = deferred();
+    render(<Harness errors={{ name: 'Taken.' }} gateWithDeps={gate} mode="onChange" />);
+    await screen.findByText('Taken.');
+    await user.type(email(), 'x');
+    await waitFor(() => expect(gate.started).toBeGreaterThan(0));
+    await act(async () => gate.release());
+    expect(screen.getByText('Taken.')).toBeInTheDocument();
+    expect(name()).toHaveAttribute('aria-invalid', 'true');
+  });
+});
+
+describe('server errors and replaced values', () => {
+  it('clears a message when a different File replaces the one it was reported for', async () => {
+    const user = userEvent.setup();
+    function Attachments() {
+      const form = useForm<{ attachment: File | null }>({ defaultValues: { attachment: new File(['a'], 'a.txt') } });
+      return (
+        <Form form={form} errors={{ attachment: 'File rejected.' }} onSubmit={() => undefined}>
+          <FormField<{ attachment: File | null }, 'attachment'> name="attachment" label="Attachment">
+            {(field) => (
+              <>
+                <Input {...field} value="" onChange={() => undefined} />
+                <Button type="button" onClick={() => field.onChange(new File(['a'], 'a.txt'))}>
+                  Replace file
+                </Button>
+              </>
+            )}
+          </FormField>
+        </Form>
+      );
+    }
+    render(<Attachments />);
+    await screen.findByText('File rejected.');
+    await user.click(screen.getByRole('button', { name: 'Replace file' }));
+    expect(screen.queryByText('File rejected.')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Attachment' })).not.toHaveAttribute('aria-invalid');
+  });
+
+  it('keeps a message while the same File instance is still the value', async () => {
+    const file = new File(['a'], 'a.txt');
+    function Attachments() {
+      const form = useForm<{ attachment: File | null }>({ defaultValues: { attachment: file } });
+      return (
+        <Form form={form} errors={{ attachment: 'File rejected.' }} onSubmit={() => undefined}>
+          <FormField<{ attachment: File | null }, 'attachment'> name="attachment" label="Attachment">
+            {(field) => <Input {...field} value="" onChange={() => undefined} />}
+          </FormField>
+        </Form>
+      );
+    }
+    render(<Attachments />);
+    expect(await screen.findByText('File rejected.')).toBeInTheDocument();
+    await act(async () => undefined);
+    expect(screen.getByText('File rejected.')).toBeInTheDocument();
+  });
+});
+
 describe('reset interception', () => {
-  it('restores the original reset on unmount and passes arguments and result through unchanged', async () => {
+  it('restores the original reset on unmount and passes values and options through unchanged', async () => {
     let form: UseFormReturn<Values> | undefined;
     let before: UseFormReturn<Values>['reset'] | undefined;
     function Capture({ onForm }: { onForm: (instance: UseFormReturn<Values>) => void }) {
@@ -382,6 +493,10 @@ describe('reset interception', () => {
     expect(form?.reset).not.toBe(before);
     act(() => form?.reset({ name: 'Rebased', email: '' }));
     expect(name()).toHaveValue('Rebased');
+    expect(form?.formState.defaultValues?.name).toBe('Rebased');
+    act(() => form?.reset({ name: 'Kept values', email: '' }, { keepDefaultValues: true }));
+    expect(name()).toHaveValue('Kept values');
+    expect(form?.formState.defaultValues?.name).toBe('Rebased');
     view.unmount();
     expect(form?.reset).toBe(before);
   });

@@ -144,7 +144,12 @@ function firstMessage(input: FormServerErrors[string]): string | undefined {
   return undefined;
 }
 
-/** Structural equality for form values: primitives, dates, arrays and plain objects. */
+function isPlainObject(value: object): boolean {
+  const proto: unknown = Object.getPrototypeOf(value);
+  return proto === Object.prototype || proto === null;
+}
+
+/** Structural equality for form values: primitives, dates, arrays and plain objects. Other objects (File, Blob) compare by identity. */
 export function isEqualValue(a: unknown, b: unknown): boolean {
   if (Object.is(a, b)) return true;
   if (a instanceof Date && b instanceof Date) return a.getTime() === b.getTime();
@@ -154,7 +159,7 @@ export function isEqualValue(a: unknown, b: unknown): boolean {
     );
   }
   if (typeof a !== 'object' || typeof b !== 'object' || a === null || b === null) return false;
-  if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)) return false;
+  if (!isPlainObject(a) || !isPlainObject(b)) return false;
   const left = a as Record<string, unknown>;
   const right = b as Record<string, unknown>;
   const keys = Object.keys(left);
