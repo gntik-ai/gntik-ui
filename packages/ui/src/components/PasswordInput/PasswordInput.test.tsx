@@ -254,6 +254,35 @@ describe('PasswordInput', () => {
       expect(screen.queryByRole('status')).not.toBeInTheDocument();
     });
 
+    it.each([
+      ['empty rules', { rules: {} }],
+      ['empty requirements', { requirements: [] }],
+      ['rules that enable nothing', { rules: { number: false } }],
+    ])('is in policy mode with %s: no hint, a named list and a status, score 0', (_name, props) => {
+      render(<PasswordInput aria-label="Pass" showStrength defaultValue="abc" {...props} />);
+      expect(screen.queryByText(/Use 12\+ characters/)).not.toBeInTheDocument();
+      expect(screen.getByRole('list', { name: 'Password requirements' })).toBeInTheDocument();
+      expect(screen.getByRole('status')).toBeInTheDocument();
+      expect(screen.getByLabelText('Pass')).toHaveAccessibleDescription(/Strength: Too weak/);
+    });
+
+    it('hides the empty-state hint for empty rules while the value is empty', () => {
+      render(<PasswordInput aria-label="Pass" showStrength rules={{}} />);
+      expect(screen.queryByText(/Use 12\+ characters/)).not.toBeInTheDocument();
+      expect(screen.getByRole('list', { name: 'Password requirements' })).toBeInTheDocument();
+    });
+
+    it('localises the policy example under an es I18nProvider', () => {
+      render(
+        <I18nProvider locale="es">
+          <PasswordInputPolicy />
+        </I18nProvider>,
+      );
+      expect(screen.getByLabelText('Contraseña nueva')).toHaveAccessibleDescription(/Sin espacios/);
+      expect(screen.getByLabelText('Contraseña nueva')).toHaveAccessibleDescription(/La política de tu espacio/);
+      expect(screen.queryByText('No spaces')).not.toBeInTheDocument();
+    });
+
     it('is localised under an es I18nProvider', () => {
       render(
         <I18nProvider locale="es">

@@ -99,12 +99,12 @@ export function PasswordInput({
     })),
     ...(requirements ?? []).map(({ id, label, test }) => ({ id, label, met: test(current) })),
   ];
-  const hasChecklist = checklist.length > 0;
+  const hasChecklist = rules !== undefined || requirements !== undefined;
   const metCount = checklist.filter((item) => item.met).length;
   const score =
     strength ??
     (hasChecklist
-      ? ((current ? Math.round((4 * metCount) / checklist.length) : 0) as PasswordStrength)
+      ? ((current && checklist.length > 0 ? Math.round((4 * metCount) / checklist.length) : 0) as PasswordStrength)
       : scorePassword(current));
   const s = passwordInputVariants({ level: score, size });
 
