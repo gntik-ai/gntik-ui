@@ -8,15 +8,22 @@ export interface SwitchProps extends Omit<BaseSwitch.Root.Props, 'className'>, S
   ref?: Ref<HTMLButtonElement>;
   /** Visible label. Without it, pass `aria-label` or wrap in a Field. */
   label?: ReactNode;
+  /** Marks the switch invalid; pair with a FieldError or description. */
+  invalid?: boolean;
   /** Label placement relative to the track. */
   labelPosition?: 'start' | 'end';
 }
 
 /** On/off setting. Controlled with `checked` + `onCheckedChange`, or uncontrolled with `defaultChecked`. */
-export function Switch({ size, label, labelPosition = 'end', className, ...props }: SwitchProps) {
+export function Switch({ size, label, labelPosition = 'end', className, invalid, ...props }: SwitchProps) {
   const s = switchVariants({ size });
   const control = (
-    <BaseSwitch.Root className={cn(s.root(), !label && className)} {...props}>
+    <BaseSwitch.Root
+      className={cn(s.root(), !label && className)}
+      {...props}
+      {...(invalid ? { 'data-invalid': true } : {})}
+      aria-invalid={props['aria-invalid'] ?? (invalid || undefined)}
+    >
       <BaseSwitch.Thumb className={s.thumb()} />
     </BaseSwitch.Root>
   );

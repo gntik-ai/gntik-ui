@@ -36,6 +36,9 @@ describe('@gntik-ai/ui/forms', () => {
     expect(await screen.findByText('Enter a name.')).toBeInTheDocument();
     expect(screen.getByText('Enter a valid email address.')).toBeInTheDocument();
     expect(screen.getByText('Choose a role.')).toBeInTheDocument();
+    const role = screen.getByRole('combobox', { name: /Role/ });
+    expect(role).toHaveAttribute('aria-invalid', 'true');
+    expect(role).toHaveAttribute('data-invalid');
     const name = screen.getByRole('textbox', { name: /Full name/ });
     await waitFor(() => expect(name).toHaveFocus());
     expect(name).toHaveAttribute('aria-invalid', 'true');
@@ -64,6 +67,8 @@ describe('@gntik-ai/ui/forms', () => {
     await user.click(screen.getByRole('combobox', { name: /Role/ }));
     await user.click(await screen.findByRole('option', { name: 'Editor' }));
     await waitFor(() => expect(screen.queryByText('Choose a role.')).not.toBeInTheDocument());
+    expect(screen.getByRole('combobox', { name: /Role/ })).not.toHaveAttribute('aria-invalid');
+    expect(screen.getByRole('combobox', { name: /Role/ })).not.toHaveAttribute('data-invalid');
     await user.click(screen.getByRole('button', { name: 'Send invitation' }));
     expect(await screen.findByText('Invitation sent to mara@example.com.')).toBeInTheDocument();
     expect(screen.queryByText('Enter a name.')).not.toBeInTheDocument();

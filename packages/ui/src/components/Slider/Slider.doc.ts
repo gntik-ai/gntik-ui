@@ -5,7 +5,8 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'stable',
   description:
-    'Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form.',
+    'Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form. The optional invalid prop exposes aria-invalid on every thumb input and destructive thumb borders; invalid Field works without the prop. Pair invalid with a FieldError or description explaining the allowed values; colour alone is insufficient.',
+  // Invalid state is demonstrated in SliderInvalid.
   primitive: '@base-ui/react/slider',
   pattern: 'slider (multi-thumb for ranges)',
   keyboard: [
@@ -21,5 +22,5 @@ export const doc: ComponentDoc = {
     ['data-dragging', 'thumb', 'The part is being dragged.'],
     ['data-disabled', 'thumb', 'The control cannot be changed or activated.'],
   ],
-  tokens: ['primary', 'secondary', 'background', 'foreground', 'muted-foreground', 'focus-ring'],
+  tokens: ['destructive', 'primary', 'secondary', 'background', 'foreground', 'muted-foreground', 'focus-ring'],
 };

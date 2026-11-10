@@ -16,10 +16,7 @@ export const listboxItem = [
   'data-disabled:cursor-disabled data-disabled:opacity-45',
 ];
 
-const alternateTrigger = [
-  fieldPickerHover,
-  'focus-visible:border-primary/60 data-invalid:border-destructive/70 aria-invalid:border-destructive/70',
-];
+const alternateTrigger = [fieldPickerHover, 'focus-visible:border-primary/60'];
 
 export const selectVariants = tv({
   slots: {
@@ -27,6 +24,10 @@ export const selectVariants = tv({
     trigger: [
       'group flex w-full items-center justify-between gap-2 rounded-md border border-border bg-background text-foreground shadow-sm transition-colors select-none',
       'hover:border-muted-foreground/40 data-popup-open:border-primary/60 data-popup-open:ring-2 data-popup-open:ring-ring/25',
+      'data-invalid:border-destructive/70 aria-invalid:border-destructive/70',
+      'data-invalid:hover:border-destructive/70 aria-invalid:hover:border-destructive/70',
+      'data-invalid:data-popup-open:border-destructive/70 aria-invalid:data-popup-open:border-destructive/70',
+      'data-invalid:focus-visible:border-destructive/70 aria-invalid:focus-visible:border-destructive/70',
       'focus-ring',
       'data-disabled:cursor-disabled data-disabled:opacity-50',
     ],

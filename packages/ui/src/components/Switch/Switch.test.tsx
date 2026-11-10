@@ -1,3 +1,4 @@
+import { Field } from '../Field/Field';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
@@ -54,5 +55,28 @@ describe('Switch', () => {
   it('example has no axe violations', async () => {
     render(<SwitchSettings />);
     await expectNoAxeViolations();
+  });
+});
+
+describe('invalid state', () => {
+  it.each([false, true])('exposes invalid when checked=%s', (checked) => {
+    const { rerender } = render(<Switch invalid checked={checked} aria-label="Accept terms" />);
+    const control = screen.getByRole('switch');
+    expect(control).toHaveAttribute('aria-invalid', 'true');
+    expect(control).toHaveAttribute('data-invalid');
+    rerender(<Switch invalid aria-invalid="false" checked={checked} aria-label="Accept terms" />);
+    expect(control).toHaveAttribute('aria-invalid', 'false');
+    rerender(<Switch checked={checked} aria-label="Accept terms" />);
+    expect(control).not.toHaveAttribute('aria-invalid');
+    expect(control).not.toHaveAttribute('data-invalid');
+  });
+  it('inherits invalid from Field', () => {
+    render(
+      <Field invalid>
+        <Switch invalid={false} aria-label="Accept terms" />
+      </Field>,
+    );
+    expect(screen.getByRole('switch')).toHaveAttribute('data-invalid');
+    expect(screen.getByRole('switch')).toHaveAttribute('aria-invalid', 'true');
   });
 });

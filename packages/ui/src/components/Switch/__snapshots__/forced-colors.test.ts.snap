@@ -26,13 +26,13 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "chip": "inline-flex h-6 items-center gap-1 rounded bg-primary/14 pe-1 ps-2 text-[12px] font-medium text-primary-chip-text outline-none data-highlighted:bg-primary/24 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring",
   "chipRemove": "grid size-4 place-items-center rounded transition-colors hover:bg-primary/20",
   "chips": "flex w-full flex-wrap items-center gap-1.5",
-  "chipsGroup": "rounded-md border border-border bg-background text-foreground shadow-sm transition-colors focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring has-[input[data-disabled]]:cursor-disabled has-[input[data-disabled]]:opacity-50 cursor-text px-2 py-1.5",
+  "chipsGroup": "data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70 rounded-md border border-border bg-background text-foreground shadow-sm transition-colors focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring has-[input[data-disabled]]:cursor-disabled has-[input[data-disabled]]:opacity-50 cursor-text px-2 py-1.5",
   "chipsInput": "h-6 min-w-20 flex-1 bg-transparent px-1 text-[13px] text-foreground outline-none placeholder:text-muted-foreground",
   "empty": "px-2.5 py-3 text-center text-[12.5px] text-muted-foreground empty:hidden",
   "iconButton": "grid size-7 shrink-0 place-items-center rounded text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-focus-ring",
   "indicator": "flex shrink-0 text-primary-text",
   "input": "w-full min-w-0 bg-transparent pe-1 ps-2.5 text-foreground outline-none placeholder:text-muted-foreground h-control text-[13px]",
-  "inputGroup": "rounded-md border border-border bg-background text-foreground shadow-sm transition-colors focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring has-[input[data-disabled]]:cursor-disabled has-[input[data-disabled]]:opacity-50 flex items-center pe-1 ps-3",
+  "inputGroup": "data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70 rounded-md border border-border bg-background text-foreground shadow-sm transition-colors focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring has-[input[data-disabled]]:cursor-disabled has-[input[data-disabled]]:opacity-50 flex items-center pe-1 ps-3",
   "item": "flex cursor-default items-center justify-between gap-2 rounded-[6px] px-2.5 py-1.5 text-[13px] text-foreground outline-none select-none data-highlighted:bg-secondary/70 data-selected:bg-primary/12 data-selected:data-highlighted:bg-primary/16 data-disabled:cursor-disabled data-disabled:opacity-45",
   "itemContent": "flex min-w-0 flex-1 items-center gap-2",
   "label": "mb-2 block text-[13px] font-medium text-foreground",
@@ -194,7 +194,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "separator": "-mx-1 my-1 h-px bg-border",
   "status": "flex items-center justify-center gap-2 px-2.5 py-2 text-[12.5px] text-muted-foreground",
   "statusError": "flex-wrap text-destructive-text",
-  "trigger": "group flex w-full items-center justify-between gap-2 rounded-md border border-border bg-background text-foreground shadow-sm transition-colors select-none hover:border-muted-foreground/40 data-popup-open:border-primary/60 data-popup-open:ring-2 data-popup-open:ring-ring/25 focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-control pe-2.5 ps-field text-[13px]",
+  "trigger": "group flex w-full items-center justify-between gap-2 rounded-md border border-border bg-background text-foreground shadow-sm transition-colors select-none hover:border-muted-foreground/40 data-popup-open:border-primary/60 data-popup-open:ring-2 data-popup-open:ring-ring/25 data-invalid:border-destructive/70 aria-invalid:border-destructive/70 data-invalid:hover:border-destructive/70 aria-invalid:hover:border-destructive/70 data-invalid:data-popup-open:border-destructive/70 aria-invalid:data-popup-open:border-destructive/70 data-invalid:focus-visible:border-destructive/70 aria-invalid:focus-visible:border-destructive/70 focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-control pe-2.5 ps-field text-[13px]",
   "value": "flex min-w-0 items-center gap-2 truncate data-placeholder:text-muted-foreground",
 }
 `;
@@ -215,7 +215,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "header": "flex items-baseline justify-between gap-3",
   "indicator": "rounded-full bg-primary select-none",
   "label": "text-[13px] font-medium text-foreground",
-  "root": "flex w-full flex-col gap-2 data-disabled:opacity-50",
+  "root": "flex w-full flex-col gap-2 data-disabled:opacity-50 data-invalid:[&_[data-index]]:border-destructive/70 aria-invalid:[&_[data-index]]:border-destructive/70",
   "thumb": "rounded-full border border-primary bg-background shadow-sm transition-[scale] select-none motion-reduce:transition-none has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus-ring data-dragging:scale-110 data-disabled:cursor-disabled size-[18px]",
   "track": "relative w-full rounded-full bg-secondary select-none h-1.5",
   "value": "font-mono text-[12px] text-muted-foreground tabular-nums",
@@ -236,7 +236,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 {
   "base": "",
   "label": "inline-flex items-center gap-2.5 text-[13px] text-foreground",
-  "root": "relative inline-flex shrink-0 cursor-interactive items-center rounded-full bg-secondary transition-colors data-checked:bg-primary focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-[26px] w-[46px]",
+  "root": "relative inline-flex shrink-0 cursor-interactive items-center rounded-full bg-secondary transition-colors data-checked:bg-primary data-invalid:ring-1 data-invalid:ring-destructive/70 aria-invalid:ring-1 aria-invalid:ring-destructive/70 focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-[26px] w-[46px]",
   "thumb": "pointer-events-none ms-[2px] grid place-items-center rounded-full bg-background shadow-sm transition-transform motion-reduce:transition-none size-[22px] data-checked:translate-x-[20px] rtl:data-checked:-translate-x-[20px]",
 }
 `;
@@ -245,7 +245,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 {
   "base": "",
   "label": "inline-flex items-center gap-2.5 text-[13px] text-foreground",
-  "root": "relative inline-flex shrink-0 cursor-interactive items-center rounded-full bg-secondary transition-colors data-checked:bg-primary focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-[18px] w-8",
+  "root": "relative inline-flex shrink-0 cursor-interactive items-center rounded-full bg-secondary transition-colors data-checked:bg-primary data-invalid:ring-1 data-invalid:ring-destructive/70 aria-invalid:ring-1 aria-invalid:ring-destructive/70 focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-[18px] w-8",
   "thumb": "pointer-events-none ms-[2px] grid place-items-center rounded-full bg-background shadow-sm transition-transform motion-reduce:transition-none size-3.5 data-checked:translate-x-[14px] rtl:data-checked:-translate-x-[14px]",
 }
 `;
@@ -254,7 +254,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 {
   "base": "",
   "label": "inline-flex items-center gap-2.5 text-[13px] text-foreground",
-  "root": "relative inline-flex shrink-0 cursor-interactive items-center rounded-full bg-secondary transition-colors data-checked:bg-primary focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-[22px] w-[40px]",
+  "root": "relative inline-flex shrink-0 cursor-interactive items-center rounded-full bg-secondary transition-colors data-checked:bg-primary data-invalid:ring-1 data-invalid:ring-destructive/70 aria-invalid:ring-1 aria-invalid:ring-destructive/70 focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-[22px] w-[40px]",
   "thumb": "pointer-events-none ms-[2px] grid place-items-center rounded-full bg-background shadow-sm transition-transform motion-reduce:transition-none size-[18px] data-checked:translate-x-[18px] rtl:data-checked:-translate-x-[18px]",
 }
 `;

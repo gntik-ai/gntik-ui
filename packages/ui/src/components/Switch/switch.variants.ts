@@ -5,6 +5,7 @@ export const switchVariants = tv({
     root: [
       'relative inline-flex shrink-0 cursor-interactive items-center rounded-full bg-secondary transition-colors',
       'data-checked:bg-primary',
+      'data-invalid:ring-1 data-invalid:ring-destructive/70 aria-invalid:ring-1 aria-invalid:ring-destructive/70',
       'forced-colors:bg-[Canvas] forced-colors:outline forced-colors:-outline-offset-1 forced-colors:outline-[ButtonBorder] forced-colors:data-checked:bg-[Highlight] forced-colors:data-disabled:outline-[GrayText]',
       'focus-ring',
       'data-disabled:cursor-disabled data-disabled:opacity-50',

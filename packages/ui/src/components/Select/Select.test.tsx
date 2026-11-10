@@ -226,3 +226,38 @@ it('ref and triggerRef both reach the SimpleSelect trigger', () => {
   ref.current?.focus();
   expect(trigger).toHaveFocus();
 });
+
+describe('invalid state', () => {
+  it('marks a standalone SimpleSelect invalid and forwards explicit aria-invalid to its trigger', () => {
+    const { rerender } = render(<SimpleSelect invalid aria-label="Region" items={fruits} />);
+    const trigger = screen.getByRole('combobox', { name: 'Region' });
+    expect(trigger).toHaveAttribute('aria-invalid', 'true');
+    expect(trigger).toHaveAttribute('data-invalid');
+    rerender(<SimpleSelect invalid aria-invalid="false" aria-label="Region" items={fruits} />);
+    expect(trigger).toHaveAttribute('aria-invalid', 'false');
+    rerender(<SimpleSelect aria-invalid="true" aria-label="Region" items={fruits} />);
+    expect(trigger).toHaveAttribute('aria-invalid', 'true');
+    rerender(<SimpleSelect aria-label="Region" items={fruits} />);
+    expect(trigger).not.toHaveAttribute('aria-invalid');
+    expect(trigger).not.toHaveAttribute('data-invalid');
+  });
+
+  it('preserves Field-provided invalid state even with invalid=false', () => {
+    render(
+      <Field invalid>
+        <SimpleSelect invalid={false} aria-label="Region" items={fruits} />
+      </Field>,
+    );
+    expect(screen.getByRole('combobox')).toHaveAttribute('data-invalid');
+  });
+
+  it('marks the compound trigger invalid', () => {
+    render(
+      <Select>
+        <SelectTrigger invalid aria-label="Region" />
+      </Select>,
+    );
+    expect(screen.getByRole('combobox')).toHaveAttribute('aria-invalid', 'true');
+    expect(screen.getByRole('combobox')).toHaveAttribute('data-invalid');
+  });
+});

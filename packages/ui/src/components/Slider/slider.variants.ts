@@ -2,7 +2,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 
 export const sliderVariants = tv({
   slots: {
-    root: 'flex w-full flex-col gap-2 data-disabled:opacity-50',
+    root: 'flex w-full flex-col gap-2 data-disabled:opacity-50 data-invalid:[&_[data-index]]:border-destructive/70 aria-invalid:[&_[data-index]]:border-destructive/70',
     header: 'flex items-baseline justify-between gap-3',
     label: 'text-[13px] font-medium text-foreground',
     value: 'font-mono text-[12px] text-muted-foreground tabular-nums',
