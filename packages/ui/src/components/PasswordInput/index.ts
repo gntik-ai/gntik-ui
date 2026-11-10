@@ -2,6 +2,7 @@ export { PasswordInput, type PasswordInputProps } from './PasswordInput';
 export {
   scorePassword,
   checkPasswordRules,
+  builtInPasswordRules,
   DEFAULT_STRENGTH_LABELS,
   type PasswordRequirement,
   type PasswordRuleId,

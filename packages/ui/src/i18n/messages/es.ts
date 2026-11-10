@@ -22,6 +22,7 @@ import { cspEs } from './csp-messages';
 import { navigationEs } from './navigation-messages';
 import { logoCloudEs } from './logo-cloud-messages';
 import { hookExampleEs } from './hook-example-messages';
+import { passwordEs } from './password-messages';
 import type { Messages } from './en';
 export const es: Messages = {
   ...dateRangeExamplesEs,
@@ -49,6 +50,7 @@ export const es: Messages = {
   ...markdownEs,
   ...searchableSelectEs,
   ...autocompleteEs,
+  ...passwordEs,
   'footer.label': 'Pie de página',
   'footer.legal': 'Legal',
   'footer.social': 'Redes sociales',
@@ -394,26 +396,6 @@ export const es: Messages = {
   'numberInput.decrease': 'Disminuir',
   'numberInput.increase': 'Aumentar',
   'otp.character': 'Carácter {index} de {total}',
-  'password.show': 'Mostrar contraseña',
-  'password.hide': 'Ocultar contraseña',
-  'password.strength': 'Seguridad:',
-  'password.tooWeak': 'Muy débil',
-  'password.weak': 'Débil',
-  'password.fair': 'Aceptable',
-  'password.good': 'Buena',
-  'password.strong': 'Fuerte',
-  'password.requirements': 'Requisitos de la contraseña',
-  'password.requirementMet': 'cumplido',
-  'password.requirementUnmet': 'no cumplido',
-  'password.requirementsSummary': '{met} de {total} requisitos cumplidos',
-  'password.rule.minLength': 'Al menos {count} caracteres',
-  'password.rule.lowercase': 'Una letra minúscula',
-  'password.rule.uppercase': 'Una letra mayúscula',
-  'password.rule.number': 'Un número',
-  'password.rule.symbol': 'Un símbolo',
-  'password.examples.label': 'Contraseña nueva',
-  'password.examples.noSpaces': 'Sin espacios',
-  'password.examples.description': 'La política de tu espacio de trabajo se comprueba mientras escribes.',
   'multiSelect.moreSelected': 'más seleccionados',
   'tokenInput.entries': 'Entradas',
   'link.external': '(se abre en una pestaña nueva)',

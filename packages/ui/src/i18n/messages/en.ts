@@ -22,6 +22,7 @@ import { cspEn } from './csp-messages';
 import { navigationEn } from './navigation-messages';
 import { logoCloudEn } from './logo-cloud-messages';
 import { hookExampleEn } from './hook-example-messages';
+import { passwordEn } from './password-messages';
 export const en = {
   ...dateRangeExamplesEn,
   ...fileInputEn,
@@ -48,6 +49,7 @@ export const en = {
   ...markdownEn,
   ...searchableSelectEn,
   ...autocompleteEn,
+  ...passwordEn,
   'footer.label': 'Footer',
   'footer.legal': 'Legal',
   'footer.social': 'Social links',
@@ -385,26 +387,6 @@ export const en = {
   'numberInput.decrease': 'Decrease',
   'numberInput.increase': 'Increase',
   'otp.character': 'Character {index} of {total}',
-  'password.show': 'Show password',
-  'password.hide': 'Hide password',
-  'password.strength': 'Strength:',
-  'password.tooWeak': 'Too weak',
-  'password.weak': 'Weak',
-  'password.fair': 'Fair',
-  'password.good': 'Good',
-  'password.strong': 'Strong',
-  'password.requirements': 'Password requirements',
-  'password.requirementMet': 'met',
-  'password.requirementUnmet': 'not met',
-  'password.requirementsSummary': '{met} of {total} requirements met',
-  'password.rule.minLength': 'At least {count} characters',
-  'password.rule.lowercase': 'A lowercase letter',
-  'password.rule.uppercase': 'An uppercase letter',
-  'password.rule.number': 'A number',
-  'password.rule.symbol': 'A symbol',
-  'password.examples.label': 'New password',
-  'password.examples.noSpaces': 'No spaces',
-  'password.examples.description': 'Your workspace policy is checked as you type.',
   'multiSelect.moreSelected': 'more selected',
   'tokenInput.entries': 'Entries',
   'link.external': '(opens in a new tab)',

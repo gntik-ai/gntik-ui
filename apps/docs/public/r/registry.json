@@ -478,6 +478,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -695,6 +700,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -1237,6 +1247,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -1472,6 +1487,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -1686,6 +1706,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -1903,6 +1928,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -2231,6 +2261,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -2447,6 +2482,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -2793,6 +2833,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -2995,6 +3040,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -3272,6 +3322,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -4021,6 +4076,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -4417,6 +4477,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -4644,6 +4709,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -5167,6 +5237,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -5687,6 +5762,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -6153,6 +6233,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -6402,6 +6487,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -6662,6 +6752,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -6911,6 +7006,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -7203,6 +7303,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -7425,6 +7530,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -7670,6 +7780,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -7921,6 +8036,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -8131,6 +8251,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -8360,6 +8485,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -8584,6 +8714,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -9194,6 +9329,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -9641,6 +9781,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -10158,6 +10303,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -10470,6 +10620,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -10816,6 +10971,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -11134,6 +11294,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -11351,6 +11516,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -11566,6 +11736,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -11794,6 +11969,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -12060,6 +12240,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -12362,6 +12547,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -12577,6 +12767,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -12801,6 +12996,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -13317,6 +13517,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -13574,6 +13779,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -14106,6 +14316,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -14525,6 +14740,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -14748,6 +14968,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -15105,6 +15330,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -15327,6 +15557,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -15541,6 +15776,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -15765,6 +16005,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -15964,6 +16209,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -16291,6 +16541,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -16551,6 +16806,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -16912,6 +17172,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -17123,6 +17388,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -17434,6 +17704,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -17660,6 +17935,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -17948,6 +18228,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -18412,6 +18697,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -18916,6 +19206,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -19477,6 +19772,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -19798,6 +20098,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -20062,6 +20367,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -20283,6 +20593,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -20595,6 +20910,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -21050,6 +21370,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -21620,6 +21945,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -22238,6 +22568,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -22546,6 +22881,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -22743,6 +23083,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -23094,6 +23439,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -23523,6 +23873,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -23872,6 +24227,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -24311,6 +24671,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -24525,6 +24890,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -24753,6 +25123,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -25138,6 +25513,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -25353,6 +25733,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -25590,6 +25975,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -25851,6 +26241,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -26073,6 +26468,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -26289,6 +26689,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -26552,6 +26957,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -26822,6 +27232,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -27156,6 +27571,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -27374,6 +27794,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -27640,6 +28065,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -27867,6 +28297,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -28224,6 +28659,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -28420,6 +28860,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -28911,6 +29356,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -29210,6 +29660,11 @@
           "target": "components/i18n/messages/navigation-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -29424,6 +29879,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -29690,6 +30150,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -29977,6 +30442,11 @@
           "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
