@@ -28,6 +28,25 @@ async function axe(page, example) {
   expect(violations).toEqual([]);
 }
 
+async function expectInvalidTrigger(page, trigger, borderColor) {
+  await expect(trigger).toHaveAttribute('data-invalid');
+  await expect(trigger).toHaveCSS('border-color', borderColor);
+  await trigger.hover();
+  await expect(trigger).toHaveCSS('border-color', borderColor);
+  // Move from pointer to keyboard focus and open the popup with the keyboard.
+  await trigger.focus();
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Shift+Tab');
+  await expect(trigger).toBeFocused();
+  await expect(trigger).toHaveCSS('outline-style', 'solid');
+  await expect(trigger).toHaveCSS('outline-width', '2px');
+  await expect(trigger).toHaveCSS('border-color', borderColor);
+  await page.keyboard.press('ArrowDown');
+  await expect(trigger).toHaveAttribute('data-popup-open');
+  await expect(trigger).toHaveCSS('border-color', borderColor);
+  await page.keyboard.press('Escape');
+}
+
 for (const theme of ['dark', 'light', 'high_contrast']) {
   test(`invalid Select border and focus survive interaction — ${theme}`, async ({ page }) => {
     const example = await openExample(page, theme, 'select');
@@ -38,26 +57,21 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
         .getByRole('textbox')
         .locator('..')
         .evaluate((el) => getComputedStyle(el).borderColor);
-      await expect(trigger).toHaveAttribute('data-invalid');
-      await expect(trigger).toHaveCSS('border-color', inputBorder);
-      await trigger.hover();
-      await expect(trigger).toHaveCSS('border-color', inputBorder);
-      // Move from pointer to keyboard focus and open the popup with the keyboard.
-      await trigger.focus();
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Shift+Tab');
-      await expect(trigger).toBeFocused();
-      await expect(trigger).toHaveCSS('outline-style', 'solid');
-      await expect(trigger).toHaveCSS('outline-width', '2px');
-      await expect(trigger).toHaveCSS('border-color', inputBorder);
-      await page.keyboard.press('ArrowDown');
-      await expect(trigger).toHaveAttribute('data-popup-open');
-      await expect(trigger).toHaveCSS('border-color', inputBorder);
-      await page.keyboard.press('Escape');
+      await expectInvalidTrigger(page, trigger, inputBorder);
     }
-    const standalone = example.getByRole('combobox', { name: 'Region' });
-    await expect(standalone).toHaveAttribute('aria-invalid', 'true');
-    await expect(standalone).toHaveAttribute('data-invalid');
+    const outlineBorder = await example
+      .locator('[data-invalid-variant="outline"]')
+      .getByRole('textbox')
+      .locator('..')
+      .evaluate((el) => getComputedStyle(el).borderColor);
+    // Both standalone APIs must retain the same styling as Field-inherited invalidity.
+    for (const standalone of [
+      example.getByRole('combobox', { name: 'Role', exact: true }).last(),
+      example.getByRole('combobox', { name: 'Region' }),
+    ]) {
+      await expect(standalone).toHaveAttribute('aria-invalid', 'true');
+      await expectInvalidTrigger(page, standalone, outlineBorder);
+    }
     await axe(page, example);
   });
 
