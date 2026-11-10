@@ -3,7 +3,14 @@ import { useId, useState } from 'react';
 import { cn } from '../../utils/cn';
 import { IconButton } from '../Button';
 import { Input, type InputProps } from '../Input';
-import { scorePassword, type PasswordStrength } from './password-strength';
+import {
+  builtInPasswordRules,
+  scorePassword,
+  type PasswordRequirement,
+  type PasswordRules,
+  type PasswordStrength,
+} from './password-strength';
+import { PasswordRequirements, type PasswordRequirementState } from './PasswordRequirements';
 import { useI18n } from '../../i18n/I18nProvider';
 import { PASSWORD_SEGMENT_FILL, passwordInputVariants } from './password-input.variants';
 
@@ -26,6 +33,13 @@ export interface PasswordInputProps extends Omit<
   strengthLabels?: readonly [string, string, string, string, string];
   /** Prefix of the announced strength text ("Strength: Good"). */
   strengthPrefix?: string;
+  /**
+   * Built-in rules shown as a checklist under the field. Without `strength`, the meter score is
+   * the share of met rules (a rule count, not a measure of guessability).
+   */
+  rules?: PasswordRules;
+  /** Custom rules added to the checklist after the built-in ones. */
+  requirements?: readonly PasswordRequirement[];
   showLabel?: string;
   hideLabel?: string;
   /** Classes for the column that holds the field and the meter. */
@@ -47,6 +61,8 @@ export function PasswordInput({
   strength,
   strengthLabels: strengthLabelsProp,
   strengthPrefix: strengthPrefixProp,
+  rules,
+  requirements,
   showLabel: showLabelProp,
   hideLabel: hideLabelProp,
   size = 'auto',
@@ -70,11 +86,26 @@ export function PasswordInput({
       t('password.strong'),
     ] as const);
   const strengthId = useId();
+  const requirementsId = useId();
   const [innerValue, setInnerValue] = useState(defaultValue ?? '');
   const [innerVisible, setInnerVisible] = useState(defaultVisible);
   const current = value ?? innerValue;
   const visible = visibleProp ?? innerVisible;
-  const score = strength ?? scorePassword(current);
+  const checklist: PasswordRequirementState[] = [
+    ...builtInPasswordRules(rules).map(({ id, test }) => ({
+      id,
+      label: t(`password.rule.${id}`, { count: rules?.minLength ?? 0 }),
+      met: test(current),
+    })),
+    ...(requirements ?? []).map(({ id, label, test }) => ({ id, label, met: test(current) })),
+  ];
+  const hasChecklist = checklist.length > 0;
+  const metCount = checklist.filter((item) => item.met).length;
+  const score =
+    strength ??
+    (hasChecklist
+      ? ((current ? Math.round((4 * metCount) / checklist.length) : 0) as PasswordStrength)
+      : scorePassword(current));
   const s = passwordInputVariants({ level: score, size });
 
   const toggle = () => {
@@ -82,7 +113,7 @@ export function PasswordInput({
     onVisibleChange?.(!visible);
   };
 
-  const describedByIds = cn(describedBy, showStrength && current && strengthId);
+  const describedByIds = cn(describedBy, showStrength && current && strengthId, hasChecklist && requirementsId);
   const input = (
     <Input
       {...props}
@@ -112,7 +143,18 @@ export function PasswordInput({
     />
   );
 
-  if (!showStrength) return input;
+  if (!showStrength && !hasChecklist) return input;
+  const checklistNode = hasChecklist ? (
+    <PasswordRequirements id={requirementsId} items={checklist} empty={!current} value={current} size={size} />
+  ) : null;
+  if (!showStrength) {
+    return (
+      <div className={cn(s.root(), wrapperClassName)}>
+        {input}
+        {checklistNode}
+      </div>
+    );
+  }
   return (
     <div className={cn(s.root(), wrapperClassName)}>
       {input}
@@ -126,7 +168,7 @@ export function PasswordInput({
           ))}
         </div>
         <p id={strengthId} className={s.text()}>
-          {current ? (
+          {hasChecklist && !current ? null : current ? (
             <>
               {strengthPrefix} <span className={s.level()}>{strengthLabels[score]}</span>
             </>
@@ -135,6 +177,7 @@ export function PasswordInput({
           )}
         </p>
       </div>
+      {checklistNode}
     </div>
   );
 }
