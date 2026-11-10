@@ -67,7 +67,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     // Both standalone APIs must retain the same styling as Field-inherited invalidity.
     for (const standalone of [
       example.getByRole('combobox', { name: 'Role', exact: true }).last(),
-      example.getByRole('combobox', { name: 'Region' }),
+      example.getByRole('combobox', { name: 'Required region', exact: true }),
     ]) {
       await expect(standalone).toHaveAttribute('aria-invalid', 'true');
       await expectInvalidTrigger(page, standalone, outlineBorder);

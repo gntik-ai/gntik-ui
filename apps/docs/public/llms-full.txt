@@ -5126,21 +5126,17 @@ Tokens: destructive, primary, secondary, background, focus-ring
 Usage:
 
 ```tsx
+import { useState } from 'react';
 import { Switch } from '@gntik-ai/ui';
-import { Field, FieldError, FieldLabel } from '@gntik-ai/ui';
-import { useI18n } from '@gntik-ai/ui';
 
-export default function SwitchInvalid() {
-  const { t } = useI18n();
+export default function SwitchSettings() {
+  const [alerts, setAlerts] = useState(true);
   return (
-    <div className="grid gap-4" data-switch-invalid>
-      {[false, true].map((checked) => (
-        <Field key={String(checked)} invalid>
-          <FieldLabel>{t('invalidControls.terms')}</FieldLabel>
-          <Switch invalid defaultChecked={checked} />
-          <FieldError>{t('invalidControls.acceptTerms')}</FieldError>
-        </Field>
-      ))}
+    <div className="grid gap-4">
+      <Switch label="Email alerts" checked={alerts} onCheckedChange={setAlerts} />
+      <Switch label="Weekly digest" size="sm" />
+      <Switch label="Auto-deploy" size="lg" defaultChecked />
+      <Switch label="Audit log (locked)" disabled defaultChecked />
     </div>
   );
 }

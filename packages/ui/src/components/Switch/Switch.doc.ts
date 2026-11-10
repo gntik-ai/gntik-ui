@@ -6,7 +6,7 @@ export const doc: ComponentDoc = {
   status: 'stable',
   description:
     'On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name). The optional invalid prop exposes aria-invalid and a destructive 1px track ring, checked or unchecked. Invalid Field also supplies this state. Pair invalid with a FieldError or description explaining how to correct the value; colour alone is insufficient.',
-  // Invalid state is demonstrated in SwitchInvalid.
+  // Invalid state is demonstrated in SwitchValidation.
   primitive: '@base-ui/react/switch',
   pattern: 'switch',
   keyboard: [
