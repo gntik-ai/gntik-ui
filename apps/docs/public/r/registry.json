@@ -483,6 +483,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -705,6 +710,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -1252,6 +1262,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -1492,6 +1507,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -1711,6 +1731,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -1933,6 +1958,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -2266,6 +2296,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -2487,6 +2522,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -2838,6 +2878,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -3045,6 +3090,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -3327,6 +3377,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -4081,6 +4136,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -4482,6 +4542,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -4714,6 +4779,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -5242,6 +5312,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -5767,6 +5842,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -6238,6 +6318,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -6492,6 +6577,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -6757,6 +6847,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -7011,6 +7106,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -7308,6 +7408,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -7535,6 +7640,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -7785,6 +7895,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -8041,6 +8156,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -8256,6 +8376,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -8490,6 +8615,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -8719,6 +8849,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -9334,6 +9469,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -9786,6 +9926,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -10308,6 +10453,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -10625,6 +10775,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -10976,6 +11131,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -11299,6 +11459,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -11521,6 +11686,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -11741,6 +11911,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -11974,6 +12149,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -12245,6 +12425,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -12552,6 +12737,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -12772,6 +12962,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -13001,6 +13196,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -13522,6 +13722,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -13784,6 +13989,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -14321,6 +14531,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -14745,6 +14960,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -14973,6 +15193,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -15335,6 +15560,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -15562,6 +15792,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -15781,6 +16016,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -16010,6 +16250,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -16214,6 +16459,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -16546,6 +16796,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -16811,6 +17066,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -17177,6 +17437,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -17393,6 +17658,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -17709,6 +17979,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -17940,6 +18215,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -18233,6 +18513,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -18704,6 +18989,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -18797,7 +19087,7 @@
       "name": "radio-group",
       "type": "registry:ui",
       "title": "RadioGroup",
-      "description": "Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).",
+      "description": "Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants. Set orientation=\"horizontal\" for two to four short options (Yes / No, Monthly / Annual): plain options sit in a row that wraps onto new lines, card options in equal-width columns, and list always keeps its vertical divided rows. Keep descriptions for vertical groups. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.9.0"
@@ -19211,6 +19501,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -19777,6 +20072,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -20103,6 +20403,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -20372,6 +20677,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -20598,6 +20908,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -20915,6 +21230,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -21375,6 +21695,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -21950,6 +22275,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -22573,6 +22903,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -22886,6 +23221,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -23088,6 +23428,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -23444,6 +23789,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -23878,6 +24228,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -24232,6 +24587,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -24676,6 +25036,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -24895,6 +25260,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -25128,6 +25498,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -25518,6 +25893,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -25738,6 +26118,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -25980,6 +26365,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -26246,6 +26636,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -26473,6 +26868,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -26694,6 +27094,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -26962,6 +27367,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -27237,6 +27647,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -27576,6 +27991,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -27799,6 +28219,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -28070,6 +28495,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -28302,6 +28732,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -28664,6 +29099,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -28865,6 +29305,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -29361,6 +29806,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -29665,6 +30115,11 @@
           "target": "components/i18n/messages/password-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
@@ -29884,6 +30339,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -30155,6 +30615,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
@@ -30447,6 +30912,11 @@
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",

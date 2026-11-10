@@ -23,12 +23,14 @@ import { navigationEs } from './navigation-messages';
 import { logoCloudEs } from './logo-cloud-messages';
 import { hookExampleEs } from './hook-example-messages';
 import { passwordEs } from './password-messages';
+import { radioInlineEs } from './radio-inline-messages';
 import type { Messages } from './en';
 export const es: Messages = {
   ...dateRangeExamplesEs,
   ...fileInputEs,
   ...uploadEs,
   ...fieldSizesEs,
+  ...radioInlineEs,
   ...toolCallEs,
   ...treeListEs,
   ...signUpEs,
