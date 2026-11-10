@@ -69,6 +69,8 @@ export interface SelectTriggerProps
   extends Omit<BaseSelect.Trigger.Props, 'className' | 'children'>, SelectVariantProps {
   className?: string;
   ref?: Ref<HTMLButtonElement>;
+  /** Marks the trigger invalid; pair with a FieldError or description. */
+  invalid?: boolean;
   /** Shown while nothing is selected. */
   placeholder?: ReactNode;
   /** Custom value rendering; defaults to the selected item's label (pass `items` to Select). */
@@ -76,7 +78,16 @@ export interface SelectTriggerProps
 }
 
 /** The button that shows the current value and a chevron, and opens the popup. */
-export function SelectTrigger({ variant, size, className, placeholder, children, ref, ...props }: SelectTriggerProps) {
+export function SelectTrigger({
+  variant,
+  size,
+  className,
+  placeholder,
+  children,
+  ref,
+  invalid,
+  ...props
+}: SelectTriggerProps) {
   const fieldVariant = useFieldVariant(variant);
   const v = selectVariants({ size, variant: fieldVariant });
   const context = useContext(SelectTriggerContext);
@@ -88,6 +99,8 @@ export function SelectTrigger({ variant, size, className, placeholder, children,
           cn(v.trigger(), fieldVariant !== 'outline' && state.readOnly && 'bg-secondary/40', className)
         }
         {...props}
+        {...(invalid ? { 'data-invalid': true } : {})}
+        aria-invalid={props['aria-invalid'] ?? (invalid || undefined)}
       >
         <BaseSelect.Value className={v.value()} placeholder={placeholder}>
           {children}
@@ -213,6 +226,9 @@ export interface SimpleSelectProps<V extends string = string>
   /** Visible label. Without it, pass `aria-label`. */
   label?: ReactNode;
   'aria-label'?: string;
+  'aria-invalid'?: SelectTriggerProps['aria-invalid'];
+  /** Marks the trigger invalid; pair with a FieldError or description. */
+  invalid?: boolean;
   placeholder?: ReactNode;
   /** Class for the trigger. */
   className?: string;
@@ -235,6 +251,8 @@ export function SimpleSelect<V extends string = string>({
   variant,
   className,
   'aria-label': ariaLabel,
+  'aria-invalid': ariaInvalid,
+  invalid,
   onOpenChange,
   triggerRef,
   ref,
@@ -278,6 +296,8 @@ export function SimpleSelect<V extends string = string>({
         className={cn(className, canClear && 'pe-14')}
         placeholder={placeholder}
         aria-label={ariaLabel}
+        aria-invalid={ariaInvalid}
+        invalid={invalid}
         onKeyDown={(event) => {
           if (canClear && (event.key === 'Delete' || event.key === 'Backspace')) {
             event.preventDefault();

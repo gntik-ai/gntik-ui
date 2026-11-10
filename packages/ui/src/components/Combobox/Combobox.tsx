@@ -24,6 +24,8 @@ type InputBaseProps = Omit<BaseCombobox.Input.Props, 'className' | 'size'> & {
   ref?: Ref<HTMLInputElement>;
   /** Visible label rendered above the field and bound to the input. Without it, pass `aria-label`. */
   label?: ReactNode;
+  /** Marks the input invalid; pair with a FieldError or description. */
+  invalid?: boolean;
 };
 
 export interface ComboboxInputProps extends InputBaseProps, ComboboxVariantProps {
@@ -44,6 +46,7 @@ export function ComboboxInput({
   clearLabel: clearLabelProp,
   triggerLabel: triggerLabelProp,
   id,
+  invalid,
   ...props
 }: ComboboxInputProps) {
   const { t } = useI18n();
@@ -62,6 +65,7 @@ export function ComboboxInput({
         </label>
       )}
       <BaseCombobox.InputGroup
+        {...(invalid ? { 'data-invalid': true } : {})}
         className={(state) =>
           cn(
             v.inputGroup(),
@@ -76,6 +80,7 @@ export function ComboboxInput({
           aria-labelledby={label ? `${inputId}-label` : undefined}
           className={v.input()}
           {...props}
+          aria-invalid={props['aria-invalid'] ?? (invalid || undefined)}
           onKeyDown={onKeyDown}
         />
         {showClear && (
@@ -164,6 +169,7 @@ export function ComboboxChipsInput<Item = unknown>({
   getLabel = defaultLabel,
   removeLabel: removeLabelProp,
   id,
+  invalid,
   ...props
 }: ComboboxChipsInputProps<Item>) {
   const fieldVariant = useFieldVariant(variant);
@@ -181,6 +187,7 @@ export function ComboboxChipsInput<Item = unknown>({
         </label>
       )}
       <BaseCombobox.InputGroup
+        {...(invalid ? { 'data-invalid': true } : {})}
         className={(state) =>
           cn(
             v.chipsGroup(),
@@ -209,6 +216,7 @@ export function ComboboxChipsInput<Item = unknown>({
                 placeholder={values.length ? undefined : placeholder}
                 className={s.chipsInput()}
                 {...props}
+                aria-invalid={props['aria-invalid'] ?? (invalid || undefined)}
                 onKeyDown={onKeyDown}
               />
             </BaseCombobox.Chips>

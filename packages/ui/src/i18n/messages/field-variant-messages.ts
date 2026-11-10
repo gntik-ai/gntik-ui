@@ -1,5 +1,15 @@
 /** Labels for the field chrome live previews. */
 export const fieldVariantsEn = {
+  'invalidControls.role': 'Role',
+  'invalidControls.chooseRole': 'Choose a role.',
+  'invalidControls.name': 'Full name',
+  'invalidControls.enterName': 'Enter a name.',
+  'invalidControls.region': 'Required region',
+  'invalidControls.chooseRegion': 'Choose a region.',
+  'invalidControls.terms': 'Accept terms',
+  'invalidControls.acceptTerms': 'Accept the terms to continue.',
+  'invalidControls.range': 'Allowed range',
+  'invalidControls.chooseRange': 'Choose a range within the allowed limits.',
   'fieldVariants.name': 'Name',
   'fieldVariants.value': 'Workspace',
   'fieldVariants.search': 'Search fields',
@@ -19,6 +29,16 @@ export const fieldVariantsEn = {
 } as const;
 
 export const fieldVariantsEs = {
+  'invalidControls.role': 'Rol',
+  'invalidControls.chooseRole': 'Elige un rol.',
+  'invalidControls.name': 'Nombre completo',
+  'invalidControls.enterName': 'Introduce un nombre.',
+  'invalidControls.region': 'Región obligatoria',
+  'invalidControls.chooseRegion': 'Elige una región.',
+  'invalidControls.terms': 'Aceptar las condiciones',
+  'invalidControls.acceptTerms': 'Acepta las condiciones para continuar.',
+  'invalidControls.range': 'Rango permitido',
+  'invalidControls.chooseRange': 'Elige un rango dentro de los límites permitidos.',
   'fieldVariants.name': 'Nombre',
   'fieldVariants.value': 'Espacio de trabajo',
   'fieldVariants.search': 'Buscar campos',

@@ -1,3 +1,4 @@
+import { Field } from '../Field/Field';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
@@ -90,4 +91,39 @@ describe('Slider', () => {
     render(<Example />);
     await expectNoAxeViolations();
   });
+});
+
+describe('invalid state', () => {
+  it('marks every range input invalid and respects explicit aria-invalid', () => {
+    const { rerender } = render(<Slider invalid label="Range" defaultValue={[20, 80]} />);
+    const inputs = screen.getAllByRole('slider');
+    expect(inputs).toHaveLength(2);
+    for (const input of inputs) expect(input).toHaveAttribute('aria-invalid', 'true');
+    rerender(<Slider invalid aria-invalid="false" label="Range" defaultValue={[20, 80]} />);
+    for (const input of screen.getAllByRole('slider')) expect(input).toHaveAttribute('aria-invalid', 'false');
+    rerender(<Slider label="Range" defaultValue={[20, 80]} />);
+    for (const input of screen.getAllByRole('slider')) {
+      expect(input).not.toHaveAttribute('aria-invalid');
+      expect(input.closest('[data-invalid]')).toBeNull();
+    }
+  });
+  it('inherits invalid from Field on every input', () => {
+    render(
+      <Field invalid>
+        <Slider invalid={false} label="Range" defaultValue={[20, 80]} />
+      </Field>,
+    );
+    for (const input of screen.getAllByRole('slider')) expect(input).toHaveAttribute('aria-invalid', 'true');
+  });
+});
+
+it('keeps the focused thumb mounted when invalid state clears', async () => {
+  const user = userEvent.setup();
+  const { rerender } = render(<Slider invalid label="Volume" defaultValue={50} />);
+  await user.tab();
+  const input = screen.getByRole('slider');
+  expect(input).toHaveFocus();
+  rerender(<Slider label="Volume" defaultValue={50} />);
+  expect(screen.getByRole('slider')).toBe(input);
+  expect(input).toHaveFocus();
 });

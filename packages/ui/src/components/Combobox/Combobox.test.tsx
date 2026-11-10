@@ -1,3 +1,4 @@
+import { Field } from '../Field/Field';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createRef } from 'react';
@@ -6,6 +7,7 @@ import {
   Combobox,
   ComboboxContent,
   ComboboxInput,
+  ComboboxChipsInput,
   ComboboxItem,
   ComboboxTrigger,
   ComboboxPopupInput,
@@ -339,4 +341,42 @@ it('opens a trigger popup with a search header and filters while the input keeps
   expect(screen.getAllByRole('option')).toHaveLength(1);
   expect(screen.getByText('Footer')).toBeInTheDocument();
   expect(input).toHaveFocus();
+});
+
+describe('invalid state', () => {
+  it.each([false, true])('marks the input and group invalid (chips=%s)', (chips) => {
+    const Control = chips ? ComboboxChipsInput : ComboboxInput;
+    const { rerender } = render(
+      <Combobox multiple={chips}>
+        <Control invalid aria-label="Region" />
+      </Combobox>,
+    );
+    const input = screen.getByRole('combobox');
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+    expect(input.closest('[data-invalid]')).toHaveClass('border');
+    rerender(
+      <Combobox multiple={chips}>
+        <Control invalid aria-invalid="false" aria-label="Region" />
+      </Combobox>,
+    );
+    expect(input).toHaveAttribute('aria-invalid', 'false');
+    rerender(
+      <Combobox multiple={chips}>
+        <Control aria-label="Region" />
+      </Combobox>,
+    );
+    expect(input).not.toHaveAttribute('aria-invalid');
+    expect(input.closest('[data-invalid]')).toBeNull();
+  });
+  it.each([false, true])('preserves an invalid Field (chips=%s)', (chips) => {
+    const Control = chips ? ComboboxChipsInput : ComboboxInput;
+    render(
+      <Field invalid>
+        <Combobox multiple={chips}>
+          <Control invalid={false} aria-label="Region" />
+        </Combobox>
+      </Field>,
+    );
+    expect(screen.getByRole('combobox')).toHaveAttribute('data-invalid');
+  });
 });

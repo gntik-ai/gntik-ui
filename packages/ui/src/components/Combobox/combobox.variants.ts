@@ -6,6 +6,7 @@ const invalidField =
   'data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70';
 
 const field = [
+  invalidField,
   'rounded-md border border-border bg-background text-foreground shadow-sm transition-colors',
   'focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring',
   'has-[input[data-disabled]]:cursor-disabled has-[input[data-disabled]]:opacity-50',
@@ -47,12 +48,12 @@ export const comboboxVariants = tv({
     variant: {
       outline: {},
       filled: {
-        inputGroup: [fieldControlVariants.filled, invalidField],
-        chipsGroup: [fieldControlVariants.filled, invalidField],
+        inputGroup: [fieldControlVariants.filled],
+        chipsGroup: [fieldControlVariants.filled],
       },
       ghost: {
-        inputGroup: [fieldControlVariants.ghost, invalidField],
-        chipsGroup: [fieldControlVariants.ghost, invalidField],
+        inputGroup: [fieldControlVariants.ghost],
+        chipsGroup: [fieldControlVariants.ghost],
       },
     },
 

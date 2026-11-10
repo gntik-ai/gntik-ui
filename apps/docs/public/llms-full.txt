@@ -3449,7 +3449,7 @@ export default function ClickableCardList() {
 
 ### Combobox (`combobox`)
 
-Use Combobox when the value must be a listed item; to accept any text with suggestions as hints, use Autocomplete. ComboboxTrigger offers a field-style button (size auto/sm/md/lg), or a custom element through render. ComboboxContent accepts optional header and footer slots; put ComboboxPopupInput in header to focus search on open. The popup input uses the localized search placeholder and shares virtualized keyboard navigation. Optional listClassName and emptyClassName customize presentation. With no slots the original input/list structure is preserved. See ComboboxPopupSearch for the trigger, header and footer together. Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews.
+Use Combobox when the value must be a listed item; to accept any text with suggestions as hints, use Autocomplete. ComboboxTrigger offers a field-style button (size auto/sm/md/lg), or a custom element through render. ComboboxContent accepts optional header and footer slots; put ComboboxPopupInput in header to focus search on open. The popup input uses the localized search placeholder and shares virtualized keyboard navigation. Optional listClassName and emptyClassName customize presentation. With no slots the original input/list structure is preserved. See ComboboxPopupSearch for the trigger, header and footer together. Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews. ComboboxInput and ComboboxChipsInput accept invalid, exposing aria-invalid on the input and a destructive border on the group in every variant. Invalid Field works without the prop. Pair invalid with a FieldError or description explaining the error; colour alone is insufficient.
 
 - Package: `@gntik-ai/ui` · export `Combobox` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Combobox/Combobox.doc.ts
@@ -3471,7 +3471,7 @@ Keyboard:
 | Backspace | Multi-select, empty input: removes the last chip |
 | Enter on “Create …” / “Retry” | Creates an item from the typed text (onCreate) / loads the options again after an error |
 
-Tokens: background, border, popover, popover-foreground, primary, primary-text, secondary, muted-foreground, focus-ring
+Tokens: destructive, background, border, popover, popover-foreground, primary, primary-text, secondary, muted-foreground, focus-ring
 
 Usage:
 
@@ -4995,7 +4995,7 @@ export default function SecretFieldBasic() {
 
 ### Select (`select`)
 
-Pick one value from a popup list using compound parts or SimpleSelect. SimpleSelect exposes ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name. For long lists, use Combobox with virtualized and a flat items array (see ComboboxVirtualized); Select requires its options to stay mounted for typeahead. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.
+Pick one value from a popup list using compound parts or SimpleSelect. SimpleSelect exposes ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name. For long lists, use Combobox with virtualized and a flat items array (see ComboboxVirtualized); Select requires its options to stay mounted for typeahead. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged. SelectTrigger and SimpleSelect accept invalid. Invalid Field or aria-invalid also gives every variant a destructive border, including on hover and while open; keyboard focus keeps its outline. SimpleSelect forwards aria-invalid to the trigger. Pair invalid with a FieldError or description explaining how to correct the value; colour alone is insufficient.
 
 - Package: `@gntik-ai/ui` · export `Select` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Select/Select.doc.ts
@@ -5016,7 +5016,7 @@ Keyboard:
 | Type a character | Typeahead: highlights the next option starting with it |
 | Escape, then Enter / ArrowDown | After a failed async load: closing and reopening the popup retries |
 
-Tokens: background, border, popover, popover-foreground, primary, primary-text, secondary, muted-foreground, ring, focus-ring
+Tokens: destructive, background, border, popover, popover-foreground, primary, primary-text, secondary, muted-foreground, ring, focus-ring
 
 Usage:
 
@@ -5062,7 +5062,7 @@ export default function SelectAsync() {
 
 ### Slider (`slider`)
 
-Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form.
+Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form. The optional invalid prop exposes aria-invalid on every thumb input and destructive thumb borders; invalid Field works without the prop. Pair invalid with a FieldError or description explaining the allowed values; colour alone is insufficient.
 
 - Package: `@gntik-ai/ui` · export `Slider` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Slider/Slider.doc.ts
@@ -5081,44 +5081,30 @@ Keyboard:
 | Home / End | Moves the focused thumb to the minimum / maximum |
 | Tab | Moves focus between thumbs |
 
-Tokens: primary, secondary, background, foreground, muted-foreground, focus-ring
+Tokens: destructive, primary, secondary, background, foreground, muted-foreground, focus-ring
 
 Usage:
 
 ```tsx
 import { Slider } from '@gntik-ai/ui';
+import { Field, FieldError, FieldLabel } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
 
-export default function SliderRange() {
+export default function SliderInvalid() {
+  const { t } = useI18n();
   return (
-    <div className="grid w-full max-w-sm gap-7">
-      <Slider
-        label="Autoscaling bounds"
-        showValue
-        min={1}
-        max={20}
-        defaultValue={[2, 8]}
-        minStepsBetweenValues={1}
-        thumbLabels={['Minimum instances', 'Maximum instances']}
-      />
-      <Slider
-        label="Monthly budget"
-        showValue
-        min={0}
-        max={5000}
-        step={100}
-        largeStep={500}
-        defaultValue={[500, 2000]}
-        format={{ style: 'currency', currency: 'USD', maximumFractionDigits: 0 }}
-        thumbLabels={['Minimum budget', 'Maximum budget']}
-      />
-    </div>
+    <Field invalid data-slider-invalid>
+      <FieldLabel>{t('invalidControls.range')}</FieldLabel>
+      <Slider invalid defaultValue={[20, 80]} />
+      <FieldError>{t('invalidControls.chooseRange')}</FieldError>
+    </Field>
   );
 }
 ```
 
 ### Switch (`switch`)
 
-On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).
+On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name). The optional invalid prop exposes aria-invalid and a destructive 1px track ring, checked or unchecked. Invalid Field also supplies this state. Pair invalid with a FieldError or description explaining how to correct the value; colour alone is insufficient.
 
 - Package: `@gntik-ai/ui` · export `Switch` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Switch/Switch.doc.ts
@@ -5135,7 +5121,7 @@ Keyboard:
 | Enter | Toggles the switch |
 | Tab | Moves focus to and from the switch |
 
-Tokens: primary, secondary, background, focus-ring
+Tokens: destructive, primary, secondary, background, focus-ring
 
 Usage:
 
