@@ -1,4 +1,17 @@
-import { createContext, useContext, useRef, type FormEvent, type FormHTMLAttributes, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type FormEvent,
+  type FormHTMLAttributes,
+  type ReactNode,
+  type RefObject,
+} from 'react';
 import type {
   FieldPath,
   FieldPathValue,
@@ -6,6 +19,7 @@ import type {
   FormProviderProps,
   SubmitErrorHandler,
   SubmitHandler,
+  UseFormReset,
   UseFormReturn,
 } from 'react-hook-form';
 import { FormProvider, useFormState } from 'react-hook-form';
@@ -13,6 +27,7 @@ import { FormActionsContext } from './FormActions';
 import { cn } from '../utils/cn';
 import { toValueProps, toCheckedProps, type ValueBindingProps, type CheckedBindingProps } from './bindings';
 import { Field, FieldDescription, FieldError, FieldLabel } from '../components/Field';
+import { createServerErrorStore, ServerErrorsContext, type FormServerErrors } from './serverErrors';
 import { useFieldProps, type UseFieldPropsOptions, type UseFieldPropsResult } from './useFieldProps';
 
 export interface EnhancedFieldProps {
@@ -120,6 +135,12 @@ export interface FormProps<TValues extends FieldValues, TTransformed = TValues> 
   afterSubmit?: 'keep' | 'rebase' | 'reset';
   /** Adds form-wide disabled/readOnly props to fields by name. Undefined leaves props unchanged. */
   enhanceFieldProps?: EnhanceFieldProps;
+  /**
+   * Server-side messages by field path (`name`, `members.1.email`); `''` or a path with no mounted
+   * FormField goes to FormRootError. Applied when the object's identity changes, so keep it in state.
+   * Each message clears on the first edit of its field, and on submit or reset.
+   */
+  errors?: FormServerErrors;
   children?: ReactNode;
 }
 
@@ -133,48 +154,98 @@ export function Form<TValues extends FieldValues, TTransformed = TValues>({
   onInvalid,
   afterSubmit = 'keep',
   enhanceFieldProps,
+  errors,
   children,
   ...props
 }: FormProps<TValues, TTransformed>) {
   const { isDirty, isSubmitting } = useFormState({ control: form.control });
   const formElement = useRef<HTMLFormElement>(null);
   const inFlight = useRef(false);
+  const serverErrors = useServerErrors(form, errors, formElement);
+  const reset = serverErrors.reset;
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (inFlight.current) return;
     inFlight.current = true;
+    serverErrors.store.reset();
     try {
       await form.handleSubmit(async (values, event) => {
         await onSubmit(values, event);
-        if (afterSubmit === 'rebase') form.reset(form.getValues());
-        else if (afterSubmit === 'reset') form.reset();
+        if (afterSubmit === 'rebase') reset(form.getValues());
+        else if (afterSubmit === 'reset') reset();
       }, onInvalid)(event);
     } finally {
       inFlight.current = false;
     }
   };
-  const provider = form as unknown as FormProviderProps<TValues, unknown, TTransformed>;
+  const provider = { ...form, reset } as unknown as FormProviderProps<TValues, unknown, TTransformed>;
   return (
     <FormProvider {...provider}>
-      <FieldEnhancerContext.Provider value={enhanceFieldProps}>
-        <FormActionsContext.Provider
-          value={{
-            isDirty,
-            isSubmitting,
-            submit: () => {
-              const element = formElement.current;
-              if (!element) return;
-              if (typeof element.requestSubmit === 'function') element.requestSubmit();
-              else element.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-            },
-            reset: () => form.reset(),
-          }}
-        >
-          <form noValidate {...props} ref={formElement} onSubmit={submit}>
-            {children}
-          </form>
-        </FormActionsContext.Provider>
-      </FieldEnhancerContext.Provider>
+      <ServerErrorsContext.Provider value={serverErrors.store}>
+        <FieldEnhancerContext.Provider value={enhanceFieldProps}>
+          <FormActionsContext.Provider
+            value={{
+              isDirty,
+              isSubmitting,
+              submit: () => {
+                const element = formElement.current;
+                if (!element) return;
+                if (typeof element.requestSubmit === 'function') element.requestSubmit();
+                else element.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+              },
+              reset: () => reset(),
+            }}
+          >
+            <form noValidate {...props} ref={formElement} onSubmit={submit}>
+              {children}
+            </form>
+          </FormActionsContext.Provider>
+        </FieldEnhancerContext.Provider>
+      </ServerErrorsContext.Provider>
     </FormProvider>
   );
+}
+
+/**
+ * The Form's server-error store and its one reset function. Submit and every reset path (FormReset,
+ * afterSubmit, and a consumer's `form.reset()` while the Form is mounted) clear the store through it.
+ */
+function useServerErrors<TValues extends FieldValues, TTransformed>(
+  form: UseFormReturn<TValues, unknown, TTransformed>,
+  errors: FormServerErrors | undefined,
+  formElement: RefObject<HTMLFormElement | null>,
+) {
+  const [store] = useState(createServerErrorStore);
+  const original = useMemo(() => form.reset, [form]);
+  const reset = useCallback<UseFormReset<TValues>>(
+    (...args) => {
+      store.reset();
+      return original(...args);
+    },
+    [store, original],
+  );
+  useEffect(() => interceptReset(form, reset, original), [form, reset, original]);
+  const applied = useRef<FormServerErrors>(undefined);
+  useEffect(() => {
+    if (errors && errors !== applied.current) store.apply(errors);
+    applied.current = errors;
+  }, [store, errors]);
+  // Focus after the applied errors have committed, so the control's description already holds them.
+  const focusTicket = useSyncExternalStore(store.subscribe, store.getFocusTicket, () => 0);
+  useEffect(() => {
+    if (focusTicket > 0) store.focusFirst(formElement.current);
+  }, [store, focusTicket, formElement]);
+  return { store, reset };
+}
+
+/** Routes a consumer's `form.reset()` through the Form's reset while mounted; the cleanup restores the original. */
+function interceptReset<TValues extends FieldValues>(
+  form: { reset: UseFormReset<TValues> },
+  reset: UseFormReset<TValues>,
+  original: UseFormReset<TValues>,
+): () => void {
+  form.reset = reset;
+  return () => {
+    if (form.reset === reset) form.reset = original;
+  };
 }

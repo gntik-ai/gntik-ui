@@ -7,6 +7,7 @@ import FormBindings from './examples/FormBindings';
 import FormDialogForm from './examples/FormDialogForm';
 import FormEditSettings from './examples/FormEditSettings';
 import FormInviteMember from './examples/FormInviteMember';
+import FormServerErrors from './examples/FormServerErrors';
 
 it.each(['dark', 'light', 'high_contrast'])('form examples have no axe violations in %s', async (theme) => {
   document.documentElement.className = theme === 'light' ? '' : theme;
@@ -139,4 +140,58 @@ it.each(['dark', 'light', 'high_contrast'])('the edit settings actions have no a
   await waitFor(() => expect(save).toBeDisabled());
   expect(save).not.toHaveAttribute('aria-busy');
   await expectNoAxeViolations();
+});
+
+it.each(['dark', 'light', 'high_contrast'])('the server errors example has no axe violations in %s', async (theme) => {
+  document.documentElement.className = theme === 'light' ? '' : theme;
+  const user = userEvent.setup();
+  const view = render(<FormServerErrors />);
+  await expectNoAxeViolations();
+  await user.type(screen.getByRole('textbox', { name: 'Workspace name' }), 'billing');
+  await user.type(screen.getByRole('textbox', { name: 'Owner email' }), 'ana@example.invalid');
+  await user.click(screen.getByRole('button', { name: 'Create workspace' }));
+  expect(await screen.findByText('That name is taken.')).toBeVisible();
+  expect(screen.getByText('This email domain is not allowed.')).toBeVisible();
+  await waitFor(() => expect(screen.getByRole('textbox', { name: 'Workspace name' })).toHaveFocus());
+  await expectNoAxeViolations();
+  view.unmount();
+  document.documentElement.className = '';
+});
+
+it('the server errors example falls back to a form-level alert for the quota error', async () => {
+  const user = userEvent.setup();
+  render(<FormServerErrors />);
+  const name = screen.getByRole('textbox', { name: 'Workspace name' });
+  const email = screen.getByRole('textbox', { name: 'Owner email' });
+  await user.type(email, 'ana@example.test');
+  for (const workspace of ['alpha', 'beta']) {
+    await user.clear(name);
+    await user.type(name, workspace);
+    await user.click(screen.getByRole('button', { name: 'Create workspace' }));
+    await screen.findByText('Workspace created.');
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Create workspace' })).not.toHaveAttribute('aria-busy'),
+    );
+  }
+  await user.click(screen.getByRole('button', { name: 'Create workspace' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Quota exceeded for this workspace.');
+  await expectNoAxeViolations();
+  await waitFor(() =>
+    expect(screen.getByRole('button', { name: 'Create workspace' })).not.toHaveAttribute('aria-busy'),
+  );
+  await user.click(screen.getByRole('button', { name: 'Create workspace' }));
+  await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('Quota exceeded for this workspace.'));
+});
+
+it('localizes the server errors example', async () => {
+  const user = userEvent.setup();
+  render(
+    <I18nProvider locale="es">
+      <FormServerErrors />
+    </I18nProvider>,
+  );
+  await user.type(screen.getByRole('textbox', { name: 'Nombre del espacio' }), 'billing');
+  await user.type(screen.getByRole('textbox', { name: 'Correo del propietario' }), 'ana@example.test');
+  await user.click(screen.getByRole('button', { name: 'Crear espacio' }));
+  expect(await screen.findByText('Ese nombre ya está en uso.')).toBeVisible();
 });

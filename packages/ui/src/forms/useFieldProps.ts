@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import {
   useController,
   useFormContext,
@@ -8,6 +9,7 @@ import {
   type FieldValues,
   type RegisterOptions,
 } from 'react-hook-form';
+import { useServerFieldError, useServerFieldRegistration } from './serverErrors';
 
 export interface UseFieldPropsOptions<TValues extends FieldValues, TName extends FieldPath<TValues>> {
   /** The form's `control`. Defaults to the nearest `<FormProvider>` / `<Form>`. */
@@ -24,6 +26,8 @@ export interface FormFieldStateProps {
   invalid: boolean;
   touched: boolean;
   dirty: boolean;
+  /** Lets the enclosing Form order fields in the document when it focuses the first server error. */
+  ref: (element: HTMLElement | null) => void;
 }
 
 export interface UseFieldPropsResult<TValues extends FieldValues, TName extends FieldPath<TValues>> {
@@ -34,7 +38,7 @@ export interface UseFieldPropsResult<TValues extends FieldValues, TName extends 
    * `ref` must reach a focusable element so a failed submit can focus the first invalid field.
    */
   controlProps: ControllerRenderProps<TValues, TName> & { 'aria-invalid'?: true };
-  /** The current error message, for `<FieldError match={!!error}>{error}</FieldError>`. */
+  /** The current error message (a Form `errors` message wins over the client error), for `<FieldError match={!!error}>{error}</FieldError>`. */
   error: string | undefined;
   fieldState: ControllerFieldState;
 }
@@ -57,11 +61,21 @@ export function useFieldProps<
     rules,
     disabled,
   });
-  const invalid = !!fieldState.error;
+  const serverMessage = useServerFieldError(name, field.value);
+  const { rootRef, captureFocus } = useServerFieldRegistration(name, field.value);
+  const { ref: fieldRef } = field;
+  const ref = useCallback(
+    (instance: { focus: () => void } | null) => {
+      fieldRef(instance);
+      captureFocus(instance);
+    },
+    [fieldRef, captureFocus],
+  );
+  const invalid = !!fieldState.error || serverMessage !== undefined;
   return {
-    fieldProps: { name, invalid, touched: fieldState.isTouched, dirty: fieldState.isDirty },
-    controlProps: { ...field, 'aria-invalid': invalid || undefined },
-    error: errorMessage(fieldState.error),
+    fieldProps: { name, invalid, touched: fieldState.isTouched, dirty: fieldState.isDirty, ref: rootRef },
+    controlProps: { ...field, ref, 'aria-invalid': invalid || undefined },
+    error: serverMessage ?? errorMessage(fieldState.error),
     fieldState,
   };
 }
