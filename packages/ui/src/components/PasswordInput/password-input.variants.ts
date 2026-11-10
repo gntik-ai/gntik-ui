@@ -10,13 +10,21 @@ export const passwordInputVariants = tv({
     segment: 'h-1 rounded-full bg-secondary transition-colors motion-reduce:transition-none',
     text: 'text-[12px] leading-4 text-muted-foreground',
     level: 'font-medium',
+    list: 'm-0 flex list-none flex-col gap-1 p-0',
+    item: 'flex items-center gap-2 text-[12px] leading-4',
+    icon: 'size-3.5 shrink-0',
   },
   variants: {
     size: {
       auto: {},
       sm: {},
       md: {},
-      lg: { toggle: 'size-9 [&_svg]:size-[17px]', text: 'text-[13px]' },
+      lg: { toggle: 'size-9 [&_svg]:size-[17px]', text: 'text-[13px]', item: 'text-[13px]' },
+    },
+    state: {
+      neutral: { item: 'text-muted-foreground', icon: 'text-muted-foreground' },
+      unmet: { item: 'text-muted-foreground', icon: 'text-muted-foreground' },
+      met: { item: 'text-foreground', icon: 'text-success-text' },
     },
     level: {
       0: { level: 'text-destructive-text' },

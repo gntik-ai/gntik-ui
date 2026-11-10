@@ -1,5 +1,15 @@
 export { PasswordInput, type PasswordInputProps } from './PasswordInput';
-export { scorePassword, DEFAULT_STRENGTH_LABELS, type PasswordStrength } from './password-strength';
+export {
+  scorePassword,
+  checkPasswordRules,
+  builtInPasswordRules,
+  DEFAULT_STRENGTH_LABELS,
+  type PasswordRequirement,
+  type PasswordRuleId,
+  type PasswordRules,
+  type PasswordRulesResult,
+  type PasswordStrength,
+} from './password-strength';
 export {
   passwordInputVariants,
   PASSWORD_SEGMENT_FILL,
