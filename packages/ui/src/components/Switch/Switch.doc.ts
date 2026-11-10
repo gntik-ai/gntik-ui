@@ -15,6 +15,7 @@ export const doc: ComponentDoc = {
     ['Tab', 'Moves focus to and from the switch'],
   ],
   dataAttributes: [
+    ['data-invalid', 'root', 'The control value is invalid; the track shows a destructive ring.'],
     ['data-checked', 'root', 'The control is checked.'],
     ['data-disabled', 'root', 'The control cannot be changed or activated.'],
     ['data-checked', 'thumb', 'The control is checked.'],

@@ -40,3 +40,15 @@
 - Pass the complete `@gntik-ai/ui` suite: all 3,044 tests across 290 files, without skips. The nine remaining non-token library suites also pass. Library builds, monorepo lint and typecheck, registry:check, docs coverage, both app kit-only checks, strict OpenSpec validation and formatting also pass.
 - Rerun the untouched tokens suite: 17 test files pass; only mirror-install fails. Running that file directly confirms the sandbox's offline fallback still reads the missing `gntik-ai-tokens-0.2.1.tgz` at line 93. Report this as SKIPPED under the operator decision.
 - Preserve the existing single minor changeset, pre-existing tests, workflows and component implementations. Browser a11y suites remain assigned to PR CI.
+
+## Checks-job revalidation (2026-11-10)
+
+- Start from the supplied clean worktree at `52c8befc`; retain the existing implementation and CI repair. The supplied `checks` excerpt contains no failing assertion: its MCP suites report zero failures, and its release-fixture messages are skips. The full local docs suite identifies the remaining failure in the pre-existing styling-hook contract.
+- Re-run the seven focused control, form, variant and example files: all 134 tests pass. Re-run the pre-existing MCP canonical-usage regression directly: it passes, including SwitchSettings as the representative Switch example.
+- Reproduce with `cd apps/docs && node test/styling-hooks.test.mjs`: the public docs boundary fails on `Slider root data-invalid meaning`. Document the invalid root hook, then observe and document the missing descendant `data-index` selector meaning, followed by the missing Switch invalid root hook. The unchanged regression passes with `cd apps/docs && node --test test/styling-hooks.test.mjs`. No test or gate is modified.
+- Regenerate the registry after repairing the metadata. Compare all changed DOM/class snapshots and outline fixtures with base `50daab66`: every added class is limited to invalid state, with identical remaining content.
+- Pass all 18 files in the complete docs suite, including styling hooks and docs coverage. Pass the final library builds, typecheck, registry check, app kit-only checks and strict OpenSpec validation. Preserve all pre-existing tests and the existing single minor changeset.
+- Pass the complete UI suite: all 3,044 tests across 290 files, with no skips. Lint passes on retry with the existing React Hook Form warning and no errors.
+- Pass the remaining library suites: the final blocks run passes 1,224 tests across 163 files, templates passes 539 tests across 83 files, and the other seven non-token library packages pass their recursive runs. Keep MCP CLI and evals suites assigned to PR CI under the worker rules.
+- Re-run the untouched tokens suite and mirror-install in isolation. Seventeen token test files pass; mirror-install repeatedly raises ENOENT at line 93 while reading `gntik-ai-tokens-0.2.1.tgz` from its offline fallback. Report it as SKIPPED under the operator decision; preserve tokens and its tests.
+- Browser computed styles, high-contrast ring contrast, browser axe and visual checks remain assigned to PR CI.

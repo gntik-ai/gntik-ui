@@ -17,6 +17,8 @@ export const doc: ComponentDoc = {
     ['Tab', 'Moves focus between thumbs'],
   ],
   dataAttributes: [
+    ['data-invalid', 'root', 'The control value is invalid; descendant thumb borders show the error.'],
+    ['data-index', 'root', 'Targets descendant thumbs by their zero-based index when styling an invalid root.'],
     ['data-disabled', 'root', 'The control cannot be changed or activated.'],
     ['data-disabled', 'control', 'The control cannot be changed or activated.'],
     ['data-dragging', 'thumb', 'The part is being dragged.'],
