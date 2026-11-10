@@ -17,11 +17,22 @@ export interface RadioGroupProps<Value = string>
  * Single-choice group (role radiogroup). Arrow keys move and select; Tab enters the group
  * once, on the selected radio. Name it with `aria-labelledby`, or render it as a Fieldset:
  * `<Fieldset render={<RadioGroup />}>`. Variants: plain, list (bordered rows) and card.
+ * `orientation="horizontal"` lays two to four short plain options out in a wrapping row and card
+ * options in equal-width columns; `list` always stays vertical. Arrow keys work in both axes.
  */
-export function RadioGroup<Value = string>({ variant = 'plain', className, ...props }: RadioGroupProps<Value>) {
+export function RadioGroup<Value = string>({
+  variant = 'plain',
+  orientation = 'vertical',
+  className,
+  ...props
+}: RadioGroupProps<Value>) {
   return (
     <VariantContext.Provider value={variant}>
-      <BaseRadioGroup<Value> className={cn(radioGroupVariants({ variant }).group(), className)} {...props} />
+      <BaseRadioGroup<Value>
+        className={cn(radioGroupVariants({ variant, orientation }).group(), className)}
+        data-orientation={orientation === 'horizontal' ? 'horizontal' : undefined}
+        {...props}
+      />
     </VariantContext.Provider>
   );
 }

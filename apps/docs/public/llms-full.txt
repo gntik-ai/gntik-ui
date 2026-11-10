@@ -4721,7 +4721,7 @@ export default function QueryBuilderBasic() {
 
 ### RadioGroup (`radio-group`)
 
-Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).
+Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants. Set orientation="horizontal" for two to four short options (Yes / No, Monthly / Annual): plain options sit in a row that wraps onto new lines, card options in equal-width columns, and list always keeps its vertical divided rows. Keep descriptions for vertical groups. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).
 
 - Package: `@gntik-ai/ui` · export `RadioGroup` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/RadioGroup/RadioGroup.doc.ts

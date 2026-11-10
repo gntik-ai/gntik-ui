@@ -23,11 +23,13 @@ import { navigationEn } from './navigation-messages';
 import { logoCloudEn } from './logo-cloud-messages';
 import { hookExampleEn } from './hook-example-messages';
 import { passwordEn } from './password-messages';
+import { radioInlineEn } from './radio-inline-messages';
 export const en = {
   ...dateRangeExamplesEn,
   ...fileInputEn,
   ...uploadEn,
   ...fieldSizesEn,
+  ...radioInlineEn,
   ...toolCallEn,
   ...treeListEn,
   ...signUpEn,

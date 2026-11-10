@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'stable',
   description:
-    'Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).',
+    'Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants. Set orientation="horizontal" for two to four short options (Yes / No, Monthly / Annual): plain options sit in a row that wraps onto new lines, card options in equal-width columns, and list always keeps its vertical divided rows. Keep descriptions for vertical groups. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).',
   primitive: '@base-ui/react/radio-group, @base-ui/react/radio',
   pattern: 'radio group',
   keyboard: [
@@ -19,6 +19,11 @@ export const doc: ComponentDoc = {
   <Radio value="second">Second</Radio>
 </RadioGroup>`,
   dataAttributes: [
+    [
+      'data-orientation',
+      'group',
+      'Present with the value horizontal when orientation is horizontal; absent otherwise.',
+    ],
     ['data-checked', 'radio', 'The control is checked.'],
     ['data-invalid', 'radio', 'The control value is invalid.'],
     ['data-disabled', 'radio', 'The control cannot be changed or activated.'],

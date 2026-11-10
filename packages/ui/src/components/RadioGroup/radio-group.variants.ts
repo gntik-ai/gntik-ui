@@ -39,8 +39,24 @@ export const radioGroupVariants = tv({
         description: 'text-[12px]',
       },
     },
+    orientation: {
+      vertical: {},
+      horizontal: {},
+    },
   },
-  defaultVariants: { variant: 'plain' },
+  compoundVariants: [
+    {
+      variant: 'plain',
+      orientation: 'horizontal',
+      class: { group: 'flex-row flex-wrap items-start gap-x-6 gap-y-2.5' },
+    },
+    {
+      variant: 'card',
+      orientation: 'horizontal',
+      class: { group: 'grid grid-cols-[repeat(auto-fit,minmax(min(100%,12rem),1fr))] gap-3' },
+    },
+  ],
+  defaultVariants: { variant: 'plain', orientation: 'vertical' },
 });
 
 export type RadioGroupVariantProps = VariantProps<typeof radioGroupVariants>;
