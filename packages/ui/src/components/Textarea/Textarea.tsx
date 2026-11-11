@@ -1,11 +1,12 @@
 import { Field } from '@base-ui/react/field';
 import { mergeProps } from '@base-ui/react/merge-props';
-import { useState, type ComponentProps, type Ref } from 'react';
+import { useState, type ComponentProps, type CSSProperties, type Ref } from 'react';
 import { useRender } from '@base-ui/react/use-render';
 import { ClearControlButton, resetNativeValue, type ClearableProps } from '../../utils/clear-control';
 import { useFieldVariant } from '../../field-variant/field-variant-context';
+import { useAutosizeFallback } from './useAutosizeFallback';
 import { cn } from '../../utils/cn';
-import { textareaVariants, type TextareaVariantProps } from './textarea.variants';
+import { textareaAutosizeBounds, textareaVariants, type TextareaVariantProps } from './textarea.variants';
 
 type NativeTextareaProps = Omit<
   ComponentProps<'textarea'>,
@@ -13,6 +14,10 @@ type NativeTextareaProps = Omit<
 >;
 
 export interface TextareaProps extends NativeTextareaProps, TextareaVariantProps, ClearableProps {
+  /** Minimum content rows with autosize; otherwise ignored. Positive finite values only. */
+  minRows?: number;
+  /** Maximum content rows with autosize; overflow scrolls. Positive finite values only. */
+  maxRows?: number;
   className?: string;
   ref?: Ref<HTMLTextAreaElement>;
   value?: string;
@@ -27,13 +32,16 @@ export interface TextareaProps extends NativeTextareaProps, TextareaVariantProps
 /**
  * Multi-line text input. Renders a native <textarea> through Base UI Field.Control, so a
  * surrounding Field links its label, description and error and tracks dirty/touched state.
- * `autosize` grows the box with its content via CSS `field-sizing: content`.
+ * `autosize` grows the box with its content via native `field-sizing: content`, with a measured fallback.
  */
 export function Textarea({
   size = 'auto',
   variant,
   resize,
   autosize,
+  minRows,
+  maxRows,
+  style,
   invalid,
   className,
   ref,
@@ -49,9 +57,20 @@ export function Textarea({
   onClear,
   ...rest
 }: TextareaProps) {
+  const maximum = autosize && maxRows !== undefined && Number.isFinite(maxRows) && maxRows > 0 ? maxRows : undefined;
+  const minimum =
+    autosize && minRows !== undefined && Number.isFinite(minRows) && minRows > 0
+      ? Math.min(minRows, maximum ?? Infinity)
+      : undefined;
+  const boundedStyle = {
+    ...style,
+    ...(minimum !== undefined && { '--textarea-min-rows': minimum }),
+    ...(maximum !== undefined && { '--textarea-max-rows': maximum }),
+  } as CSSProperties;
   const fieldVariant = useFieldVariant(variant);
   const [control, setControl] = useState<HTMLTextAreaElement | null>(null);
   const [inner, setInner] = useState(defaultValue ?? '');
+  useAutosizeFallback(control, autosize, value ?? inner, minimum, maximum, size);
   const hasValue = (value ?? (control ? control.value : inner)).length > 0;
   const textarea = useRender({
     ref: [ref ?? null, setControl],
@@ -70,9 +89,12 @@ export function Textarea({
           <textarea
             {...mergeProps<'textarea'>(controlProps as ComponentProps<'textarea'>, rest, {
               rows: autosize ? undefined : rows,
+              style: minimum !== undefined || maximum !== undefined ? boundedStyle : style,
               'aria-invalid': invalid || undefined,
               className: cn(
                 textareaVariants({ variant: fieldVariant, size, resize, autosize }),
+                minimum !== undefined && textareaAutosizeBounds.min,
+                maximum !== undefined && textareaAutosizeBounds.max,
                 clearable && 'pe-9',
                 className,
               ),

@@ -1,3 +1,4 @@
+import { textareaEs } from './textarea-messages';
 import { switchEs } from './switch-messages';
 import { sliderInputEs } from './slider-input-messages';
 import { formActionsEs } from './form-action-messages';
@@ -28,6 +29,7 @@ import { passwordEs } from './password-messages';
 import { radioInlineEs } from './radio-inline-messages';
 import type { Messages } from './en';
 export const es: Messages = {
+  ...textareaEs,
   ...sliderInputEs,
   ...switchEs,
   ...dateRangeExamplesEs,
