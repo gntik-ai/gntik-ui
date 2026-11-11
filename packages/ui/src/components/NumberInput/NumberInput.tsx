@@ -63,6 +63,10 @@ export function NumberInput({
   incrementLabel: incrementLabelProp,
   placeholder,
   id,
+  role,
+  'aria-valuemin': ariaValueMin,
+  'aria-valuemax': ariaValueMax,
+  'aria-valuenow': ariaValueNow,
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
@@ -77,7 +81,12 @@ export function NumberInput({
   const s = numberInputVariants({ variant: fieldVariant, size, align });
   const px = NUMBER_INPUT_ICON_SIZE[size];
   return (
-    <NumberField.Root id={inputId} className={cn(s.root(), className)} {...props}>
+    <NumberField.Root
+      id={inputId}
+      className={cn(s.root(), className)}
+      role={role === 'spinbutton' ? undefined : role}
+      {...props}
+    >
       {scrubLabel != null && (
         <NumberField.ScrubArea className={s.scrub()}>
           <label htmlFor={inputId}>{scrubLabel}</label>
@@ -94,6 +103,11 @@ export function NumberInput({
         )}
         <NumberField.Input
           ref={ref}
+          role={role === 'spinbutton' ? role : undefined}
+          aria-valuemin={ariaValueMin}
+          aria-valuemax={ariaValueMax}
+          aria-valuenow={ariaValueNow}
+          {...(role === 'spinbutton' ? { 'aria-roledescription': undefined } : {})}
           placeholder={placeholder}
           aria-label={ariaLabel}
           aria-labelledby={ariaLabelledBy}

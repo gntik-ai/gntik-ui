@@ -26,3 +26,11 @@ export const sliderVariants = tv({
 });
 
 export type SliderVariantProps = VariantProps<typeof sliderVariants>;
+
+// Kept separate so the default public variants output and existing snapshots stay unchanged.
+export const sliderInputVariants = tv({
+  slots: {
+    row: 'grid grid-cols-[1fr_auto] items-center gap-3',
+    input: 'w-20',
+  },
+});

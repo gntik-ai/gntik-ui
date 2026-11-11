@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'stable',
   description:
-    'Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form. The optional invalid prop exposes aria-invalid on every thumb input and destructive thumb borders; invalid Field works without the prop. Pair invalid with a FieldError or description explaining the allowed values; colour alone is insufficient.',
+    'Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form. The optional invalid prop exposes aria-invalid on every thumb input and destructive thumb borders; invalid Field works without the prop. Pair invalid with a FieldError or description explaining the allowed values; colour alone is insufficient. Set withInput to pair each thumb with a kit NumberInput on a fixed grid row. Typing within the bounds updates the slider immediately; blur or Enter clamps and snaps to the nearest step from min (1.37 becomes 1.4 with min 0 and step 0.1). Empty or unparsable text restores the current value without a change callback. Range inputs also clamp against neighbouring thumbs and respect minStepsBetweenValues. The slider remains the only named form control; paired inputs are isolated from Field validation and share the slider or thumb name. showValue is hidden while paired. inputProps accepts unit, hideSteppers and size; input size defaults to the slider size (md by default). See SliderWithInput for single, controlled and range examples.',
   // Invalid state is demonstrated in SliderInvalid.
   primitive: '@base-ui/react/slider',
   pattern: 'slider (multi-thumb for ranges)',
@@ -14,7 +14,8 @@ export const doc: ComponentDoc = {
     ['ArrowLeft / ArrowDown', 'Decreases the focused thumb by one step'],
     ['PageUp / PageDown', 'Increases / decreases by the large step'],
     ['Home / End', 'Moves the focused thumb to the minimum / maximum'],
-    ['Tab', 'Moves focus between thumbs'],
+    ['Tab', 'Moves focus between thumbs and paired inputs; commits typed values on blur'],
+    ['Enter in paired input', 'Clamps and snaps the typed value; restores empty or unparsable text'],
   ],
   dataAttributes: [
     ['data-invalid', 'root', 'The control value is invalid; descendant thumb borders show the error.'],
