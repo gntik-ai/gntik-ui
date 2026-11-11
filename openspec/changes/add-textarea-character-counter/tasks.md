@@ -26,12 +26,14 @@ Tests use rendered public Input and Textarea controls, accessible descriptions, 
 
 The unlimited description uses charCount.count with singular/plural branches. New catalog keys extend the existing textarea-messages module already included by both en and es, keeping the large catalog entry files untouched. Textarea's className continues to style only the native control. Moving its counter into a future addon frame is deferred.
 
+## Follow-up review
+
+Verified the clean assigned worktree at f065b392 on the issue 180 branch. Review found no additional runtime defect. Extended the public-control tests for both Input and Textarea to cover typing beyond a soft limit, including the accessible count description, and silent mounting with a prefilled warning-zone value. These acceptance tests pass against the existing implementation; this follow-up changes only tests and validation notes. The focused counter and SSR run passes all 28 tests. The existing minor changeset and generated registry remain intact.
+
 ## Validation and limits
 
-Library builds, lint (one warning in unchanged forms coverage), typecheck, registry:check, docs coverage, both app kit-only checks, formatting and strict OpenSpec validation pass. The focused counter/SSR command passes 24 tests. A broader focused run of Input, Textarea, counters and Combobox async passes all 85 tests across nine files, including unchanged Input/Textarea clear and autosize coverage.
+Library builds, lint (one warning in unchanged forms coverage), typecheck, registry:check, docs coverage, both app kit-only checks, formatting and strict OpenSpec validation pass. The focused counter and SSR command passes all 28 tests. The full UI suite passes all 3,121 tests across 293 files, including unchanged Input/Textarea clear and autosize tests and the previously intermittent Combobox async test. Example axe checks pass in jsdom for dark, light and high_contrast; browser accessibility and color contrast remain assigned to PR CI.
 
-The CLI, codemods, icons, charts, editor and flow suites pass in the recursive runs. Blocks, chat and templates pass in a separate final run after the recursive command stops at UI.
+The CLI, codemods and icons suites pass in the requested recursive library run before it stops at tokens. Charts, editor, flow, chat, blocks and templates all pass in the supplemental library run.
 
-The full UI run completes with 3,116 passing tests and one real assertion failure in the unchanged Combobox async debounce test at packages/ui/src/components/Combobox/Combobox.async.test.tsx:86: an intermediate query fires during typing. The focused rerun passes that test. The recursive library command excluding tokens also stops at UI. These failures are reported as failures for the base rerun and CI to assess; no unrelated Combobox changes are included.
-
-The requested recursive library command including tokens cannot complete offline. The tokens mirror-install fallback packs the current package version but reads gntik-ai-tokens-0.2.1.tgz, causing ENOENT at packages/tokens/test/mirror-install.test.mjs:93. A focused rerun confirms this environment limitation. Browser a11y/color contrast, MCP CLI tests and evals tests run in PR CI under worker policy. No dependencies, lockfiles or visual baselines change.
+The requested recursive library command cannot complete offline. The unchanged tokens mirror-install fallback packs the current 0.4.0 version but reads gntik-ai-tokens-0.2.1.tgz, causing ENOENT at packages/tokens/test/mirror-install.test.mjs:93. A focused rerun and direct diagnostic confirm this environment limitation. The tokens suite alone confirms that its other 17 test files pass; commands stopped by the mirror-install environment error are reported as SKIPPED. Browser a11y/color contrast, MCP CLI tests, evals tests and Next.js app builds run in PR CI under worker policy. No dependencies, lockfiles or visual baselines change.

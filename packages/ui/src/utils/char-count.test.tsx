@@ -86,6 +86,19 @@ describe.each([
 ] as const)('%s accessible count', (_, Control) => {
   afterEach(() => vi.useRealTimers());
 
+  it('accepts typing beyond a soft limit while exposing the current count', async () => {
+    const user = userEvent.setup();
+    render(<Control aria-label="Note" showCount maxCount={10} />);
+    const control = screen.getByRole('textbox');
+    await user.type(control, 'abcdefghijkl');
+    expect(control).toHaveValue('abcdefghijkl');
+    expect(control).not.toHaveAttribute('maxlength');
+    expect(control).toHaveAttribute('data-over-limit');
+    expect(control).not.toHaveAttribute('aria-invalid');
+    expect(control).toHaveAccessibleDescription('12 of 10 characters');
+    expect(screen.getByText('12 / 10')).toHaveClass('text-destructive-text');
+  });
+
   it('tracks clearing, controlled replacement and maxCount precedence without claiming invalidity', async () => {
     const user = userEvent.setup();
     const { rerender } = render(
@@ -215,10 +228,10 @@ describe.each([
     expect(region).toHaveTextContent(message);
   });
 
-  it('does not announce prefilled values or unlimited edits', () => {
+  it.each(['abcdefgh', 'abcdefghijkl'])('does not announce prefilled %s or unlimited edits', (defaultValue) => {
     vi.useFakeTimers();
     const { container, rerender } = render(
-      <Control aria-label="Note" showCount maxCount={10} defaultValue="abcdefghijkl" />,
+      <Control aria-label="Note" showCount maxCount={10} defaultValue={defaultValue} />,
     );
     const region = container.querySelector('[aria-live="polite"]');
     act(() => vi.advanceTimersByTime(500));
