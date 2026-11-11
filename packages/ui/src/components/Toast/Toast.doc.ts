@@ -10,7 +10,10 @@ export const doc: ComponentDoc = {
   pattern: 'region + live announcements (status)',
   keyboard: [
     ['F6', 'Moves focus into the notifications region (pauses auto-dismiss)'],
-    ['Tab / Shift+Tab', 'Reaches each toast’s primary action, dismiss action and close button'],
+    [
+      'Tab / Shift+Tab',
+      'Reaches each toast’s primary action, dismiss action and close button once the stack is focused (F6); toasts hidden from assistive technology stay out of the tab order',
+    ],
     ['Enter / Space', 'On the close button or dismiss action: dismisses the toast (an action also runs its handler)'],
   ],
   dataAttributes: [

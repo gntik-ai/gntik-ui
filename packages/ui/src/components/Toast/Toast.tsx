@@ -1,6 +1,6 @@
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { CircleAlert, CircleCheck, Info, TriangleAlert, X, type LucideIcon } from 'lucide-react';
-import { useMemo, type ReactNode } from 'react';
+import { createContext, useContext, useMemo, type HTMLAttributes, type ReactNode } from 'react';
 import { usePortalContainer } from '../../utils/portal';
 import { Spinner } from '../Spinner';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
@@ -19,6 +19,27 @@ const TONES = new Set<string>(Object.keys(TONE_ICON));
 /** Base UI's own promise types, mapped onto the kit tones. */
 const TYPE_ALIASES: Record<string, ToastTone> = { error: 'destructive' };
 let toastSeq = 0;
+
+/** True while Base UI marks the enclosing toast root aria-hidden (e.g. high priority, viewport unfocused). */
+const RootHiddenContext = createContext(false);
+
+const isAriaHidden = (value: unknown) => value === true || value === 'true';
+
+/**
+ * Base UI marks some toast parts aria-hidden but leaves them tabbable (axe `aria-hidden-focus`).
+ * Takes the part out of sequential focus while it is hidden, derived from Base UI's own computed
+ * aria-hidden so the two cannot drift; `tabIndex -1` (not `inert`) keeps pointer use and `.focus()` working.
+ */
+function guardFocus<P extends HTMLAttributes<HTMLElement>>(props: P, hidden: boolean): P {
+  return hidden ? { ...props, tabIndex: -1 } : props;
+}
+
+/** Close, Action and dismiss buttons: not tabbable while they, or their toast, are aria-hidden. */
+function useControlGuard() {
+  const rootHidden = useContext(RootHiddenContext);
+  return <P extends HTMLAttributes<HTMLElement>>(props: P) =>
+    guardFocus(props, rootHidden || isAriaHidden(props['aria-hidden']));
+}
 
 export interface ToastProviderProps extends BaseToast.Provider.Props {
   /** Default auto-dismiss time in ms; 0 keeps toasts until closed. */
@@ -66,6 +87,16 @@ export interface ToastPromiseOptions<Value> {
 
 interface ToastData {
   dismissAction?: ToastOptions['dismissAction'];
+}
+
+function GuardedAction({ className }: { className: string }) {
+  const guard = useControlGuard();
+  return <BaseToast.Action className={className} render={(props) => <button {...guard(props)} />} />;
+}
+
+function GuardedClose({ onClick, ...rest }: BaseToast.Close.Props) {
+  const guard = useControlGuard();
+  return <BaseToast.Close {...rest} onClick={onClick} render={(props) => <button {...guard(props)} />} />;
 }
 
 function resolveState<Arg>(state: ToastPromiseState<Arg>, arg: Arg): ToastOptions {
@@ -154,7 +185,19 @@ export function Toaster({ className, closeLabel: closeLabelProp, container }: To
           const v = toastVariants({ tone });
           const IconCmp = TONE_ICON[tone];
           return (
-            <BaseToast.Root key={t.id} toast={t} className={v.root()}>
+            <BaseToast.Root
+              key={t.id}
+              toast={t}
+              className={v.root()}
+              render={(props) => {
+                const hidden = isAriaHidden(props['aria-hidden']);
+                return (
+                  <RootHiddenContext.Provider value={hidden}>
+                    <div {...guardFocus(props, hidden)} />
+                  </RootHiddenContext.Provider>
+                );
+              }}
+            >
               <BaseToast.Content className={v.content()}>
                 {(IconCmp || tone === 'loading') && (
                   <span className={v.icon()}>
@@ -166,18 +209,18 @@ export function Toaster({ className, closeLabel: closeLabelProp, container }: To
                   <BaseToast.Description className={v.description()} />
                   {(t.actionProps || dismiss) && (
                     <div className={v.actions()}>
-                      {t.actionProps && <BaseToast.Action className={v.action()} />}
+                      {t.actionProps && <GuardedAction className={v.action()} />}
                       {dismiss && (
-                        <BaseToast.Close className={v.dismissAction()} onClick={() => dismiss.onClick?.()}>
+                        <GuardedClose className={v.dismissAction()} onClick={() => dismiss.onClick?.()}>
                           {dismiss.label}
-                        </BaseToast.Close>
+                        </GuardedClose>
                       )}
                     </div>
                   )}
                 </div>
-                <BaseToast.Close aria-label={closeLabel} className={v.close()}>
+                <GuardedClose aria-label={closeLabel} className={v.close()}>
                   <X size={13} strokeWidth={2.4} aria-hidden />
-                </BaseToast.Close>
+                </GuardedClose>
               </BaseToast.Content>
             </BaseToast.Root>
           );
