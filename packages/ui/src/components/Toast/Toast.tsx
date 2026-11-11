@@ -58,8 +58,10 @@ const SAVED_TABINDEX = 'data-gntik-toast-tabindex';
 function syncDescendantFocus(node: HTMLElement, hidden: boolean) {
   if (hidden) {
     node.querySelectorAll<HTMLElement>(FOCUSABLE).forEach((el) => {
-      if (el.hasAttribute(SAVED_TABINDEX) || el.getAttribute('tabindex') === '-1') return;
-      el.setAttribute(SAVED_TABINDEX, el.getAttribute('tabindex') ?? '');
+      const current = el.getAttribute('tabindex');
+      if (current === '-1') return;
+      // Content that re-asserts its own tabindex while hidden is guarded again; its value is what we give back.
+      el.setAttribute(SAVED_TABINDEX, current ?? '');
       el.setAttribute('tabindex', '-1');
     });
   } else {
@@ -80,9 +82,16 @@ function GuardedText({
 }: HTMLAttributes<HTMLElement> & { as: 'h2' | 'p'; ref?: Ref<HTMLElement> }) {
   const hidden = useContext(RootHiddenContext);
   const own = useRef<HTMLElement | null>(null);
-  // Runs after every render so content that changes while hidden is guarded too.
+  // Content can become focusable while hidden without this component rendering (a link gaining an
+  // href, a child swapping in), so while hidden the subtree is also watched and re-guarded.
   useLayoutEffect(() => {
-    if (own.current) syncDescendantFocus(own.current, hidden);
+    const node = own.current;
+    if (!node) return;
+    syncDescendantFocus(node, hidden);
+    if (!hidden) return;
+    const observer = new MutationObserver(() => syncDescendantFocus(node, true));
+    observer.observe(node, { subtree: true, childList: true, attributes: true });
+    return () => observer.disconnect();
   });
   return (
     <Tag

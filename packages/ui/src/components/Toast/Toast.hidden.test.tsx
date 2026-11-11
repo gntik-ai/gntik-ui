@@ -1,5 +1,6 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useEffect, useState } from 'react';
 import { I18nProvider } from '../../i18n/I18nProvider';
 import { axeViolations } from '../../test/a11y';
 import { Button } from '../Button';
@@ -27,6 +28,32 @@ function Buttons() {
       </Button>
     </>
   );
+}
+
+function Late() {
+  const toast = useToast();
+  return (
+    <Button
+      onClick={() =>
+        toast.add({ tone: 'destructive', priority: 'high', title: 'Late', description: <LateLink />, timeout: 0 })
+      }
+    >
+      Raise
+    </Button>
+  );
+}
+
+const runbookSetters = new Set<() => void>();
+
+/** A description that turns an existing anchor into a link through its own state, not through the toast. */
+function LateLink() {
+  const [href, setHref] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    const enable = () => setHref('/runbook');
+    runbookSetters.add(enable);
+    return () => void runbookSetters.delete(enable);
+  }, []);
+  return <a href={href}>Late runbook</a>;
 }
 
 function Fixture({ locale = 'en' }: { locale?: string }) {
@@ -77,6 +104,30 @@ describe('Toast hidden from assistive technology', () => {
     await waitFor(() => expect(link.closest('[aria-hidden="true"]')).toBeNull());
     expect(link).not.toHaveAttribute('tabindex');
     expect(link).not.toHaveAttribute('data-gntik-toast-tabindex');
+  });
+
+  it('a link that becomes focusable inside a hidden toast through its own update is guarded', async () => {
+    const user = userEvent.setup();
+    render(
+      <I18nProvider locale="en">
+        <ToastProvider>
+          <Button onClick={() => undefined}>Page</Button>
+          <Late />
+          <Toaster />
+        </ToastProvider>
+      </I18nProvider>,
+    );
+    await user.click(screen.getByRole('button', { name: 'Raise' }));
+    const region = await screen.findByRole('region', { name: 'Notifications' });
+    const link = await within(region).findByText('Late runbook');
+    expect(link.closest('[aria-hidden="true"]')).not.toBeNull();
+    act(() => runbookSetters.forEach((enable) => enable()));
+    await waitFor(() => expect(link).toHaveAttribute('href', '/runbook'));
+    await waitFor(() => expect(link).toHaveAttribute('tabindex', '-1'));
+    expect(link.closest('[aria-hidden="true"]')).not.toBeNull();
+    fireEvent.keyDown(document.body, { key: 'F6' });
+    await waitFor(() => expect(link.closest('[aria-hidden="true"]')).toBeNull());
+    expect(link).not.toHaveAttribute('tabindex');
   });
 
   it('Tab from the page never lands inside a hidden toast', async () => {
