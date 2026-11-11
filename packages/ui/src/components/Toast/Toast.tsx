@@ -1,6 +1,15 @@
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { CircleAlert, CircleCheck, Info, TriangleAlert, X, type LucideIcon } from 'lucide-react';
-import { createContext, useContext, useMemo, type HTMLAttributes, type ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  type HTMLAttributes,
+  type ReactNode,
+  type Ref,
+} from 'react';
 import { usePortalContainer } from '../../utils/portal';
 import { Spinner } from '../Spinner';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
@@ -39,6 +48,52 @@ function useControlGuard() {
   const rootHidden = useContext(RootHiddenContext);
   return <P extends HTMLAttributes<HTMLElement>>(props: P) =>
     guardFocus(props, rootHidden || isAriaHidden(props['aria-hidden']));
+}
+
+const FOCUSABLE =
+  'a[href],button,input,select,textarea,summary,iframe,[tabindex],[contenteditable]:not([contenteditable="false"]),audio[controls],video[controls]';
+const SAVED_TABINDEX = 'data-gntik-toast-tabindex';
+
+/** Takes (or gives back) sequential focus of whatever focusable content a title / description carries. */
+function syncDescendantFocus(node: HTMLElement, hidden: boolean) {
+  if (hidden) {
+    node.querySelectorAll<HTMLElement>(FOCUSABLE).forEach((el) => {
+      if (el.hasAttribute(SAVED_TABINDEX) || el.getAttribute('tabindex') === '-1') return;
+      el.setAttribute(SAVED_TABINDEX, el.getAttribute('tabindex') ?? '');
+      el.setAttribute('tabindex', '-1');
+    });
+  } else {
+    node.querySelectorAll<HTMLElement>(`[${SAVED_TABINDEX}]`).forEach((el) => {
+      const saved = el.getAttribute(SAVED_TABINDEX);
+      if (saved) el.setAttribute('tabindex', saved);
+      else el.removeAttribute('tabindex');
+      el.removeAttribute(SAVED_TABINDEX);
+    });
+  }
+}
+
+/** Title / description text: links and other focusable content passed as ReactNode follow the hidden state of the root. */
+function GuardedText({
+  as: Tag,
+  ref,
+  ...rest
+}: HTMLAttributes<HTMLElement> & { as: 'h2' | 'p'; ref?: Ref<HTMLElement> }) {
+  const hidden = useContext(RootHiddenContext);
+  const own = useRef<HTMLElement | null>(null);
+  // Runs after every render so content that changes while hidden is guarded too.
+  useLayoutEffect(() => {
+    if (own.current) syncDescendantFocus(own.current, hidden);
+  });
+  return (
+    <Tag
+      {...rest}
+      ref={(node: HTMLElement | null) => {
+        own.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
+      }}
+    />
+  );
 }
 
 export interface ToastProviderProps extends BaseToast.Provider.Props {
@@ -205,8 +260,11 @@ export function Toaster({ className, closeLabel: closeLabelProp, container }: To
                   </span>
                 )}
                 <div className={v.text()}>
-                  <BaseToast.Title className={v.title()} />
-                  <BaseToast.Description className={v.description()} />
+                  <BaseToast.Title className={v.title()} render={(props) => <GuardedText as="h2" {...props} />} />
+                  <BaseToast.Description
+                    className={v.description()}
+                    render={(props) => <GuardedText as="p" {...props} />}
+                  />
                   {(t.actionProps || dismiss) && (
                     <div className={v.actions()}>
                       {t.actionProps && <GuardedAction className={v.action()} />}

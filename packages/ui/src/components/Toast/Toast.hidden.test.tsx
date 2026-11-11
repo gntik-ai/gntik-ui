@@ -16,6 +16,7 @@ function Buttons() {
             tone: 'destructive',
             priority: 'high',
             title: 'Rotation failed',
+            description: <a href="/runbook">Open the runbook</a>,
             action: { label: 'Retry', onClick: () => {} },
             dismissAction: { label: 'Not now' },
             timeout: 0,
@@ -47,7 +48,8 @@ async function showBoth(user: ReturnType<typeof userEvent.setup>) {
   return region;
 }
 
-const TABBABLE = 'button:not([tabindex="-1"]),a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])';
+const TABBABLE =
+  'a[href]:not([tabindex="-1"]),button:not([tabindex="-1"]),input:not([tabindex="-1"]),select:not([tabindex="-1"]),textarea:not([tabindex="-1"]),[tabindex]:not([tabindex="-1"])';
 
 describe('Toast hidden from assistive technology', () => {
   it.each(['en', 'es'])('keeps aria-hidden toasts and their controls out of the tab order (%s)', async (locale) => {
@@ -62,6 +64,19 @@ describe('Toast hidden from assistive technology', () => {
       expect(el.querySelectorAll(TABBABLE)).toHaveLength(0);
     }
     expect(await axeViolations()).toEqual([]);
+  });
+
+  it('links inside a hidden toast description are out of the tab order and restored on F6', async () => {
+    const user = userEvent.setup();
+    render(<Fixture />);
+    const region = await showBoth(user);
+    const link = within(region).getByText('Open the runbook');
+    expect(link.closest('[aria-hidden="true"]')).not.toBeNull();
+    expect(link).toHaveAttribute('tabindex', '-1');
+    fireEvent.keyDown(document.body, { key: 'F6' });
+    await waitFor(() => expect(link.closest('[aria-hidden="true"]')).toBeNull());
+    expect(link).not.toHaveAttribute('tabindex');
+    expect(link).not.toHaveAttribute('data-gntik-toast-tabindex');
   });
 
   it('Tab from the page never lands inside a hidden toast', async () => {
