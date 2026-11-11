@@ -493,6 +493,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -720,6 +725,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -1272,6 +1282,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -1517,6 +1532,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -1741,6 +1761,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -1968,6 +1993,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -2306,6 +2336,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -2532,6 +2567,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -2888,6 +2928,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -3100,6 +3145,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -3387,6 +3437,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -4146,6 +4201,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -4552,6 +4612,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -4789,6 +4854,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -5322,6 +5392,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -5852,6 +5927,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -6328,6 +6408,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -6587,6 +6672,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -6857,6 +6947,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -7116,6 +7211,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -7418,6 +7518,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -7650,6 +7755,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -7905,6 +8015,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -8166,6 +8281,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -8386,6 +8506,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -8625,6 +8750,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -8859,6 +8989,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -9479,6 +9614,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -9936,6 +10076,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -10463,6 +10608,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -10785,6 +10935,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -11141,6 +11296,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -11469,6 +11629,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -11696,6 +11861,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -11921,6 +12091,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -12159,6 +12334,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -12435,6 +12615,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -12747,6 +12932,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -12972,6 +13162,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -13206,6 +13401,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -13732,6 +13932,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -13999,6 +14204,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -14541,6 +14751,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -14970,6 +15185,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -15203,6 +15423,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -15570,6 +15795,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -15615,7 +15845,7 @@
       "name": "number-input",
       "type": "registry:ui",
       "title": "NumberInput",
-      "description": "Numeric input with − / + steppers, a unit suffix, min/max/step clamping, locale formatting and an optional scrub label (drag to change). Sizes auto, sm, md and lg like Input; invalid, disabled and read-only states; works inside Field. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.",
+      "description": "Numeric input with − / + steppers, a unit suffix, min/max/step clamping, locale formatting and an optional scrub label (drag to change). Sizes auto, sm, md and lg like Input; invalid, disabled and read-only states; works inside Field. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged. Slider withInput reuses this control with role=\"spinbutton\" and aria-valuemin, aria-valuemax and aria-valuenow on the visible input; ordinary NumberInput keeps its textbox semantics. See SliderWithInput for the paired live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.9.0",
@@ -15800,6 +16030,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -16026,6 +16261,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -16260,6 +16500,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -16469,6 +16714,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -16806,6 +17056,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -17076,6 +17331,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -17447,6 +17707,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -17668,6 +17933,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -17989,6 +18259,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -18225,6 +18500,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -18523,6 +18803,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -18997,6 +19282,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -19511,6 +19801,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -20082,6 +20377,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -20413,6 +20713,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -20687,6 +20992,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -20918,6 +21228,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -21240,6 +21555,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -21705,6 +22025,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -22287,6 +22612,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -22686,13 +23016,14 @@
       "name": "slider",
       "type": "registry:ui",
       "title": "Slider",
-      "description": "Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form. The optional invalid prop exposes aria-invalid on every thumb input and destructive thumb borders; invalid Field works without the prop. Pair invalid with a FieldError or description explaining the allowed values; colour alone is insufficient.",
+      "description": "Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form. The optional invalid prop exposes aria-invalid on every thumb input and destructive thumb borders; invalid Field works without the prop. Pair invalid with a FieldError or description explaining the allowed values; colour alone is insufficient. Set withInput to pair each thumb with a kit NumberInput on a fixed grid row. Typing within the bounds updates the slider immediately; blur or Enter clamps and snaps to the nearest step from min (1.37 becomes 1.4 with min 0 and step 0.1). Empty or unparsable text restores the current value without a change callback. Range inputs also clamp against neighbouring thumbs and respect minStepsBetweenValues. The slider remains the only named form control; paired inputs are isolated from Field validation and share the slider or thumb name. showValue is hidden while paired. inputProps accepts unit, hideSteppers and size; input size defaults to the slider size (md by default). See SliderWithInput for single, controlled and range examples.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/number-input.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -22725,11 +23056,6 @@
           "path": "packages/ui/src/components/Slider/Slider.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/slider/Slider.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
         }
       ]
     },
@@ -22911,6 +23237,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -23231,6 +23562,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -23438,6 +23774,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -23799,6 +24140,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -24238,6 +24584,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -24597,6 +24948,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -25046,6 +25402,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -25270,6 +25631,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -25508,6 +25874,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -25903,6 +26274,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -26128,6 +26504,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -26375,6 +26756,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -26646,6 +27032,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -26878,6 +27269,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -27104,6 +27500,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -27377,6 +27778,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -27657,6 +28063,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -28001,6 +28412,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -28229,6 +28645,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -28505,6 +28926,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -28742,6 +29168,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -29109,6 +29540,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -29315,6 +29751,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -29816,6 +30257,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -30125,6 +30571,11 @@
           "target": "components/i18n/messages/searchable-select-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -30349,6 +30800,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -30625,6 +31081,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -30922,6 +31383,11 @@
           "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
