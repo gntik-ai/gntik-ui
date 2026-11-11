@@ -4,12 +4,14 @@ import { useRender } from '@base-ui/react/use-render';
 import { ClearControlButton, resetNativeValue, type ClearableProps } from '../../utils/clear-control';
 import { useFieldVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
+import { CharCount, useCharCount, type CharCountProps } from '../../utils/char-count';
 import { InputSizeContext, useInputSize } from '../../utils/input-size-context';
 import { inputVariants, INPUT_ICON_SIZE, type InputVariantProps } from './input.variants';
 
 type IconComponent = ComponentType<{ size?: number; 'aria-hidden'?: boolean; className?: string }>;
 
-export interface InputProps extends Omit<BaseInput.Props, 'className' | 'size'>, InputVariantProps, ClearableProps {
+export interface InputProps
+  extends Omit<BaseInput.Props, 'className' | 'size'>, InputVariantProps, ClearableProps, CharCountProps {
   /** Clear a non-empty editable input on Escape and stop propagation. */
   clearOnEscape?: boolean;
   /** Classes for the outer wrapper (border, width, layout). */
@@ -50,11 +52,16 @@ export function Input({
   ref,
   onValueChange,
   onKeyDown,
+  showCount,
+  maxCount,
+  countStrategy,
   ...props
 }: InputProps) {
   const fieldVariant = useFieldVariant(variant);
   const [control, setControl] = useState<HTMLInputElement | null>(null);
   const [inner, setInner] = useState(props.defaultValue ?? '');
+  const current = String(props.value ?? inner);
+  const counter = useCharCount(current, { showCount, maxCount, countStrategy }, props.maxLength);
   const hasValue = String(props.value ?? (control ? control.value : inner)).length > 0;
   const clear = () => {
     if (!control || control.disabled || control.readOnly) return;
@@ -88,6 +95,10 @@ export function Input({
         }}
         className={cn(inputVariants({ size, variant: fieldVariant }).input(), inputClassName)}
         aria-invalid={props['aria-invalid'] ?? (invalid || undefined)}
+        {...(showCount && {
+          'aria-describedby': [props['aria-describedby'], counter.descriptionId].filter(Boolean).join(' '),
+          'data-over-limit': counter.over ? '' : undefined,
+        })}
       />
     ),
   });
@@ -99,6 +110,7 @@ export function Input({
         {LeadingIcon && <LeadingIcon size={px} aria-hidden className={s.icon()} />}
         {leadingAddon != null && <span className={s.addon()}>{leadingAddon}</span>}
         {input}
+        {showCount && <CharCount {...counter} />}
         {trailingAddon != null && <span className={s.addon()}>{trailingAddon}</span>}
         {clearable && hasValue && !props.disabled && !props.readOnly && (
           <ClearControlButton control={control} clearLabel={clearLabel} onClick={clear} />

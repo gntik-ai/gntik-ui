@@ -1,27 +1,23 @@
-import { useState } from 'react';
-import { Field, FieldDescription, FieldError, FieldLabel } from '../../Field';
+import { Field, FieldDescription, FieldLabel } from '../../Field';
+import { useI18n } from '../../../i18n';
 import { Textarea } from '../Textarea';
 
-const MAX = 280;
+const countBytes = (value: string) => new TextEncoder().encode(value).length;
 
 export default function TextareaCounter() {
-  const [note, setNote] = useState('Retries three times before falling back to the backup region.');
-  const tooLong = note.length > MAX;
+  const { t } = useI18n();
   return (
-    <Field invalid={tooLong} className="max-w-xl">
-      <div className="flex items-baseline justify-between">
-        <FieldLabel>Deployment note</FieldLabel>
-        <span
-          className={
-            tooLong ? 'font-mono text-[11px] text-destructive-text' : 'font-mono text-[11px] text-muted-foreground'
-          }
-        >
-          {note.length}/{MAX}
-        </span>
-      </div>
-      <Textarea value={note} onValueChange={setNote} placeholder="Add context for the next reviewer…" />
-      <FieldDescription>Basic Markdown is allowed. The note is kept in the audit log.</FieldDescription>
-      <FieldError match={tooLong}>Keep the note under {MAX} characters.</FieldError>
-    </Field>
+    <div className="flex max-w-xl flex-col gap-4">
+      <Field>
+        <FieldLabel>{t('charCount.noteLabel')}</FieldLabel>
+        <Textarea showCount maxLength={280} clearable defaultValue={t('charCount.noteExample')} />
+        <FieldDescription>{t('charCount.noteHint')}</FieldDescription>
+      </Field>
+      <Field>
+        <FieldLabel>{t('charCount.bytesLabel')}</FieldLabel>
+        <Textarea showCount maxCount={10} countStrategy={countBytes} defaultValue="é" clearable />
+        <FieldDescription>{t('charCount.bytesHint')}</FieldDescription>
+      </Field>
+    </div>
   );
 }

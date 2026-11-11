@@ -6,6 +6,7 @@ import { ClearControlButton, resetNativeValue, type ClearableProps } from '../..
 import { useFieldVariant } from '../../field-variant/field-variant-context';
 import { useAutosizeFallback } from './useAutosizeFallback';
 import { cn } from '../../utils/cn';
+import { CharCount, useCharCount, type CharCountProps } from '../../utils/char-count';
 import { textareaAutosizeBounds, textareaVariants, type TextareaVariantProps } from './textarea.variants';
 
 type NativeTextareaProps = Omit<
@@ -13,7 +14,7 @@ type NativeTextareaProps = Omit<
   'className' | 'ref' | 'value' | 'defaultValue' | 'onChange'
 >;
 
-export interface TextareaProps extends NativeTextareaProps, TextareaVariantProps, ClearableProps {
+export interface TextareaProps extends NativeTextareaProps, TextareaVariantProps, ClearableProps, CharCountProps {
   /** Minimum content rows with autosize; otherwise ignored. Positive finite values only. */
   minRows?: number;
   /** Maximum content rows with autosize; overflow scrolls. Positive finite values only. */
@@ -55,6 +56,9 @@ export function Textarea({
   clearable,
   clearLabel,
   onClear,
+  showCount,
+  maxCount,
+  countStrategy,
   ...rest
 }: TextareaProps) {
   const maximum = autosize && maxRows !== undefined && Number.isFinite(maxRows) && maxRows > 0 ? maxRows : undefined;
@@ -70,6 +74,7 @@ export function Textarea({
   const fieldVariant = useFieldVariant(variant);
   const [control, setControl] = useState<HTMLTextAreaElement | null>(null);
   const [inner, setInner] = useState(defaultValue ?? '');
+  const counter = useCharCount(value ?? inner, { showCount, maxCount, countStrategy }, rest.maxLength);
   useAutosizeFallback(control, autosize, value ?? inner, minimum, maximum, size);
   const hasValue = (value ?? (control ? control.value : inner)).length > 0;
   const textarea = useRender({
@@ -91,6 +96,12 @@ export function Textarea({
               rows: autosize ? undefined : rows,
               style: minimum !== undefined || maximum !== undefined ? boundedStyle : style,
               'aria-invalid': invalid || undefined,
+              ...(showCount && {
+                'aria-describedby': [controlProps['aria-describedby'], rest['aria-describedby'], counter.descriptionId]
+                  .filter(Boolean)
+                  .join(' '),
+                'data-over-limit': counter.over ? '' : undefined,
+              }),
               className: cn(
                 textareaVariants({ variant: fieldVariant, size, resize, autosize }),
                 minimum !== undefined && textareaAutosizeBounds.min,
@@ -104,8 +115,9 @@ export function Textarea({
       />
     ),
   });
-  if (!clearable) return textarea;
-  return (
+  const field = !clearable ? (
+    textarea
+  ) : (
     <div className="relative">
       {textarea}
       {hasValue && !disabled && !rest.readOnly && (
@@ -121,6 +133,15 @@ export function Textarea({
           }}
         />
       )}
+    </div>
+  );
+  if (!showCount) return field;
+  return (
+    <div className="flex flex-col gap-1">
+      {field}
+      <div className="flex justify-end">
+        <CharCount {...counter} />
+      </div>
     </div>
   );
 }
