@@ -5105,13 +5105,13 @@ export default function SliderInvalid() {
 
 ### Switch (`switch`)
 
-On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name). The optional invalid prop exposes aria-invalid and a destructive 1px track ring, checked or unchecked. Invalid Field also supplies this state. Pair invalid with a FieldError or description explaining how to correct the value; colour alone is insufficient.
+On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name). The optional invalid prop exposes aria-invalid and a destructive 1px track ring, checked or unchecked. Invalid Field also supplies this state. Pair invalid with a FieldError or description explaining how to correct the value; colour alone is insufficient. The loading prop marks a pending save: a spinner appears in the thumb, toggles are ignored, and the switch stays focusable with aria-busy and a visually hidden "Saving…" description (override with loadingLabel). checked stays as the app passes it, so the app picks optimistic or pessimistic updates and clears loading when the request settles. disabled wins over loading. Prefer size md or lg for toggles that call the server; the sm spinner is small.
 
 - Package: `@gntik-ai/ui` · export `Switch` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Switch/Switch.doc.ts
 - Primitive: `@base-ui/react/switch`
 - ARIA pattern: switch
-- Registry dependencies: ui-utils
+- Registry dependencies: spinner, ui-utils
 - Install: `gntik-ui add switch`; own the source with `gntik-ui eject switch`
 
 Keyboard:
@@ -5122,22 +5122,45 @@ Keyboard:
 | Enter | Toggles the switch |
 | Tab | Moves focus to and from the switch |
 
-Tokens: destructive, primary, secondary, background, focus-ring
+Tokens: destructive, primary, secondary, background, focus-ring, muted-foreground
 
 Usage:
 
 ```tsx
 import { useState } from 'react';
+import { useI18n } from '@gntik-ai/ui';
+import { Alert } from '@gntik-ai/ui';
 import { Switch } from '@gntik-ai/ui';
 
-export default function SwitchSettings() {
-  const [alerts, setAlerts] = useState(true);
+const request = (fail: boolean) =>
+  new Promise<void>((resolve, reject) => setTimeout(() => (fail ? reject(new Error('failed')) : resolve()), 400));
+
+export default function SwitchPending() {
+  const { t } = useI18n();
+  const [enabled, setEnabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [failNext, setFailNext] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  const toggle = async (next: boolean) => {
+    setFailed(false);
+    setEnabled(next);
+    setLoading(true);
+    try {
+      await request(failNext);
+    } catch {
+      setEnabled(!next);
+      setFailed(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="grid gap-4">
-      <Switch label="Email alerts" checked={alerts} onCheckedChange={setAlerts} />
-      <Switch label="Weekly digest" size="sm" />
-      <Switch label="Auto-deploy" size="lg" defaultChecked />
-      <Switch label="Audit log (locked)" disabled defaultChecked />
+      <Switch label={t('switch.example.connector')} checked={enabled} onCheckedChange={toggle} loading={loading} />
+      <Switch label={t('switch.example.failNext')} size="sm" checked={failNext} onCheckedChange={setFailNext} />
+      {failed && <Alert tone="destructive">{t('switch.example.error')}</Alert>}
     </div>
   );
 }

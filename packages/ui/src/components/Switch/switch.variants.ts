@@ -33,4 +33,20 @@ export const switchVariants = tv({
   defaultVariants: { size: 'md' },
 });
 
+/** Pending-state styles, applied by Switch only while `loading`, so the default output stays unchanged. */
+export const switchLoadingVariants = tv({
+  slots: {
+    root: 'data-loading:cursor-progress',
+    spinner: 'text-muted-foreground forced-colors:text-[Canvas] forced-colors:in-data-checked:text-[Highlight]',
+  },
+  variants: {
+    size: {
+      sm: { spinner: 'size-2.5' },
+      md: { spinner: 'size-3' },
+      lg: { spinner: 'size-3.5' },
+    },
+  },
+  defaultVariants: { size: 'md' },
+});
+
 export type SwitchVariantProps = VariantProps<typeof switchVariants>;
