@@ -21,6 +21,11 @@ export const doc: ComponentDoc = {
     ['data-disabled', 'root', 'The control cannot be changed or activated.'],
     ['data-checked', 'thumb', 'The control is checked.'],
     ['data-disabled', 'thumb', 'The control cannot be changed or activated.'],
+    [
+      'data-checked',
+      'spinner',
+      'The control is checked; in forced colours the loading spinner switches to the checked colour.',
+    ],
   ],
   tokens: ['destructive', 'primary', 'secondary', 'background', 'focus-ring', 'muted-foreground'],
 };
