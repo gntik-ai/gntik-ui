@@ -32,3 +32,9 @@ export const textareaVariants = tv({
 });
 
 export type TextareaVariantProps = VariantProps<typeof textareaVariants>;
+
+/** Applied only when the corresponding autosize row bound is valid. */
+export const textareaAutosizeBounds = {
+  min: 'min-h-[calc(var(--textarea-min-rows)*1lh+1rem+2px)]',
+  max: 'max-h-[calc(var(--textarea-max-rows)*1lh+1rem+2px)] overflow-y-auto',
+};
