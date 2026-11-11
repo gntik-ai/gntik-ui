@@ -1,4 +1,17 @@
 export const textareaEn = {
+  'charCount.noteLabel': 'Deployment note',
+  'charCount.noteExample': 'Retries three times before falling back to the backup region.',
+  'charCount.noteHint': 'Basic Markdown is allowed. The note is kept in the audit log.',
+  'charCount.bytesLabel': 'Byte budget',
+  'charCount.bytesHint': 'Counts UTF-8 bytes with a soft limit of 10. Typing beyond the budget is allowed.',
+  'charCount.resourceLabel': 'Resource name',
+  'charCount.resourceHint': 'Up to 63 characters, followed by the service suffix.',
+  'charCount.aliasLabel': 'Alias',
+  'charCount.aliasHint': 'Shows the character count without a maximum.',
+  'charCount.status': '{count} of {max} characters',
+  'charCount.count': '{count, plural, one {# character} other {# characters}}',
+  'charCount.left': '{count, plural, one {# character left} other {# characters left}}',
+  'charCount.over': '{count, plural, one {# character over the limit} other {# characters over the limit}}',
   'textarea.prompt': 'System prompt',
   'textarea.boundsHint': 'Grows from three to twelve lines, then scrolls.',
   'textarea.placeholder': 'Describe how the assistant should respond…',
@@ -9,6 +22,20 @@ export const textareaEn = {
 } as const;
 
 export const textareaEs = {
+  'charCount.noteLabel': 'Nota de despliegue',
+  'charCount.noteExample': 'Reintenta tres veces antes de recurrir a la región de respaldo.',
+  'charCount.noteHint': 'Se permite Markdown básico. La nota se guarda en el registro de auditoría.',
+  'charCount.bytesLabel': 'Presupuesto de bytes',
+  'charCount.bytesHint': 'Cuenta bytes UTF-8 con un límite flexible de 10. Se permite superar el presupuesto.',
+  'charCount.resourceLabel': 'Nombre del recurso',
+  'charCount.resourceHint': 'Hasta 63 caracteres, seguidos del sufijo del servicio.',
+  'charCount.aliasLabel': 'Alias',
+  'charCount.aliasHint': 'Muestra el número de caracteres sin un máximo.',
+  'charCount.status': '{count} de {max} caracteres',
+  'charCount.count': '{count, plural, one {# carácter} other {# caracteres}}',
+  'charCount.left': '{count, plural, one {Queda # carácter} other {Quedan # caracteres}}',
+  'charCount.over':
+    '{count, plural, one {# carácter por encima del límite} other {# caracteres por encima del límite}}',
   'textarea.prompt': 'Instrucciones del sistema',
   'textarea.boundsHint': 'Crece de tres a doce líneas y después se desplaza.',
   'textarea.placeholder': 'Describe cómo debe responder el asistente…',
