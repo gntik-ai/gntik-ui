@@ -1,9 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { Toggle, ToggleGroup } from './ToggleGroup';
 import ToggleGroupJoined from './examples/ToggleGroupJoined';
 import ToggleGroupSegmented from './examples/ToggleGroupSegmented';
+import { I18nProvider } from '../../i18n/I18nProvider';
+import ToggleGroupChips from './examples/ToggleGroupChips';
 import ToggleMultiple from './examples/ToggleMultiple';
 
 function setup(multiple = false) {
@@ -110,11 +112,168 @@ describe('ToggleGroup', () => {
   });
 
   it.each([
+    ['ToggleGroupChips', ToggleGroupChips],
     ['ToggleGroupSegmented', ToggleGroupSegmented],
     ['ToggleGroupJoined', ToggleGroupJoined],
     ['ToggleMultiple', ToggleMultiple],
   ] as const)('%s has no axe violations', async (_n, Example) => {
     render(<Example />);
     await expectNoAxeViolations();
+  });
+});
+
+describe('Toggle compatibility', () => {
+  it.each(['segmented', 'joined'] as const)('%s keeps its markup and classes', (variant) => {
+    const { container } = render(
+      <ToggleGroup variant={variant} aria-label="Status" defaultValue={['failed']}>
+        <Toggle value="all">All</Toggle>
+        <Toggle value="failed">Failed</Toggle>
+      </ToggleGroup>,
+    );
+    expect(container.innerHTML.replace(/id="[^"]*"/g, 'id="stable"')).toMatchSnapshot();
+    expect(container.querySelector('svg')).toBeNull();
+  });
+
+  it('standalone keeps its markup and classes without extra children', () => {
+    const { container } = render(<Toggle defaultPressed>Failed</Toggle>);
+    expect(container.innerHTML.replace(/id="[^"]*"/g, 'id="stable"')).toMatchSnapshot();
+    const button = screen.getByRole('button', { name: 'Failed' });
+    expect(button.childNodes).toHaveLength(1);
+    expect(button.children).toHaveLength(0);
+  });
+});
+
+describe('chip filters', () => {
+  it.each(['standalone', 'segmented', 'joined', 'chip'] as const)(
+    'includes the optional count in the %s button name',
+    (variant) => {
+      const toggle = (
+        <Toggle value="failed" count={3}>
+          Failed
+        </Toggle>
+      );
+      render(
+        variant === 'standalone' ? (
+          toggle
+        ) : (
+          <ToggleGroup variant={variant} aria-label="Status">
+            {toggle}
+          </ToggleGroup>
+        ),
+      );
+      const button = screen.getByRole('button', { name: 'Failed 3' });
+      expect(button.lastElementChild).toHaveTextContent('3');
+      expect(button.lastElementChild).toHaveClass('font-mono', 'tabular-nums', 'text-[11px]');
+    },
+  );
+
+  it('renders a zero count', () => {
+    render(<Toggle count={0}>Failed</Toggle>);
+    expect(screen.getByRole('button', { name: 'Failed 0' }).lastElementChild).toHaveTextContent('0');
+  });
+
+  it('renders named filter buttons with a check only on the pressed chip', () => {
+    render(
+      <ToggleGroup variant="chip" aria-label="Status" multiple defaultValue={['failed']}>
+        <Toggle value="all">All</Toggle>
+        <Toggle value="running">Running</Toggle>
+        <Toggle value="failed">Failed</Toggle>
+      </ToggleGroup>,
+    );
+    const group = screen.getByRole('group', { name: 'Status' });
+    expect(within(group).getAllByRole('button')).toHaveLength(3);
+    expect(group).toHaveClass('flex-wrap', 'gap-1.5');
+    for (const name of ['All', 'Running', 'Failed']) {
+      const button = within(group).getByRole('button', { name });
+      expect(button).toHaveClass('rounded-full', 'border', 'bg-card');
+      expect(button).toHaveAttribute('aria-pressed', name === 'Failed' ? 'true' : 'false');
+      expect(button.querySelectorAll('svg')).toHaveLength(name === 'Failed' ? 1 : 0);
+      if (name === 'Failed') {
+        expect(button.firstElementChild).toHaveAttribute('aria-hidden', 'true');
+        expect(button.firstElementChild).toHaveAttribute('width', '14');
+      }
+    }
+  });
+});
+
+describe('chip interaction', () => {
+  function chips(value?: string[]) {
+    return (
+      <ToggleGroup
+        variant="chip"
+        aria-label="Status"
+        multiple
+        defaultValue={['failed']}
+        value={value}
+        onValueChange={onValueChange}
+      >
+        <Toggle value="all">All</Toggle>
+        <Toggle value="running">Running</Toggle>
+        <Toggle value="failed">Failed</Toggle>
+      </ToggleGroup>
+    );
+  }
+  const onValueChange = vi.fn();
+
+  it('keeps roving focus, Home/End, wrapping arrows, Space/Enter and one Tab stop', async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <button>Before</button>
+        {chips()}
+        <button>After</button>
+      </>,
+    );
+    const all = screen.getByRole('button', { name: 'All' });
+    const running = screen.getByRole('button', { name: 'Running' });
+    const failed = screen.getByRole('button', { name: 'Failed' });
+    all.focus();
+    await user.keyboard('{ArrowRight}');
+    expect(running).toHaveFocus();
+    await user.keyboard(' ');
+    expect(running).toHaveAttribute('aria-pressed', 'true');
+    expect(running.querySelectorAll('svg[aria-hidden="true"]')).toHaveLength(1);
+    expect(onValueChange).toHaveBeenLastCalledWith(['failed', 'running'], expect.anything());
+    await user.keyboard('{End}');
+    expect(failed).toHaveFocus();
+    await user.keyboard('{ArrowRight}');
+    expect(all).toHaveFocus();
+    await user.keyboard('{End}{Home}');
+    expect(all).toHaveFocus();
+    await user.keyboard('{Enter}');
+    expect(all).toHaveAttribute('aria-pressed', 'true');
+    await user.keyboard('{Enter}');
+    expect(all.querySelector('svg')).toBeNull();
+    screen.getByRole('button', { name: 'Before' }).focus();
+    await user.tab();
+    expect(screen.getByRole('group', { name: 'Status' })).toContainElement(document.activeElement as HTMLElement);
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+  });
+
+  it('reflects controlled values without duplicating selection state', async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(chips(['failed']));
+    const running = screen.getByRole('button', { name: 'Running' });
+    await user.click(running);
+    expect(running).toHaveAttribute('aria-pressed', 'false');
+    expect(running.querySelector('svg')).toBeNull();
+    rerender(chips(['running']));
+    expect(running).toHaveAttribute('aria-pressed', 'true');
+    expect(running.querySelector('svg')).not.toBeNull();
+    expect(screen.getByRole('button', { name: 'Failed' }).querySelector('svg')).toBeNull();
+  });
+
+  it('shows counts in the single and multiple examples and translates their labels', () => {
+    const { rerender } = render(<ToggleGroupChips />);
+    expect(screen.getAllByRole('button', { name: 'Failed 3' })).toHaveLength(2);
+    expect(screen.getByRole('group', { name: 'Status' })).toBeInTheDocument();
+    rerender(
+      <I18nProvider locale="es">
+        <ToggleGroupChips />
+      </I18nProvider>,
+    );
+    expect(screen.getAllByRole('button', { name: 'Fallidos 3' })).toHaveLength(2);
+    expect(screen.getByRole('group', { name: 'Estado' })).toBeInTheDocument();
   });
 });

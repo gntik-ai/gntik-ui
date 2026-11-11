@@ -327,7 +327,7 @@ export default function SuggestionChipsZeroState() {
 
 ### ToggleGroup (`toggle-group`)
 
-Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). Segmented and joined looks, two sizes, icon-only items.
+Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). Segmented and joined bars or wrapping chip pills for short status filter sets, with optional counts in the accessible name. Chip checks indicate pressed state; multiple enables independent filters. Use TagGroup for removable tags. Sizes follow density or use sm/md; icon-only items need a label.
 
 - Package: `@gntik-ai/ui` · export `ToggleGroup` · group Actions · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/ToggleGroup/ToggleGroup.doc.ts
@@ -345,39 +345,45 @@ Keyboard:
 | Space / Enter | Toggles the focused item |
 | Tab | Moves focus into and out of the group (one tab stop) |
 
-Tokens: card, border, secondary, foreground, muted-foreground, primary, focus-ring
+Tokens: card, border, secondary, foreground, muted-foreground, primary, primary-chip-text, focus-ring
 
 Usage:
 
 ```tsx
-import { LayoutGrid, List, SquareKanban } from '@gntik-ai/icons';
 import { useState } from 'react';
+import { useI18n } from '@gntik-ai/ui';
 import { Toggle, ToggleGroup } from '@gntik-ai/ui';
 
-export default function ToggleGroupJoined() {
-  const [view, setView] = useState(['week']);
+const filters = [
+  { value: 'all', label: 'toggleGroup.all', count: 12 },
+  { value: 'running', label: 'toggleGroup.running', count: 9 },
+  { value: 'failed', label: 'toggleGroup.failed', count: 3 },
+] as const;
+
+export default function ToggleGroupChips() {
+  const { t } = useI18n();
+  const [value, setValue] = useState(['failed']);
   return (
     <div className="flex flex-col items-start gap-5">
-      <ToggleGroup
-        aria-label="Calendar view"
-        variant="joined"
-        value={view}
-        onValueChange={(v) => v.length && setView(v)}
-      >
-        <Toggle value="day">Day</Toggle>
-        <Toggle value="week">Week</Toggle>
-        <Toggle value="month">Month</Toggle>
+      <ToggleGroup variant="chip" aria-label={t('toggleGroup.status')} value={value} onValueChange={setValue}>
+        {filters.map((filter) => (
+          <Toggle key={filter.value} value={filter.value} count={filter.count}>
+            {t(filter.label)}
+          </Toggle>
+        ))}
       </ToggleGroup>
-      <ToggleGroup aria-label="Project layout" variant="joined" defaultValue={['list']}>
-        <Toggle value="list" iconOnly aria-label="List">
-          <List size={16} aria-hidden />
-        </Toggle>
-        <Toggle value="grid" iconOnly aria-label="Grid">
-          <LayoutGrid size={16} aria-hidden />
-        </Toggle>
-        <Toggle value="board" iconOnly aria-label="Board">
-          <SquareKanban size={16} aria-hidden />
-        </Toggle>
+      <ToggleGroup
+        variant="chip"
+        aria-label={t('toggleGroup.statusMultiple')}
+        multiple
+        defaultValue={['failed']}
+        size="sm"
+      >
+        {filters.map((filter) => (
+          <Toggle key={filter.value} value={filter.value} count={filter.count}>
+            {t(filter.label)}
+          </Toggle>
+        ))}
       </ToggleGroup>
     </div>
   );

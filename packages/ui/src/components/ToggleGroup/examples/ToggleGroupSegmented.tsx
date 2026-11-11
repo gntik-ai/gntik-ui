@@ -14,9 +14,8 @@ export default function ToggleGroupSegmented() {
       {/* Keep one item pressed: ignore the change that would empty the group. */}
       <ToggleGroup aria-label="Filter deployments" value={value} onValueChange={(v) => v.length && setValue(v)}>
         {filters.map((f) => (
-          <Toggle key={f.value} value={f.value}>
+          <Toggle key={f.value} value={f.value} count={f.count}>
             {f.label}
-            <span className="font-mono text-[10.5px] opacity-70">{f.count}</span>
           </Toggle>
         ))}
       </ToggleGroup>

@@ -513,6 +513,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -755,6 +760,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -1322,6 +1332,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -1582,6 +1597,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -1821,6 +1841,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -2063,6 +2088,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -2416,6 +2446,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -2657,6 +2692,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -3028,6 +3068,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -3255,6 +3300,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -3557,6 +3607,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -4331,6 +4386,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -4752,6 +4812,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -5004,6 +5069,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -5552,6 +5622,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -6097,6 +6172,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -6588,6 +6668,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -6862,6 +6947,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -7147,6 +7237,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -7421,6 +7516,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -7738,6 +7838,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -7985,6 +8090,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -8255,6 +8365,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -8531,6 +8646,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -8766,6 +8886,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -9020,6 +9145,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -9269,6 +9399,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -9904,6 +10039,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -10376,6 +10516,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -10918,6 +11063,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -11255,6 +11405,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -11626,6 +11781,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -11969,6 +12129,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -12211,6 +12376,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -12451,6 +12621,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -12704,6 +12879,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -12995,6 +13175,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -13322,6 +13507,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -13562,6 +13752,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -13811,6 +14006,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -14352,6 +14552,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -14634,6 +14839,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -15191,6 +15401,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -15635,6 +15850,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -15883,6 +16103,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -16265,6 +16490,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -16512,6 +16742,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -16751,6 +16986,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -17000,6 +17240,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -17224,6 +17469,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -17576,6 +17826,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -17861,6 +18116,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -18247,6 +18507,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -18483,6 +18748,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -18819,6 +19089,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -19070,6 +19345,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -19383,6 +19663,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -19872,6 +20157,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -20401,6 +20691,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -20987,6 +21282,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -21333,6 +21633,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -21622,6 +21927,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -21868,6 +22178,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -22205,6 +22520,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -22685,6 +23005,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -23280,6 +23605,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -23919,6 +24249,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -24252,6 +24587,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -24474,6 +24814,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -24850,6 +25195,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -25304,6 +25654,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -25680,6 +26035,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -26047,6 +26407,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -26328,6 +26693,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -26567,6 +26937,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -26820,6 +27195,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -27235,6 +27615,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -27475,6 +27860,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -27737,6 +28127,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -28023,6 +28418,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -28270,6 +28670,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -28513,6 +28918,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -28553,10 +28963,11 @@
       "name": "toggle-group",
       "type": "registry:ui",
       "title": "ToggleGroup",
-      "description": "Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). Segmented and joined looks, two sizes, icon-only items.",
+      "description": "Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). Segmented and joined bars or wrapping chip pills for short status filter sets, with optional counts in the accessible name. Chip checks indicate pressed state; multiple enables independent filters. Use TagGroup for removable tags. Sizes follow density or use sm/md; icon-only items need a label.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.9.0"
+        "@base-ui/react@^1.9.0",
+        "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -28799,6 +29210,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -29094,6 +29510,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -29453,6 +29874,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -29696,6 +30122,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -29987,6 +30418,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -30239,6 +30675,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -30621,6 +31062,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -30842,6 +31288,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -31363,6 +31814,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -31687,6 +32143,11 @@
           "target": "components/i18n/messages/textarea-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/tool-call-en.ts"
@@ -31926,6 +32387,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -32217,6 +32683,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
@@ -32529,6 +33000,11 @@
           "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/tool-call-en.ts",

@@ -1,8 +1,10 @@
+import { toggleGroupEn, toggleGroupEs } from './toggle-group-messages';
 import { kitEn, kitEs } from './kit-messages';
 
 /** Catalog copy for scoped theme and resource previews. */
 export const catalogPreviewEn = {
   ...kitEn,
+  ...toggleGroupEn,
   'navRoute.home': 'Home',
   'navRoute.functions': 'Functions',
   'navRoute.templates': 'Templates',
@@ -36,6 +38,7 @@ export const catalogPreviewEn = {
 
 export const catalogPreviewEs = {
   ...kitEs,
+  ...toggleGroupEs,
   'navRoute.home': 'Inicio',
   'navRoute.functions': 'Funciones',
   'navRoute.templates': 'Plantillas',
