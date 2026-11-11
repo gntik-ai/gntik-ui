@@ -1,6 +1,15 @@
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { CircleAlert, CircleCheck, Info, TriangleAlert, X, type LucideIcon } from 'lucide-react';
-import { useMemo, type ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  type HTMLAttributes,
+  type ReactNode,
+  type Ref,
+} from 'react';
 import { usePortalContainer } from '../../utils/portal';
 import { Spinner } from '../Spinner';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
@@ -19,6 +28,82 @@ const TONES = new Set<string>(Object.keys(TONE_ICON));
 /** Base UI's own promise types, mapped onto the kit tones. */
 const TYPE_ALIASES: Record<string, ToastTone> = { error: 'destructive' };
 let toastSeq = 0;
+
+/** True while Base UI marks the enclosing toast root aria-hidden (e.g. high priority, viewport unfocused). */
+const RootHiddenContext = createContext(false);
+
+const isAriaHidden = (value: unknown) => value === true || value === 'true';
+
+/**
+ * Base UI marks some toast parts aria-hidden but leaves them tabbable (axe `aria-hidden-focus`).
+ * Takes the part out of sequential focus while it is hidden, derived from Base UI's own computed
+ * aria-hidden so the two cannot drift; `tabIndex -1` (not `inert`) keeps pointer use and `.focus()` working.
+ */
+function guardFocus<P extends HTMLAttributes<HTMLElement>>(props: P, hidden: boolean): P {
+  return hidden ? { ...props, tabIndex: -1 } : props;
+}
+
+/** Close, Action and dismiss buttons: not tabbable while they, or their toast, are aria-hidden. */
+function useControlGuard() {
+  const rootHidden = useContext(RootHiddenContext);
+  return <P extends HTMLAttributes<HTMLElement>>(props: P) =>
+    guardFocus(props, rootHidden || isAriaHidden(props['aria-hidden']));
+}
+
+const FOCUSABLE =
+  'a[href],button,input,select,textarea,summary,iframe,[tabindex],[contenteditable]:not([contenteditable="false"]),audio[controls],video[controls]';
+const SAVED_TABINDEX = 'data-gntik-toast-tabindex';
+
+/** Takes (or gives back) sequential focus of whatever focusable content a title / description carries. */
+function syncDescendantFocus(node: HTMLElement, hidden: boolean) {
+  if (hidden) {
+    node.querySelectorAll<HTMLElement>(FOCUSABLE).forEach((el) => {
+      const current = el.getAttribute('tabindex');
+      if (current === '-1') return;
+      // Content that re-asserts its own tabindex while hidden is guarded again; its value is what we give back.
+      el.setAttribute(SAVED_TABINDEX, current ?? '');
+      el.setAttribute('tabindex', '-1');
+    });
+  } else {
+    node.querySelectorAll<HTMLElement>(`[${SAVED_TABINDEX}]`).forEach((el) => {
+      const saved = el.getAttribute(SAVED_TABINDEX);
+      if (saved) el.setAttribute('tabindex', saved);
+      else el.removeAttribute('tabindex');
+      el.removeAttribute(SAVED_TABINDEX);
+    });
+  }
+}
+
+/** Title / description text: links and other focusable content passed as ReactNode follow the hidden state of the root. */
+function GuardedText({
+  as: Tag,
+  ref,
+  ...rest
+}: HTMLAttributes<HTMLElement> & { as: 'h2' | 'p'; ref?: Ref<HTMLElement> }) {
+  const hidden = useContext(RootHiddenContext);
+  const own = useRef<HTMLElement | null>(null);
+  // Content can become focusable while hidden without this component rendering (a link gaining an
+  // href, a child swapping in), so while hidden the subtree is also watched and re-guarded.
+  useLayoutEffect(() => {
+    const node = own.current;
+    if (!node) return;
+    syncDescendantFocus(node, hidden);
+    if (!hidden) return;
+    const observer = new MutationObserver(() => syncDescendantFocus(node, true));
+    observer.observe(node, { subtree: true, childList: true, attributes: true });
+    return () => observer.disconnect();
+  });
+  return (
+    <Tag
+      {...rest}
+      ref={(node: HTMLElement | null) => {
+        own.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
+      }}
+    />
+  );
+}
 
 export interface ToastProviderProps extends BaseToast.Provider.Props {
   /** Default auto-dismiss time in ms; 0 keeps toasts until closed. */
@@ -66,6 +151,16 @@ export interface ToastPromiseOptions<Value> {
 
 interface ToastData {
   dismissAction?: ToastOptions['dismissAction'];
+}
+
+function GuardedAction({ className }: { className: string }) {
+  const guard = useControlGuard();
+  return <BaseToast.Action className={className} render={(props) => <button {...guard(props)} />} />;
+}
+
+function GuardedClose({ onClick, ...rest }: BaseToast.Close.Props) {
+  const guard = useControlGuard();
+  return <BaseToast.Close {...rest} onClick={onClick} render={(props) => <button {...guard(props)} />} />;
 }
 
 function resolveState<Arg>(state: ToastPromiseState<Arg>, arg: Arg): ToastOptions {
@@ -154,7 +249,19 @@ export function Toaster({ className, closeLabel: closeLabelProp, container }: To
           const v = toastVariants({ tone });
           const IconCmp = TONE_ICON[tone];
           return (
-            <BaseToast.Root key={t.id} toast={t} className={v.root()}>
+            <BaseToast.Root
+              key={t.id}
+              toast={t}
+              className={v.root()}
+              render={(props) => {
+                const hidden = isAriaHidden(props['aria-hidden']);
+                return (
+                  <RootHiddenContext.Provider value={hidden}>
+                    <div {...guardFocus(props, hidden)} />
+                  </RootHiddenContext.Provider>
+                );
+              }}
+            >
               <BaseToast.Content className={v.content()}>
                 {(IconCmp || tone === 'loading') && (
                   <span className={v.icon()}>
@@ -162,22 +269,25 @@ export function Toaster({ className, closeLabel: closeLabelProp, container }: To
                   </span>
                 )}
                 <div className={v.text()}>
-                  <BaseToast.Title className={v.title()} />
-                  <BaseToast.Description className={v.description()} />
+                  <BaseToast.Title className={v.title()} render={(props) => <GuardedText as="h2" {...props} />} />
+                  <BaseToast.Description
+                    className={v.description()}
+                    render={(props) => <GuardedText as="p" {...props} />}
+                  />
                   {(t.actionProps || dismiss) && (
                     <div className={v.actions()}>
-                      {t.actionProps && <BaseToast.Action className={v.action()} />}
+                      {t.actionProps && <GuardedAction className={v.action()} />}
                       {dismiss && (
-                        <BaseToast.Close className={v.dismissAction()} onClick={() => dismiss.onClick?.()}>
+                        <GuardedClose className={v.dismissAction()} onClick={() => dismiss.onClick?.()}>
                           {dismiss.label}
-                        </BaseToast.Close>
+                        </GuardedClose>
                       )}
                     </div>
                   )}
                 </div>
-                <BaseToast.Close aria-label={closeLabel} className={v.close()}>
+                <GuardedClose aria-label={closeLabel} className={v.close()}>
                   <X size={13} strokeWidth={2.4} aria-hidden />
-                </BaseToast.Close>
+                </GuardedClose>
               </BaseToast.Content>
             </BaseToast.Root>
           );
