@@ -498,6 +498,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -730,6 +735,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -1287,6 +1297,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -1537,6 +1552,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -1766,6 +1786,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -1998,6 +2023,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -2341,6 +2371,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -2572,6 +2607,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -2933,6 +2973,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -3150,6 +3195,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -3442,6 +3492,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -4206,6 +4261,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -4617,6 +4677,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -4859,6 +4924,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -5397,6 +5467,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -5932,6 +6007,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -6413,6 +6493,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -6677,6 +6762,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -6952,6 +7042,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -7216,6 +7311,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -7523,6 +7623,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -7760,6 +7865,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -8020,6 +8130,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -8286,6 +8401,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -8511,6 +8631,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -8755,6 +8880,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -8994,6 +9124,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -9619,6 +9754,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -10081,6 +10221,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -10613,6 +10758,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -10940,6 +11090,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -11301,6 +11456,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -11634,6 +11794,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -11866,6 +12031,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -12096,6 +12266,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -12339,6 +12514,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -12620,6 +12800,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -12937,6 +13122,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -13167,6 +13357,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -13406,6 +13601,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -13937,6 +14137,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -14209,6 +14414,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -14756,6 +14966,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -15190,6 +15405,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -15428,6 +15648,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -15800,6 +16025,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -16037,6 +16267,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -16266,6 +16501,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -16505,6 +16745,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -16719,6 +16964,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -17061,6 +17311,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -17336,6 +17591,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -17712,6 +17972,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -17938,6 +18203,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -18264,6 +18534,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -18505,6 +18780,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -18808,6 +19088,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -19287,6 +19572,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -19806,6 +20096,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -20382,6 +20677,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -20718,6 +21018,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -20997,6 +21302,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -21233,6 +21543,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -21560,6 +21875,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -22030,6 +22350,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -22615,6 +22940,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -23244,6 +23574,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -23567,6 +23902,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -23779,6 +24119,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -24145,6 +24490,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -24589,6 +24939,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -24955,6 +25310,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -25130,13 +25490,14 @@
       "name": "switch",
       "type": "registry:ui",
       "title": "Switch",
-      "description": "On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name). The optional invalid prop exposes aria-invalid and a destructive 1px track ring, checked or unchecked. Invalid Field also supplies this state. Pair invalid with a FieldError or description explaining how to correct the value; colour alone is insufficient.",
+      "description": "On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name). The optional invalid prop exposes aria-invalid and a destructive 1px track ring, checked or unchecked. Invalid Field also supplies this state. Pair invalid with a FieldError or description explaining how to correct the value; colour alone is insufficient. The loading prop marks a pending save: a spinner appears in the thumb, toggles are ignored, and the switch stays focusable with aria-busy and a visually hidden \"Saving…\" description (override with loadingLabel). checked stays as the app passes it, so the app picks optimistic or pessimistic updates and clears loading when the request settles. disabled wins over loading. Prefer size md or lg for toggles that call the server; the sm spinner is small.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/spinner.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -25166,14 +25527,194 @@
           "target": "components/ui/switch/switch.variants.ts"
         },
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-range-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tool-call-en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Switch/Switch.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/switch/Switch.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
         }
       ]
     },
@@ -25407,6 +25948,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -25636,6 +26182,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -25879,6 +26430,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -26279,6 +26835,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -26509,6 +27070,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -26761,6 +27327,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -27037,6 +27608,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -27274,6 +27850,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -27505,6 +28086,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -27783,6 +28369,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -28068,6 +28659,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -28417,6 +29013,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -28650,6 +29251,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -28931,6 +29537,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -29173,6 +29784,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -29545,6 +30161,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -29756,6 +30377,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -30262,6 +30888,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -30576,6 +31207,11 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/table-menu-messages.ts"
@@ -30805,6 +31441,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -31086,6 +31727,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
@@ -31388,6 +32034,11 @@
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",

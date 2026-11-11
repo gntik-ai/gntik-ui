@@ -1,3 +1,4 @@
+import { switchEs } from './switch-messages';
 import { sliderInputEs } from './slider-input-messages';
 import { formActionsEs } from './form-action-messages';
 import { dateRangeExamplesEs } from './date-range-example-messages';
@@ -28,6 +29,7 @@ import { radioInlineEs } from './radio-inline-messages';
 import type { Messages } from './en';
 export const es: Messages = {
   ...sliderInputEs,
+  ...switchEs,
   ...dateRangeExamplesEs,
   ...fileInputEs,
   ...uploadEs,
