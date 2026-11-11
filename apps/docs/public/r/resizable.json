@@ -217,7 +217,7 @@
       "path": "packages/ui/src/i18n/messages/switch-messages.ts",
       "type": "registry:ui",
       "target": "components/i18n/messages/switch-messages.ts",
-      "content": "export const switchEn = {\n  'switch.saving': 'Saving…',\n  'switch.example.connector': 'Slack connector',\n  'switch.example.failNext': 'Fail the next request',\n  'switch.example.error': 'Could not update the connector. The change was rolled back.',\n};\n\nexport const switchEs = {\n  'switch.saving': 'Guardando…',\n  'switch.example.connector': 'Conector de Slack',\n  'switch.example.failNext': 'Hacer fallar la siguiente solicitud',\n  'switch.example.error': 'No se pudo actualizar el conector. El cambio se revirtió.',\n};\n"
+      "content": "export const switchEn = {\n  'switch.saving': 'Saving…',\n  'switch.example.connector': 'Slack connector',\n  'switch.example.webhook': 'Webhook connector',\n  'switch.example.connecting': 'Connecting…',\n  'switch.example.failNext': 'Fail the next request',\n  'switch.example.error': 'Could not update the connector. The change was rolled back.',\n};\n\nexport const switchEs = {\n  'switch.saving': 'Guardando…',\n  'switch.example.connector': 'Conector de Slack',\n  'switch.example.webhook': 'Conector de webhook',\n  'switch.example.connecting': 'Conectando…',\n  'switch.example.failNext': 'Hacer fallar la siguiente solicitud',\n  'switch.example.error': 'No se pudo actualizar el conector. El cambio se revirtió.',\n};\n"
     },
     {
       "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",

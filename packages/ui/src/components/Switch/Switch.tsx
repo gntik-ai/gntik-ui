@@ -1,7 +1,8 @@
 import { Switch as BaseSwitch } from '@base-ui/react/switch';
-import { useId, type ReactNode, type Ref } from 'react';
+import { useContext, useId, type ReactNode, type Ref } from 'react';
 import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { FieldsetDisabledContext, InFieldContext } from '../../utils/in-field-context';
 import { Spinner } from '../Spinner/Spinner';
 import { switchLoadingVariants, switchVariants, type SwitchVariantProps } from './switch.variants';
 
@@ -35,7 +36,9 @@ export function Switch({
   const l = switchLoadingVariants({ size });
   const { t } = useI18n();
   const savingId = useId();
-  const busy = loading && !props.disabled;
+  const field = useContext(InFieldContext);
+  const inDisabledFieldset = useContext(FieldsetDisabledContext);
+  const busy = loading && !(props.disabled || field?.disabled || inDisabledFieldset);
   const describedBy = busy
     ? [props['aria-describedby'], savingId].filter(Boolean).join(' ')
     : props['aria-describedby'];
@@ -50,7 +53,7 @@ export function Switch({
     >
       <BaseSwitch.Thumb className={s.thumb()}>{busy && <Spinner className={l.spinner()} />}</BaseSwitch.Thumb>
       {busy && (
-        <span id={savingId} className="sr-only">
+        <span id={savingId} aria-hidden className="sr-only">
           {loadingLabel ?? t('switch.saving')}
         </span>
       )}

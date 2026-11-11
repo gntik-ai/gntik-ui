@@ -159,6 +159,27 @@ describe('loading state', () => {
     expect(screen.getByRole('switch')).toHaveAccessibleDescription(expect.stringContaining('Saving…'));
   });
 
+  it('does not change the accessible name of a visibly labelled switch while loading', () => {
+    render(<Switch loading label="Slack" />);
+    const sw = screen.getByRole('switch', { name: 'Slack' });
+    expect(sw).toHaveAccessibleDescription('Saving…');
+  });
+
+  it('lets an inherited Field disabled win over loading', () => {
+    render(
+      <Field disabled>
+        <FieldLabel>Slack</FieldLabel>
+        <Switch loading />
+      </Field>,
+    );
+    const sw = screen.getByRole('switch');
+    expect(sw).toHaveAttribute('data-disabled');
+    expect(sw).not.toHaveAttribute('aria-busy');
+    expect(sw).not.toHaveAttribute('data-loading');
+    expect(sw).not.toHaveAccessibleDescription();
+    expect(sw.querySelector('svg')).toBeNull();
+  });
+
   it('restores toggling when loading ends', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();

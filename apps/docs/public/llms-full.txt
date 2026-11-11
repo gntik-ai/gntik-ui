@@ -5142,6 +5142,19 @@ export default function SwitchPending() {
   const [failNext, setFailNext] = useState(false);
   const [failed, setFailed] = useState(false);
 
+  const [webhook, setWebhook] = useState(false);
+  const [webhookLoading, setWebhookLoading] = useState(false);
+
+  const toggleWebhook = async (next: boolean) => {
+    setWebhook(next);
+    setWebhookLoading(true);
+    try {
+      await request(false);
+    } finally {
+      setWebhookLoading(false);
+    }
+  };
+
   const toggle = async (next: boolean) => {
     setFailed(false);
     setEnabled(next);
@@ -5159,6 +5172,13 @@ export default function SwitchPending() {
   return (
     <div className="grid gap-4">
       <Switch label={t('switch.example.connector')} checked={enabled} onCheckedChange={toggle} loading={loading} />
+      <Switch
+        label={t('switch.example.webhook')}
+        loadingLabel={t('switch.example.connecting')}
+        checked={webhook}
+        onCheckedChange={toggleWebhook}
+        loading={webhookLoading}
+      />
       <Switch label={t('switch.example.failNext')} size="sm" checked={failNext} onCheckedChange={setFailNext} />
       {failed && <Alert tone="destructive">{t('switch.example.error')}</Alert>}
     </div>
