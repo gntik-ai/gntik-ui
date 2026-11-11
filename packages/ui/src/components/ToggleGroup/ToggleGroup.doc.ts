@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Actions',
   status: 'stable',
   description:
-    'Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). Segmented and joined looks, two sizes, icon-only items.',
+    'Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). Segmented and joined bars or wrapping chip pills for short status filter sets, with optional counts in the accessible name. Chip checks indicate pressed state; multiple enables independent filters. Use TagGroup for removable tags. Sizes follow density or use sm/md; icon-only items need a label.',
   primitive: '@base-ui/react/toggle-group',
   pattern: 'toolbar-style group of toggle buttons (aria-pressed)',
   keyboard: [
@@ -23,5 +23,14 @@ export const doc: ComponentDoc = {
     ['data-disabled', 'root', 'The control cannot be changed or activated.'],
     ['data-pressed', 'root', 'The toggle is pressed.'],
   ],
-  tokens: ['card', 'border', 'secondary', 'foreground', 'muted-foreground', 'primary', 'focus-ring'],
+  tokens: [
+    'card',
+    'border',
+    'secondary',
+    'foreground',
+    'muted-foreground',
+    'primary',
+    'primary-chip-text',
+    'focus-ring',
+  ],
 };

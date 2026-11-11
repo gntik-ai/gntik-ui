@@ -4,6 +4,7 @@ export const toggleGroupVariants = tv({
   base: 'inline-flex data-[orientation=vertical]:flex-col data-disabled:opacity-50',
   variants: {
     variant: {
+      chip: 'flex-wrap gap-1.5',
       /** Pill container; the pressed item lifts onto bg-secondary. */
       segmented: 'items-center gap-0.5 rounded-lg border border-border bg-card p-0.5 shadow-sm',
       /** Buttons sharing borders; rounding only on the container. */
@@ -28,6 +29,7 @@ export const toggleVariants = tv({
         'rounded-lg border border-border bg-card shadow-sm hover:bg-secondary/50 data-pressed:border-primary/40',
       segmented: 'rounded-md data-pressed:shadow-sm',
       joined: 'hover:bg-secondary/50',
+      chip: 'rounded-full border border-border bg-card px-3 hover:bg-secondary/50 data-pressed:border-primary/40 data-pressed:bg-primary/14 data-pressed:text-primary-chip-text',
     },
     size: {
       /** Follows `data-density` (comfortable = md). */
@@ -38,6 +40,9 @@ export const toggleVariants = tv({
     iconOnly: { true: 'px-0' },
   },
   compoundVariants: [
+    { variant: 'chip', size: 'auto', class: 'h-control-sm px-3' },
+    { variant: 'chip', size: 'sm', class: 'h-7 px-3' },
+    { variant: 'chip', size: 'md', class: 'h-8 px-3' },
     { variant: 'segmented', size: 'auto', class: 'h-control-sm px-control-sm text-[12.5px]' },
     { variant: 'segmented', size: 'md', class: 'h-8 px-3 text-[12.5px]' },
     { variant: 'segmented', size: 'sm', class: 'h-7 px-2.5 text-[12px]' },
@@ -47,6 +52,9 @@ export const toggleVariants = tv({
     { iconOnly: true, variant: 'segmented', size: 'auto', class: 'size-control-sm' },
     { iconOnly: true, variant: 'segmented', size: 'md', class: 'size-8' },
     { iconOnly: true, variant: 'segmented', size: 'sm', class: 'size-7' },
+    { iconOnly: true, variant: 'chip', size: 'auto', class: 'size-control-sm' },
+    { iconOnly: true, variant: 'chip', size: 'md', class: 'size-8' },
+    { iconOnly: true, variant: 'chip', size: 'sm', class: 'size-7' },
   ],
   defaultVariants: { variant: 'standalone', size: 'auto', iconOnly: false },
 });

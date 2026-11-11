@@ -1,5 +1,7 @@
 import { Toggle as BaseToggle } from '@base-ui/react/toggle';
 import { ToggleGroup as BaseToggleGroup } from '@base-ui/react/toggle-group';
+import { useRender } from '@base-ui/react/use-render';
+import { Check } from 'lucide-react';
 import { createContext, useContext, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import {
@@ -9,13 +11,15 @@ import {
   type ToggleVariantProps,
 } from './toggle-group.variants';
 
-type GroupStyle = { variant: 'segmented' | 'joined'; size: 'auto' | 'sm' | 'md' };
+type GroupStyle = { variant: 'segmented' | 'joined' | 'chip'; size: 'auto' | 'sm' | 'md' };
 const GroupStyleContext = createContext<GroupStyle | null>(null);
 
 export interface ToggleProps extends Omit<BaseToggle.Props, 'className'>, Omit<ToggleVariantProps, 'variant'> {
   className?: string;
   ref?: Ref<HTMLButtonElement>;
   children?: ReactNode;
+  /** Trailing count, included in the accessible name. */
+  count?: ReactNode;
 }
 
 /**
@@ -23,7 +27,7 @@ export interface ToggleProps extends Omit<BaseToggle.Props, 'className'>, Omit<T
  * Inside a ToggleGroup: give it a `value`; it inherits the group's look. Icon-only toggles
  * need `aria-label` (set `iconOnly`).
  */
-export function Toggle({ size, iconOnly, className, type = 'button', ...props }: ToggleProps) {
+export function Toggle({ size, iconOnly, className, render, children, count, type = 'button', ...props }: ToggleProps) {
   const group = useContext(GroupStyleContext);
   return (
     <BaseToggle
@@ -33,6 +37,20 @@ export function Toggle({ size, iconOnly, className, type = 'button', ...props }:
         className,
       )}
       {...props}
+      children={
+        count == null ? (
+          children
+        ) : (
+          <>
+            {children} <span className="font-mono tabular-nums text-[11px]">{count}</span>
+          </>
+        )
+      }
+      render={
+        group?.variant === 'chip'
+          ? (elementProps, state) => <ChipButton elementProps={elementProps} state={state} render={render} />
+          : render
+      }
     />
   );
 }
@@ -55,4 +73,30 @@ export function ToggleGroup({ variant = 'segmented', size = 'auto', className, .
       <BaseToggleGroup className={cn(toggleGroupVariants({ variant }), className)} {...props} />
     </GroupStyleContext.Provider>
   );
+}
+
+/** Uses Base UI's pressed state without duplicating its selection or focus logic. */
+function ChipButton({
+  elementProps,
+  state,
+  render,
+}: {
+  elementProps: useRender.ElementProps<'button'>;
+  state: BaseToggle.State;
+  render: BaseToggle.Props['render'];
+}) {
+  return useRender<{ pressed: boolean; disabled: boolean }, HTMLButtonElement>({
+    defaultTagName: 'button',
+    render,
+    props: {
+      ...elementProps,
+      children: (
+        <>
+          {state.pressed && <Check size={14} aria-hidden />}
+          {elementProps.children}
+        </>
+      ),
+    },
+    state,
+  });
 }
