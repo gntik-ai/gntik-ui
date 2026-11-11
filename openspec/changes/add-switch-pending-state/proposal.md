@@ -6,7 +6,7 @@
 
 - Add `loading?: boolean` and `loadingLabel?: string` to `SwitchProps`. While loading (and not disabled) the switch is Base UI `readOnly`, has `aria-busy="true"` and `data-loading`, shows the kit `Spinner` in the thumb, and adds a hidden `switch.saving` description (en `Saving…`, es `Guardando…`).
 - `checked` stays as the app passes it; `disabled` wins over `loading`.
-- Add `examples/SwitchPending.tsx` and a loading note in `Switch.doc.ts`.
+- Add `examples/SwitchSettingsPending.tsx` and a loading note in `Switch.doc.ts`.
 
 ## Out of scope
 

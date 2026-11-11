@@ -6,7 +6,7 @@ import { Switch } from '../Switch';
 const request = (fail: boolean) =>
   new Promise<void>((resolve, reject) => setTimeout(() => (fail ? reject(new Error('failed')) : resolve()), 400));
 
-export default function SwitchPending() {
+export default function SwitchSettingsPending() {
   const { t } = useI18n();
   const [enabled, setEnabled] = useState(false);
   const [loading, setLoading] = useState(false);

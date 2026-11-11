@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { I18nProvider } from '../../i18n/I18nProvider';
 import { Switch } from './Switch';
-import SwitchPending from './examples/SwitchPending';
+import SwitchSettingsPending from './examples/SwitchSettingsPending';
 import SwitchSettings from './examples/SwitchSettings';
 import SwitchWithAccessibleLabel from './examples/SwitchWithAccessibleLabel';
 
@@ -229,7 +229,7 @@ describe('loading state', () => {
 
   it('example has no axe violations and clears loading when the request settles', async () => {
     const user = userEvent.setup();
-    render(<SwitchPending />);
+    render(<SwitchSettingsPending />);
     await expectNoAxeViolations();
     const sw = screen.getByRole('switch', { name: 'Slack connector' });
     await user.click(sw);

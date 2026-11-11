@@ -4,7 +4,7 @@
 
 - [x] 1.1 Add `loading` and `loadingLabel` to packages/ui/src/components/Switch/Switch.tsx: Base UI `readOnly`, `aria-busy`, `Spinner` inside `BaseSwitch.Thumb`, the hidden description.
 - [x] 1.2 Add the loading styles to switch.variants.ts and the `switch.saving` key to the en and es catalogs.
-- [x] 1.3 Add examples/SwitchPending.tsx and the note in Switch.doc.ts.
+- [x] 1.3 Add examples/SwitchSettingsPending.tsx and the note in Switch.doc.ts.
 
 ## 2. Tests
 
