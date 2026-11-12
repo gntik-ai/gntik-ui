@@ -79,4 +79,12 @@ describe('SettingsSecurityPage', () => {
     const { container } = render(<SettingsSecurityPage />);
     await expectNoAxeViolations(container);
   }, 15000);
+
+  it('has no axe violations with the QR setup dialog open', async () => {
+    render(<WithQrCode />);
+    await userEvent.click(screen.getByRole('switch', { name: 'Authenticator app' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Set up two-factor authentication' });
+    expect(within(dialog).getByRole('img', { name: 'QR code' })).toBeInTheDocument();
+    await expectNoAxeViolations(document.body);
+  }, 15000);
 });

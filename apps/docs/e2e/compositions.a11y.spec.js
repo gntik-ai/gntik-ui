@@ -50,6 +50,11 @@ const cases = [
     id: 'settings-profile--read-only',
     theme,
   })),
+  ...['dark', 'light', 'high_contrast'].map((theme) => ({
+    kind: 'template',
+    id: 'settings-security--with-qr-code',
+    theme,
+  })),
   ...kit.items
     .filter((i) => i.kind === 'template')
     .flatMap((i) => ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: i.id, theme }))),
@@ -215,6 +220,12 @@ for (const { kind, id, theme } of cases) {
         await page.keyboard.press('Escape');
         await expect(panel).toBeVisible();
       }
+    }
+    if (id === 'settings-security--with-qr-code') {
+      await page.getByRole('switch', { name: 'Authenticator app' }).click();
+      const dialog = page.getByRole('dialog', { name: 'Set up two-factor authentication' });
+      await expect(dialog.getByRole('img', { name: 'QR code' })).toBeVisible();
+      await expect(dialog.getByText(/Setup key:/)).toBeVisible();
     }
     if (id === 'settings-profile--read-only') {
       const content = page.locator('#settings-content');
