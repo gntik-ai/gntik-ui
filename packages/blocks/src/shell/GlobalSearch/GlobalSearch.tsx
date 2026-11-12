@@ -78,8 +78,12 @@ export function GlobalSearch({
     recent: labels?.recent ?? t('commandPalette.recent'),
   };
   const origin = new Map<string, GlobalSearchGroup>();
+  const staticItems = new Set<CommandItem>();
   const tag = (items: CommandItem[], group: GlobalSearchGroup) => {
-    for (const item of items) if (!origin.has(item.id)) origin.set(item.id, group);
+    for (const item of items) {
+      staticItems.add(item);
+      if (!origin.has(item.id)) origin.set(item.id, group);
+    }
     return items;
   };
   const groups: CommandGroup[] = [
@@ -87,13 +91,17 @@ export function GlobalSearch({
     { label: l.records, items: tag(records, 'records') },
     { label: l.actions, items: tag(actions, 'actions') },
   ].filter((g) => g.items.length > 0);
-  for (const item of recent) if (!origin.has(item.id)) origin.set(item.id, 'recent');
-  // Ids returned by loadItems; the static `origin` map above is never touched by them.
-  const loadedIds = useRef(new Set<string>());
+  for (const item of recent) {
+    staticItems.add(item);
+    if (!origin.has(item.id)) origin.set(item.id, 'recent');
+  }
+  // Objects returned by loadItems; the static `origin` map above is never touched by them. A loaded
+  // item that shares an id with a hidden static one is told apart by identity.
+  const loadedItems = useRef(new WeakSet<CommandItem>());
   const loadAndTag: CommandPaletteProps['loadItems'] = loadItems
     ? async (query, context) => {
         const loaded = await loadItems(query, context);
-        for (const group of loaded) for (const item of group.items) loadedIds.current.add(item.id);
+        for (const group of loaded) for (const item of group.items) loadedItems.current.add(item);
         return loaded;
       }
     : undefined;
@@ -114,7 +122,10 @@ export function GlobalSearch({
       onQueryChange={onQueryChange}
       store={store}
       onSelect={(item) =>
-        onSelect?.(item, origin.get(item.id) ?? (loadedIds.current.has(item.id) ? 'records' : 'recent'))
+        onSelect?.(
+          item,
+          loadedItems.current.has(item) && !staticItems.has(item) ? 'records' : (origin.get(item.id) ?? 'recent'),
+        )
       }
     >
       <CommandPaletteTrigger className={className}>{triggerLabel}</CommandPaletteTrigger>

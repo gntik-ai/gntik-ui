@@ -11084,7 +11084,7 @@ import { EnvironmentBadge } from '@gntik-ai/blocks';
 
 ### Global search (`global-search`)
 
-⌘K search button opening a CommandPalette pre-wired with recent items and grouped results: pages, records and actions.
+⌘K search button opening a CommandPalette pre-wired with recent items and grouped results: pages, records and actions. loadItems (with debounceMs, minQueryLength and onQueryChange) adds debounced, abortable server results that onSelect reports as records, and a store from createCommandPaletteStore opens it from code. Preview: global-search--server-search.
 
 - Package: `@gntik-ai/blocks` · export `GlobalSearch` · group shell · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/shell/GlobalSearch/block.meta.ts

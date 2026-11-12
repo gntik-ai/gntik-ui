@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { I18nProvider } from '../../i18n/I18nProvider';
 import { CommandPalette, CommandPaletteTrigger, type CommandPaletteProps } from './CommandPalette';
 import type { CommandGroup, CommandItem } from './command-filter';
+import { createCommandPaletteStore } from './commandPaletteStore';
 
 type Load = NonNullable<CommandPaletteProps['loadItems']>;
 
@@ -313,6 +314,21 @@ describe('CommandPalette loadItems', () => {
       await screen.findByRole('option', { name: 'a1' });
       expect(screen.queryByText('Nothing')).not.toBeInTheDocument();
     });
+  });
+
+  it('closes the store only after the item and palette onSelect have run', async () => {
+    const store = createCommandPaletteStore();
+    const seen: boolean[] = [];
+    const a1 = item('a1', 'Agent one', { onSelect: () => seen.push(store.isOpen()) });
+    const { user, input } = await setup({
+      store,
+      loadItems: async () => [{ label: 'Agents', items: [a1] }],
+      onSelect: () => seen.push(store.isOpen()),
+    });
+    await user.type(input, 'zzz');
+    await user.click(await screen.findByRole('option', { name: 'Agent one' }));
+    expect(seen).toEqual([true, true]);
+    await waitFor(() => expect(store.isOpen()).toBe(false));
   });
 
   describe('onQueryChange', () => {

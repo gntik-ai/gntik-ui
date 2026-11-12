@@ -2,6 +2,7 @@ import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createCommandPaletteStore } from '@gntik-ai/ui';
 import { expectNoAxeViolations } from '../../test/a11y';
+import ServerSearch from './examples/ServerSearch';
 import { GlobalSearch } from './GlobalSearch';
 
 describe('GlobalSearch', () => {
@@ -94,4 +95,36 @@ describe('GlobalSearch', () => {
     await user.click(await screen.findByRole('option', { name: 'Settings' }));
     expect(onSelect).toHaveBeenCalledWith(settings, 'pages');
   });
+
+  it('reports a loaded item as records when a hidden static item shares its id', async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    const server = { id: 'settings', label: 'Server agent' };
+    render(
+      <GlobalSearch
+        pages={[{ id: 'settings', label: 'Settings' }]}
+        records={[]}
+        actions={[]}
+        recent={[]}
+        loadItems={async () => [{ label: 'Server', items: [server] }]}
+        debounceMs={10}
+        onSelect={onSelect}
+        defaultOpen
+      />,
+    );
+    await user.type(await screen.findByRole('combobox'), 'agent');
+    await user.click(await screen.findByRole('option', { name: 'Server agent' }));
+    expect(onSelect).toHaveBeenCalledWith(server, 'records');
+  });
+
+  it('the Server search example opens from its button, loads records and passes axe', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<ServerSearch />);
+    await expectNoAxeViolations(container);
+    await user.click(screen.getByRole('button', { name: 'Open from a button' }));
+    await user.type(await screen.findByRole('combobox'), 'agent');
+    await expectNoAxeViolations();
+    await user.click(await screen.findByRole('option', { name: 'Support triage' }, { timeout: 3000 }));
+    expect(await screen.findByText('Support triage (records)')).toBeInTheDocument();
+  }, 15_000);
 });

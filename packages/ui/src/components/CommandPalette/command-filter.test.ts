@@ -30,11 +30,23 @@ describe('filterCommandGroups with a custom scorer', () => {
     expect(score).toHaveBeenCalledWith(expect.objectContaining({ id: 'run-a' }), 'run');
   });
 
-  it('still shows recent and every group for an empty query without calling the scorer', () => {
-    const score = vi.fn(() => -1);
+  it('applies the scorer to the empty query too: below 0 hides, recent stays first', () => {
+    const score = vi.fn((i: { id: string }) => (i.id === 'beta' ? -1 : i.id === 'run-b' ? 2 : 1));
     const out = filterCommandGroups(groups, '', [item('r1')], 'Recent', undefined, { score });
-    expect(ids(out)).toEqual([['r1'], ['run-a', 'beta', 'run-b'], ['rerun', 'run-c']]);
-    expect(score).not.toHaveBeenCalled();
+    expect(ids(out)).toEqual([['r1'], ['run-b', 'run-a'], ['rerun', 'run-c']]);
+    expect(score).toHaveBeenCalledWith(expect.objectContaining({ id: 'run-a' }), '');
+  });
+
+  it('hides every group item when the scorer rejects the empty query', () => {
+    expect(ids(filterCommandGroups(groups, '', [], 'Recent', undefined, { score: () => -1 }))).toEqual([]);
+  });
+
+  it('without a scorer an empty query lists recent items and every group as given', () => {
+    expect(ids(filterCommandGroups(groups, '  ', [item('r1')]))).toEqual([
+      ['r1'],
+      ['run-a', 'beta', 'run-b'],
+      ['rerun', 'run-c'],
+    ]);
   });
 });
 

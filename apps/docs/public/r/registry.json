@@ -11096,7 +11096,7 @@
       "name": "global-search",
       "type": "registry:block",
       "title": "Global search",
-      "description": "⌘K search button opening a CommandPalette pre-wired with recent items and grouped results: pages, records and actions.",
+      "description": "⌘K search button opening a CommandPalette pre-wired with recent items and grouped results: pages, records and actions. loadItems (with debounceMs, minQueryLength and onQueryChange) adds debounced, abortable server results that onSelect reports as records, and a store from createCommandPaletteStore opens it from code. Preview: global-search--server-search.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",

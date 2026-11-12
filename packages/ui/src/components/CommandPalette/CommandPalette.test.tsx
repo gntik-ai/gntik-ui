@@ -223,6 +223,16 @@ describe('CommandPalette filter, limit and renderItem', () => {
     expect(screen.queryByText(/No results/)).not.toBeInTheDocument();
   });
 
+  it('a custom filter also ranks the empty query on open: below 0 hides, higher scores come first', async () => {
+    const { unmount } = render(<CommandPalette defaultOpen groups={groups} filter={() => -1} />);
+    await screen.findByRole('combobox');
+    expect(screen.queryAllByRole('option')).toEqual([]);
+    unmount();
+    render(<CommandPalette defaultOpen groups={groups} filter={(item) => (item.id === 'rerun' ? 2 : 1)} />);
+    await screen.findByRole('combobox');
+    expect(screen.getAllByRole('option').map((o) => o.textContent)).toEqual(['rerun', 'run-a', 'beta', 'run-b']);
+  });
+
   it('limit renders that many options and the footer reads Showing 50 of 120', async () => {
     const many = Array.from({ length: 120 }, (_, i) => ({ id: `cmd-${i}`, label: `Command ${i}` }));
     render(<CommandPalette defaultOpen groups={[{ label: 'All', items: many }]} limit={50} />);

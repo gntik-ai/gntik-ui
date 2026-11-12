@@ -62,7 +62,7 @@ export interface CommandPaletteProps {
   /** Called with every typed query and with `''` when opening resets it; not called when an item is chosen. */
   onQueryChange?: (query: string) => void;
   /**
-   * Scores a static item for the trimmed, non-empty query instead of the built-in fuzzy ranking:
+   * Scores a static item for the trimmed query (empty on open) instead of the built-in fuzzy ranking:
    * below 0 hides it, higher scores come first, ties keep the given order. `() => 0` keeps every
    * item in the given order (for apps that filter on their side).
    */
@@ -188,9 +188,9 @@ export function CommandPalette({
   const visible: CommandEntryGroup[] = failed ? [...loadedGroups, retryGroup(t('common.retry'))] : loadedGroups;
   const run = (item: CommandItem) => {
     if (item.disabled) return;
-    setOpen(false);
     item.onSelect?.();
     onSelect?.(item);
+    setOpen(false);
   };
   const activate = (entry: CommandEntry) => (isRetryEntry(entry) ? reload() : run(entry.item));
 
