@@ -82,32 +82,73 @@ export function scoreCommand(item: CommandItem, query: string, locale?: string):
   return total;
 }
 
+export interface FilterCommandOptions {
+  /** Replaces `scoreCommand`, also for an empty query: below 0 hides the item, higher scores come first, ties keep the given order. */
+  score?: (item: CommandItem, query: string) => number;
+  /** Renders at most this many rows in display order across groups (recent included). */
+  limit?: number;
+}
+
+export interface FilteredCommandGroups {
+  groups: CommandEntryGroup[];
+  /** Rows before `limit` cut them. */
+  total: number;
+}
+
 /**
- * Builds the visible groups: with an empty query, recent items first then every group as given;
- * otherwise only matching items, best first within each group, and empty groups dropped.
+ * Builds the visible groups: with an empty query (and no custom scorer), recent items first then every
+ * group as given; otherwise only matching items, best first within each group, and empty groups dropped. Also
+ * reports how many rows matched before the optional `limit` cut them.
  */
+export function filterCommandGroupsWithTotal(
+  groups: CommandGroup[],
+  query: string,
+  recent: CommandItem[] = [],
+  recentLabel = 'Recent',
+  locale?: string,
+  { score, limit }: FilterCommandOptions = {},
+): FilteredCommandGroups {
+  const toEntries = (items: CommandItem[], prefix = '') => items.map((item) => ({ key: prefix + item.id, item }));
+  const trimmed = query.trim();
+  let visible: CommandEntryGroup[];
+  if (!trimmed && !score) {
+    const all = groups.map((g) => ({ value: g.label, items: toEntries(g.items) }));
+    visible = [...(recent.length ? [{ value: recentLabel, items: toEntries(recent, 'recent:') }] : []), ...all];
+  } else {
+    // A custom scorer also ranks the empty query, recent items included (they stay first).
+    const rank = score ?? ((item: CommandItem, q: string) => scoreCommand(item, q, locale));
+    const rankItems = (items: CommandItem[], prefix = '') =>
+      items
+        .map((item) => ({ item, score: rank(item, trimmed) }))
+        .filter((r) => r.score >= 0)
+        .sort((a, b) => b.score - a.score)
+        .map(({ item }) => ({ key: prefix + item.id, item }));
+    const ranked = groups.map((g) => ({ value: g.label, items: rankItems(g.items) }));
+    const recents = !trimmed && recent.length ? [{ value: recentLabel, items: rankItems(recent, 'recent:') }] : [];
+    visible = [...recents, ...ranked];
+  }
+  visible = visible.filter((g) => g.items.length);
+  const total = visible.reduce((n, g) => n + g.items.length, 0);
+  if (limit === undefined || total <= limit) return { groups: visible, total };
+  let left = Math.max(0, limit);
+  const cut = visible
+    .map((g) => {
+      const items = g.items.slice(0, left);
+      left -= items.length;
+      return { value: g.value, items };
+    })
+    .filter((g) => g.items.length);
+  return { groups: cut, total };
+}
+
+/** Same as `filterCommandGroupsWithTotal`, returning only the visible groups. */
 export function filterCommandGroups(
   groups: CommandGroup[],
   query: string,
   recent: CommandItem[] = [],
   recentLabel = 'Recent',
   locale?: string,
+  options?: FilterCommandOptions,
 ): CommandEntryGroup[] {
-  const toEntries = (items: CommandItem[], prefix = '') => items.map((item) => ({ key: prefix + item.id, item }));
-  if (!query.trim()) {
-    const all = groups.map((g) => ({ value: g.label, items: toEntries(g.items) }));
-    return [...(recent.length ? [{ value: recentLabel, items: toEntries(recent, 'recent:') }] : []), ...all].filter(
-      (g) => g.items.length,
-    );
-  }
-  return groups
-    .map((g) => ({
-      value: g.label,
-      items: g.items
-        .map((item) => ({ item, score: scoreCommand(item, query, locale) }))
-        .filter((r) => r.score >= 0)
-        .sort((a, b) => b.score - a.score)
-        .map(({ item }) => ({ key: item.id, item })),
-    }))
-    .filter((g) => g.items.length);
+  return filterCommandGroupsWithTotal(groups, query, recent, recentLabel, locale, options).groups;
 }

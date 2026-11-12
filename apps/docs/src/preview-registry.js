@@ -138,6 +138,8 @@ export const PREVIEW_LOADERS = {
     'logo-cloud--under-hero': () => import('../../../packages/blocks/src/marketing/LogoCloud/examples/UnderHero'),
     'logo-cloud--custom': () => import('../../../packages/blocks/src/marketing/LogoCloud/examples/Custom'),
     'logo-cloud--empty': () => import('../../../packages/blocks/src/marketing/LogoCloud/examples/Empty'),
+    'global-search--server-search': () =>
+      import('../../../packages/blocks/src/shell/GlobalSearch/examples/ServerSearch'),
     'site-footer--centered': () => import('../../../packages/blocks/src/marketing/SiteFooter/examples/Centered'),
     'site-footer--simple': () => import('../../../packages/blocks/src/marketing/SiteFooter/examples/Simple'),
     'site-footer--custom': () => import('../../../packages/blocks/src/marketing/SiteFooter/examples/Custom'),

@@ -230,6 +230,21 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                   ))}
                 </>
               )}
+              {kind === 'block' && it.id === 'global-search' && (
+                <>
+                  <p className="my-4 text-sm text-muted-foreground">
+                    loadItems adds debounced, abortable server results after the static groups; a chosen loaded item is
+                    reported to onSelect with the group records. The store opens the search from any button.
+                  </p>
+                  <Viewer
+                    kind="block"
+                    id="global-search--server-search"
+                    title={`${it.title} · Server search`}
+                    file="../../../packages/blocks/src/shell/GlobalSearch/examples/ServerSearch.tsx"
+                    height={height}
+                  />
+                </>
+              )}
               {kind === 'block' && it.id === 'logo-cloud' && (
                 <>
                   <p className="my-4 text-sm text-muted-foreground">

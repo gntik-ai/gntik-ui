@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Overlays',
   status: 'beta',
   description:
-    '⌘K on macOS/iOS or Ctrl+K elsewhere opens a command palette: a modal dialog with a search input over grouped commands (icon, label, description, shortcut keys). Commands are data with an onSelect. Fuzzy-ish ranking (prefix, word start, substring, subsequence; keywords and descriptions count), recent items while the query is empty, an empty state and footer hints. useCommandPaletteShortcut() exposes the shortcut on its own through useHotkeys.',
+    '⌘K on macOS/iOS or Ctrl+K elsewhere opens a command palette: a modal dialog with a search input over grouped commands (icon, label, description, shortcut keys). Commands are data with an onSelect. Fuzzy-ish ranking (prefix, word start, substring, subsequence; keywords and descriptions count), recent items while the query is empty, an empty state and footer hints. loadItems adds debounced, abortable server results (Loading… status, aria-busy, an error message and a last Retry option) after the static groups; filter, limit and renderItem customise ranking, row count and row content; createCommandPaletteStore() opens and closes the palette from code; onQueryChange reports the query. useCommandPaletteShortcut() exposes the shortcut on its own through useHotkeys.',
   primitive: '@base-ui/react/dialog + @base-ui/react/autocomplete (inline)',
   pattern: 'modal dialog with a combobox and listbox',
   keyboard: [
@@ -13,6 +13,7 @@ export const doc: ComponentDoc = {
     ['Typing', 'Filters and ranks the commands'],
     ['ArrowDown / ArrowUp', 'Moves the highlight between commands across groups'],
     ['Enter', 'Runs the highlighted command and closes the palette'],
+    ['Enter on Retry', 'After a failed loadItems, loads the same query again and keeps the palette open'],
     ['Escape', 'Closes the palette and returns focus'],
   ],
   dataAttributes: [
@@ -37,5 +38,6 @@ export const doc: ComponentDoc = {
     'card',
     'ring',
     'focus-ring',
+    'destructive-text',
   ],
 };

@@ -5,9 +5,11 @@ export {
   type CommandPaletteTriggerProps,
 } from './CommandPalette';
 export { useCommandPaletteShortcut, type CommandPaletteShortcutOptions } from './useCommandPaletteShortcut';
+export { createCommandPaletteStore, type CommandPaletteStore } from './commandPaletteStore';
 export {
   scoreCommand,
   filterCommandGroups,
+  type FilterCommandOptions,
   type CommandItem,
   type CommandGroup,
   type CommandIcon,
