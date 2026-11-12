@@ -2,6 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { expectNoAxeViolations } from '../test/a11y';
+import WithQrCode from './examples/WithQrCode';
 import { MfaSetupDialog } from './MfaSetupDialog';
 import SettingsSecurityPage from './Page';
 
@@ -50,8 +51,17 @@ describe('SettingsSecurityPage', () => {
     expect(qr.compareDocumentPosition(code) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   }, 15000);
 
-  it('shows the demo QR code by default and keeps the setup key as the manual fallback', async () => {
-    render(<SettingsSecurityPage />);
+  it('shows no QR code on the page without mfaOtpauthUri and keeps the consumer setup key', async () => {
+    render(<SettingsSecurityPage mfaSetupKey="ABCD EFGH IJKL MNOP" />);
+    await userEvent.click(screen.getByRole('switch', { name: 'Authenticator app' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Set up two-factor authentication' });
+    expect(within(dialog).queryByRole('img')).toBeNull();
+    expect(within(dialog).getByText(/Setup key:/)).toHaveTextContent('Setup key: ABCD EFGH IJKL MNOP');
+    expect(within(dialog).getByRole('group', { name: 'Verification code' })).toBeInTheDocument();
+  }, 15000);
+
+  it('shows the demo QR code in the docs example and keeps the setup key as the manual fallback', async () => {
+    render(<WithQrCode />);
     await userEvent.click(screen.getByRole('switch', { name: 'Authenticator app' }));
     const dialog = await screen.findByRole('dialog', { name: 'Set up two-factor authentication' });
     expect(within(dialog).getByRole('img', { name: 'QR code' })).toBeInTheDocument();

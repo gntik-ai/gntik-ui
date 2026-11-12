@@ -275,6 +275,8 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/templates/src/live-event-stream/examples/LiveWithEvents'),
     'live-event-stream--error': () => import('../../../packages/templates/src/live-event-stream/examples/Error'),
     'live-event-stream--stopped': () => import('../../../packages/templates/src/live-event-stream/examples/Stopped'),
+    'settings-security--with-qr-code': () =>
+      import('../../../packages/templates/src/settings-security/examples/WithQrCode'),
     'settings-profile--read-only': () => import('../../../packages/templates/src/settings-profile/examples/ReadOnly'),
     'resource-detail--runtime-with-transition': () =>
       import('../../../packages/templates/src/resource-detail/examples/runtime-with-transition'),
