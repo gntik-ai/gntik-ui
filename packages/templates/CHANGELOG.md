@@ -1,5 +1,19 @@
 # @gntik-ai/templates
 
+## 0.13.0
+
+### Patch Changes
+
+- Updated dependencies [dffd24a]
+- Updated dependencies [f065b39]
+- Updated dependencies [1220029]
+- Updated dependencies [50d28e1]
+- Updated dependencies [fe5aa16]
+- Updated dependencies [ed6ace0]
+  - @gntik-ai/ui@0.13.0
+  - @gntik-ai/blocks@0.13.0
+  - @gntik-ai/chat@0.13.0
+
 ## 0.12.0
 
 ### Minor Changes
