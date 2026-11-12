@@ -1,5 +1,19 @@
 # @gntik-ai/ui
 
+## 0.13.0
+
+### Minor Changes
+
+- dffd24a: Add a `loading` prop to Switch that shows a spinner in the thumb, ignores toggles and keeps focus while a save is pending.
+- f065b39: Add optional character counters, custom counting strategies and polite limit announcements to Input and Textarea.
+- 1220029: Add optional minRows and maxRows bounds to Textarea autosize with a fallback for browsers without field-sizing support.
+- fe5aa16: ToggleGroup gains `disallowEmptySelection`, which keeps one item pressed in single and multiple groups, controlled or not.
+- ed6ace0: Add wrapping ToggleGroup filter chips with pressed check indicators and optional accessible Toggle counts.
+
+### Patch Changes
+
+- 50d28e1: Keep a capped Textarea with native autosize scrolled to its end while typing at the end of the text.
+
 ## 0.12.0
 
 ### Minor Changes
