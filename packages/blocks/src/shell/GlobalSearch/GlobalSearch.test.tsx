@@ -117,6 +117,27 @@ describe('GlobalSearch', () => {
     expect(onSelect).toHaveBeenCalledWith(server, 'records');
   });
 
+  it('reports a loaded item as records when the loader returns the same object as a hidden static item', async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    const settings = { id: 'settings', label: 'Settings' };
+    render(
+      <GlobalSearch
+        pages={[settings]}
+        records={[]}
+        actions={[]}
+        recent={[]}
+        loadItems={async () => [{ label: 'Server', items: [settings] }]}
+        debounceMs={10}
+        onSelect={onSelect}
+        defaultOpen
+      />,
+    );
+    await user.type(await screen.findByRole('combobox'), 'agent');
+    await user.click(await screen.findByRole('option', { name: 'Settings' }));
+    expect(onSelect).toHaveBeenCalledWith(settings, 'records');
+  });
+
   it('the Server search example opens from its button, loads records and passes axe', async () => {
     const user = userEvent.setup();
     const { container } = render(<ServerSearch />);
