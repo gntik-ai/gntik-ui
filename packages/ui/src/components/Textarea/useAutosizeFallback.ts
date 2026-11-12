@@ -35,6 +35,12 @@ function resizeTextarea(
   };
 }
 
+/** Native field-sizing needs no script to size; it only needs the capped field kept at its end. */
+function scrollToEnd(control: HTMLTextAreaElement) {
+  const caretAtEnd = control.selectionStart === control.value.length && control.selectionEnd === control.value.length;
+  if (caretAtEnd && control.scrollHeight > control.clientHeight) control.scrollTop = control.scrollHeight;
+}
+
 /** Native field-sizing needs no script; measure only after a client commit. */
 export function useAutosizeFallback(
   control: HTMLTextAreaElement | null,
@@ -45,7 +51,12 @@ export function useAutosizeFallback(
   size: string | undefined,
 ) {
   useLayoutEffect(() => {
-    if (!autosize || !control || globalThis.CSS?.supports?.('field-sizing', 'content')) return;
+    if (!autosize || !control) return;
+    // The browser keeps only the caret line visible, leaving the bottom padding out of view.
+    if (globalThis.CSS?.supports?.('field-sizing', 'content')) {
+      scrollToEnd(control);
+      return;
+    }
 
     return resizeTextarea(control, minRows, maxRows, size);
   }, [control, autosize, value, minRows, maxRows, size]);
