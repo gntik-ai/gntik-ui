@@ -10,6 +10,7 @@ export const qrCodeEn = {
   'qrCode.example.pairingCaption': 'Open the link on your phone',
   'qrCode.example.expiredCaption': 'Codes expire after two minutes',
   'qrCode.example.reissued': 'New code issued',
+  'qrCode.example.tooLongCaption': 'Shorten the value or lower the error level',
 };
 
 export const qrCodeEs = {
@@ -24,4 +25,5 @@ export const qrCodeEs = {
   'qrCode.example.pairingCaption': 'Abre el enlace en tu teléfono',
   'qrCode.example.expiredCaption': 'Los códigos caducan a los dos minutos',
   'qrCode.example.reissued': 'Nuevo código emitido',
+  'qrCode.example.tooLongCaption': 'Acorta el valor o baja el nivel de corrección de errores',
 };

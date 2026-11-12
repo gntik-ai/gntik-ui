@@ -7,6 +7,7 @@ import { qrCodeSvg } from './qr-svg';
 import { doc } from './QrCode.doc';
 import QrCodeExpired from './examples/QrCodeExpired';
 import QrCodeOtpauth from './examples/QrCodeOtpauth';
+import QrCodeTooLong from './examples/QrCodeTooLong';
 import QrCodePairingLink from './examples/QrCodePairingLink';
 
 const OTPAUTH = 'otpauth://totp/Example:ana@example.com?secret=JBSWY3DPEHPK3PXP&issuer=Example';
@@ -200,6 +201,7 @@ describe('QrCode', () => {
       ['QrCodeOtpauth', QrCodeOtpauth],
       ['QrCodePairingLink', QrCodePairingLink],
       ['QrCodeExpired', QrCodeExpired],
+      ['QrCodeTooLong', QrCodeTooLong],
     ])('%s has no axe violations in dark, light and high_contrast', async (_name, Example) => {
       for (const theme of ['dark', 'light', 'high_contrast']) {
         document.documentElement.className = theme;
@@ -208,6 +210,12 @@ describe('QrCode', () => {
         unmount();
       }
       document.documentElement.className = '';
+    });
+
+    it('too-long example shows the placeholder and no image', () => {
+      const { container } = render(<QrCodeTooLong />);
+      expect(screen.getByText('Too much content for a QR code')).toBeInTheDocument();
+      expect(container.querySelector('svg')).toBeNull();
     });
 
     it('expired example refreshes into a new code', async () => {
