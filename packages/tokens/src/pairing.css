@@ -10,6 +10,9 @@
    On a TINTED chip (bg-<tone>/10–20: badges, status pills, level tags) use the
    `text-<tone>-chip-text` aliases instead: the tint lightens a dark surface, so
    a brand colour that passes on the plain surface can fail on its own tint.
+   `fill-qr-module` on `bg-qr-surface` draws a QR code: the modules are always the
+   darker colour of the pair, because scanners are not required to read reversed
+   codes. The pair is not text on the page surface, so the text-pairing tests skip it.
    ============================================================================ */
 :root {
   --primary-text: var(--accent-foreground);
@@ -21,6 +24,8 @@
   --success-chip-text: var(--success-strong);
   --warning-chip-text: var(--foreground);
   --destructive-chip-text: var(--foreground);
+  --qr-module: var(--foreground);
+  --qr-surface: var(--card);
 }
 .dark {
   --primary-text: var(--primary);
@@ -32,6 +37,8 @@
   --success-chip-text: var(--success);
   --warning-chip-text: var(--warning);
   --destructive-chip-text: var(--foreground);
+  --qr-module: var(--background);
+  --qr-surface: var(--foreground);
 }
 .high_contrast {
   --primary-text: var(--primary);
@@ -43,4 +50,6 @@
   --success-chip-text: var(--success);
   --warning-chip-text: var(--warning);
   --destructive-chip-text: var(--foreground);
+  --qr-module: var(--background);
+  --qr-surface: var(--foreground);
 }

@@ -71,6 +71,8 @@ test('pairing aliases resolve to existing tokens and meet WCAG AA', () => {
       assert.ok(tokens[m[1]], `${theme} ${alias} points at unknown token ${m[1]}`);
       if (alias === '--focus-ring') continue; // non-text: 3:1, checked below
       if (alias.endsWith('-chip-text')) continue; // checked on tints below
+      // qr-module / qr-surface are a pair, not text on the page surface: the QR pair test below checks them.
+      if (alias.startsWith('--qr-')) continue;
       for (const surface of ['--background', '--card', '--popover']) {
         const r = ratio(tokens[m[1]], tokens[surface]);
         assert.ok(r >= 4.5, `${theme} ${alias} on ${surface} is ${r.toFixed(2)}:1`);
@@ -79,6 +81,53 @@ test('pairing aliases resolve to existing tokens and meet WCAG AA', () => {
     const ring = tokens[/var\((--[\w-]+)\)/.exec(aliases[theme]['--focus-ring'])[1]];
     assert.ok(ratio(ring, tokens['--background']) >= 3, `${theme} focus ring below 3:1`);
   }
+});
+
+// QR pair (pairing.css): scanners are not required to read reversed codes, so the modules must be the
+// darker colour of the pair in every theme and palette, with at least 7:1 against their own surface.
+const QR_CONTRAST = 7;
+const qrPair = (aliases, colors, label) => {
+  const resolve = (alias) => {
+    const m = /^var\((--[\w-]+)\)$/.exec(aliases[alias] ?? '');
+    assert.ok(m, `${label} ${alias} must be var(--token)`);
+    assert.ok(colors[m[1]], `${label} ${alias} points at unknown token ${m[1]}`);
+    return colors[m[1]];
+  };
+  const module = resolve('--qr-module');
+  const surface = resolve('--qr-surface');
+  assert.ok(luminance(module) < luminance(surface), `${label} qr-module must be darker than qr-surface`);
+  assert.ok(ratio(module, surface) >= QR_CONTRAST, `${label} qr pair is ${ratio(module, surface).toFixed(2)}:1`);
+};
+
+test('qr-module is the darker colour of the pair with at least 7:1 in every theme', () => {
+  const brand = parse(css);
+  const aliases = parse(pairing);
+  const status = parse(fs.readFileSync(new URL('../src/status.css', import.meta.url), 'utf8'));
+  for (const theme of [':root', '.dark', '.high_contrast']) {
+    const tokens = { ...brand[':root'], ...brand[theme], ...status[':root'], ...status[theme] };
+    qrPair({ ...aliases[':root'], ...aliases[theme] }, tokens, theme);
+  }
+});
+
+test('qr-module is the darker colour of the pair with at least 7:1 in every palette', () => {
+  for (const palette of PALETTES) {
+    const blocks =
+      palette === 'green'
+        ? [frozen[':root'], frozen['.dark']]
+        : paletteBlocks(fs.readFileSync(new URL(`../src/palettes/${palette}.css`, import.meta.url), 'utf8'));
+    const aliases = parse(pairing);
+    for (const [index, tokens] of blocks.entries()) {
+      const theme = index === 0 ? 'light' : 'dark';
+      const selector = index === 0 ? ':root' : '.dark';
+      qrPair({ ...aliases[':root'], ...aliases[selector] }, { ...frozen[':root'], ...tokens }, `${palette} ${theme}`);
+    }
+  }
+});
+
+test('qr aliases are bridged to colour utilities', () => {
+  const tw = fs.readFileSync(new URL('../src/tailwind.css', import.meta.url), 'utf8');
+  assert.match(tw, /--color-qr-module:\s*hsl\(var\(--qr-module\)\);/);
+  assert.match(tw, /--color-qr-surface:\s*hsl\(var\(--qr-surface\)\);/);
 });
 
 test('runtime tokenHex converts brand HSL like the browser', async () => {
@@ -245,6 +294,8 @@ test('every palette passes text, chips, focus, button and hue separation contrac
       const colors = { '--success-strong': index === 0 ? '153 55% 22%' : '145 61% 50%', ...tokens };
       const label = `${palette} ${theme}`;
       for (const [alias, value] of Object.entries(aliases)) {
+        // qr-module / qr-surface are a pair, not text on the page surface: the QR pair test checks them.
+        if (alias.startsWith('--qr-')) continue;
         const color = colors[/var\((--[\w-]+)\)/.exec(value)[1]];
         if (alias === '--focus-ring') {
           assert.ok(ratio(color, colors['--background']) >= 3, `${label} ${alias}`);

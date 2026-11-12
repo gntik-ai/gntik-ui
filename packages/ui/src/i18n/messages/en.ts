@@ -1,5 +1,6 @@
 import { textareaEn } from './textarea-messages';
 import { switchEn } from './switch-messages';
+import { qrCodeEn } from './qr-code-messages';
 import { sliderInputEn } from './slider-input-messages';
 import { formActionsEn } from './form-action-messages';
 import { dateRangeExamplesEn } from './date-range-example-messages';
@@ -31,6 +32,7 @@ export const en = {
   ...textareaEn,
   ...sliderInputEn,
   ...switchEn,
+  ...qrCodeEn,
   ...dateRangeExamplesEn,
   ...fileInputEn,
   ...uploadEn,

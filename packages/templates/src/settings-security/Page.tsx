@@ -12,7 +12,13 @@ import {
 } from '@gntik-ai/ui';
 import { useState, type FormEvent } from 'react';
 import { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';
-import { DEMO_MFA_CODE, PASSWORD_MIN_LENGTH, mfaSetupKey, sessions as defaultSessions } from './data';
+import {
+  DEMO_MFA_CODE,
+  PASSWORD_MIN_LENGTH,
+  mfaOtpauthUri as demoOtpauthUri,
+  mfaSetupKey,
+  sessions as defaultSessions,
+} from './data';
 import { MfaSetupDialog } from './MfaSetupDialog';
 
 export interface PasswordChange {
@@ -25,6 +31,8 @@ export interface SettingsSecurityProps extends SettingsFrameOptions {
   /** Whether two-factor authentication is on. */
   mfaEnabled: boolean;
   mfaSetupKey: string;
+  /** `otpauth://` URI of the enrolment; the setup dialog shows its QR code above the key. Defaults to a demo URI. */
+  mfaOtpauthUri: string;
   /** Checks an enrolment code; defaults to the demo code 123456. */
   onVerifyMfa: (code: string) => boolean | Promise<boolean>;
   onMfaChange: (enabled: boolean) => void;
@@ -39,6 +47,7 @@ export default function SettingsSecurityPage({
   sessions = defaultSessions,
   mfaEnabled = false,
   mfaSetupKey: setupKey = mfaSetupKey,
+  mfaOtpauthUri: otpauthUri = demoOtpauthUri,
   onVerifyMfa = (code) => code === DEMO_MFA_CODE,
   onMfaChange,
   onPasswordChange,
@@ -152,7 +161,13 @@ export default function SettingsSecurityPage({
         </SettingsRow>
       </FormSection>
       <SessionsDevices sessions={sessions} onRevoke={onRevokeSession} onRevokeOthers={onRevokeOtherSessions} />
-      <MfaSetupDialog open={setupOpen} onOpenChange={setSetupOpen} setupKey={setupKey} onVerify={verify} />
+      <MfaSetupDialog
+        open={setupOpen}
+        onOpenChange={setSetupOpen}
+        setupKey={setupKey}
+        otpauthUri={otpauthUri}
+        onVerify={verify}
+      />
     </SettingsFrame>
   );
 }

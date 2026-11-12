@@ -97,6 +97,8 @@
   --color-success-chip-text: hsl(var(--success-chip-text));
   --color-warning-chip-text: hsl(var(--warning-chip-text));
   --color-destructive-chip-text: hsl(var(--destructive-chip-text));
+  --color-qr-module: hsl(var(--qr-module));
+  --color-qr-surface: hsl(var(--qr-surface));
 }
 
 /* Radius, shadow and font scales: brand.css declares --radius-*, --shadow-*

@@ -1,5 +1,6 @@
 import { textareaEs } from './textarea-messages';
 import { switchEs } from './switch-messages';
+import { qrCodeEs } from './qr-code-messages';
 import { sliderInputEs } from './slider-input-messages';
 import { formActionsEs } from './form-action-messages';
 import { dateRangeExamplesEs } from './date-range-example-messages';
@@ -32,6 +33,7 @@ export const es: Messages = {
   ...textareaEs,
   ...sliderInputEs,
   ...switchEs,
+  ...qrCodeEs,
   ...dateRangeExamplesEs,
   ...fileInputEs,
   ...uploadEs,
