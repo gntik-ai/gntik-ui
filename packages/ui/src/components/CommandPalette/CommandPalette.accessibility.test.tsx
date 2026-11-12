@@ -55,14 +55,14 @@ describe.each(['dark', 'light', 'high_contrast'])('async and custom-row examples
   });
 });
 
-it('reads the loading and error strings from the Spanish catalog', async () => {
+it('reads the loading and error strings and the example controls from the Spanish catalog', async () => {
   const user = userEvent.setup();
   render(
     <I18nProvider locale="es">
       <CommandPaletteAsync />
     </I18nProvider>,
   );
-  await user.click(screen.getByRole('button', { name: 'Open from a button' }));
+  await user.click(screen.getByRole('button', { name: 'Abrir desde un botón' }));
   await user.type(await screen.findByRole('combobox'), 'fail');
   await waitFor(() =>
     expect(
@@ -74,4 +74,34 @@ it('reads the loading and error strings from the Spanish catalog', async () => {
   );
   expect(await screen.findByText('No se pudieron cargar los resultados.')).toBeInTheDocument();
   expect(screen.getByRole('option', { name: 'Reintentar' })).toBeInTheDocument();
+});
+
+describe('shortcut ownership when every example is mounted together', () => {
+  const renderAll = () =>
+    render(
+      <>
+        <CommandPaletteBasic />
+        <CommandPaletteAsync />
+        <CommandPaletteCustomRows />
+      </>,
+    );
+
+  it('Ctrl+K opens only the basic palette, which owns the shortcut', async () => {
+    const user = userEvent.setup();
+    renderAll();
+    await user.keyboard('{Control>}k{/Control}');
+    expect(await screen.findAllByRole('dialog')).toHaveLength(1);
+    expect(screen.getByRole('combobox')).toHaveAttribute('placeholder', 'Type a command or search…');
+    await user.keyboard('{Control>}k{/Control}');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
+  it('Ctrl+K never opens the custom-rows palette over an async palette opened from its button', async () => {
+    const user = userEvent.setup();
+    renderAll();
+    await user.click(screen.getByRole('button', { name: 'Open from a button' }));
+    await screen.findByRole('dialog');
+    await user.keyboard('{Control>}k{/Control}');
+    expect(screen.queryByText('Showing 50 of 120')).not.toBeInTheDocument();
+  });
 });

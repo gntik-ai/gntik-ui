@@ -1,5 +1,6 @@
 import { Bot, Home, Settings, Users } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { useI18n } from '../../../i18n/I18nProvider';
 import { Button } from '../../Button';
 import { matchText } from '../../../utils/match-text';
 import { CommandPalette, CommandPaletteTrigger } from '../CommandPalette';
@@ -52,6 +53,7 @@ function searchServer(
 }
 
 export default function CommandPaletteAsync() {
+  const { t } = useI18n();
   const [store] = useState(createCommandPaletteStore);
   const attempts = useRef(new Map<string, number>());
   const [query, setQuery] = useState('');
@@ -72,6 +74,7 @@ export default function CommandPaletteAsync() {
         <CommandPalette
           groups={groups}
           store={store}
+          shortcut={false}
           loadItems={(q, context) => searchServer(q, context, attempts.current)}
           debounceMs={250}
           minQueryLength={2}
@@ -81,16 +84,16 @@ export default function CommandPaletteAsync() {
           <CommandPaletteTrigger />
         </CommandPalette>
         <Button variant="secondary" onClick={store.open}>
-          Open from a button
+          {t('commandPalette.examples.openFromButton')}
         </Button>
       </div>
       <p aria-live="polite" className="text-[12px] text-muted-foreground">
-        Type two letters (“agent”, “run”) to search the server; “fail” shows the error and Retry. Query:{' '}
+        {t('commandPalette.examples.asyncHelp')} {t('commandPalette.examples.queryLabel')}:{' '}
         <span className="font-mono text-foreground">{query || '—'}</span>
         {chosen ? (
           <>
             {' '}
-            · Chosen: <span className="font-mono text-foreground">{chosen}</span>
+            · {t('commandPalette.examples.chosenLabel')}: <span className="font-mono text-foreground">{chosen}</span>
           </>
         ) : null}
       </p>

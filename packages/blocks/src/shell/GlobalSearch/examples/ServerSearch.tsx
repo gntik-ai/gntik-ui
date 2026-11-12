@@ -1,4 +1,4 @@
-import { Button, createCommandPaletteStore, type CommandGroup } from '@gntik-ai/ui';
+import { Button, createCommandPaletteStore, useI18n, type CommandGroup } from '@gntik-ai/ui';
 import { useRef, useState } from 'react';
 import { GlobalSearch, type GlobalSearchGroup } from '../GlobalSearch';
 
@@ -35,6 +35,7 @@ function searchServer(query: string, signal: AbortSignal, attempts: Map<string, 
 
 /** Server-backed ⌘K search: loadItems, minQueryLength, onQueryChange and a store; loaded rows report `records`. */
 export default function ServerSearch() {
+  const { t } = useI18n();
   const [store] = useState(createCommandPaletteStore);
   const attempts = useRef(new Map<string, number>());
   const [query, setQuery] = useState('');
@@ -49,22 +50,23 @@ export default function ServerSearch() {
           actions={[]}
           recent={[]}
           store={store}
+          shortcut={false}
           loadItems={(q, { signal }) => searchServer(q, signal, attempts.current)}
           minQueryLength={2}
           onQueryChange={setQuery}
           onSelect={onSelect}
         />
         <Button variant="secondary" onClick={store.open}>
-          Open from a button
+          {t('commandPalette.examples.openFromButton')}
         </Button>
       </div>
       <p aria-live="polite" className="text-[12px] text-muted-foreground">
-        Type two letters (“agent”, “run”) to search the server; “fail” shows the error and Retry. Query:{' '}
+        {t('commandPalette.examples.asyncHelp')} {t('commandPalette.examples.queryLabel')}:{' '}
         <span className="font-mono text-foreground">{query || '—'}</span>
         {chosen ? (
           <>
             {' '}
-            · Chosen: <span className="font-mono text-foreground">{chosen}</span>
+            · {t('commandPalette.examples.chosenLabel')}: <span className="font-mono text-foreground">{chosen}</span>
           </>
         ) : null}
       </p>
