@@ -22,6 +22,7 @@
     "changeset": "changeset",
     "version-packages": "changeset version && pnpm registry",
     "release": "pnpm -r build && changeset publish",
+    "canary:plan": "node packages/mcp/scripts/canary-plan.mjs",
     "registry:release-check": "pnpm --filter @gntik-ai/gntik-ui-mcp registry:release-check"
   },
   "devDependencies": {
