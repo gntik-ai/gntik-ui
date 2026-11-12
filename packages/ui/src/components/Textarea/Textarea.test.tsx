@@ -206,6 +206,51 @@ describe('Textarea', () => {
     expect(field).not.toHaveClass('overflow-y-auto');
   });
 
+  describe('native autosize scroll', () => {
+    const scrollGeometry = (scrollHeight: number, clientHeight: number) => {
+      vi.stubGlobal('CSS', { supports: () => true });
+      vi.spyOn(HTMLTextAreaElement.prototype, 'scrollHeight', 'get').mockReturnValue(scrollHeight);
+      vi.spyOn(HTMLTextAreaElement.prototype, 'clientHeight', 'get').mockReturnValue(clientHeight);
+    };
+    const text = Array(12).fill('line').join('\n');
+
+    it('scrolls a capped field to its end when typing with the caret at the end', async () => {
+      scrollGeometry(255, 160);
+      const user = userEvent.setup();
+      render(<Textarea aria-label="Prompt" autosize minRows={2} maxRows={6} />);
+      const field = screen.getByRole<HTMLTextAreaElement>('textbox');
+      await user.click(field);
+      await user.keyboard(text.replaceAll('\n', '{Enter}'));
+      expect(field.scrollTop + field.clientHeight).toBeGreaterThanOrEqual(field.scrollHeight - 1);
+      expect(field.style.height).toBe('');
+      expect(field.style.overflowY).toBe('');
+    });
+
+    it('leaves the scroll position alone when the caret is in the middle', async () => {
+      scrollGeometry(255, 160);
+      const user = userEvent.setup();
+      render(<Textarea aria-label="Prompt" autosize minRows={2} maxRows={6} defaultValue={text} />);
+      const field = screen.getByRole<HTMLTextAreaElement>('textbox');
+      await user.click(field);
+      field.scrollTop = 40;
+      field.setSelectionRange(10, 10);
+      await user.keyboard('x');
+      expect(field.value).toHaveLength(text.length + 1);
+      expect(field.scrollTop).toBe(40);
+    });
+
+    it('does not scroll or set a height when the content does not overflow', async () => {
+      scrollGeometry(100, 100);
+      const user = userEvent.setup();
+      render(<Textarea aria-label="Prompt" autosize minRows={2} maxRows={6} />);
+      const field = screen.getByRole<HTMLTextAreaElement>('textbox');
+      await user.click(field);
+      await user.keyboard('one');
+      expect(field.scrollTop).toBe(0);
+      expect(field.style.height).toBe('');
+    });
+  });
+
   it('keeps an 88px minimum with missing CSS.supports and zero scrollHeight', () => {
     vi.stubGlobal('CSS', {});
     const { rerender } = render(<Textarea aria-label="Prompt" autosize />);
