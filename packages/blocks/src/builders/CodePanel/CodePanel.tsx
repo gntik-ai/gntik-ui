@@ -152,8 +152,9 @@ export function CodePanel({
           <ToggleGroup
             aria-label="Editor view"
             size="sm"
+            disallowEmptySelection
             value={[effectiveView]}
-            onValueChange={(v) => v[0] && setView(v[0] as View)}
+            onValueChange={(v) => setView(v[0] as View)}
             className="mb-2 self-start sm:self-auto"
           >
             <Toggle value="code">Edit</Toggle>

@@ -68,8 +68,9 @@ export function TokenCostCard({
             <ToggleGroup
               aria-label="Period"
               size="sm"
+              disallowEmptySelection
               value={[period.id]}
-              onValueChange={(v) => v[0] && setPeriodId(v[0])}
+              onValueChange={(v) => setPeriodId(v[0] as string)}
             >
               {periods.map((p) => (
                 <Toggle key={p.id} value={p.id}>

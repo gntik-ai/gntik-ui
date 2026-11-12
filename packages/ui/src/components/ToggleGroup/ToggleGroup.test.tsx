@@ -122,6 +122,135 @@ describe('ToggleGroup', () => {
   });
 });
 
+describe('disallowEmptySelection', () => {
+  function ranges(props: Partial<React.ComponentProps<typeof ToggleGroup>> = {}) {
+    return (
+      <ToggleGroup aria-label="Range" disallowEmptySelection {...props}>
+        <Toggle value="7d">7d</Toggle>
+        <Toggle value="30d">30d</Toggle>
+        <Toggle value="90d" disabled>
+          90d
+        </Toggle>
+      </ToggleGroup>
+    );
+  }
+
+  it('uncontrolled: pressing the pressed item keeps it pressed and calls nothing', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(ranges({ defaultValue: ['7d'], onValueChange }));
+    const d7 = screen.getByRole('button', { name: '7d' });
+    await user.click(d7);
+    expect(d7).toHaveAttribute('aria-pressed', 'true');
+    await user.click(d7);
+    expect(d7).toHaveAttribute('aria-pressed', 'true');
+    expect(onValueChange).not.toHaveBeenCalled();
+  });
+
+  it('uncontrolled: switching presses the new item once and releases the old one', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(ranges({ defaultValue: ['7d'], onValueChange }));
+    await user.click(screen.getByRole('button', { name: '30d' }));
+    expect(screen.getByRole('button', { name: '30d' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: '7d' })).toHaveAttribute('aria-pressed', 'false');
+    expect(onValueChange).toHaveBeenCalledTimes(1);
+    expect(onValueChange).toHaveBeenCalledWith(['30d'], expect.anything());
+  });
+
+  it('Space and Enter on the pressed item change nothing and call nothing', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(ranges({ defaultValue: ['7d'], onValueChange }));
+    const d7 = screen.getByRole('button', { name: '7d' });
+    d7.focus();
+    await user.keyboard(' ');
+    await user.keyboard('{Enter}');
+    expect(d7).toHaveAttribute('aria-pressed', 'true');
+    expect(onValueChange).not.toHaveBeenCalled();
+  });
+
+  it('controlled: pressing the pressed item does not call onValueChange', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(ranges({ value: ['7d'], onValueChange }));
+    await user.click(screen.getByRole('button', { name: '7d' }));
+    expect(screen.getByRole('button', { name: '7d' })).toHaveAttribute('aria-pressed', 'true');
+    expect(onValueChange).not.toHaveBeenCalled();
+  });
+
+  it('multiple: the last pressed item cannot be released, others can', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(
+      <ToggleGroup
+        aria-label="Format"
+        multiple
+        disallowEmptySelection
+        defaultValue={['bold']}
+        onValueChange={onValueChange}
+      >
+        <Toggle value="bold">Bold</Toggle>
+        <Toggle value="italic">Italic</Toggle>
+      </ToggleGroup>,
+    );
+    const bold = screen.getByRole('button', { name: 'Bold' });
+    await user.click(bold);
+    expect(bold).toHaveAttribute('aria-pressed', 'true');
+    expect(onValueChange).not.toHaveBeenCalled();
+    await user.click(screen.getByRole('button', { name: 'Italic' }));
+    onValueChange.mockClear();
+    await user.click(bold);
+    expect(bold).toHaveAttribute('aria-pressed', 'false');
+    expect(onValueChange).toHaveBeenCalledTimes(1);
+    expect(onValueChange).toHaveBeenCalledWith(['italic'], expect.anything());
+  });
+
+  it('a group that starts empty renders nothing pressed, then cannot be emptied', async () => {
+    const user = userEvent.setup();
+    render(ranges());
+    const d7 = screen.getByRole('button', { name: '7d' });
+    expect(d7).toHaveAttribute('aria-pressed', 'false');
+    expect(screen.getByRole('button', { name: '30d' })).toHaveAttribute('aria-pressed', 'false');
+    await user.click(d7);
+    expect(d7).toHaveAttribute('aria-pressed', 'true');
+    await user.click(d7);
+    expect(d7).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('disabled items cannot be toggled', async () => {
+    const user = userEvent.setup();
+    render(ranges({ defaultValue: ['7d'] }));
+    await user.click(screen.getByRole('button', { name: '90d' }));
+    expect(screen.getByRole('button', { name: '90d' })).toHaveAttribute('aria-pressed', 'false');
+    expect(screen.getByRole('button', { name: '7d' })).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('does not leak the prop to the DOM', () => {
+    render(ranges({ defaultValue: ['7d'] }));
+    expect(screen.getByRole('group', { name: 'Range' })).not.toHaveAttribute('disallowemptyselection');
+  });
+
+  it('without the prop, pressing the pressed item still reports an empty value', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(ranges({ disallowEmptySelection: undefined, defaultValue: ['7d'], onValueChange }));
+    await user.click(screen.getByRole('button', { name: '7d' }));
+    expect(onValueChange).toHaveBeenCalledWith([], expect.anything());
+    expect(screen.getByRole('button', { name: '7d' })).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('segmented example keeps Chart range 7d pressed when pressed twice', async () => {
+    const user = userEvent.setup();
+    render(<ToggleGroupSegmented />);
+    const d7 = screen.getByRole('button', { name: '7d' });
+    await user.click(d7);
+    expect(d7).toHaveAttribute('aria-pressed', 'true');
+    await user.click(d7);
+    expect(d7).toHaveAttribute('aria-pressed', 'true');
+  });
+});
+
 describe('Toggle compatibility', () => {
   it.each(['segmented', 'joined'] as const)('%s keeps its markup and classes', (variant) => {
     const { container } = render(

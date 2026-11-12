@@ -194,8 +194,9 @@ export function DiffViewer({
           <ToggleGroup
             aria-label={t('diff.view')}
             size="sm"
+            disallowEmptySelection
             value={[mode]}
-            onValueChange={(v) => v[0] && setMode(v[0] as DiffMode)}
+            onValueChange={(v) => setMode(v[0] as DiffMode)}
           >
             <Toggle value="unified">{t('diff.unified')}</Toggle>
             <Toggle value="split">{t('diff.split')}</Toggle>

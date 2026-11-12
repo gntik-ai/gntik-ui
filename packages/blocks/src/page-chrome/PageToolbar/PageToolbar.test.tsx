@@ -29,8 +29,10 @@ describe('PageToolbar', () => {
     await user.click(screen.getByRole('button', { name: 'Grid view' }));
     expect(onViewChange).toHaveBeenCalledWith('grid');
     expect(screen.getByRole('button', { name: 'Grid view' })).toHaveAttribute('aria-pressed', 'true');
-    // Clicking the active view keeps it selected.
+    // Clicking the active view keeps it selected and reports nothing.
+    onViewChange.mockClear();
     await user.click(screen.getByRole('button', { name: 'Grid view' }));
+    expect(onViewChange).not.toHaveBeenCalled();
     expect(screen.getByRole('button', { name: 'Grid view' })).toHaveAttribute('aria-pressed', 'true');
     await user.click(screen.getByRole('button', { name: 'Create' }));
     expect(onCreate).toHaveBeenCalledTimes(1);

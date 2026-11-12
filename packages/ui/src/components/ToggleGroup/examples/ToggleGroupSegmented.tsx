@@ -11,15 +11,14 @@ export default function ToggleGroupSegmented() {
   const [value, setValue] = useState(['all']);
   return (
     <div className="flex flex-col items-start gap-5">
-      {/* Keep one item pressed: ignore the change that would empty the group. */}
-      <ToggleGroup aria-label="Filter deployments" value={value} onValueChange={(v) => v.length && setValue(v)}>
+      <ToggleGroup aria-label="Filter deployments" disallowEmptySelection value={value} onValueChange={setValue}>
         {filters.map((f) => (
           <Toggle key={f.value} value={f.value} count={f.count}>
             {f.label}
           </Toggle>
         ))}
       </ToggleGroup>
-      <ToggleGroup aria-label="Chart range" size="sm" defaultValue={['7d']}>
+      <ToggleGroup aria-label="Chart range" size="sm" disallowEmptySelection defaultValue={['7d']}>
         <Toggle value="24h">24h</Toggle>
         <Toggle value="7d">7d</Toggle>
         <Toggle value="30d">30d</Toggle>

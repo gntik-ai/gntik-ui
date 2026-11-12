@@ -23,6 +23,16 @@ describe('TokenCostCard', () => {
     expect(screen.getByRole('meter', { name: 'Budget' })).toHaveAttribute('aria-valuetext', '$431.75 of $500.00');
   });
 
+  it('pressing the active period keeps it active', async () => {
+    const user = userEvent.setup();
+    render(<TokenCostCard />);
+    const d30 = screen.getByRole('button', { name: '30d' });
+    await user.click(d30);
+    await user.click(d30);
+    expect(d30).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByText('$431.75')).toBeInTheDocument();
+  });
+
   it('reports overspend and hides the switch for a single period', () => {
     render(
       <TokenCostCard

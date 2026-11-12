@@ -60,17 +60,42 @@ export interface ToggleGroupProps extends Omit<BaseToggleGroup.Props<string>, 'c
   ref?: Ref<HTMLDivElement>;
   /** Item size, passed down to every Toggle. `auto` (default) follows the density. */
   size?: 'auto' | 'sm' | 'md';
+  /**
+   * Keep at least one item pressed: a change that would leave the value empty is ignored
+   * (the pressed item stays pressed and `onValueChange` is not called). Works in single and
+   * `multiple` mode, controlled or not. An uncontrolled `defaultValue` is read once. A group
+   * that starts empty stays empty until the first press. Default `false`.
+   */
+  disallowEmptySelection?: boolean;
 }
 
 /**
  * A set of Toggles with shared state: segmented control (`multiple={false}`, the default)
  * or multi-select toolbar (`multiple`). Arrow keys move focus; Space/Enter toggles.
- * Give it an `aria-label`.
+ * Give it an `aria-label`. `disallowEmptySelection` keeps one item pressed.
  */
-export function ToggleGroup({ variant = 'segmented', size = 'auto', className, ...props }: ToggleGroupProps) {
+export function ToggleGroup({
+  variant = 'segmented',
+  size = 'auto',
+  className,
+  disallowEmptySelection = false,
+  onValueChange,
+  ...props
+}: ToggleGroupProps) {
+  const handleValueChange: BaseToggleGroup.Props<string>['onValueChange'] = (next, eventDetails) => {
+    if (disallowEmptySelection && next.length === 0) {
+      eventDetails.cancel();
+      return;
+    }
+    onValueChange?.(next, eventDetails);
+  };
   return (
     <GroupStyleContext.Provider value={{ variant: variant ?? 'segmented', size }}>
-      <BaseToggleGroup className={cn(toggleGroupVariants({ variant }), className)} {...props} />
+      <BaseToggleGroup
+        className={cn(toggleGroupVariants({ variant }), className)}
+        onValueChange={handleValueChange}
+        {...props}
+      />
     </GroupStyleContext.Provider>
   );
 }
