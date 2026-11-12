@@ -1,8 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { expectNoAxeViolations } from '../test/a11y';
-import SettingsSecurityPage from './Page';
+import WithQrCode from './examples/WithQrCode';
+import { MfaSetupDialog } from './MfaSetupDialog';
+import SettingsSecurityPage, { type SettingsSecurityProps } from './Page';
 
 describe('SettingsSecurityPage', () => {
   it('renders the password, MFA and sessions sections', () => {
@@ -37,8 +39,67 @@ describe('SettingsSecurityPage', () => {
     expect(await screen.findByText('Enabled')).toBeInTheDocument();
   }, 15000);
 
+  it('shows the QR code above the setup key and the verification code in the setup dialog', async () => {
+    render(<SettingsSecurityPage mfaOtpauthUri="otpauth://totp/Acme:ana@example.com?secret=ABCDEFGH&issuer=Acme" />);
+    await userEvent.click(screen.getByRole('switch', { name: 'Authenticator app' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Set up two-factor authentication' });
+    const qr = within(dialog).getByRole('img', { name: 'QR code' });
+    const key = within(dialog).getByText(/Setup key:/);
+    const code = within(dialog).getByRole('group', { name: 'Verification code' });
+    expect(qr.compareDocumentPosition(key) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(key.compareDocumentPosition(code) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(qr.compareDocumentPosition(code) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  }, 15000);
+
+  it('shows no QR code on the page without mfaOtpauthUri and keeps the consumer setup key', async () => {
+    render(<SettingsSecurityPage mfaSetupKey="ABCD EFGH IJKL MNOP" />);
+    await userEvent.click(screen.getByRole('switch', { name: 'Authenticator app' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Set up two-factor authentication' });
+    expect(within(dialog).queryByRole('img')).toBeNull();
+    expect(within(dialog).getByText(/Setup key:/)).toHaveTextContent('Setup key: ABCD EFGH IJKL MNOP');
+    expect(within(dialog).getByRole('group', { name: 'Verification code' })).toBeInTheDocument();
+  }, 15000);
+
+  it('shows the demo QR code in the docs example and keeps the setup key as the manual fallback', async () => {
+    render(<WithQrCode />);
+    await userEvent.click(screen.getByRole('switch', { name: 'Authenticator app' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Set up two-factor authentication' });
+    expect(within(dialog).getByRole('img', { name: 'QR code' })).toBeInTheDocument();
+    expect(within(dialog).getByText('JBSW Y3DP EHPK 3PXP')).toBeInTheDocument();
+  }, 15000);
+
+  it('renders no QR code in the setup dialog without otpauthUri', () => {
+    render(<MfaSetupDialog open onOpenChange={() => undefined} setupKey="ABCD EFGH" onVerify={() => true} />);
+    const dialog = screen.getByRole('dialog', { name: 'Set up two-factor authentication' });
+    expect(within(dialog).queryByRole('img')).toBeNull();
+    expect(within(dialog).getByText(/Setup key:/)).toHaveTextContent('Setup key: ABCD EFGH');
+  }, 15000);
+
+  it('keeps mfaOtpauthUri optional on the exported props type', () => {
+    const complete: SettingsSecurityProps = {
+      sessions: [],
+      mfaEnabled: false,
+      mfaSetupKey: 'ABCD EFGH',
+      onVerifyMfa: () => true,
+      onMfaChange: () => undefined,
+      onPasswordChange: () => undefined,
+      onRevokeSession: () => undefined,
+      onRevokeOtherSessions: () => undefined,
+    };
+    render(<SettingsSecurityPage {...complete} />);
+    expect(screen.getByRole('switch', { name: 'Authenticator app' })).toBeInTheDocument();
+  }, 15000);
+
   it('has no axe violations', async () => {
     const { container } = render(<SettingsSecurityPage />);
     await expectNoAxeViolations(container);
+  }, 15000);
+
+  it('has no axe violations with the QR setup dialog open', async () => {
+    render(<WithQrCode />);
+    await userEvent.click(screen.getByRole('switch', { name: 'Authenticator app' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Set up two-factor authentication' });
+    expect(within(dialog).getByRole('img', { name: 'QR code' })).toBeInTheDocument();
+    await expectNoAxeViolations(document.body);
   }, 15000);
 });

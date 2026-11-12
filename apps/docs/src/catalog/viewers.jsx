@@ -176,6 +176,23 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                   ))}
                 </>
               )}
+              {kind === 'template' && it.id === 'settings-security' && (
+                <>
+                  <p className="my-4 max-w-3xl text-[13px] leading-6 text-muted-foreground">
+                    Pass mfaOtpauthUri to show a scannable QR code of the otpauth URI above the setup key in the
+                    two-factor dialog; the key stays as the manual fallback. Turn on Authenticator app to open it.
+                    Without the prop the dialog is unchanged. The example offers no download: exporting an otpauth code
+                    writes the TOTP secret to disk.
+                  </p>
+                  <Viewer
+                    kind="template"
+                    id="settings-security--with-qr-code"
+                    title={`${it.title} · QR code in the setup dialog`}
+                    file="../../../packages/templates/src/settings-security/examples/WithQrCode.tsx"
+                    height={height}
+                  />
+                </>
+              )}
               {kind === 'block' && it.apiFolder && <ApiReference folder={it.apiFolder} kind="block" level={4} />}
               {kind === 'block' && it.id === 'file-upload-panel' && (
                 <>

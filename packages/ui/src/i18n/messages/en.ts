@@ -1,5 +1,7 @@
 import { textareaEn } from './textarea-messages';
 import { switchEn } from './switch-messages';
+import { qrCodeEn } from './qr-code-messages';
+import { logViewerEn } from './log-viewer-messages';
 import { sliderInputEn } from './slider-input-messages';
 import { formActionsEn } from './form-action-messages';
 import { dateRangeExamplesEn } from './date-range-example-messages';
@@ -31,6 +33,8 @@ export const en = {
   ...textareaEn,
   ...sliderInputEn,
   ...switchEn,
+  ...qrCodeEn,
+  ...logViewerEn,
   ...dateRangeExamplesEn,
   ...fileInputEn,
   ...uploadEn,
@@ -96,23 +100,6 @@ export const en = {
   'pageHeader.title': 'Deployments',
   'pageHeader.description': 'Every build and release of this project across its environments.',
   'pageHeader.moreActions': 'More actions',
-  'logViewer.title': 'Logs',
-  'logViewer.level.debug': 'DEBUG',
-  'logViewer.level.info': 'INFO',
-  'logViewer.level.warn': 'WARN',
-  'logViewer.level.error': 'ERROR',
-  'logViewer.levelFilterOption.debug': 'debug',
-  'logViewer.levelFilterOption.info': 'info',
-  'logViewer.levelFilterOption.warn': 'warn',
-  'logViewer.levelFilterOption.error': 'error',
-  'logViewer.levelFilter': 'Log levels',
-  'logViewer.searchLabel': 'Search logs',
-  'logViewer.searchPlaceholder': 'Search…',
-  'logViewer.follow': 'Follow',
-  'logViewer.count': '{visible} of {total}',
-  'logViewer.empty': 'No lines match the current filters.',
-  'logViewer.inspect': 'Inspect event {timestamp}',
-  'logViewer.copy': 'Copy line {timestamp}',
   'pageHeader.sections': 'Page sections',
   'thumbnail.uploading': 'Uploading {label}',
   'thumbnail.error': 'Upload failed',

@@ -13,6 +13,7 @@ import {
   FieldError,
   FieldLabel,
   OtpInput,
+  QrCode,
   useI18n,
 } from '@gntik-ai/ui';
 import { useState } from 'react';
@@ -21,12 +22,14 @@ export interface MfaSetupDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   setupKey: string;
+  /** An `otpauth://` URI. When set, the dialog shows its QR code above the setup key, which stays as the fallback. */
+  otpauthUri?: string;
   /** Checks the 6-digit code; resolve `true` to finish enrolment. */
   onVerify: (code: string) => boolean | Promise<boolean>;
 }
 
-/** Authenticator enrolment: manual setup key and a 6-digit OtpInput, verified on completion. */
-export function MfaSetupDialog({ open, onOpenChange, setupKey, onVerify }: MfaSetupDialogProps) {
+/** Authenticator enrolment: optional QR code, manual setup key and a 6-digit OtpInput, verified on completion. */
+export function MfaSetupDialog({ open, onOpenChange, setupKey, otpauthUri, onVerify }: MfaSetupDialogProps) {
   const { t } = useI18n();
   const [code, setCode] = useState('');
   const [invalid, setInvalid] = useState(false);
@@ -65,6 +68,7 @@ export function MfaSetupDialog({ open, onOpenChange, setupKey, onVerify }: MfaSe
             </DialogDescription>
           </DialogHeader>
           <DialogBody className="flex flex-col gap-5">
+            {otpauthUri && <QrCode value={otpauthUri} className="self-center" />}
             <p className="text-[12.5px] text-muted-foreground">
               Setup key: <span className="font-mono text-foreground">{setupKey}</span>
             </p>

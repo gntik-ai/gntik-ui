@@ -116,6 +116,7 @@ export * from './components/PermissionMatrix';
 export * from './components/Popover';
 export * from './components/PowerSearch';
 export * from './components/Progress';
+export * from './components/QrCode';
 export * from './components/QueryBuilder';
 export * from './components/RadioGroup';
 export * from './components/Resizable';

@@ -4108,6 +4108,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -4126,6 +4130,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -4295,6 +4303,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -4313,6 +4325,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -4563,6 +4579,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -4581,6 +4601,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -4753,6 +4777,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -4771,6 +4799,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -4939,6 +4971,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -4957,6 +4993,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -5156,6 +5196,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -5174,6 +5218,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -5343,6 +5391,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -5361,6 +5413,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -5590,6 +5646,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -5608,6 +5668,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -5806,6 +5870,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -5824,6 +5892,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -6280,6 +6352,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -6298,6 +6374,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -6527,6 +6607,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -6545,6 +6629,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -6725,6 +6813,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -6743,6 +6835,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -7010,6 +7106,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -7028,6 +7128,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -7225,6 +7329,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -7243,6 +7351,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -7429,6 +7541,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -7447,6 +7563,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -7646,6 +7766,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -7664,6 +7788,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -7841,6 +7969,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -7859,6 +7991,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -8035,6 +8171,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -8053,6 +8193,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -8246,6 +8390,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -8264,6 +8412,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -8446,6 +8598,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -8464,6 +8620,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -8647,6 +8807,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -8665,6 +8829,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -8836,6 +9004,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -8854,6 +9026,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -9031,6 +9207,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -9049,6 +9229,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -9226,6 +9410,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -9244,6 +9432,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -9490,6 +9682,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -9508,6 +9704,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -9680,6 +9880,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -9698,6 +9902,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -9905,6 +10113,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -9923,6 +10135,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -10092,6 +10308,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -10110,6 +10330,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -10322,6 +10546,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -10340,6 +10568,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -10516,6 +10748,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -10534,6 +10770,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -10703,6 +10943,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -10721,6 +10965,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -10898,6 +11146,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -10916,6 +11168,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -11087,6 +11343,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -11105,6 +11365,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -11288,6 +11552,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -11306,6 +11574,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -11475,6 +11747,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -11493,6 +11769,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -11666,6 +11946,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -11684,6 +11968,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -11936,6 +12224,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -11954,6 +12246,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -12129,6 +12425,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -12147,6 +12447,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -12442,6 +12746,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -12460,6 +12768,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -12673,6 +12985,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -12691,6 +13007,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -12871,6 +13191,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -12889,6 +13213,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -13102,6 +13430,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -13120,6 +13452,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -13299,6 +13635,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -13317,6 +13657,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -13486,6 +13830,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -13504,6 +13852,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -13676,6 +14028,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -13694,6 +14050,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -13867,6 +14227,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -13885,6 +14249,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -14062,6 +14430,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -14080,6 +14452,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -14271,6 +14647,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -14289,6 +14669,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -14461,6 +14845,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -14479,6 +14867,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -14649,6 +15041,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -14667,6 +15063,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -14844,6 +15244,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -14862,6 +15266,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -14955,6 +15363,211 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Progress/Progress.doc.ts"
+    },
+    {
+      "id": "qr-code",
+      "kind": "component",
+      "name": "QrCode",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "beta",
+      "description": "Scannable QR code for an otpauth URI, a pairing link or a share link. `value` is encoded as UTF-8 bytes at `errorLevel` (L, M, Q or H; default M) with a quiet zone of `margin` modules (default 4) and drawn as one `<svg role=\"img\">` with a single `<path>` for every dark module, scaled to `size` px (default 160). The modules are always the dark colour of the `qr-module` / `qr-surface` token pair on a light square, in light, dark and high_contrast, because scanners are not required to read reversed codes; the light square is deliberate and stays inside the code's own box. The accessible name is `label` or the catalog \"QR code\". `status=\"loading\"` sets `aria-busy` and shows a Spinner in place of the code; `status=\"expired\"` removes every module from the DOM (an expired code can never be scanned), shows \"QR code expired\" and, only when `onRefresh` is set, a Refresh button that calls it once per activation. A value that does not fit a version 40 code at the chosen level renders a bordered \"Too much content for a QR code\" placeholder instead of an image and never throws; lower `errorLevel` to fit more. `qrCodeSvg(value, options?)` returns the same code as a standalone SVG string (no class names; `moduleColor` and `surfaceColor` are used when given, otherwise the live tokens are read with `tokenColor`; it throws a `RangeError` for an oversized value). Security: an otpauth URI carries the TOTP secret. The MFA example offers no download, and exporting such a code with `qrCodeSvg` writes the secret to disk: do not offer a download for it. Keep the text secret as the manual fallback next to the code. Fixed-size: the expired state needs about 140 px to fit its text and button.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/QrCode/QrCode.tsx",
+          "target": "components/ui/qr-code/QrCode.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/QrCode/index.ts",
+          "target": "components/ui/qr-code/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/QrCode/qr-code.variants.ts",
+          "target": "components/ui/qr-code/qr-code.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/QrCode/qr-encoder.ts",
+          "target": "components/ui/qr-code/qr-encoder.ts"
+        },
+        {
+          "path": "packages/ui/src/components/QrCode/qr-svg.ts",
+          "target": "components/ui/qr-code/qr-svg.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
+          "target": "components/i18n/messages/date-range-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
+          "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
+          "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
+          "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
+          "target": "components/i18n/messages/tool-call-en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
+          "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "target": "components/i18n/time-zone.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "@gntik-ai/tokens"
+      ],
+      "registryDependencies": [
+        "button",
+        "spinner",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/QrCode/QrCode.doc.ts"
     },
     {
       "id": "query-builder",
@@ -15070,6 +15683,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -15088,6 +15705,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -15368,6 +15989,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -15386,6 +16011,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -15564,6 +16193,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -15582,6 +16215,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -15787,6 +16424,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -15805,6 +16446,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -15981,6 +16626,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -15999,6 +16648,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -16172,6 +16825,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -16190,6 +16847,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -16401,6 +17062,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -16419,6 +17084,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -16679,6 +17348,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -16697,6 +17370,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -16889,6 +17566,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -16907,6 +17588,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -17169,6 +17854,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -17187,6 +17876,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -17388,6 +18081,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -17406,6 +18103,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -17579,6 +18280,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -17597,6 +18302,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -17766,6 +18475,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -17784,6 +18497,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -17960,6 +18677,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -17978,6 +18699,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -18262,6 +18987,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -18280,6 +19009,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -18456,6 +19189,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -18474,6 +19211,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -18659,6 +19400,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -18677,6 +19422,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -18850,6 +19599,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -18868,6 +19621,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -19040,6 +19797,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -19058,6 +19819,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -19227,6 +19992,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -19245,6 +20014,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -19446,6 +20219,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -19464,6 +20241,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -19645,6 +20426,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -19663,6 +20448,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -19908,6 +20697,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -19926,6 +20719,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -20094,6 +20891,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -20112,6 +20913,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -20288,6 +21093,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -20306,6 +21115,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -20490,6 +21303,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -20508,6 +21325,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -20747,6 +21568,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -20765,6 +21590,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -20933,6 +21762,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -20951,6 +21784,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -21248,6 +22085,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -21266,6 +22107,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -21447,6 +22292,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -21465,6 +22314,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -21633,6 +22486,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -21651,6 +22508,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -21827,6 +22688,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -21845,6 +22710,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -22006,6 +22875,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -22024,6 +22897,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -22194,6 +23071,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -22212,6 +23093,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -22383,6 +23268,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -22401,6 +23290,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -22576,6 +23469,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -22594,6 +23491,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -22766,6 +23667,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -22784,6 +23689,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -22952,6 +23861,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -22970,6 +23883,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -23140,6 +24057,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -23158,6 +24079,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -23329,6 +24254,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -23347,6 +24276,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -23524,6 +24457,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -23542,6 +24479,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -23713,6 +24654,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -23731,6 +24676,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -23903,6 +24852,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -23921,6 +24874,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
@@ -24091,6 +25048,10 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
           "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
@@ -24109,6 +25070,10 @@
         {
           "path": "packages/ui/src/i18n/messages/password-messages.ts",
           "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "target": "components/i18n/messages/qr-code-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",

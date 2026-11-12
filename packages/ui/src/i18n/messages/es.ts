@@ -1,5 +1,7 @@
 import { textareaEs } from './textarea-messages';
 import { switchEs } from './switch-messages';
+import { qrCodeEs } from './qr-code-messages';
+import { logViewerEs } from './log-viewer-messages';
 import { sliderInputEs } from './slider-input-messages';
 import { formActionsEs } from './form-action-messages';
 import { dateRangeExamplesEs } from './date-range-example-messages';
@@ -32,6 +34,8 @@ export const es: Messages = {
   ...textareaEs,
   ...sliderInputEs,
   ...switchEs,
+  ...qrCodeEs,
+  ...logViewerEs,
   ...dateRangeExamplesEs,
   ...fileInputEs,
   ...uploadEs,
@@ -102,24 +106,6 @@ export const es: Messages = {
   'pageHeader.title': 'Despliegues',
   'pageHeader.description': 'Todas las compilaciones y versiones de este proyecto en sus entornos.',
   'pageHeader.moreActions': 'Más acciones',
-
-  'logViewer.title': 'Registros',
-  'logViewer.level.debug': 'DEBUG',
-  'logViewer.level.info': 'INFO',
-  'logViewer.level.warn': 'AVISO',
-  'logViewer.level.error': 'ERROR',
-  'logViewer.levelFilterOption.debug': 'debug',
-  'logViewer.levelFilterOption.info': 'info',
-  'logViewer.levelFilterOption.warn': 'aviso',
-  'logViewer.levelFilterOption.error': 'error',
-  'logViewer.levelFilter': 'Niveles de registro',
-  'logViewer.searchLabel': 'Buscar en los registros',
-  'logViewer.searchPlaceholder': 'Buscar…',
-  'logViewer.follow': 'Seguir',
-  'logViewer.count': '{visible} de {total}',
-  'logViewer.empty': 'Ninguna línea coincide con los filtros actuales.',
-  'logViewer.inspect': 'Inspeccionar evento {timestamp}',
-  'logViewer.copy': 'Copiar línea {timestamp}',
 
   'pageHeader.sections': 'Secciones de la página',
   'thumbnail.uploading': 'Subiendo {label}',

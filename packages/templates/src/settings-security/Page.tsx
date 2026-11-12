@@ -25,6 +25,8 @@ export interface SettingsSecurityProps extends SettingsFrameOptions {
   /** Whether two-factor authentication is on. */
   mfaEnabled: boolean;
   mfaSetupKey: string;
+  /** `otpauth://` URI of the enrolment; the setup dialog shows its QR code above the key. Without it, no QR code is shown. */
+  mfaOtpauthUri?: string;
   /** Checks an enrolment code; defaults to the demo code 123456. */
   onVerifyMfa: (code: string) => boolean | Promise<boolean>;
   onMfaChange: (enabled: boolean) => void;
@@ -39,6 +41,7 @@ export default function SettingsSecurityPage({
   sessions = defaultSessions,
   mfaEnabled = false,
   mfaSetupKey: setupKey = mfaSetupKey,
+  mfaOtpauthUri: otpauthUri,
   onVerifyMfa = (code) => code === DEMO_MFA_CODE,
   onMfaChange,
   onPasswordChange,
@@ -152,7 +155,13 @@ export default function SettingsSecurityPage({
         </SettingsRow>
       </FormSection>
       <SessionsDevices sessions={sessions} onRevoke={onRevokeSession} onRevokeOthers={onRevokeOtherSessions} />
-      <MfaSetupDialog open={setupOpen} onOpenChange={setSetupOpen} setupKey={setupKey} onVerify={verify} />
+      <MfaSetupDialog
+        open={setupOpen}
+        onOpenChange={setSetupOpen}
+        setupKey={setupKey}
+        otpauthUri={otpauthUri}
+        onVerify={verify}
+      />
     </SettingsFrame>
   );
 }
