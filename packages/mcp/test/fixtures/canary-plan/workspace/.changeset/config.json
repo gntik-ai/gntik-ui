@@ -1,0 +1,6 @@
+{
+  "privatePackages": {
+    "version": false
+  },
+  "ignore": ["@gntik-ai/docs"]
+}
