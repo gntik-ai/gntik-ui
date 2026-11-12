@@ -115,17 +115,16 @@ export function filterCommandGroupsWithTotal(
     const all = groups.map((g) => ({ value: g.label, items: toEntries(g.items) }));
     visible = [...(recent.length ? [{ value: recentLabel, items: toEntries(recent, 'recent:') }] : []), ...all];
   } else {
-    // A custom scorer also ranks the empty query (recent items stay first, unscored).
+    // A custom scorer also ranks the empty query, recent items included (they stay first).
     const rank = score ?? ((item: CommandItem, q: string) => scoreCommand(item, q, locale));
-    const ranked = groups.map((g) => ({
-      value: g.label,
-      items: g.items
+    const rankItems = (items: CommandItem[], prefix = '') =>
+      items
         .map((item) => ({ item, score: rank(item, trimmed) }))
         .filter((r) => r.score >= 0)
         .sort((a, b) => b.score - a.score)
-        .map(({ item }) => ({ key: item.id, item })),
-    }));
-    const recents = !trimmed && recent.length ? [{ value: recentLabel, items: toEntries(recent, 'recent:') }] : [];
+        .map(({ item }) => ({ key: prefix + item.id, item }));
+    const ranked = groups.map((g) => ({ value: g.label, items: rankItems(g.items) }));
+    const recents = !trimmed && recent.length ? [{ value: recentLabel, items: rankItems(recent, 'recent:') }] : [];
     visible = [...recents, ...ranked];
   }
   visible = visible.filter((g) => g.items.length);

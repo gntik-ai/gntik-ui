@@ -41,6 +41,13 @@ describe('filterCommandGroups with a custom scorer', () => {
     expect(ids(filterCommandGroups(groups, '', [], 'Recent', undefined, { score: () => -1 }))).toEqual([]);
   });
 
+  it('scores recent items with the scorer: below 0 hides them, higher scores come first', () => {
+    const score = (i: { id: string }) => (i.id === 'r1' ? -1 : i.id === 'r3' ? 2 : 1);
+    const out = filterCommandGroups(groups, '', [item('r1'), item('r2'), item('r3')], 'Recent', undefined, { score });
+    expect(ids(out).slice(0, 1)).toEqual([['r3', 'r2']]);
+    expect(ids(filterCommandGroups(groups, '', [item('r1')], 'Recent', undefined, { score: () => -1 }))).toEqual([]);
+  });
+
   it('without a scorer an empty query lists recent items and every group as given', () => {
     expect(ids(filterCommandGroups(groups, '  ', [item('r1')]))).toEqual([
       ['r1'],

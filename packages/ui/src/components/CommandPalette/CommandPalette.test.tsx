@@ -233,6 +233,14 @@ describe('CommandPalette filter, limit and renderItem', () => {
     expect(screen.getAllByRole('option').map((o) => o.textContent)).toEqual(['rerun', 'run-a', 'beta', 'run-b']);
   });
 
+  it('a custom filter also scores recent items: filter={() => -1} lists no option even with recents', async () => {
+    render(
+      <CommandPalette defaultOpen groups={groups} recent={[{ id: 'old', label: 'Old command' }]} filter={() => -1} />,
+    );
+    await screen.findByRole('combobox');
+    expect(screen.queryAllByRole('option')).toEqual([]);
+  });
+
   it('limit renders that many options and the footer reads Showing 50 of 120', async () => {
     const many = Array.from({ length: 120 }, (_, i) => ({ id: `cmd-${i}`, label: `Command ${i}` }));
     render(<CommandPalette defaultOpen groups={[{ label: 'All', items: many }]} limit={50} />);
