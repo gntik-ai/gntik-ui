@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { expectNoAxeViolations } from '../test/a11y';
 import WithQrCode from './examples/WithQrCode';
 import { MfaSetupDialog } from './MfaSetupDialog';
-import SettingsSecurityPage from './Page';
+import SettingsSecurityPage, { type SettingsSecurityProps } from './Page';
 
 describe('SettingsSecurityPage', () => {
   it('renders the password, MFA and sessions sections', () => {
@@ -73,6 +73,21 @@ describe('SettingsSecurityPage', () => {
     const dialog = screen.getByRole('dialog', { name: 'Set up two-factor authentication' });
     expect(within(dialog).queryByRole('img')).toBeNull();
     expect(within(dialog).getByText(/Setup key:/)).toHaveTextContent('Setup key: ABCD EFGH');
+  }, 15000);
+
+  it('keeps mfaOtpauthUri optional on the exported props type', () => {
+    const complete: SettingsSecurityProps = {
+      sessions: [],
+      mfaEnabled: false,
+      mfaSetupKey: 'ABCD EFGH',
+      onVerifyMfa: () => true,
+      onMfaChange: () => undefined,
+      onPasswordChange: () => undefined,
+      onRevokeSession: () => undefined,
+      onRevokeOtherSessions: () => undefined,
+    };
+    render(<SettingsSecurityPage {...complete} />);
+    expect(screen.getByRole('switch', { name: 'Authenticator app' })).toBeInTheDocument();
   }, 15000);
 
   it('has no axe violations', async () => {

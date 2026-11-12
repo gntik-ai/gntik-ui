@@ -26,7 +26,7 @@ export interface SettingsSecurityProps extends SettingsFrameOptions {
   mfaEnabled: boolean;
   mfaSetupKey: string;
   /** `otpauth://` URI of the enrolment; the setup dialog shows its QR code above the key. Without it, no QR code is shown. */
-  mfaOtpauthUri: string;
+  mfaOtpauthUri?: string;
   /** Checks an enrolment code; defaults to the demo code 123456. */
   onVerifyMfa: (code: string) => boolean | Promise<boolean>;
   onMfaChange: (enabled: boolean) => void;
