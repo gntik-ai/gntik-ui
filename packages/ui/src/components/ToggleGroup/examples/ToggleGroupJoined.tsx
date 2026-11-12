@@ -9,14 +9,15 @@ export default function ToggleGroupJoined() {
       <ToggleGroup
         aria-label="Calendar view"
         variant="joined"
+        disallowEmptySelection
         value={view}
-        onValueChange={(v) => v.length && setView(v)}
+        onValueChange={setView}
       >
         <Toggle value="day">Day</Toggle>
         <Toggle value="week">Week</Toggle>
         <Toggle value="month">Month</Toggle>
       </ToggleGroup>
-      <ToggleGroup aria-label="Project layout" variant="joined" defaultValue={['list']}>
+      <ToggleGroup aria-label="Project layout" variant="joined" disallowEmptySelection defaultValue={['list']}>
         <Toggle value="list" iconOnly aria-label="List">
           <List size={16} aria-hidden />
         </Toggle>

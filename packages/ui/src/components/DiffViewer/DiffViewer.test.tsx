@@ -119,6 +119,16 @@ describe('DiffViewer', () => {
     expect(marked).toEqual(['8080', '8443']);
   });
 
+  it('pressing the active layout keeps it active and reports nothing', async () => {
+    const user = userEvent.setup();
+    const onModeChange = vi.fn();
+    render(<DiffViewer oldValue={'a\nb'} newValue={'a\nc'} onModeChange={onModeChange} />);
+    const unified = screen.getByRole('button', { name: 'Unified' });
+    await user.click(unified);
+    expect(unified).toHaveAttribute('aria-pressed', 'true');
+    expect(onModeChange).not.toHaveBeenCalled();
+  });
+
   it('Tab reaches the view switch and the region; arrows and Enter switch the layout', async () => {
     const user = userEvent.setup();
     const onModeChange = vi.fn();

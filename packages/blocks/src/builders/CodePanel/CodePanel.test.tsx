@@ -127,6 +127,17 @@ describe('CodePanel', () => {
     await waitFor(() => expect(m.created.at(-1)?.revealLineInCenter).toHaveBeenCalledWith(5));
   });
 
+  it('pressing the active editor view keeps it active', async () => {
+    const user = userEvent.setup();
+    const m = mockMonaco();
+    render(<CodePanel loader={m.loader} />);
+    await waitFor(() => expect(m.editor.create).toHaveBeenCalledTimes(1));
+    const edit = screen.getByRole('button', { name: 'Edit' });
+    await user.click(edit);
+    expect(edit).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: 'Diff' })).toHaveAttribute('aria-pressed', 'false');
+  });
+
   it('supports a controlled active file', async () => {
     const user = userEvent.setup();
     const m = mockMonaco();

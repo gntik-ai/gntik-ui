@@ -101,10 +101,10 @@ export function PageToolbar({
             <ToggleGroup
               aria-label={t('toolbar.view')}
               size="sm"
+              disallowEmptySelection
               value={[currentView]}
               onValueChange={(next) => {
-                const picked = next[0];
-                if (!picked) return; // keep one view selected
+                const picked = next[0] as string;
                 setInnerView(picked);
                 onViewChange?.(picked);
               }}

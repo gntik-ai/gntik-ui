@@ -145,8 +145,9 @@ export function EvaluationScorecard({
         <ToggleGroup
           aria-label="Show datasets"
           size="sm"
+          disallowEmptySelection
           value={[filter]}
-          onValueChange={(v) => v[0] && setFilter(v[0] as 'all' | 'regressions')}
+          onValueChange={(v) => setFilter(v[0] as 'all' | 'regressions')}
         >
           <Toggle value="all">
             All <span className="font-mono text-[10.5px] opacity-70">{rows.length}</span>

@@ -30,6 +30,16 @@ describe('EvaluationScorecard', () => {
     ]);
   });
 
+  it('pressing the active filter keeps it active', async () => {
+    const user = userEvent.setup();
+    render(<EvaluationScorecard />);
+    const regressions = screen.getByRole('button', { name: /Regressions/ });
+    await user.click(regressions);
+    await user.click(regressions);
+    expect(regressions).toHaveAttribute('aria-pressed', 'true');
+    expect(bodyRows()).toHaveLength(2);
+  });
+
   it('shows an empty row when nothing regressed', async () => {
     const user = userEvent.setup();
     render(<EvaluationScorecard rows={[]} />);

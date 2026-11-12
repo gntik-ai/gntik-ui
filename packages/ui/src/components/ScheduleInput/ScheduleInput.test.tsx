@@ -73,6 +73,18 @@ describe('ScheduleInput', () => {
     expect(field).toHaveValue('0 9 2 * *');
   });
 
+  it('pressing the active frequency or the last weekday keeps it active', async () => {
+    const { user, field, onValueChange } = setup({ defaultValue: '0 9 * * 1' });
+    const weekly = screen.getByRole('button', { name: 'Weekly' });
+    await user.click(weekly);
+    expect(weekly).toHaveAttribute('aria-pressed', 'true');
+    const monday = screen.getByRole('button', { name: 'Monday' });
+    await user.click(monday);
+    expect(monday).toHaveAttribute('aria-pressed', 'true');
+    expect(field).toHaveValue('0 9 * * 1');
+    expect(onValueChange).not.toHaveBeenCalled();
+  });
+
   it('ArrowUp in the time field steps the hour', async () => {
     const { user, field } = setup({ defaultValue: '0 9 * * *' });
     await user.click(screen.getByRole('spinbutton', { name: 'Hours' }));

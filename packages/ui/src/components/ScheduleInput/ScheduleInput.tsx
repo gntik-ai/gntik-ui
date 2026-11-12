@@ -157,11 +157,9 @@ export function ScheduleInput({
     <div role="group" aria-label={ariaLabel ?? t('scheduleInput.label')} className={cn(s.root(), className)}>
       <ToggleGroup
         aria-label={t('scheduleInput.frequency')}
+        disallowEmptySelection
         value={[frequency]}
-        onValueChange={(v) => {
-          const next = v[0] as ScheduleFrequency | undefined;
-          if (next) pickFrequency(next);
-        }}
+        onValueChange={(v) => pickFrequency(v[0] as ScheduleFrequency)}
         disabled={disabled}
         className="w-fit max-w-full flex-wrap"
       >
@@ -197,8 +195,9 @@ export function ScheduleInput({
                 variant="joined"
                 size="sm"
                 aria-labelledby={`${uid}-days`}
+                disallowEmptySelection
                 value={parts.weekdays.map(String)}
-                onValueChange={(v) => v.length && update({ weekdays: v.map(Number) })}
+                onValueChange={(v) => update({ weekdays: v.map(Number) })}
                 disabled={disabled}
               >
                 {weekOrder.map((d) => (
