@@ -6,13 +6,14 @@ import {
   FlowCanvas,
   NodeCard,
   flowNodeTypes,
+  useFlowState,
   useFlowTheme,
   withBrandMarkers,
   type FlowTone,
 } from './index';
 import NodeTypesStrip from './examples/NodeTypesStrip';
 import PipelineCanvas from './examples/PipelineCanvas';
-import { pipelineEdges } from './examples/pipeline';
+import { pipelineEdges, pipelineNodes } from './examples/pipeline';
 
 function setTokens(vars: Record<string, string>) {
   for (const [k, v] of Object.entries(vars)) document.documentElement.style.setProperty(k, v);
@@ -181,4 +182,17 @@ it('spaces named handles on each side with room for separate pointer targets', (
   expect(canvas.querySelector('[data-handleid="first"]')).toHaveStyle({ top: '33.33333333333333%' });
   expect(canvas.querySelector('[data-handleid="second"]')).toHaveStyle({ top: '66.66666666666666%' });
   expect(input.parentElement).toHaveStyle({ minHeight: '96px' });
+});
+
+it('accepts the whole useFlowState result, history controls included, without leaking them to the DOM', () => {
+  const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+  function Spread() {
+    const flow = useFlowState(pipelineNodes, pipelineEdges, { history: true });
+    return <FlowCanvas aria-label="Spread canvas" {...flow} />;
+  }
+  render(<Spread />);
+  const region = screen.getByRole('region', { name: 'Spread canvas' });
+  expect(region.querySelector('[canundo], [canredo], [undo], [redo], [resethistory]')).toBeNull();
+  expect(error).not.toHaveBeenCalled();
+  error.mockRestore();
 });

@@ -72,6 +72,8 @@ export interface NodeInspectorProps<Kind extends string = FlowNodeKind> {
   node: FlowNode<Kind> | undefined;
   onChange: (id: string, patch: Partial<FlowNodeData>) => void;
   onDelete: (id: string) => void;
+  /** Called when a field of the form loses focus. */
+  onFieldBlur?: () => void;
   /** Heading level of the panel title (default h3). */
   titleAs?: PanelHeading;
 }
@@ -81,6 +83,7 @@ export function NodeInspector<Kind extends string = FlowNodeKind>({
   node,
   onChange,
   onDelete,
+  onFieldBlur,
   titleAs: TitleTag = 'h3',
 }: NodeInspectorProps<Kind>) {
   const titleId = useId();
@@ -93,6 +96,7 @@ export function NodeInspector<Kind extends string = FlowNodeKind>({
         <form
           aria-labelledby={titleId}
           onSubmit={(e) => e.preventDefault()}
+          onBlur={onFieldBlur}
           className="flex flex-1 flex-col gap-3 overflow-y-auto px-3 pb-3"
         >
           <p className="flex items-center gap-2 text-[12px] text-muted-foreground">

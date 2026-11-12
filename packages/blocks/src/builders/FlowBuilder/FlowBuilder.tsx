@@ -1,8 +1,20 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { breakpointQuery } from '@gntik-ai/tokens/runtime';
-import { Play } from '@gntik-ai/icons';
+import { Play, Redo2, Undo2 } from '@gntik-ai/icons';
 import { FlowCanvas, type FlowCanvasProps, type FlowNode, type FlowNodeData, type FlowNodeKind } from '@gntik-ai/flow';
-import { Button, ResizablePanel, ResizablePanelGroup, ResizeHandle, cn, useMediaQuery } from '@gntik-ai/ui';
+import {
+  Button,
+  IconButton,
+  LiveAnnouncer,
+  ResizablePanel,
+  ResizablePanelGroup,
+  ResizeHandle,
+  cn,
+  useAnnounce,
+  useHasLiveAnnouncer,
+  useI18n,
+  useMediaQuery,
+} from '@gntik-ai/ui';
 import {
   builderConsole,
   builderEdges,
@@ -16,6 +28,16 @@ import type { FlowBuilderExtensions } from './extensions';
 import { useDecoratedNodes } from './decorated-nodes';
 import { useConnections } from './connections';
 import { useBuilderGraph } from './graph-state';
+import {
+  ACTION_KEYS,
+  carryCanvasState,
+  historyShortcut,
+  isEditableTarget,
+  useCanvasFocusFallback,
+  useGraphHistory,
+  type FlowEditType,
+  type FlowHistoryOption,
+} from './history';
 import { FlowProblems } from './problems';
 import { NodeInspector, NodePalette, RunConsole } from './parts';
 
@@ -34,7 +56,8 @@ export interface FlowGraph<Kind extends string = FlowNodeKind> {
 }
 
 export interface FlowGraphChange {
-  type: 'add' | 'delete' | 'move' | 'connect' | 'update';
+  /** `undo` and `redo` report the graph a history step restored. */
+  type: 'add' | 'delete' | 'move' | 'connect' | 'update' | 'undo' | 'redo';
   nodeIds: string[];
   edgeIds: string[];
 }
@@ -60,6 +83,12 @@ export interface FlowBuilderProps<Kind extends string = FlowNodeKind> extends Fl
   /** Controlled graph content. Canvas selection, measurements and active drags stay local. */
   graph?: FlowGraph<Kind>;
   onGraphChange?: (graph: FlowGraph<Kind>, change: FlowGraphChange) => void;
+  /**
+   * Undo and Redo of committed edits (default true in edit mode): header buttons and the
+   * Mod+Z, Shift+Mod+Z and Ctrl+Y shortcuts inside the builder. `{ limit }` bounds the steps
+   * kept (default 100); false removes the buttons and the shortcuts.
+   */
+  history?: FlowHistoryOption;
   palette?: PaletteItem[];
   /**
    * Console output (controlled). Run and Clear then report the next list through
@@ -99,12 +128,20 @@ function clock() {
  * inspector for the selected node and a run console, in resizable panels. On small screens
  * the panels stack.
  */
-export function FlowBuilder<Kind extends string = FlowNodeKind>({
+export function FlowBuilder<Kind extends string = FlowNodeKind>(props: FlowBuilderProps<Kind>) {
+  const hasAnnouncer = useHasLiveAnnouncer();
+  const content = <FlowBuilderContent<Kind> {...props} />;
+  // Undo announcements need a live region: use the one above, else render our own.
+  return props.history === false || hasAnnouncer ? content : <LiveAnnouncer>{content}</LiveAnnouncer>;
+}
+
+function FlowBuilderContent<Kind extends string = FlowNodeKind>({
   title = 'Untitled flow',
   nodes: initialNodes = builderNodes,
   edges: initialEdges = builderEdges,
   graph,
   onGraphChange,
+  history = true,
   palette = builderPalette,
   consoleEntries,
   defaultConsoleEntries = builderConsole,
@@ -145,6 +182,57 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
   const seq = useRef(0);
   const runs = useRef(0);
   const selected = nodes.find((n) => n.selected);
+  const historyOn = history !== false && !runMode;
+  const { t } = useI18n();
+  const announce = useAnnounce();
+  const [start] = useState(() => cleanFlowGraph<Kind>(graph ?? { nodes: initialNodes, edges: initialEdges }));
+  const graphHistory = useGraphHistory<Kind>(start, history);
+  // The graph last handed to the host. A controlled graph that is not that one came from elsewhere.
+  const reported = useRef(graph);
+  const seen = useRef(graph);
+  // Inspector edits of one node merge into one history step until a field loses focus.
+  const editBatch = useRef(0);
+
+  const commit = (next: FlowGraph<Kind>, change: FlowGraphChange & { type: FlowEditType }, coalesce?: string) => {
+    reported.current = next;
+    if (historyOn) graphHistory.record(next, change.type, coalesce);
+    onGraphChange?.(next, change);
+  };
+
+  const focusFallback = useCanvasFocusFallback(root);
+
+  const { restart } = graphHistory;
+  useEffect(() => {
+    const previous = seen.current;
+    seen.current = graph;
+    if (!graph || !historyOn) return;
+    if (previous?.nodes === graph.nodes && previous.edges === graph.edges) return;
+    if (reported.current?.nodes === graph.nodes && reported.current.edges === graph.edges) return;
+    restart(cleanFlowGraph(graph));
+  }, [graph, historyOn, restart]);
+
+  const stepHistory = (direction: 'undo' | 'redo') => {
+    const move = direction === 'undo' ? graphHistory.undo() : graphHistory.redo();
+    if (!move) return;
+    focusFallback.request();
+    reported.current = move.graph;
+    if (!graph) {
+      setNodes(carryCanvasState(move.graph.nodes, nodes));
+      setEdges(carryCanvasState(move.graph.edges, edges));
+    }
+    onGraphChange?.(move.graph, move.change);
+    announce(
+      t(direction === 'undo' ? 'flow.undid' : 'flow.redid', { action: t(ACTION_KEYS[move.action ?? 'update']) }),
+    );
+  };
+
+  const onShortcut = (event: KeyboardEvent<HTMLElement>) => {
+    if (!historyOn || event.defaultPrevented || isEditableTarget(event.target)) return;
+    const direction = historyShortcut(event);
+    if (!direction) return;
+    event.preventDefault();
+    stepHistory(direction);
+  };
 
   const addNode = (item: PaletteItem) => {
     seq.current += 1;
@@ -164,13 +252,17 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
     };
     const next = [...nodes.map((n) => (n.selected ? { ...n, selected: false } : n)), node];
     setNodes(next);
-    onGraphChange?.(cleanFlowGraph({ nodes: next, edges }), { type: 'add', nodeIds: [id], edgeIds: [] });
+    commit(cleanFlowGraph({ nodes: next, edges }), { type: 'add', nodeIds: [id], edgeIds: [] });
   };
 
   const updateNode = (id: string, patch: Partial<FlowNodeData>) => {
     const next = nodes.map((n) => (n.id === id ? { ...n, data: { ...n.data, ...patch } } : n));
     setNodes(next);
-    onGraphChange?.(cleanFlowGraph({ nodes: next, edges }), { type: 'update', nodeIds: [id], edgeIds: [] });
+    commit(
+      cleanFlowGraph({ nodes: next, edges }),
+      { type: 'update', nodeIds: [id], edgeIds: [] },
+      `update:${id}:${editBatch.current}`,
+    );
   };
 
   const deleteNode = (id: string) => {
@@ -230,7 +322,7 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
     (edge) => {
       const next = [...edges, edge];
       setEdges(next);
-      onGraphChange?.(cleanFlowGraph({ nodes, edges: next }), { type: 'connect', nodeIds: [], edgeIds: [edge.id] });
+      commit(cleanFlowGraph({ nodes, edges: next }), { type: 'connect', nodeIds: [], edgeIds: [edge.id] });
     },
     {
       onConnect: onConnected,
@@ -269,7 +361,8 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
         };
         setNodes(next.nodes);
         setEdges(next.edges);
-        onGraphChange?.(cleanFlowGraph(next), { type: 'delete', nodeIds, edgeIds });
+        focusFallback.request();
+        commit(cleanFlowGraph(next), { type: 'delete', nodeIds, edgeIds });
       }}
       onNodesChange={(changes) => {
         onNodesChange(
@@ -284,7 +377,7 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
           const move = moves.find((change) => change.id === node.id);
           return move?.type === 'position' && move.position ? { ...node, position: move.position } : node;
         });
-        onGraphChange?.(cleanFlowGraph({ nodes: next, edges }), {
+        commit(cleanFlowGraph({ nodes: next, edges }), {
           type: 'move',
           nodeIds: moves.map((move) => move.id),
           edgeIds: [],
@@ -324,7 +417,15 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
     />
   );
   const palettePanel = <NodePalette items={palette} onAdd={addNode} titleAs={panelAs} />;
-  const inspector = <NodeInspector node={selected} onChange={updateNode} onDelete={deleteNode} titleAs={panelAs} />;
+  const inspector = (
+    <NodeInspector
+      node={selected}
+      onChange={updateNode}
+      onDelete={deleteNode}
+      onFieldBlur={() => (editBatch.current += 1)}
+      titleAs={panelAs}
+    />
+  );
   const consolePanel = (
     <div className="flex h-full min-h-0 flex-col">
       <FlowProblems issues={issues} onSelect={selectNode} titleAs={panelAs} />
@@ -379,6 +480,8 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
     <section
       ref={root}
       aria-label={title}
+      onKeyDown={onShortcut}
+      onFocus={focusFallback.track}
       className={cn('overflow-hidden rounded-lg border border-border bg-card shadow-sm', className)}
     >
       <header className="flex items-center justify-between gap-3 border-b border-border bg-secondary/35 px-3 py-2">
@@ -389,9 +492,33 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
           </p>
         </div>
         {!runMode && (
-          <Button size="sm" icon={Play} loading={running} onClick={() => void run()}>
-            Run
-          </Button>
+          <div className="flex shrink-0 items-center gap-1.5">
+            {historyOn && (
+              <>
+                <IconButton
+                  icon={Undo2}
+                  label={t('flow.undo')}
+                  size="sm"
+                  disabled={!graphHistory.canUndo}
+                  focusableWhenDisabled
+                  aria-keyshortcuts="Meta+Z Control+Z"
+                  onClick={() => stepHistory('undo')}
+                />
+                <IconButton
+                  icon={Redo2}
+                  label={t('flow.redo')}
+                  size="sm"
+                  disabled={!graphHistory.canRedo}
+                  focusableWhenDisabled
+                  aria-keyshortcuts="Shift+Meta+Z Shift+Control+Z Control+Y"
+                  onClick={() => stepHistory('redo')}
+                />
+              </>
+            )}
+            <Button size="sm" icon={Play} loading={running} onClick={() => void run()}>
+              Run
+            </Button>
+          </div>
         )}
       </header>
       {body}

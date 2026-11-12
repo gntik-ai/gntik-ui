@@ -120,6 +120,24 @@ describe('FlowBuilderPage', () => {
     );
   });
 
+  it('offers undo by default and passes history through to the builder', async () => {
+    const { rerender } = render(<FlowBuilderPage />);
+    expect(screen.getByRole('button', { name: 'Undo' })).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByRole('button', { name: 'Redo' })).toBeInTheDocument();
+    rerender(<FlowBuilderPage history={false} />);
+    expect(screen.queryByRole('button', { name: 'Undo' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Redo' })).toBeNull();
+  });
+
+  it('saves the graph an undo restored', async () => {
+    const onSave = vi.fn<(graph: FlowGraph) => Promise<void>>(() => Promise.resolve());
+    render(<FlowBuilderPage onSave={onSave} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Add Step' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Undo' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+    expect(onSave.mock.calls[0]?.[0].nodes).toHaveLength(5);
+  });
+
   it('renders the editor chrome and the flow builder', { timeout: 15000 }, async () => {
     render(<FlowBuilderPage />);
     expect(screen.getByRole('main', { name: 'Order sync editor' })).toBeInTheDocument();

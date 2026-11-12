@@ -11,7 +11,8 @@ export {
   type FlowNodeData,
 } from './nodes';
 export { useFlowTheme, flowMarker, withBrandMarkers, brandEdgeOptions, type FlowTheme } from './theme';
-export { useFlowState } from './useFlowState';
+export { useFlowState, type FlowSetter, type FlowStateOptions } from './useFlowState';
+export { useStateHistory, type StateHistory, type StateHistoryMeta, type StateHistoryOptions } from './useStateHistory';
 export {
   FLOW_TONES,
   KIND_CHIP,

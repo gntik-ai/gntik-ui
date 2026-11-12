@@ -31,6 +31,7 @@ export interface FlowBuilderPageProps<Kind extends string = FlowNodeKind> extend
   | 'onNodeSelect'
   | 'graph'
   | 'onGraphChange'
+  | 'history'
 > {
   /** Optional companion code panel; run mode forces readOnly. */
   codePanel?: CodePanelProps;
@@ -88,6 +89,7 @@ export default function FlowBuilderPage<Kind extends string = FlowNodeKind>(
     onNodeSelect,
     graph,
     onGraphChange,
+    history,
     codePanel,
     breadcrumbs = flowBuilderBreadcrumbs,
     height = 640,
@@ -175,6 +177,7 @@ export default function FlowBuilderPage<Kind extends string = FlowNodeKind>(
           mode={mode}
           nodeStatus={nodeStatus}
           onNodeSelect={onNodeSelect}
+          history={history}
         />
         {codePanel && (
           <CodePanel
