@@ -1,5 +1,6 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { createCommandPaletteStore } from '@gntik-ai/ui';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { GlobalSearch } from './GlobalSearch';
 
@@ -38,4 +39,59 @@ describe('GlobalSearch', () => {
     expect(onSelect.mock.calls[0]?.[0]).toMatchObject({ id: 'record-inv-2041' });
     expect(onSelect.mock.calls[0]?.[1]).toBe('records');
   }, 15_000);
+
+  it('reports a chosen loaded item as records, forwarding loadItems, onQueryChange and the store', async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    const onQueryChange = vi.fn();
+    const store = createCommandPaletteStore();
+    const run = { id: 'run-42', label: 'Run 42' };
+    const loadItems = vi.fn(async () => [{ label: 'Runs', items: [run] }]);
+    render(
+      <GlobalSearch
+        pages={[]}
+        records={[]}
+        actions={[]}
+        recent={[]}
+        loadItems={loadItems}
+        debounceMs={10}
+        minQueryLength={3}
+        onQueryChange={onQueryChange}
+        store={store}
+        onSelect={onSelect}
+      />,
+    );
+    act(() => store.open());
+    const input = await screen.findByRole('combobox');
+    await user.type(input, 'ru');
+    await new Promise((r) => setTimeout(r, 40));
+    expect(loadItems).not.toHaveBeenCalled();
+    await user.type(input, 'n');
+    await user.click(await screen.findByRole('option', { name: 'Run 42' }));
+    expect(loadItems).toHaveBeenCalledWith('run', expect.objectContaining({ signal: expect.any(AbortSignal) }));
+    expect(onQueryChange).toHaveBeenCalledWith('run');
+    expect(onSelect).toHaveBeenCalledWith(run, 'records');
+    await waitFor(() => expect(store.isOpen()).toBe(false));
+  });
+
+  it('keeps the static group of an item that is also returned by loadItems', async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    const settings = { id: 'settings', label: 'Settings' };
+    render(
+      <GlobalSearch
+        pages={[settings]}
+        records={[]}
+        actions={[]}
+        recent={[]}
+        loadItems={async () => [{ label: 'Server', items: [{ id: 'settings', label: 'Settings (server)' }] }]}
+        debounceMs={10}
+        onSelect={onSelect}
+        defaultOpen
+      />,
+    );
+    await user.type(await screen.findByRole('combobox'), 'set');
+    await user.click(await screen.findByRole('option', { name: 'Settings' }));
+    expect(onSelect).toHaveBeenCalledWith(settings, 'pages');
+  });
 });

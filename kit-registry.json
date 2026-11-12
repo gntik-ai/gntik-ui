@@ -4052,6 +4052,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -4245,6 +4249,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -4523,6 +4531,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -4721,6 +4733,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -4913,6 +4929,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -5140,6 +5160,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5333,6 +5357,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -5590,6 +5618,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5812,6 +5844,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -6296,6 +6332,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6551,6 +6591,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6706,11 +6750,15 @@
       "package": "@gntik-ai/ui",
       "group": "Overlays",
       "status": "beta",
-      "description": "⌘K on macOS/iOS or Ctrl+K elsewhere opens a command palette: a modal dialog with a search input over grouped commands (icon, label, description, shortcut keys). Commands are data with an onSelect. Fuzzy-ish ranking (prefix, word start, substring, subsequence; keywords and descriptions count), recent items while the query is empty, an empty state and footer hints. useCommandPaletteShortcut() exposes the shortcut on its own through useHotkeys.",
+      "description": "⌘K on macOS/iOS or Ctrl+K elsewhere opens a command palette: a modal dialog with a search input over grouped commands (icon, label, description, shortcut keys). Commands are data with an onSelect. Fuzzy-ish ranking (prefix, word start, substring, subsequence; keywords and descriptions count), recent items while the query is empty, an empty state and footer hints. loadItems adds debounced, abortable server results (Loading… status, aria-busy, an error message and a last Retry option) after the static groups; filter, limit and renderItem customise ranking, row count and row content; createCommandPaletteStore() opens and closes the palette from code; onQueryChange reports the query. useCommandPaletteShortcut() exposes the shortcut on its own through useHotkeys.",
       "files": [
         {
           "path": "packages/ui/src/components/CommandPalette/CommandPalette.tsx",
           "target": "components/ui/command-palette/CommandPalette.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/CommandPalette/CommandPaletteParts.tsx",
+          "target": "components/ui/command-palette/CommandPaletteParts.tsx"
         },
         {
           "path": "packages/ui/src/components/CommandPalette/command-filter.ts",
@@ -6719,6 +6767,14 @@
         {
           "path": "packages/ui/src/components/CommandPalette/command-palette.variants.ts",
           "target": "components/ui/command-palette/command-palette.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CommandPalette/commandPaletteAsync.ts",
+          "target": "components/ui/command-palette/commandPaletteAsync.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CommandPalette/commandPaletteStore.ts",
+          "target": "components/ui/command-palette/commandPaletteStore.ts"
         },
         {
           "path": "packages/ui/src/components/CommandPalette/index.ts",
@@ -6755,6 +6811,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -6898,7 +6958,9 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "combobox",
         "kbd",
+        "spinner",
         "ui-hooks",
         "ui-utils"
       ],
@@ -7048,6 +7110,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -7273,6 +7339,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7483,6 +7553,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -7710,6 +7784,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7913,6 +7991,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8113,6 +8195,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -8334,6 +8420,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8540,6 +8630,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -8751,6 +8845,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8946,6 +9044,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -9151,6 +9253,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9352,6 +9458,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -9626,6 +9736,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9822,6 +9936,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -10057,6 +10175,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10250,6 +10372,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -10490,6 +10616,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10692,6 +10822,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10885,6 +11019,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -11090,6 +11228,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -11285,6 +11427,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -11496,6 +11642,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -11689,6 +11839,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -11888,6 +12042,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -12168,6 +12326,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -12367,6 +12529,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -12690,6 +12856,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -12929,6 +13099,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -13133,6 +13307,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -13374,6 +13552,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -13579,6 +13761,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -13772,6 +13958,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -13972,6 +14162,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -14169,6 +14363,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -14372,6 +14570,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -14591,6 +14793,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -14789,6 +14995,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -14983,6 +15193,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -15186,6 +15400,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -15422,6 +15640,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -15625,6 +15847,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -15933,6 +16159,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -16135,6 +16365,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -16368,6 +16602,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -16570,6 +16808,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -16767,6 +17009,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -17004,6 +17250,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -17292,6 +17542,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -17508,6 +17762,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -17798,6 +18056,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -18025,6 +18287,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -18224,6 +18490,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -18417,6 +18687,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -18619,6 +18893,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -18931,6 +19209,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -19131,6 +19413,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -19344,6 +19630,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -19541,6 +19831,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -19741,6 +20035,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -19934,6 +20232,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -20163,6 +20465,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -20368,6 +20674,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -20641,6 +20951,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -20833,6 +21147,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -21035,6 +21353,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -21245,6 +21567,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -21512,6 +21838,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -21704,6 +22034,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -22029,6 +22363,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -22236,6 +22574,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -22428,6 +22770,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -22632,6 +22978,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -22817,6 +23167,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -23015,6 +23369,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -23210,6 +23568,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -23413,6 +23775,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -23611,6 +23977,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -23803,6 +24173,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -24001,6 +24375,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -24196,6 +24574,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -24401,6 +24783,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -24596,6 +24982,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -24796,6 +25186,10 @@
           "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -24990,6 +25384,10 @@
         {
           "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
           "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "target": "components/i18n/messages/command-palette-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",

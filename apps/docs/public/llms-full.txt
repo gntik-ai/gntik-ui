@@ -7086,13 +7086,13 @@ export default function BottomSheetDetails() {
 
 ### CommandPalette (`command-palette`)
 
-⌘K on macOS/iOS or Ctrl+K elsewhere opens a command palette: a modal dialog with a search input over grouped commands (icon, label, description, shortcut keys). Commands are data with an onSelect. Fuzzy-ish ranking (prefix, word start, substring, subsequence; keywords and descriptions count), recent items while the query is empty, an empty state and footer hints. useCommandPaletteShortcut() exposes the shortcut on its own through useHotkeys.
+⌘K on macOS/iOS or Ctrl+K elsewhere opens a command palette: a modal dialog with a search input over grouped commands (icon, label, description, shortcut keys). Commands are data with an onSelect. Fuzzy-ish ranking (prefix, word start, substring, subsequence; keywords and descriptions count), recent items while the query is empty, an empty state and footer hints. loadItems adds debounced, abortable server results (Loading… status, aria-busy, an error message and a last Retry option) after the static groups; filter, limit and renderItem customise ranking, row count and row content; createCommandPaletteStore() opens and closes the palette from code; onQueryChange reports the query. useCommandPaletteShortcut() exposes the shortcut on its own through useHotkeys.
 
 - Package: `@gntik-ai/ui` · export `CommandPalette` · group Overlays · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/CommandPalette/CommandPalette.doc.ts
 - Primitive: `@base-ui/react/dialog + @base-ui/react/autocomplete (inline)`
 - ARIA pattern: modal dialog with a combobox and listbox
-- Registry dependencies: kbd, ui-hooks, ui-utils
+- Registry dependencies: combobox, kbd, spinner, ui-hooks, ui-utils
 - Install: `gntik-ui add command-palette`; own the source with `gntik-ui eject command-palette`
 
 Keyboard:
@@ -7103,105 +7103,109 @@ Keyboard:
 | Typing | Filters and ranks the commands |
 | ArrowDown / ArrowUp | Moves the highlight between commands across groups |
 | Enter | Runs the highlighted command and closes the palette |
+| Enter on Retry | After a failed loadItems, loads the same query again and keeps the palette open |
 | Escape | Closes the palette and returns focus |
 
-Tokens: popover, popover-foreground, background, border, accent, accent-foreground, primary-text, muted-foreground, card, ring, focus-ring
+Tokens: popover, popover-foreground, background, border, accent, accent-foreground, primary-text, muted-foreground, card, ring, focus-ring, destructive-text
 
 Usage:
 
 ```tsx
-import {
-  BarChart3,
-  CreditCard,
-  Download,
-  FolderKanban,
-  FolderPlus,
-  Home,
-  Rocket,
-  Settings,
-  UserPlus,
-  Users,
-} from '@gntik-ai/icons';
-import { useState } from 'react';
+import { Bot, Home, Settings, Users } from '@gntik-ai/icons';
+import { useRef, useState } from 'react';
+import { Button } from '@gntik-ai/ui';
+import { matchText } from '@gntik-ai/ui';
 import { CommandPalette, CommandPaletteTrigger } from '@gntik-ai/ui';
 import type { CommandGroup, CommandItem } from '@gntik-ai/ui';
+import { createCommandPaletteStore } from '@gntik-ai/ui';
 
-export default function CommandPaletteBasic() {
-  const [last, setLast] = useState('');
-  const go = (label: string) => () => setLast(label);
+const AGENTS = [
+  ['agent-support', 'Support triage', 'Routes inbound tickets'],
+  ['agent-billing', 'Billing reconciler', 'Matches invoices to payments'],
+  ['agent-research', 'Research assistant', 'Summarises long documents'],
+  ['agent-deploy', 'Deploy guard', 'Checks releases before they ship'],
+] as const;
+
+const RUNS = [
+  ['run-4812', 'Run 4812', 'Support triage · succeeded'],
+  ['run-4813', 'Run 4813', 'Billing reconciler · running'],
+  ['run-4814', 'Run 4814', 'Deploy guard · failed'],
+] as const;
+
+/**
+ * Stands in for `fetch('/api/search?q=…', { signal })`: resolves after a short delay in the order the
+ * server ranks it, honours abort, and fails the first time a query contains “fail” so Retry is visible.
+ */
+function searchServer(
+  query: string,
+  { signal }: { signal: AbortSignal },
+  attempts: Map<string, number>,
+): Promise<CommandGroup[]> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      const tries = (attempts.get(query) ?? 0) + 1;
+      attempts.set(query, tries);
+      if (query.includes('fail') && tries === 1) return reject(new Error('Search is unavailable'));
+      const pick = (rows: readonly (readonly [string, string, string])[]): CommandItem[] =>
+        rows
+          .filter(([id, label, description]) => matchText(`${id} ${label} ${description}`, query))
+          .map(([id, label, description]) => ({ id, label, description, icon: Bot }));
+      resolve(
+        [
+          { label: 'Agents', items: pick(AGENTS) },
+          { label: 'Runs', items: pick(RUNS) },
+        ].filter((group) => group.items.length),
+      );
+    }, 300);
+    signal.addEventListener('abort', () => {
+      clearTimeout(timer);
+      reject(new DOMException('Aborted', 'AbortError'));
+    });
+  });
+}
+
+export default function CommandPaletteAsync() {
+  const [store] = useState(createCommandPaletteStore);
+  const attempts = useRef(new Map<string, number>());
+  const [query, setQuery] = useState('');
+  const [chosen, setChosen] = useState('');
   const groups: CommandGroup[] = [
-    {
-      label: 'Actions',
-      items: [
-        {
-          id: 'new-project',
-          label: 'Create project',
-          icon: FolderPlus,
-          shortcut: ['⌘', 'N'],
-          keywords: ['new'],
-          onSelect: go('Create project'),
-        },
-        {
-          id: 'deploy',
-          label: 'Deploy to production',
-          icon: Rocket,
-          shortcut: ['⌘', 'D'],
-          description: 'Promote the latest build of the current project',
-          onSelect: go('Deploy to production'),
-        },
-        {
-          id: 'invite',
-          label: 'Invite member',
-          icon: UserPlus,
-          keywords: ['team', 'people'],
-          onSelect: go('Invite member'),
-        },
-        { id: 'export', label: 'Export usage (CSV)', icon: Download, onSelect: go('Export usage (CSV)') },
-      ],
-    },
     {
       label: 'Go to',
       items: [
-        { id: 'overview', label: 'Overview', icon: Home, shortcut: ['G', 'O'], onSelect: go('Overview') },
-        { id: 'projects', label: 'Projects', icon: FolderKanban, shortcut: ['G', 'P'], onSelect: go('Projects') },
-        { id: 'analytics', label: 'Analytics', icon: BarChart3, onSelect: go('Analytics') },
-        { id: 'members', label: 'Members', icon: Users, onSelect: go('Members') },
-        { id: 'billing', label: 'Billing', icon: CreditCard, keywords: ['invoices', 'plan'], onSelect: go('Billing') },
-        { id: 'settings', label: 'Settings', icon: Settings, shortcut: ['⌘', ','], onSelect: go('Settings') },
+        { id: 'overview', label: 'Overview', icon: Home, onSelect: () => setChosen('Overview') },
+        { id: 'agents-page', label: 'Agents', icon: Users, keywords: ['agent'], onSelect: () => setChosen('Agents') },
+        { id: 'settings', label: 'Settings', icon: Settings, onSelect: () => setChosen('Settings') },
       ],
-    },
-  ];
-  const recent: CommandItem[] = [
-    {
-      id: 'web-frontend',
-      label: 'web-frontend',
-      icon: FolderKanban,
-      mono: true,
-      description: 'Project',
-      onSelect: go('web-frontend'),
-    },
-    {
-      id: 'billing-api',
-      label: 'billing-api',
-      icon: FolderKanban,
-      mono: true,
-      description: 'Project',
-      onSelect: go('billing-api'),
     },
   ];
   return (
     <div className="flex flex-col items-center gap-3 text-center">
-      <CommandPalette groups={groups} recent={recent}>
-        <CommandPaletteTrigger />
-      </CommandPalette>
+      <div className="flex items-center gap-2">
+        <CommandPalette
+          groups={groups}
+          store={store}
+          loadItems={(q, context) => searchServer(q, context, attempts.current)}
+          debounceMs={250}
+          minQueryLength={2}
+          onQueryChange={setQuery}
+          onSelect={(item) => setChosen(item.label)}
+        >
+          <CommandPaletteTrigger />
+        </CommandPalette>
+        <Button variant="secondary" onClick={store.open}>
+          Open from a button
+        </Button>
+      </div>
       <p aria-live="polite" className="text-[12px] text-muted-foreground">
-        {last ? (
+        Type two letters (“agent”, “run”) to search the server; “fail” shows the error and Retry. Query:{' '}
+        <span className="font-mono text-foreground">{query || '—'}</span>
+        {chosen ? (
           <>
-            Last command: <span className="font-mono text-foreground">{last}</span>
+            {' '}
+            · Chosen: <span className="font-mono text-foreground">{chosen}</span>
           </>
-        ) : (
-          'Press ⌘K (Ctrl+K) or the button to open'
-        )}
+        ) : null}
       </p>
     </div>
   );
