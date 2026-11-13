@@ -1,3 +1,4 @@
+import { flowEs } from './flow-messages';
 import { textareaEs } from './textarea-messages';
 import { switchEs } from './switch-messages';
 import { qrCodeEs } from './qr-code-messages';
@@ -65,6 +66,7 @@ export const es: Messages = {
   ...searchableSelectEs,
   ...autocompleteEs,
   ...passwordEs,
+  ...flowEs,
   'footer.label': 'Pie de página',
   'footer.legal': 'Legal',
   'footer.social': 'Redes sociales',

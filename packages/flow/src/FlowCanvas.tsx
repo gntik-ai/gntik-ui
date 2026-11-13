@@ -48,6 +48,15 @@ const STATIC_PROPS = {
   preventScrolling: false,
 } as const;
 
+/** Controls returned by `useFlowState` that are not React Flow props; spreading the hook must not leak them to the DOM. */
+const HOOK_CONTROLS = ['setNodes', 'setEdges', 'undo', 'redo', 'canUndo', 'canRedo', 'resetHistory'] as const;
+
+function withoutHookControls<P extends object>(props: P): P {
+  const out: Partial<Record<string, unknown>> = { ...props };
+  for (const key of HOOK_CONTROLS) delete out[key];
+  return out as P;
+}
+
 /**
  * React Flow canvas themed from the brand tokens: dotted background, controls and minimap,
  * brand node types, smoothstep edges with arrows (primary when animated). Drag, connect and
@@ -69,8 +78,9 @@ export function FlowCanvas<N extends Node = FlowNode, E extends Edge = Edge>({
   defaultEdgeOptions,
   proOptions,
   children,
-  ...rest
+  ...passthrough
 }: FlowCanvasProps<N, E>) {
+  const rest = withoutHookControls(passthrough);
   const t = useFlowTheme();
   const customTypes = useMemo(() => (nodeRenderers ? adaptNodeRenderers(nodeRenderers) : undefined), [nodeRenderers]);
   const brandedEdges = useMemo(() => (edges ? withBrandMarkers(edges, t) : undefined), [edges, t]);

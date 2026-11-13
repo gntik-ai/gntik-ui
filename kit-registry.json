@@ -1783,7 +1783,7 @@
       "package": "@gntik-ai/blocks",
       "group": "builders",
       "status": "beta",
-      "description": "FlowGraph<Kind> is {nodes,edges}; FlowGraphChange names the edit type and affected nodeIds/edgeIds. Optional onGraphChange(graph, change) reports each committed add, delete, move, connect or inspector update once, omitting selected, dragging and measured from nodes. Inspector updates report every value change: hosts persisting every call should debounce. Selection, measurement, panel resizing, rejected connections and run mode report nothing. Optional graph controls content: render the parent graph without applying edits locally, while selection, measured sizes and active drag positions stay internal by stable node id. nodes/edges remain initial values when uncontrolled. onRun keeps the canvas node objects. builderNodes and builderEdges expose the shared starter graph; cleanFlowGraph(graph) returns a graph without transient node fields for persistence. examples/ControlledGraph.tsx shows graph={graph} onGraphChange={setGraph}. Palette ids skip existing kind-n ids. Visual flow editor with optional nodeTypes for named handles (branch-arm, parallel and sequence examples), onConnectEdge for edge type/data mapping, isValidConnection and onConnectionRejected for rules, onConnect for accepted connections, validationIssues for node/flow problems, mode=\"run\" for a read-only canvas, nodeStatus for live badges, and onNodeSelect for pointer/keyboard selection. Optional nodeTypes registers kit-owned {type, handles:[{id,kind,position?,label?}], render, decorations?} definitions (no React Flow NodeProps). Keep nodeTypes and its renderer definitions stable (module scope or useMemo) across nodeStatus updates: recreating the array rebuilds custom node components and remounts them, defeating per-node memoization. onConnectEdge({source,target,sourceType,targetType,sourceHandle,targetHandle}) returns {type,data}; examples/extensions.tsx maps branch arm-0 to {kind: \"branch-arm\", armIndex: 0}, parallel branch to {kind: \"parallel\"}, and sequence next to {kind: \"sequence\"}. isValidConnection returns true, false, or {code,nodeId?,message}; onConnectionRejected reports {code,nodeId,message} once (nodeId defaults to the source) so consumers can forward it into validationIssues and control its lifetime, while onConnect reports accepted connections only. validationIssues decorates nodes with an icon and accessible text; node issues select and focus their node, and flow issues have no node link. mode=\"run\" removes the Run action, palette, inspector and graph mutation while keeping labelled keyboard-selectable nodes, pan/zoom, fit controls and the wide-screen minimap. nodeStatus maps node IDs to FlowTone badges (running, degraded, failed, paused, done, handoff, review); onNodeSelect(id) handles pointer and keyboard selection. RunFlowExample shows live updates with per-node memoization. FlowNode defaults to the built-in FlowNodeKind union; use FlowNode<string> (or a custom kind union) for custom graphs, inferred by FlowBuilder and WorkflowBuilderPage. Custom renderers use kit status overlays and issue decorations by default; set decorations:\"consumer\" when render owns them, using data.decoration with accessible text and icons (for example, render:({data}) => <NodeCard title={data.title} tone={data.decoration?.status} />). FlowCanvas showInteractiveControls=false retains zoom/fit without the editing toggle. Named handles are keyboard controls: Enter or Space starts or completes a connection in edit mode; handles are disabled in run mode.",
+      "description": "FlowGraph<Kind> is {nodes,edges}; FlowGraphChange names the edit type and affected nodeIds/edgeIds. Optional onGraphChange(graph, change) reports each committed add, delete, move, connect or inspector update once, omitting selected, dragging and measured from nodes. Inspector updates report every value change: hosts persisting every call should debounce. Selection, measurement, panel resizing, rejected connections and run mode report nothing. Optional graph controls content: render the parent graph without applying edits locally, while selection, measured sizes and active drag positions stay internal by stable node id. nodes/edges remain initial values when uncontrolled. onRun keeps the canvas node objects. builderNodes and builderEdges expose the shared starter graph; cleanFlowGraph(graph) returns a graph without transient node fields for persistence. examples/ControlledGraph.tsx shows graph={graph} onGraphChange={setGraph}. Palette ids skip existing kind-n ids. Visual flow editor with optional nodeTypes for named handles (branch-arm, parallel and sequence examples), onConnectEdge for edge type/data mapping, isValidConnection and onConnectionRejected for rules, onConnect for accepted connections, validationIssues for node/flow problems, mode=\"run\" for a read-only canvas, nodeStatus for live badges, and onNodeSelect for pointer/keyboard selection. Optional nodeTypes registers kit-owned {type, handles:[{id,kind,position?,label?}], render, decorations?} definitions (no React Flow NodeProps). Keep nodeTypes and its renderer definitions stable (module scope or useMemo) across nodeStatus updates: recreating the array rebuilds custom node components and remounts them, defeating per-node memoization. onConnectEdge({source,target,sourceType,targetType,sourceHandle,targetHandle}) returns {type,data}; examples/extensions.tsx maps branch arm-0 to {kind: \"branch-arm\", armIndex: 0}, parallel branch to {kind: \"parallel\"}, and sequence next to {kind: \"sequence\"}. isValidConnection returns true, false, or {code,nodeId?,message}; onConnectionRejected reports {code,nodeId,message} once (nodeId defaults to the source) so consumers can forward it into validationIssues and control its lifetime, while onConnect reports accepted connections only. validationIssues decorates nodes with an icon and accessible text; node issues select and focus their node, and flow issues have no node link. mode=\"run\" removes the Run action, palette, inspector and graph mutation while keeping labelled keyboard-selectable nodes, pan/zoom, fit controls and the wide-screen minimap. nodeStatus maps node IDs to FlowTone badges (running, degraded, failed, paused, done, handoff, review); onNodeSelect(id) handles pointer and keyboard selection. RunFlowExample shows live updates with per-node memoization. FlowNode defaults to the built-in FlowNodeKind union; use FlowNode<string> (or a custom kind union) for custom graphs, inferred by FlowBuilder and WorkflowBuilderPage. Custom renderers use kit status overlays and issue decorations by default; set decorations:\"consumer\" when render owns them, using data.decoration with accessible text and icons (for example, render:({data}) => <NodeCard title={data.title} tone={data.decoration?.status} />). FlowCanvas showInteractiveControls=false retains zoom/fit without the editing toggle. Named handles are keyboard controls: Enter or Space starts or completes a connection in edit mode; handles are disabled in run mode. history (default true; false or {limit} to bound the steps, default 100) adds Undo and Redo icon buttons before Run and the Mod+Z, Shift+Mod+Z and Ctrl+Y shortcuts, in edit mode only. Each committed add, delete, move, connect or inspector update is one step (consecutive inspector edits to one node merge until a field loses focus); selection, measurement and in-progress drags are not steps. The shortcuts act only while focus is inside the builder and outside inputs, textareas, selects, contenteditable and Monaco, which keep their native text undo; handled events are defaultPrevented, so a global Mod+Z handler must skip defaultPrevented events. Undo and redo report the restored graph through onGraphChange with change.type \"undo\" or \"redo\" (FlowGraphChange type now has seven values: widen exhaustive switches), announce \"Undid delete node\" politely (own LiveAnnouncer when none is above; labels flow.* in en and es) and move focus to the canvas when the focused node is removed. With a controlled graph the host applies the reported graph; a graph whose nodes or edges arrays are not the ones last reported resets the history. examples/History.tsx shows history={{ limit: 20 }}; examples/UseFlowStateHistory.tsx shows useFlowState(nodes, edges, { history: true }) from @gntik-ai/flow with undo, redo, canUndo and canRedo; history={false} restores the header without the buttons.",
       "files": [
         {
           "path": "packages/blocks/src/builders/FlowBuilder/FlowBuilder.tsx",
@@ -1808,6 +1808,10 @@
         {
           "path": "packages/blocks/src/builders/FlowBuilder/graph-state.ts",
           "target": "components/blocks/builders/flow-builder/graph-state.ts"
+        },
+        {
+          "path": "packages/blocks/src/builders/FlowBuilder/history.ts",
+          "target": "components/blocks/builders/flow-builder/history.ts"
         },
         {
           "path": "packages/blocks/src/builders/FlowBuilder/parts.tsx",
@@ -4088,6 +4092,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -4285,6 +4293,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -4567,6 +4579,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -4769,6 +4785,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -4965,6 +4985,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -5196,6 +5220,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -5393,6 +5421,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -5654,6 +5686,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -5880,6 +5916,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -6368,6 +6408,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -6627,6 +6671,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -6847,6 +6895,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -7148,6 +7200,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -7375,6 +7431,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -7589,6 +7649,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -7820,6 +7884,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -8027,6 +8095,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -8231,6 +8303,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -8456,6 +8532,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -8666,6 +8746,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -8881,6 +8965,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -9080,6 +9168,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -9289,6 +9381,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -9494,6 +9590,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -9772,6 +9872,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -9972,6 +10076,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -10211,6 +10319,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -10408,6 +10520,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -10652,6 +10768,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -10858,6 +10978,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -11055,6 +11179,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -11264,6 +11392,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -11463,6 +11595,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -11678,6 +11814,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -11875,6 +12015,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -12078,6 +12222,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -12362,6 +12510,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -12565,6 +12717,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -12892,6 +13048,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -13135,6 +13295,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -13343,6 +13507,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -13588,6 +13756,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -13797,6 +13969,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -13994,6 +14170,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -14198,6 +14378,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -14399,6 +14583,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -14606,6 +14794,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -14829,6 +15021,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -15031,6 +15227,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -15229,6 +15429,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -15436,6 +15640,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -15676,6 +15884,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -15883,6 +16095,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -16195,6 +16411,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -16401,6 +16621,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -16638,6 +16862,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -16844,6 +17072,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -17045,6 +17277,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -17286,6 +17522,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -17578,6 +17818,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -17798,6 +18042,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -18092,6 +18340,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -18323,6 +18575,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -18526,6 +18782,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -18723,6 +18983,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -18929,6 +19193,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -19245,6 +19513,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -19449,6 +19721,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -19666,6 +19942,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -19867,6 +20147,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -20071,6 +20355,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -20268,6 +20556,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -20501,6 +20793,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -20710,6 +21006,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -20987,6 +21287,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -21183,6 +21487,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -21389,6 +21697,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -21603,6 +21915,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -21874,6 +22190,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -22070,6 +22390,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -22399,6 +22723,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -22610,6 +22938,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -22806,6 +23138,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -23014,6 +23350,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -23203,6 +23543,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -23405,6 +23749,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -23604,6 +23952,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -23811,6 +24163,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -24013,6 +24369,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -24209,6 +24569,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -24411,6 +24775,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -24610,6 +24978,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -24819,6 +25191,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -25018,6 +25394,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
@@ -25222,6 +25602,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
           "target": "components/i18n/messages/form-action-messages.ts"
         },
@@ -25420,6 +25804,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "target": "components/i18n/messages/flow-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/form-action-messages.ts",

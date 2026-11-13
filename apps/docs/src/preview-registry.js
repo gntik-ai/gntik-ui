@@ -130,6 +130,9 @@ export const PREVIEW_LOADERS = {
     'agenda-list--locale': () => import('../../../packages/blocks/src/scheduling/AgendaList/examples/Locale'),
     'flow-builder--controlled-graph': () =>
       import('../../../packages/blocks/src/builders/FlowBuilder/examples/ControlledGraph'),
+    'flow-builder--history': () => import('../../../packages/blocks/src/builders/FlowBuilder/examples/History'),
+    'flow-builder--use-flow-state-history': () =>
+      import('../../../packages/blocks/src/builders/FlowBuilder/examples/UseFlowStateHistory'),
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
     'site-footer': () => import('../../../packages/blocks/src/marketing/SiteFooter/examples/Columns'),
     'logo-cloud': () => import('../../../packages/blocks/src/marketing/LogoCloud/examples/Row'),

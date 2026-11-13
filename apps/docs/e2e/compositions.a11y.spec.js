@@ -28,6 +28,8 @@ const cases = [
   ),
   ...[
     { kind: 'block', id: 'flow-builder--controlled-graph' },
+    { kind: 'block', id: 'flow-builder--history' },
+    { kind: 'block', id: 'flow-builder--use-flow-state-history' },
     { kind: 'block', id: 'comment-thread--rendered-body' },
     { kind: 'template', id: 'workflow-builder--save-graph' },
   ].flatMap((example) => ['dark', 'light', 'high_contrast'].map((theme) => ({ ...example, theme }))),

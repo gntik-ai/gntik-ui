@@ -1,3 +1,4 @@
+import { flowEn } from './flow-messages';
 import { textareaEn } from './textarea-messages';
 import { switchEn } from './switch-messages';
 import { qrCodeEn } from './qr-code-messages';
@@ -64,6 +65,7 @@ export const en = {
   ...searchableSelectEn,
   ...autocompleteEn,
   ...passwordEn,
+  ...flowEn,
   'footer.label': 'Footer',
   'footer.legal': 'Legal',
   'footer.social': 'Social links',
