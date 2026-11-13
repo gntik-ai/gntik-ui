@@ -1,4 +1,7 @@
+import { datePickerPeriodEn, datePickerPeriodEs } from './date-picker-period-messages';
+
 export const dateRangeExamplesEn = {
+  ...datePickerPeriodEn,
   'datePicker.examples.retentionLabel': 'Report period',
   'datePicker.examples.retentionHint':
     'Pick 3 to 90 calendar days, including both ends. Days outside the limits are unavailable after picking a start.',
@@ -8,6 +11,7 @@ export const dateRangeExamplesEn = {
 } as const;
 
 export const dateRangeExamplesEs = {
+  ...datePickerPeriodEs,
   'datePicker.examples.retentionLabel': 'Periodo del informe',
   'datePicker.examples.retentionHint':
     'Elige de 3 a 90 días naturales, incluidos ambos extremos. Las fechas fuera de los límites no están disponibles tras elegir el inicio.',

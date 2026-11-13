@@ -25,13 +25,13 @@ export type { PeriodCalendarProps } from './period-types';
 /** Inline whole-period selection. */
 export function PeriodCalendar(props: PeriodCalendarProps) {
   const granularity = props.granularity ?? 'month';
+  const weekStartsOn = props.weekStartsOn ?? 1;
+  const periodStart = (date: Date) => startOfPeriod(date, granularity, weekStartsOn);
   const { locale, t } = usePeriodI18n(props.locale);
   const { single, range, changeSingle, changeRange } = usePeriodValue(props);
   const [preview, setPreview] = useState<Date | null>(null);
   const anchor = (props.mode === 'range' ? range.start : single) ?? props.today ?? new Date();
-  const [focused, setFocused] = useState(() =>
-    granularity === 'week' ? startOfDay(anchor) : startOfPeriod(anchor, granularity),
-  );
+  const [focused, setFocused] = useState(() => (granularity === 'week' ? startOfDay(anchor) : periodStart(anchor)));
   const [view, setView] = useState<PeriodGranularity>(granularity);
   const drillOrigins = useRef<{ view: PeriodGranularity; date: Date }[]>([]);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -60,17 +60,16 @@ export function PeriodCalendar(props: PeriodCalendarProps) {
       : view === 'week'
         ? formatMonth(focused, locale)
         : t('periodPicker.yearTitle', { year: focused.getFullYear() });
-  const previewRange =
-    range.start && !range.end ? normalizeRange(range.start, startOfPeriod(preview ?? focused, granularity)) : null;
+  const previewRange = range.start && !range.end ? normalizeRange(range.start, periodStart(preview ?? focused)) : null;
   const shownRange = range.end ? range : previewRange;
   const inRange = (date: Date) => {
-    const start = startOfPeriod(date, granularity);
+    const start = periodStart(date);
     return (
       view === granularity &&
       !!shownRange?.start &&
       !!shownRange.end &&
-      compareDay(start, startOfPeriod(shownRange.start, granularity)) >= 0 &&
-      compareDay(start, startOfPeriod(shownRange.end, granularity)) <= 0
+      compareDay(start, periodStart(shownRange.start)) >= 0 &&
+      compareDay(start, periodStart(shownRange.end)) <= 0
     );
   };
   return (
@@ -137,6 +136,7 @@ export function PeriodCalendar(props: PeriodCalendarProps) {
       <Grid
         focused={focused}
         locale={locale}
+        weekStartsOn={weekStartsOn}
         labelId={id}
         label={(date) => periodLabel(date, view, locale, t)}
         weekLabel={(date) => periodLabel(date, 'week', locale, t)}
@@ -145,14 +145,13 @@ export function PeriodCalendar(props: PeriodCalendarProps) {
         isInRange={inRange}
         onMove={moveFocus}
         isDisabled={(date) =>
-          view === granularity && periodUnavailable(startOfPeriod(date, granularity), granularity, props)
+          view === granularity && periodUnavailable(periodStart(date), granularity, props, weekStartsOn)
         }
         isSelected={(date) =>
           view === granularity &&
           (props.mode === 'range'
-            ? inRange(date) ||
-              (!!range.start && isSameDay(startOfPeriod(date, granularity), startOfPeriod(range.start, granularity)))
-            : !!single && isSameDay(startOfPeriod(date, granularity), startOfPeriod(single, granularity)))
+            ? inRange(date) || (!!range.start && isSameDay(periodStart(date), periodStart(range.start)))
+            : !!single && isSameDay(periodStart(date), periodStart(single)))
         }
         onSelect={(date) => {
           if (view !== granularity) {
@@ -172,15 +171,15 @@ export function PeriodCalendar(props: PeriodCalendarProps) {
             );
             return;
           }
-          if (periodUnavailable(startOfPeriod(date, granularity), granularity, props)) return;
-          const start = startOfPeriod(date, granularity);
+          const start = periodStart(date);
+          if (periodUnavailable(start, granularity, props, weekStartsOn)) return;
           if (props.mode === 'range') {
             if (!range.start || range.end) changeRange({ start, end: null });
             else {
               const ordered = normalizeRange(range.start, start);
               changeRange({
-                start: startOfPeriod(ordered.start!, granularity),
-                end: endOfPeriod(ordered.end!, granularity),
+                start: periodStart(ordered.start!),
+                end: endOfPeriod(ordered.end!, granularity, weekStartsOn),
               });
             }
             setPreview(null);

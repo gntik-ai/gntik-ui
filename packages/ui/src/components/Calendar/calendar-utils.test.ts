@@ -52,3 +52,28 @@ describe('whole-period date helpers', () => {
     expect(endOfPeriod(new Date(2026, 8, 30), 'week')).toEqual(new Date(2026, 9, 4));
   });
 });
+
+describe('weekStartsOn for week periods', () => {
+  // 2026-03-04 is a Wednesday.
+  const date = new Date(2026, 2, 4);
+
+  it('stays ISO (Monday) by default', () => {
+    expect(startOfPeriod(date, 'week')).toEqual(new Date(2026, 2, 2));
+    expect(endOfPeriod(date, 'week')).toEqual(new Date(2026, 2, 8));
+  });
+
+  it.each([
+    [0, new Date(2026, 2, 1), new Date(2026, 2, 7)],
+    [1, new Date(2026, 2, 2), new Date(2026, 2, 8)],
+    [6, new Date(2026, 1, 28), new Date(2026, 2, 6)],
+  ] as const)('week starting on %i spans %s to %s', (weekStartsOn, start, end) => {
+    expect(startOfPeriod(date, 'week', weekStartsOn)).toEqual(start);
+    expect(endOfPeriod(date, 'week', weekStartsOn)).toEqual(end);
+  });
+
+  it('ignores weekStartsOn for month, quarter and year', () => {
+    expect(startOfPeriod(date, 'month', 0)).toEqual(new Date(2026, 2, 1));
+    expect(endOfPeriod(date, 'quarter', 0)).toEqual(new Date(2026, 2, 31));
+    expect(endOfPeriod(date, 'year', 6)).toEqual(new Date(2026, 11, 31));
+  });
+});

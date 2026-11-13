@@ -1,7 +1,14 @@
 import { useI18n, useOptionalI18n, builtInMessages } from '../../i18n/I18nProvider';
 import { createFormatters } from '../../i18n/format';
 import type { I18nFormatters } from '../../i18n/format';
-import { compareDay, endOfPeriod, isoWeek, quarterOf, type PeriodGranularity } from '../Calendar/calendar-utils';
+import {
+  compareDay,
+  endOfPeriod,
+  isoWeek,
+  quarterOf,
+  type PeriodGranularity,
+  type WeekDay,
+} from '../Calendar/calendar-utils';
 import type { PeriodCommonProps } from './period-types';
 
 /** An explicit locale selects both Intl formatting and the built-in message catalog. */
@@ -27,10 +34,15 @@ export function periodLabel(date: Date, granularity: PeriodGranularity, locale: 
   }
 }
 
-export function periodUnavailable(start: Date, granularity: PeriodGranularity, props: PeriodCommonProps) {
+export function periodUnavailable(
+  start: Date,
+  granularity: PeriodGranularity,
+  props: PeriodCommonProps,
+  weekStartsOn: WeekDay = 1,
+) {
   return (
     !!props.disabled ||
-    (!!props.min && compareDay(endOfPeriod(start, granularity), props.min) < 0) ||
+    (!!props.min && compareDay(endOfPeriod(start, granularity, weekStartsOn), props.min) < 0) ||
     (!!props.max && compareDay(start, props.max) > 0) ||
     !!props.isPeriodDisabled?.(start)
   );
