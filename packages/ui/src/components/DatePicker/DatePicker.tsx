@@ -2,11 +2,18 @@ import { FieldVariantProvider } from '../../field-variant/FieldVariantProvider';
 import { type ClearableProps } from '../../utils/clear-control';
 import { useId, useRef, useState, type Ref } from 'react';
 import { Calendar, type CalendarSingleProps } from '../Calendar/Calendar';
-import { formatDate, localeWeekStart, startOfDay, startOfPeriod, toISODate } from '../Calendar/calendar-utils';
+import {
+  formatDate,
+  isSameDay,
+  localeWeekStart,
+  startOfDay,
+  startOfPeriod,
+  toISODate,
+} from '../Calendar/calendar-utils';
 import { Button } from '../Button';
 import { Popover, PopoverContent } from '../Popover';
 import { PeriodCalendar } from '../PeriodPicker/PeriodCalendar';
-import { usePeriodI18n } from '../PeriodPicker/period-utils';
+import { periodUnavailable, usePeriodI18n } from '../PeriodPicker/period-utils';
 import { TimePicker } from '../TimePicker/TimePicker';
 import { formatTimeOfDay, timeOfDay, withTimeOfDay, parseTimeOfDay } from '../TimePicker/time-utils';
 import { DateTrigger } from './DateTrigger';
@@ -395,7 +402,26 @@ export function DatePicker({
             <div className={s.panel()}>
               <div role="group" aria-label={t('datePicker.quickDates')} className={s.presets()}>
                 {presets.map((preset) => {
-                  const state = presetState(preset, presetToday, presetValue, presetBounds);
+                  const state = presetState(
+                    preset,
+                    presetToday,
+                    presetValue,
+                    period ? { min: presetBounds.min, max: presetBounds.max } : presetBounds,
+                  );
+                  if (period && state.day) {
+                    // Period presets follow the grid: the period must be pickable and, to be pressed, the value's period.
+                    const start = startOfPeriod(state.day, period, periodWeekStart);
+                    state.disabled = periodUnavailable(
+                      start,
+                      period,
+                      { min: presetBounds.min, max: presetBounds.max },
+                      periodWeekStart,
+                    );
+                    state.pressed = isSameDay(
+                      start,
+                      presetValue && startOfPeriod(presetValue, period, periodWeekStart),
+                    );
+                  }
                   return (
                     <button
                       key={preset.id}

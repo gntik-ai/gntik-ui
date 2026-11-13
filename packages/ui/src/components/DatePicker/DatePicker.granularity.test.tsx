@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { DatePicker } from './DatePicker';
 import DatePickerMonth from './examples/DatePickerMonth';
+import DatePickerVisibleMonth from './examples/DatePickerVisibleMonth';
 import DateRangePickerQuarters from './examples/DateRangePickerQuarters';
 
 const today = new Date(2026, 2, 11);
@@ -280,7 +281,85 @@ describe('DatePicker month forwarding', () => {
   });
 });
 
+describe('DatePicker period presets', () => {
+  const march = { id: 'march', label: 'March', date: () => new Date(2026, 2, 17) };
+  const february = { id: 'february', label: 'February', date: () => new Date(2026, 1, 1) };
+
+  it('ignores isDateDisabled: a March preset stays enabled and picks 1 March', async () => {
+    const user = userEvent.setup();
+    const isDateDisabled = vi.fn(() => true);
+    const onValueChange = vi.fn();
+    render(
+      <DatePicker
+        aria-label="Month"
+        granularity="month"
+        locale="en-US"
+        today={today}
+        presets={[march]}
+        isDateDisabled={isDateDisabled}
+        onValueChange={onValueChange}
+      />,
+    );
+    const dialog = await open(user);
+    const preset = within(dialog).getByRole('button', { name: 'March' });
+    expect(preset).toBeEnabled();
+    expect(isDateDisabled).not.toHaveBeenCalled();
+    await user.click(preset);
+    expect(onValueChange).toHaveBeenCalledWith(new Date(2026, 2, 1), { reason: 'preset', presetId: 'march' });
+  });
+
+  it('a 1 February preset stays enabled with min 2026-02-15, as February is in the grid', async () => {
+    const user = userEvent.setup();
+    render(
+      <DatePicker
+        aria-label="Month"
+        granularity="month"
+        locale="en-US"
+        today={today}
+        min={new Date(2026, 1, 15)}
+        presets={[february]}
+      />,
+    );
+    const dialog = await open(user);
+    expect(within(dialog).getByRole('button', { name: 'February' })).toBeEnabled();
+    expect(within(dialog).getByRole('button', { name: 'Feb' })).not.toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('disables a preset whose period ends before min', async () => {
+    const user = userEvent.setup();
+    render(
+      <DatePicker
+        aria-label="Month"
+        granularity="month"
+        locale="en-US"
+        today={today}
+        min={new Date(2026, 2, 5)}
+        presets={[february]}
+      />,
+    );
+    const dialog = await open(user);
+    expect(within(dialog).getByRole('button', { name: 'February' })).toBeDisabled();
+  });
+});
+
 describe('period examples', () => {
+  it('DatePickerVisibleMonth shows the controlled month and opens on defaultMonth', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<DatePickerVisibleMonth />);
+    await expectNoAxeViolations(container);
+    const [shipment, audit] = screen.getAllByRole('combobox');
+    await user.click(shipment!);
+    let dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByRole('grid')).toHaveAccessibleName('June 2026');
+    await user.click(within(dialog).getByRole('button', { name: /next month/i }));
+    expect(screen.getByText('Visible month: July 2026')).toBeInTheDocument();
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    await user.click(audit!);
+    dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByRole('grid')).toHaveAccessibleName('September 2026');
+  });
+
   it('DatePickerMonth is axe clean closed and open', async () => {
     const user = userEvent.setup();
     const { container } = render(<DatePickerMonth />);
