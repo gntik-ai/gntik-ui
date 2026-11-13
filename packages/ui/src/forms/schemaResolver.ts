@@ -20,11 +20,18 @@ function setPath(target: Record<string, unknown>, path: readonly string[], value
   let node = target;
   path.forEach((key, i) => {
     if (i === path.length - 1) {
-      if (node[key] === undefined) node[key] = value; // first issue per field wins
+      // Paths can come from third-party schemas; never traverse or invoke inherited properties.
+      if (!Object.hasOwn(node, key))
+        Object.defineProperty(node, key, { value, enumerable: true, configurable: true, writable: true }); // first issue wins
       return;
     }
-    const next = node[key];
-    node[key] = next && typeof next === 'object' ? next : {};
+    const next = Object.hasOwn(node, key) ? node[key] : undefined;
+    Object.defineProperty(node, key, {
+      value: next && typeof next === 'object' ? next : {},
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
     node = node[key] as Record<string, unknown>;
   });
 }

@@ -16,3 +16,11 @@ it('the built root dependency graph does not load the optional forms peer', () =
   const source = readFileSync(resolve('src/index.ts'), 'utf8');
   expect(source).not.toMatch(/FieldArray|from\s*['"][^'"]*forms/);
 });
+
+it('exports the schema renderer only through the optional forms entry', async () => {
+  const forms = await import('./index');
+  expect(forms.SchemaForm).toBeTypeOf('function');
+  expect(forms.SchemaFields).toBeTypeOf('function');
+  expect(forms.schemaFormDoc.name).toBe('SchemaForm');
+  expect(readFileSync(resolve('src/index.ts'), 'utf8')).not.toMatch(/SchemaForm|SchemaFields|schema-form/);
+});
