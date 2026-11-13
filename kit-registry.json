@@ -4068,6 +4068,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -4281,6 +4285,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -4579,6 +4587,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -4797,6 +4809,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -5009,6 +5025,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -5256,6 +5276,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -5469,6 +5493,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -5750,6 +5778,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -5993,6 +6025,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -6497,6 +6533,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -6772,6 +6812,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -7008,6 +7052,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -7325,6 +7373,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -7568,6 +7620,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -7798,6 +7854,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -8049,6 +8109,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -8273,6 +8337,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -8493,6 +8561,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -8734,6 +8806,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -8960,6 +9036,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -9191,6 +9271,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -9406,6 +9490,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -9631,6 +9719,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -9852,6 +9944,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -10146,6 +10242,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -10362,6 +10462,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -10617,6 +10721,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -10830,6 +10938,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -11090,6 +11202,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -11312,6 +11428,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -11525,6 +11645,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -11750,6 +11874,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -11965,6 +12093,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -12196,6 +12328,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -12409,6 +12545,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -12628,6 +12768,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -12928,6 +13072,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -13147,6 +13295,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -13490,6 +13642,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -13749,6 +13905,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -13973,6 +14133,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -14234,6 +14398,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -14459,6 +14627,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -14672,6 +14844,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -14892,6 +15068,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -15109,6 +15289,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -15332,6 +15516,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -15571,6 +15759,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -15789,6 +15981,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -16003,6 +16199,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -16226,6 +16426,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -16482,6 +16686,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -16705,6 +16913,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -17033,6 +17245,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -17255,6 +17471,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -17534,6 +17754,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -17793,6 +18017,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -18015,6 +18243,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -18232,6 +18464,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -18489,6 +18725,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -18797,6 +19037,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -19033,6 +19277,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -19343,6 +19591,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -19590,6 +19842,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -19809,6 +20065,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -20022,6 +20282,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -20244,6 +20508,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -20576,6 +20844,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -20796,6 +21068,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -21029,6 +21305,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -21246,6 +21526,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -21466,6 +21750,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -21679,6 +21967,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -21928,6 +22220,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -22153,6 +22449,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -22446,6 +22746,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -22658,6 +22962,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -22880,6 +23188,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -23110,6 +23422,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -23397,6 +23713,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -23609,6 +23929,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -23954,6 +24278,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -24181,6 +24509,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -24393,6 +24725,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -24617,6 +24953,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -24822,6 +25162,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -25040,6 +25384,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -25255,6 +25603,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -25478,6 +25830,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -25696,6 +26052,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -25908,6 +26268,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -26126,6 +26490,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -26341,6 +26709,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -26566,6 +26938,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -26781,6 +27157,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
@@ -27001,6 +27381,10 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
           "target": "components/i18n/messages/date-range-example-messages.ts"
         },
@@ -27215,6 +27599,10 @@
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",

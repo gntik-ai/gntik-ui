@@ -20,7 +20,13 @@ import { focusCalendarDay } from './DatePicker';
 import { DateTrigger } from './DateTrigger';
 import { DEFAULT_DATE_RANGE_PRESETS, matchPreset, type DateRangePreset } from './date-range-presets';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
-import { focusPeriodCell, periodFieldText, snapPeriodRange, type DatePickerGranularity } from './period-field';
+import {
+  focusPeriodCell,
+  periodFieldText,
+  periodRangeUnavailable,
+  snapPeriodRange,
+  type DatePickerGranularity,
+} from './period-field';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
 
 type CalendarPassThrough = Pick<
@@ -187,9 +193,14 @@ export function DateRangePicker({
     onClear?.();
   };
 
+  const periodPresetUnavailable = (r: DateRange | undefined) =>
+    !!period && !!r && periodRangeUnavailable(r, period, periodWeekStart, { min, max });
+
   const pickPreset = (p: DateRangePreset) => {
     if (p.range) {
-      apply(period ? snapPeriodRange(p.range(today), period, periodWeekStart) : p.range(today));
+      const r = p.range(today);
+      if (periodPresetUnavailable(r)) return;
+      apply(period ? snapPeriodRange(r, period, periodWeekStart) : r);
       return;
     }
     setCustomActive(true);
@@ -255,10 +266,11 @@ export function DateRangePicker({
                     !period && (maximum !== undefined || validRangeLimit(minRange) !== undefined)
                       ? p.range?.(today)
                       : undefined;
-                  const presetDisabled =
-                    !!presetRange?.start &&
-                    !!presetRange.end &&
-                    outsideRangeLimits(presetRange.start, presetRange.end, minRange, maxRange);
+                  const presetDisabled = period
+                    ? periodPresetUnavailable(p.range?.(today))
+                    : !!presetRange?.start &&
+                      !!presetRange.end &&
+                      outsideRangeLimits(presetRange.start, presetRange.end, minRange, maxRange);
                   return (
                     <button
                       key={p.id}

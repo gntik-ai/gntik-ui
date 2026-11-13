@@ -10,6 +10,7 @@ import {
   type WeekDay,
 } from '../Calendar/calendar-utils';
 import type { I18nFormatters } from '../../i18n/format';
+import { periodUnavailable } from '../PeriodPicker/period-utils';
 
 /** `granularity` of DatePicker and DateRangePicker: `day` is the day calendar, the rest pick whole periods. */
 export type DatePickerGranularity = 'day' | PeriodGranularity;
@@ -60,4 +61,16 @@ export function periodFieldText(
   // A single week reads as its days; other single periods read as their first day.
   const last = end ?? (granularity === 'week' && !formatOptions ? endOfPeriod(start, 'week', weekStartsOn) : null);
   return last ? formatDateRange({ start, end: last }, locale, options) : formatDate(start, locale, options);
+}
+
+/** A preset range is unavailable when its first or last period lies outside `min` and `max`, as the grid shows it. */
+export function periodRangeUnavailable(
+  range: DateRange,
+  granularity: PeriodGranularity,
+  weekStartsOn: WeekDay,
+  bounds: { min?: Date; max?: Date },
+): boolean {
+  const { start, end } = snapPeriodRange(range, granularity, weekStartsOn);
+  if (!start) return false;
+  return [start, end ?? start].some((day) => periodUnavailable(day, granularity, bounds, weekStartsOn));
 }

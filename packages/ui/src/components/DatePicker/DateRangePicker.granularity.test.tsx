@@ -205,6 +205,52 @@ describe('DateRangePicker granularity', () => {
     expect(onValueChange).toHaveBeenCalledWith({ start: new Date(2026, 0, 1), end: new Date(2026, 5, 30) });
   });
 
+  it.each([
+    ['min', { min: new Date(2026, 1, 15) }],
+    ['max', { max: new Date(2025, 11, 31) }],
+  ])('a preset outside %s is disabled and applies nothing', async (_bound, bounds) => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(
+      <DateRangePicker
+        aria-label="Period"
+        granularity="month"
+        locale="en-US"
+        today={today}
+        onValueChange={onValueChange}
+        presets={[
+          { id: 'jan', label: 'January', range: () => ({ start: new Date(2026, 0, 5), end: new Date(2026, 0, 20) }) },
+        ]}
+        {...bounds}
+      />,
+    );
+    await open(user);
+    expect(button('January')).toBeDisabled();
+    await user.click(button('January'));
+    expect(onValueChange).not.toHaveBeenCalled();
+  });
+
+  it('a preset inside min and max stays enabled', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(
+      <DateRangePicker
+        aria-label="Period"
+        granularity="month"
+        locale="en-US"
+        today={today}
+        min={new Date(2026, 1, 15)}
+        onValueChange={onValueChange}
+        presets={[
+          { id: 'feb', label: 'February', range: () => ({ start: new Date(2026, 1, 3), end: new Date(2026, 1, 9) }) },
+        ]}
+      />,
+    );
+    await open(user);
+    await user.click(button('February'));
+    expect(onValueChange).toHaveBeenCalledWith({ start: new Date(2026, 1, 1), end: new Date(2026, 1, 28) });
+  });
+
   it('keeps the two-month day calendar and default presets when granularity is unset', async () => {
     const user = userEvent.setup();
     render(<DateRangePicker aria-label="Period" locale="en-US" today={today} />);
