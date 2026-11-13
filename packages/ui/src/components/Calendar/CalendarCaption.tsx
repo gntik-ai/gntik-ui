@@ -1,5 +1,6 @@
 import { useI18n } from '../../i18n/I18nProvider';
 import { SimpleSelect } from '../Select';
+import { Spinner } from '../Spinner';
 import { formatMonth, monthNames, monthOutsideBounds, yearOutsideBounds } from './calendar-utils';
 
 export interface CalendarCaptionProps {
@@ -10,6 +11,8 @@ export interface CalendarCaptionProps {
   max?: Date;
   yearRange?: { from: number; to: number };
   labelId: string;
+  /** Shows a spinner after the selects that takes no room, so the selects stay centred. */
+  loading?: boolean;
   onChange: (date: Date) => void;
 }
 
@@ -22,6 +25,7 @@ export function CalendarCaption({
   max,
   yearRange,
   labelId,
+  loading,
   onChange,
 }: CalendarCaptionProps) {
   const { t } = useI18n();
@@ -68,6 +72,7 @@ export function CalendarCaption({
           }
         }}
       />
+      {loading && <Spinner size={12} className="-me-4 text-muted-foreground" />}
     </div>
   );
 }

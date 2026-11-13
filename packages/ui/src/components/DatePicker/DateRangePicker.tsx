@@ -29,6 +29,12 @@ type CalendarPassThrough = Pick<
   | 'numberOfMonths'
   | 'maxView'
   | 'captionLayout'
+  | 'getDayMarkers'
+  | 'highlightedDates'
+  | 'highlightedLabel'
+  | 'loading'
+  | 'renderDay'
+  | 'onMonthChange'
   | 'maxRange'
   | 'minRange'
 >;
@@ -102,6 +108,12 @@ export function DateRangePicker({
   isDateDisabled,
   maxView,
   captionLayout,
+  getDayMarkers,
+  highlightedDates,
+  highlightedLabel,
+  loading,
+  renderDay,
+  onMonthChange,
   numberOfMonths = 2,
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
@@ -259,6 +271,12 @@ export function DateRangePicker({
               isDateDisabled={isDateDisabled}
               maxView={maxView}
               captionLayout={captionLayout}
+              getDayMarkers={getDayMarkers}
+              highlightedDates={highlightedDates}
+              highlightedLabel={highlightedLabel}
+              loading={loading}
+              renderDay={renderDay}
+              onMonthChange={onMonthChange}
               today={today}
             />
           </div>

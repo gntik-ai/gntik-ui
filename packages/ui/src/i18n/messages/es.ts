@@ -9,6 +9,7 @@ import { commandPaletteEs } from './command-palette-messages';
 import { sliderInputEs } from './slider-input-messages';
 import { formActionsEs } from './form-action-messages';
 import { dateRangeExamplesEs } from './date-range-example-messages';
+import { calendarMarkerExamplesEs } from './calendar-marker-messages';
 import { fileInputEs } from './file-input-messages';
 import { uploadEs } from './upload-messages';
 import { fieldSizesEs } from './field-size-messages';
@@ -44,6 +45,7 @@ export const es: Messages = {
   ...logViewerEs,
   ...commandPaletteEs,
   ...dateRangeExamplesEs,
+  ...calendarMarkerExamplesEs,
   ...fileInputEs,
   ...uploadEs,
   ...fieldSizesEs,
@@ -355,6 +357,7 @@ export const es: Messages = {
   'calendar.localeDefaults': 'Valores predeterminados regionales',
   'calendar.previousMonth': 'Mes anterior',
   'calendar.nextMonth': 'Mes siguiente',
+  'calendar.highlighted': 'Destacado',
   'scheduling.displayTimeZone': 'Zona horaria de visualización',
   'scheduling.timeZone': 'Horas en {zone}',
   'calendar.today': 'Hoy',

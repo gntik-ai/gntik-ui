@@ -16,7 +16,20 @@ import { cn } from '../../utils/cn';
 
 type CalendarPassThrough = Pick<
   CalendarSingleProps,
-  'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'today' | 'maxView' | 'captionLayout'
+  | 'locale'
+  | 'weekStartsOn'
+  | 'min'
+  | 'max'
+  | 'isDateDisabled'
+  | 'today'
+  | 'maxView'
+  | 'captionLayout'
+  | 'getDayMarkers'
+  | 'highlightedDates'
+  | 'highlightedLabel'
+  | 'loading'
+  | 'renderDay'
+  | 'onMonthChange'
 >;
 
 /** Second argument of `onValueChange`: what produced the value. */
@@ -106,6 +119,12 @@ export function DatePicker({
   isDateDisabled,
   maxView,
   captionLayout,
+  getDayMarkers,
+  highlightedDates,
+  highlightedLabel,
+  loading,
+  renderDay,
+  onMonthChange,
   today,
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
@@ -286,6 +305,12 @@ export function DatePicker({
       isDateDisabled={isDateDisabled}
       maxView={maxView}
       captionLayout={captionLayout}
+      getDayMarkers={getDayMarkers}
+      highlightedDates={highlightedDates}
+      highlightedLabel={highlightedLabel}
+      loading={loading}
+      renderDay={renderDay}
+      onMonthChange={onMonthChange}
       today={zone === 'system' ? today : proxyDay(today ?? new Date())}
     />
   );

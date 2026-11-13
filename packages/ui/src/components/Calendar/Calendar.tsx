@@ -1,12 +1,21 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useEffect, useId, useRef, useState, type KeyboardEvent, type Ref } from 'react';
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode, type Ref } from 'react';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { Spinner } from '../Spinner';
 import { RTL_FLIP } from '../../utils/rtl';
 import { calendarVariants } from './calendar.variants';
 import { CalendarMonthView } from './CalendarMonthView';
 import { CalendarYearView } from './CalendarYearView';
 import { CalendarCaption } from './CalendarCaption';
+import {
+  CalendarDayContent,
+  hasDayDecoration,
+  markedDayLabel,
+  resolveDayMarkers,
+  type CalendarDayMarker,
+  type CalendarDayState,
+} from './calendar-markers';
 import { periodCellKey, yearPageStart } from './period-grids';
 import {
   addDays,
@@ -33,6 +42,8 @@ import {
   type DateRange,
   type WeekDay,
 } from './calendar-utils';
+
+export type { CalendarDayMarker, CalendarDayState, CalendarMarkerTone } from './calendar-markers';
 
 const s = calendarVariants();
 
@@ -72,6 +83,23 @@ interface CalendarCommonProps {
   'aria-label'?: string;
   previousMonthLabel?: string;
   nextMonthLabel?: string;
+  /**
+   * Markers for an in-month day, drawn as up to three tone dots and appended to the day's accessible name.
+   * Runs once per visible day on every render, so memoise it and look days up by `YYYY-MM-DD`. Inside a
+   * DatePicker with a non-system `timeZone` it receives calendar (proxy) days at local midnight.
+   */
+  getDayMarkers?: (date: Date) => readonly CalendarDayMarker[] | undefined;
+  /** Days that get one primary marker, before the `getDayMarkers` ones. */
+  highlightedDates?: readonly Date[];
+  /** Label of the highlighted marker. Defaults to the catalog's "Highlighted". */
+  highlightedLabel?: string;
+  /** Month data is loading: grids are busy, a spinner shows and no markers are drawn. Days stay operable. */
+  loading?: boolean;
+  /**
+   * Replaces the visible day number and dots of in-month days. The output is hidden from assistive
+   * technology, so keep it non-interactive and token-styled; the name stays the day label plus marker labels.
+   */
+  renderDay?: (date: Date, state: CalendarDayState) => ReactNode;
 }
 
 export interface CalendarSingleProps extends CalendarCommonProps {
@@ -124,6 +152,11 @@ export function Calendar(props: CalendarProps) {
     today: todayProp,
     previousMonthLabel: previousMonthLabelProp,
     nextMonthLabel: nextMonthLabelProp,
+    getDayMarkers,
+    highlightedDates,
+    highlightedLabel: highlightedLabelProp,
+    loading = false,
+    renderDay,
   } = props;
   const { t } = useI18n();
   const providerLocale = useOptionalI18n()?.locale;
@@ -131,6 +164,7 @@ export function Calendar(props: CalendarProps) {
   const locale = localeProp ?? providerLocale;
   const previousMonthLabel = previousMonthLabelProp ?? t('calendar.previousMonth');
   const nextMonthLabel = nextMonthLabelProp ?? t('calendar.nextMonth');
+  const highlightedLabel = highlightedLabelProp ?? t('calendar.highlighted');
   const weekStartsOn = props.weekStartsOn ?? localeWeekStart(locale);
   const isRange = props.mode === 'range';
   const baseId = useId();
@@ -426,6 +460,7 @@ export function Calendar(props: CalendarProps) {
                     max={max}
                     yearRange={yearRange}
                     labelId={headingId}
+                    loading={loading && mi === 0}
                     onChange={(date) => pickMonth(date, mi)}
                   />
                 ) : (
@@ -445,6 +480,7 @@ export function Calendar(props: CalendarProps) {
                         <span id={headingId}>{formatMonth(m, locale)}</span>
                       </button>
                     )}
+                    {loading && mi === 0 && <Spinner size={12} className={s.loadingIndicator()} />}
                   </h2>
                 )}
                 {mi === months.length - 1 ? (
@@ -461,7 +497,7 @@ export function Calendar(props: CalendarProps) {
                   <span className={s.navSpacer()} />
                 )}
               </div>
-              <table role="grid" aria-labelledby={headingId} className={s.grid()}>
+              <table role="grid" aria-labelledby={headingId} aria-busy={loading || undefined} className={s.grid()}>
                 <thead>
                   <tr>
                     {weekdays.map((w) => (
@@ -497,6 +533,13 @@ export function Calendar(props: CalendarProps) {
                         const rangeStart = within && isSameDay(d, shownRange?.start);
                         const rangeEnd = within && isSameDay(d, shownRange?.end);
                         const today = isSameDay(d, todayDate);
+                        const markers = resolveDayMarkers(d, {
+                          loading,
+                          highlightedDates,
+                          highlightedLabel,
+                          getDayMarkers,
+                        });
+                        const dayState: CalendarDayState = { selected, today, disabled, inRange: within, markers };
                         return (
                           <td
                             key={key}
@@ -513,16 +556,20 @@ export function Calendar(props: CalendarProps) {
                               data-today={today || undefined}
                               data-in-range={within || undefined}
                               tabIndex={isSameDay(d, tabbable) ? 0 : -1}
-                              aria-label={formatDayLabel(d, locale)}
+                              aria-label={markedDayLabel(formatDayLabel(d, locale), markers)}
                               aria-current={today ? 'date' : undefined}
                               aria-disabled={disabled || undefined}
-                              className={s.day()}
+                              className={cn(s.day(), hasDayDecoration(markers, renderDay) && s.dayDecorated())}
                               onClick={() => select(d)}
                               onKeyDown={(e) => onDayKeyDown(e, d)}
                               onFocus={() => setFocused(d)}
                               onMouseEnter={isRange && range.start && !range.end ? () => setPreview(d) : undefined}
                             >
-                              {d.getDate()}
+                              {markers.length > 0 || renderDay ? (
+                                <CalendarDayContent date={d} state={dayState} renderDay={renderDay} />
+                              ) : (
+                                d.getDate()
+                              )}
                             </button>
                           </td>
                         );
@@ -534,6 +581,11 @@ export function Calendar(props: CalendarProps) {
             </div>
           );
         })
+      )}
+      {loading && view === 'day' && (
+        <span role="status" className="sr-only">
+          {t('common.loading')}
+        </span>
       )}
     </div>
   );

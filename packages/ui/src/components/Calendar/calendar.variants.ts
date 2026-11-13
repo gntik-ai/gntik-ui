@@ -3,6 +3,8 @@ import { tv, type VariantProps } from '../../utils/tv';
 /**
  * Month grid in the brand style: 32px day cells, primary fill on the selection, an inset
  * primary ring on today, a primary/12 band across a range. Day state comes from data attributes.
+ * Markers are up to three 4px token-coloured dots pinned to the bottom of the day; `tone: 'selected'`
+ * is the on-primary colour of a selected day. Forced colours repaint them with system colours.
  */
 export const calendarVariants = tv({
   slots: {
@@ -34,7 +36,22 @@ export const calendarVariants = tv({
       'data-selected:bg-primary data-selected:font-semibold data-selected:text-primary-foreground data-selected:ring-0 data-selected:hover:bg-primary/90 forced-colors:data-selected:bg-[Highlight] forced-colors:data-selected:text-[HighlightText] forced-colors:data-selected:[&_*]:text-[HighlightText] forced-colors:data-selected:hover:bg-[Highlight] forced-colors:data-selected:hover:text-[HighlightText] forced-colors:data-selected:hover:[&_*]:text-[HighlightText]',
       'aria-disabled:cursor-disabled aria-disabled:text-muted-foreground/30 aria-disabled:line-through aria-disabled:hover:bg-transparent',
     ],
+    dayDecorated: 'relative',
+    markers: 'pointer-events-none absolute inset-x-0 bottom-1 flex items-center justify-center gap-0.5',
+    marker: 'size-1 shrink-0 rounded-full forced-colors:bg-[CanvasText]',
+    loadingIndicator: 'ms-1.5 -me-4.5 inline-block align-middle text-muted-foreground',
     outside: 'mx-auto grid size-8 place-items-center text-[12.5px] text-muted-foreground tabular-nums select-none',
+  },
+  variants: {
+    tone: {
+      primary: { marker: 'bg-primary' },
+      success: { marker: 'bg-success' },
+      warning: { marker: 'bg-warning' },
+      destructive: { marker: 'bg-destructive' },
+      info: { marker: 'bg-info' },
+      neutral: { marker: 'bg-muted-foreground' },
+      selected: { marker: 'bg-primary-foreground forced-colors:bg-[HighlightText]' },
+    },
   },
 });
 
