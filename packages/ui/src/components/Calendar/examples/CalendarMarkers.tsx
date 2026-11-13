@@ -28,8 +28,8 @@ function loadMonth(month: Date): Record<string, DayRuns> {
   };
 }
 
-/** Tone-coded run outcomes per day, a month of data that loads on paging, and a custom day cell. */
-export default function CalendarMarkers() {
+/** Independent month and data state per calendar: what an app would hold around onMonthChange. */
+function useMonthRuns() {
   const { t } = useI18n();
   const [month, setMonth] = useState(() => new Date(2026, 2, 1));
   const [loaded, setLoaded] = useState<{ month: string; runs: Record<string, DayRuns> } | null>(() => ({
@@ -65,6 +65,14 @@ export default function CalendarMarkers() {
     },
     [runs, t],
   );
+  return { month, setMonth, loading, getDayMarkers };
+}
+
+/** Tone-coded run outcomes per day, a month of data that loads on paging, and a custom day cell. */
+export default function CalendarMarkers() {
+  const { t } = useI18n();
+  const first = useMonthRuns();
+  const second = useMonthRuns();
   const highlighted = useMemo(() => [new Date(2026, 2, 10)], []);
 
   return (
@@ -76,12 +84,12 @@ export default function CalendarMarkers() {
           locale="en-US"
           weekStartsOn={1}
           today={today}
-          month={month}
-          onMonthChange={setMonth}
-          loading={loading}
+          month={first.month}
+          onMonthChange={first.setMonth}
+          loading={first.loading}
           highlightedDates={highlighted}
           highlightedLabel={t('calendar.examples.markers.window')}
-          getDayMarkers={getDayMarkers}
+          getDayMarkers={first.getDayMarkers}
         />
       </div>
       <div className="space-y-2">
@@ -91,7 +99,10 @@ export default function CalendarMarkers() {
           locale="en-US"
           weekStartsOn={1}
           today={today}
-          getDayMarkers={getDayMarkers}
+          month={second.month}
+          onMonthChange={second.setMonth}
+          loading={second.loading}
+          getDayMarkers={second.getDayMarkers}
           renderDay={(date, state) => (
             <span className="flex flex-col items-center leading-none">
               <span>{date.getDate()}</span>

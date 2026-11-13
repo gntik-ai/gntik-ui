@@ -229,6 +229,29 @@ describe('Calendar markers example', () => {
     expect(document.querySelectorAll('[data-marker]').length).toBeGreaterThan(0);
     vi.useRealTimers();
   });
+
+  it('keeps each calendar on its own month and data', async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    render(<CalendarMarkers />);
+    const second = screen.getAllByRole('grid')[1] as HTMLElement;
+    const markedDays = (grid: HTMLElement) => within(grid).queryAllByRole('button', { name: /runs?\b/ }).length;
+    const marked = markedDays(second);
+    expect(marked).toBeGreaterThan(0);
+
+    await user.click(screen.getAllByRole('button', { name: 'Next month' })[0] as HTMLElement);
+    await act(() => vi.advanceTimersByTimeAsync(1500));
+    expect(screen.getAllByRole('grid')[0]).toHaveAccessibleName('April 2026');
+    expect(screen.getAllByRole('grid')[1]).toHaveAccessibleName('March 2026');
+    expect(markedDays(screen.getAllByRole('grid')[1] as HTMLElement)).toBe(marked);
+    expect(screen.getAllByRole('grid')[1]).not.toHaveAttribute('aria-busy');
+
+    await user.click(screen.getAllByRole('button', { name: 'Next month' })[1] as HTMLElement);
+    await act(() => vi.advanceTimersByTimeAsync(1500));
+    expect(screen.getAllByRole('grid')[1]).toHaveAccessibleName('April 2026');
+    expect(markedDays(screen.getAllByRole('grid')[1] as HTMLElement)).toBeGreaterThan(0);
+    vi.useRealTimers();
+  });
 });
 
 function Controlled() {
