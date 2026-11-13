@@ -4044,6 +4044,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -4253,6 +4257,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -4547,6 +4555,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -4761,6 +4773,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -4969,6 +4985,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -5212,6 +5232,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -5421,6 +5445,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -5639,7 +5667,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "The public localeWeekStart(locale?) helper returns the locale first weekday (0–6, Monday fallback), matching scheduling blocks. CalendarRangeLimits demonstrates inclusive minRange/maxRange limits while a range end is pending (3 to 7 days), and isDateDisabled(date, { rangeStart }) keeping endpoints in the same month. rangeStart is null before a start, after completion and in single mode; one-argument predicates remain supported. Limits apply on both sides of the start, leave disabled days focusable, reject their selection and preview, and lift after completion. Non-positive or non-integer limits are ignored; minRange > maxRange leaves no selectable end. Day or range selection with one or two months, inclusive min/max bounds and Intl names. The clickable month heading opens a month grid, then the year heading opens a shared 12-year page (2020–2031 for 2026). Set maxView=\"day\" for the previous static header, or \"month\" to stop at months; the default is \"year\". Optional view/defaultView/onViewChange control or report the view (initially \"day\"). captionLayout=\"select\" uses labelled kit month/year selects; yearRange={from,to} defaults to the current year ±10, clipped to min/max and including the visible year. Picking a month returns to days, preserving and clamping the focused day, and calls onMonthChange once with the first day. DatePicker and DateRangePicker forward maxView and captionLayout and reopen in the day view.",
+      "description": "The public localeWeekStart(locale?) helper returns the locale first weekday (0–6, Monday fallback), matching scheduling blocks. CalendarRangeLimits demonstrates inclusive minRange/maxRange limits while a range end is pending (3 to 7 days), and isDateDisabled(date, { rangeStart }) keeping endpoints in the same month. rangeStart is null before a start, after completion and in single mode; one-argument predicates remain supported. Limits apply on both sides of the start, leave disabled days focusable, reject their selection and preview, and lift after completion. Non-positive or non-integer limits are ignored; minRange > maxRange leaves no selectable end. Day or range selection with one or two months, inclusive min/max bounds and Intl names. The clickable month heading opens a month grid, then the year heading opens a shared 12-year page (2020–2031 for 2026). Set maxView=\"day\" for the previous static header, or \"month\" to stop at months; the default is \"year\". Optional view/defaultView/onViewChange control or report the view (initially \"day\"). captionLayout=\"select\" uses labelled kit month/year selects; yearRange={from,to} defaults to the current year ±10, clipped to min/max and including the visible year. Picking a month returns to days, preserving and clamping the focused day, and calls onMonthChange once with the first day. DatePicker and DateRangePicker forward maxView and captionLayout and reopen in the day view. CalendarMarkers shows day markers (including the neutral tone and a highlightedLabel override): getDayMarkers(date) returns { label, tone? } items for in-month days (tone: primary by default, success, warning, destructive, info or neutral), drawn as up to three 4px token-coloured dots, each edged with a 1px foreground ring for 3:1 non-text contrast, at the bottom of the day; selected days use the on-primary colour. Outside days never show markers. The day button name is the day label followed by every marker label, comma-separated, so the meaning never depends on colour; the dots are aria-hidden. In forced-colors mode the dots take system colours and stay visible, but their tone is conveyed only by the label. getDayMarkers runs for each visible day on every render: pass a memoised callback that looks days up by a YYYY-MM-DD key. highlightedDates adds one primary marker, before the getDayMarkers ones, labelled by highlightedLabel or the translated Highlighted. loading marks each grid aria-busy, shows a 12px spinner beside the month heading, adds one visually hidden status and draws no markers; days stay focusable and selectable, and markers appear without moving focus when loading ends. Fetch each month in onMonthChange and pass loading while it is pending. renderDay(date, state) replaces the number and dots of in-month days with non-interactive, token-styled content inside an aria-hidden wrapper; the button keeps data-day, roving tabindex, keys and its name, and state is { selected, today, disabled, inRange, markers }. DatePicker and DateRangePicker forward getDayMarkers, highlightedDates, highlightedLabel, loading, renderDay and onMonthChange; with a non-system DatePicker timeZone the dates they receive are calendar (proxy) days at local midnight.",
       "files": [
         {
           "path": "packages/ui/src/components/Calendar/Calendar.tsx",
@@ -5656,6 +5684,10 @@
         {
           "path": "packages/ui/src/components/Calendar/CalendarYearView.tsx",
           "target": "components/ui/calendar/CalendarYearView.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Calendar/calendar-markers.tsx",
+          "target": "components/ui/calendar/calendar-markers.tsx"
         },
         {
           "path": "packages/ui/src/components/Calendar/calendar-utils.ts",
@@ -5692,6 +5724,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -5864,6 +5900,7 @@
       ],
       "registryDependencies": [
         "select",
+        "spinner",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Calendar/Calendar.doc.ts"
@@ -5932,6 +5969,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -6432,6 +6473,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -6703,6 +6748,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -6935,6 +6984,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -7248,6 +7301,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -7487,6 +7544,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -7715,6 +7776,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -7897,7 +7962,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. DateRangePickerRetention demonstrates maxRange={90}, minRange={3} and onCalendarChange for partial picks. Limits count inclusive calendar days, apply on both sides only while an end is pending, reset on reopening and disable presets outside the limits. Invalid limits (non-positive or non-integer) are ignored; minRange > maxRange leaves no selectable end. onCalendarChange reports every calendar pick, including { start, end: null }; onValueChange still applies only complete ranges. A polite live region announces the maximum once per start pick, in English or Spanish; minRange alone adds no announcement. isDateDisabled(date, { rangeStart }) receives the pending start in range mode and null otherwise, including DatePicker presets; one-argument predicates still work. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits. DatePicker accepts `timeZone` (IANA, UTC or system), defaulting to I18nProvider then the browser; invalid names fall back to the browser. Calendar days, today, min/max, time segments and edits use that wall clock while values stay Date instants. isDateDisabled receives a local-midnight proxy of the zoned calendar day. DST gaps move forward and overlaps choose the earlier occurrence. Non-system zones appear in field text and time labels unless `hideTimeZone` is true. With time, hidden values include the wall time and UTC offset (and seconds with `withSeconds`); date-only values submit YYYY-MM-DD and emit zoned midnight. Custom formatOptions retain their format but use the effective zone. DatePicker `presets` adds app-defined quick dates ({ id, label, date(today) }) in a Quick dates group before the calendar, wrapping into a row on narrow screens: activating one sets the day (with `withTime` it keeps the time, or 00:00 when empty, and the popup stays open), otherwise closes the popup and returns focus to the field; a preset returning null clears the value. Presets before `min`, after `max` or rejected by `isDateDisabled` are disabled; the preset on the value day (or the null preset when empty) has aria-pressed. Today for presets is the `today` prop or the current day in the effective zone. `onValueChange` receives an optional second argument { reason: calendar | preset | time, presetId? }. DatePickerExpiryPresets shows In 7 days, In 30 days, End of quarter and No expiry; DatePickerPresetsTimeLimits shows presets with `withTime` keeping the time and the popup open, and a preset disabled by `max`. DatePickerUtc demonstrates UTC, seconds, hidden zone labels and a provider-inherited date-only zone; DateRangePicker is unchanged. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. The internal calendar selectors and time field in the popup stay outlined, including inside a ghost or filled provider. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.",
+      "description": "Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. DateRangePickerRetention demonstrates maxRange={90}, minRange={3} and onCalendarChange for partial picks. Limits count inclusive calendar days, apply on both sides only while an end is pending, reset on reopening and disable presets outside the limits. Invalid limits (non-positive or non-integer) are ignored; minRange > maxRange leaves no selectable end. onCalendarChange reports every calendar pick, including { start, end: null }; onValueChange still applies only complete ranges. A polite live region announces the maximum once per start pick, in English or Spanish; minRange alone adds no announcement. isDateDisabled(date, { rangeStart }) receives the pending start in range mode and null otherwise, including DatePicker presets; one-argument predicates still work. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits. DatePicker accepts `timeZone` (IANA, UTC or system), defaulting to I18nProvider then the browser; invalid names fall back to the browser. Calendar days, today, min/max, time segments and edits use that wall clock while values stay Date instants. isDateDisabled receives a local-midnight proxy of the zoned calendar day. DST gaps move forward and overlaps choose the earlier occurrence. Non-system zones appear in field text and time labels unless `hideTimeZone` is true. With time, hidden values include the wall time and UTC offset (and seconds with `withSeconds`); date-only values submit YYYY-MM-DD and emit zoned midnight. Custom formatOptions retain their format but use the effective zone. DatePicker `presets` adds app-defined quick dates ({ id, label, date(today) }) in a Quick dates group before the calendar, wrapping into a row on narrow screens: activating one sets the day (with `withTime` it keeps the time, or 00:00 when empty, and the popup stays open), otherwise closes the popup and returns focus to the field; a preset returning null clears the value. Presets before `min`, after `max` or rejected by `isDateDisabled` are disabled; the preset on the value day (or the null preset when empty) has aria-pressed. Today for presets is the `today` prop or the current day in the effective zone. `onValueChange` receives an optional second argument { reason: calendar | preset | time, presetId? }. DatePickerExpiryPresets shows In 7 days, In 30 days, End of quarter and No expiry; DatePickerPresetsTimeLimits shows presets with `withTime` keeping the time and the popup open, and a preset disabled by `max`. DatePickerUtc demonstrates UTC, seconds, hidden zone labels and a provider-inherited date-only zone; DateRangePicker is unchanged. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. The internal calendar selectors and time field in the popup stay outlined, including inside a ghost or filled provider. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged. DatePicker and DateRangePicker forward the Calendar props getDayMarkers, highlightedDates, highlightedLabel, loading, renderDay and onMonthChange to the popup calendar, so a picker can show per-day markers and load the month the user pages to (see Calendar CalendarMarkers); with a non-system timeZone the dates they receive are calendar (proxy) days at local midnight.",
       "files": [
         {
           "path": "packages/ui/src/components/DatePicker/DatePicker.tsx",
@@ -7954,6 +8019,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -8175,6 +8244,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -8391,6 +8464,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -8628,6 +8705,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -8850,6 +8931,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -9077,6 +9162,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -9288,6 +9377,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -9509,6 +9602,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -9726,6 +9823,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -10016,6 +10117,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -10228,6 +10333,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -10479,6 +10588,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -10688,6 +10801,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -10944,6 +11061,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -11162,6 +11283,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -11371,6 +11496,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -11592,6 +11721,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -11803,6 +11936,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -12030,6 +12167,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -12239,6 +12380,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -12454,6 +12599,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -12750,6 +12899,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -12965,6 +13118,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -13304,6 +13461,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -13559,6 +13720,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -13779,6 +13944,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -14036,6 +14205,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -14257,6 +14430,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -14466,6 +14643,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -14682,6 +14863,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -14895,6 +15080,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -15114,6 +15303,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -15349,6 +15542,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -15563,6 +15760,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -15773,6 +15974,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -15992,6 +16197,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -16244,6 +16453,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -16463,6 +16676,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -16787,6 +17004,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -17005,6 +17226,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -17280,6 +17505,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -17535,6 +17764,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -17753,6 +17986,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -17966,6 +18203,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -18219,6 +18460,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -18523,6 +18768,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -18755,6 +19004,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -19061,6 +19314,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -19304,6 +19561,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -19519,6 +19780,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -19728,6 +19993,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -19946,6 +20215,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -20274,6 +20547,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -20490,6 +20767,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -20719,6 +21000,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -20932,6 +21217,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -21148,6 +21437,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -21357,6 +21650,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -21602,6 +21899,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -21823,6 +22124,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -22112,6 +22417,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -22320,6 +22629,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -22538,6 +22851,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -22764,6 +23081,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -23047,6 +23368,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -23255,6 +23580,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -23596,6 +23925,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -23819,6 +24152,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -24027,6 +24364,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -24247,6 +24588,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -24448,6 +24793,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -24662,6 +25011,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -24873,6 +25226,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -25092,6 +25449,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -25306,6 +25667,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -25514,6 +25879,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -25728,6 +26097,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -25939,6 +26312,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -26160,6 +26537,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -26371,6 +26752,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -26587,6 +26972,10 @@
           "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -26797,6 +27186,10 @@
         {
           "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
           "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
