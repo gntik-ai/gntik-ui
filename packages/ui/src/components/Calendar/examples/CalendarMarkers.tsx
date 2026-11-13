@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useI18n } from '../../../i18n/I18nProvider';
+import { cn } from '../../../utils/cn';
 import { toISODate } from '../calendar-utils';
 import { Calendar, type CalendarDayMarker } from '../Calendar';
 
@@ -8,6 +9,7 @@ const today = new Date(2026, 2, 10);
 interface DayRuns {
   failed?: number;
   passed?: number;
+  skipped?: number;
   maintenance?: boolean;
   review?: boolean;
 }
@@ -18,6 +20,7 @@ function loadMonth(month: Date): Record<string, DayRuns> {
   return {
     [day(3)]: { failed: 2 },
     [day(5)]: { passed: 8 },
+    [day(8)]: { skipped: 4 },
     [day(12)]: { passed: 5, failed: 1 },
     [day(18)]: { maintenance: true },
     [day(24)]: { passed: 3, failed: 1, maintenance: true, review: true },
@@ -52,6 +55,9 @@ export default function CalendarMarkers() {
       if (day.passed) {
         markers.push({ label: t('calendar.examples.markers.passed', { count: day.passed }), tone: 'success' });
       }
+      if (day.skipped) {
+        markers.push({ label: t('calendar.examples.markers.skipped', { count: day.skipped }), tone: 'neutral' });
+      }
       if (day.maintenance) markers.push({ label: t('calendar.examples.markers.maintenance'), tone: 'warning' });
       if (day.review) markers.push({ label: t('calendar.examples.markers.review'), tone: 'info' });
       return markers;
@@ -73,6 +79,7 @@ export default function CalendarMarkers() {
           onMonthChange={setMonth}
           loading={loading}
           highlightedDates={highlighted}
+          highlightedLabel={t('calendar.examples.markers.window')}
           getDayMarkers={getDayMarkers}
         />
       </div>
@@ -87,7 +94,14 @@ export default function CalendarMarkers() {
           renderDay={(date, state) => (
             <span className="flex flex-col items-center leading-none">
               <span>{date.getDate()}</span>
-              <span className="font-mono text-[9px] text-muted-foreground">{state.markers.length || ''}</span>
+              <span
+                className={cn(
+                  'font-mono text-[9px]',
+                  state.selected ? 'text-primary-foreground' : 'text-muted-foreground',
+                )}
+              >
+                {state.markers.length || ''}
+              </span>
             </span>
           )}
         />

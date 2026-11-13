@@ -4,6 +4,8 @@ export const calendarMarkerExamplesEn = {
   'calendar.examples.markers.passed': '{count, plural, one {# passed run} other {# passed runs}}',
   'calendar.examples.markers.maintenance': 'Maintenance',
   'calendar.examples.markers.review': 'Review due',
+  'calendar.examples.markers.skipped': '{count, plural, one {# skipped run} other {# skipped runs}}',
+  'calendar.examples.markers.window': 'Release window',
   'calendar.examples.markers.renderDay': 'Runs per day with a custom day cell.',
 } as const;
 
@@ -13,5 +15,7 @@ export const calendarMarkerExamplesEs = {
   'calendar.examples.markers.passed': '{count, plural, one {# ejecución correcta} other {# ejecuciones correctas}}',
   'calendar.examples.markers.maintenance': 'Mantenimiento',
   'calendar.examples.markers.review': 'Revisión pendiente',
+  'calendar.examples.markers.skipped': '{count, plural, one {# ejecución omitida} other {# ejecuciones omitidas}}',
+  'calendar.examples.markers.window': 'Ventana de lanzamiento',
   'calendar.examples.markers.renderDay': 'Ejecuciones por día con una celda de día personalizada.',
 } satisfies Record<keyof typeof calendarMarkerExamplesEn, string>;
