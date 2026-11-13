@@ -228,6 +228,13 @@ function FlowBuilderContent<Kind extends string = FlowNodeKind>({
     restart(cleanFlowGraph(graph));
   }, [graph, historyOn, restart]);
 
+  // Edits made while history was off are not steps: start again from the graph as it is when it is switched on.
+  const wasOn = useRef(historyOn);
+  useEffect(() => {
+    if (historyOn && !wasOn.current) restart(cleanFlowGraph<Kind>({ nodes, edges }));
+    wasOn.current = historyOn;
+  }, [historyOn, nodes, edges, restart]);
+
   const stepHistory = (direction: 'undo' | 'redo') => {
     const move = direction === 'undo' ? graphHistory.undo() : graphHistory.redo();
     if (!move) return;

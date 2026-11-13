@@ -170,4 +170,20 @@ describe('useFlowState history', () => {
     expect(result.current.nodes).toHaveLength(3);
     expect(result.current.canUndo).toBe(false);
   });
+  it('rebases on the current graph when history is switched on after edits made while off', async () => {
+    const { result, rerender } = renderHook(
+      ({ history }: { history: boolean }) => useFlowState<FlowNode, Edge>(nodes, edges, { history }),
+      { initialProps: { history: false } },
+    );
+    await act(async () => result.current.onNodesChange([{ type: 'remove', id: 'webhook' }]));
+    rerender({ history: true });
+    expect(result.current.canUndo).toBe(false);
+    await act(async () => result.current.onNodesChange([{ type: 'remove', id: 'store' }]));
+    expect(result.current.canUndo).toBe(true);
+    act(() => {
+      result.current.undo();
+    });
+    expect(result.current.nodes.map((n) => n.id)).toEqual(['validate', 'route', 'notify', 'store']);
+    expect(result.current.canUndo).toBe(false);
+  });
 });

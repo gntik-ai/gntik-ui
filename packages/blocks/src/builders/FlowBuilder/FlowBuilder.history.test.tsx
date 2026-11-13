@@ -295,4 +295,16 @@ describe('FlowBuilder undo and redo with a controlled graph', () => {
     expect(within(header).getByRole('button', { name: 'Run' }).parentElement).toBe(header);
     expect(document.querySelector('[data-live-announcer]')).toBeNull();
   });
+  it('undoes only the edits made after history was switched back on', async () => {
+    const { rerender } = render(<FlowBuilder history={false} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Add Step' }));
+    expect(screen.getByText('6 nodes · 4 edges')).toBeInTheDocument();
+    rerender(<FlowBuilder />);
+    expect(undoButton()).toHaveAttribute('aria-disabled', 'true');
+    await userEvent.click(screen.getByRole('button', { name: 'Add Step' }));
+    expect(screen.getByText('7 nodes · 4 edges')).toBeInTheDocument();
+    await userEvent.click(undoButton());
+    expect(screen.getByText('6 nodes · 4 edges')).toBeInTheDocument();
+    expect(undoButton()).toHaveAttribute('aria-disabled', 'true');
+  });
 });

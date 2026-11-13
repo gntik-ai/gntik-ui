@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, type SetStateAction } from 'react';
+import { useCallback, useEffect, useRef, useState, type SetStateAction } from 'react';
 import {
   addEdge,
   applyEdgeChanges,
@@ -222,6 +222,13 @@ export function useFlowState<N extends Node = FlowNode, E extends Edge = Edge>(
     };
     reset(recorded.current);
   }, [reset]);
+
+  // Edits made while history was off are not steps: start again from the graph as it is when it is switched on.
+  const wasEnabled = useRef(enabled);
+  useEffect(() => {
+    if (enabled && !wasEnabled.current) resetHistory();
+    wasEnabled.current = enabled;
+  }, [enabled, resetHistory]);
 
   return {
     nodes,
