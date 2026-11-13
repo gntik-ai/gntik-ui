@@ -242,8 +242,13 @@ export function usageOf(root: string, item: KitItem): Usage {
           .sort()[0]
       : undefined;
     const code = first ? readRepoFile(root, `${dir}/examples/${first}`) : undefined;
-    if (first && code)
-      return { source: 'example', file: `${dir}/examples/${first}`, code: toPackageImports(code, item.package) };
+    if (first && code) {
+      // Forms are optional peers: importing their examples through the root would produce invalid usage.
+      const entryCode = dir.startsWith('packages/ui/src/forms/')
+        ? code.replace(/from '\.\.\/\.\.'/g, "from '@gntik-ai/ui/forms'")
+        : code;
+      return { source: 'example', file: `${dir}/examples/${first}`, code: toPackageImports(entryCode, item.package) };
+    }
   }
   if (item.kind === 'template') {
     const shell = usesConsoleShell(root, item);

@@ -19,7 +19,7 @@ const layoutDocs = import.meta.glob('../../../packages/ui/src/layouts/*/*.doc.ts
 // @gntik-ai/chat: one folder per component, like ui.
 const chatDocs = import.meta.glob('../../../packages/chat/src/*/*.doc.ts', { eager: true, import: 'doc' });
 // @gntik-ai/ui/forms: the optional react-hook-form entry keeps its files flat, one *.doc.ts per piece.
-const formsDocs = import.meta.glob('../../../packages/ui/src/forms/*.doc.ts', { eager: true, import: 'doc' });
+const formsDocs = import.meta.glob('../../../packages/ui/src/forms/**/*.doc.ts', { eager: true, import: 'doc' });
 const blockDocs = import.meta.glob('../../../packages/blocks/src/*/*/*.doc.ts', { eager: true, import: 'doc' });
 const sources = {
   ...import.meta.glob('../../../packages/blocks/src/*/*/*.{ts,tsx}', { eager: true, query: '?raw', import: 'default' }),
@@ -46,7 +46,7 @@ const sources = {
     query: '?raw',
     import: 'default',
   }),
-  ...import.meta.glob('../../../packages/ui/src/forms/*.{ts,tsx}', {
+  ...import.meta.glob('../../../packages/ui/src/forms/**/*.{ts,tsx}', {
     eager: true,
     query: '?raw',
     import: 'default',
@@ -377,6 +377,7 @@ function folderKey(path, docBase) {
   if (m) return `${m[1]}/${m[2]}`;
   m = /\/chat\/src\/([^/]+)\//.exec(path);
   if (m) return `chat/${m[1]}`;
+  if (path.includes('/ui/src/forms/schema-form/') && docBase === 'SchemaForm') return 'forms/SchemaForm';
   m = /\/ui\/src\/forms\/([^/]+)$/.exec(path);
   if (m && docBase && (m[1].startsWith(`${docBase}.`) || m[1].startsWith(`${kebab(docBase)}.`)))
     return `forms/${docBase}`;

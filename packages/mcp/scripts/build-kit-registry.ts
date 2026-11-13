@@ -225,6 +225,16 @@ export function collectSources(): Source[] {
         });
     }
   };
+  // The schema renderer belongs to the optional forms entry, outside the root component barrel.
+  out.push({
+    kind: 'component',
+    pkg: '@gntik-ai/ui',
+    dir: path.join(ROOT, 'packages/ui/src/forms/schema-form'),
+    metaFile: path.join(ROOT, 'packages/ui/src/forms/schema-form/SchemaForm.doc.ts'),
+    metaExport: 'doc',
+    targetBase: 'components/forms/schema-form',
+    id: 'schema-form',
+  });
   doc('component', '@gntik-ai/ui', path.join(ROOT, 'packages/ui/src/components'), 'components/ui');
   doc('layout', '@gntik-ai/ui', path.join(ROOT, 'packages/ui/src/layouts'), 'components/layouts');
   doc('component', '@gntik-ai/chat', path.join(ROOT, 'packages/chat/src'), 'components/chat');

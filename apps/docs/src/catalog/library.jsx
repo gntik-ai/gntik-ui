@@ -23,9 +23,9 @@ const sources = import.meta.glob('../../../../packages/ui/src/components/*/examp
   query: '?raw',
   import: 'default',
 });
-const formsDocs = import.meta.glob('../../../../packages/ui/src/forms/*.doc.ts', { eager: true, import: 'doc' });
-const formsExampleModules = import.meta.glob('../../../../packages/ui/src/forms/examples/*.tsx', { eager: true });
-const formsSources = import.meta.glob('../../../../packages/ui/src/forms/examples/*.tsx', {
+const formsDocs = import.meta.glob('../../../../packages/ui/src/forms/**/*.doc.ts', { eager: true, import: 'doc' });
+const formsExampleModules = import.meta.glob('../../../../packages/ui/src/forms/**/examples/*.tsx', { eager: true });
+const formsSources = import.meta.glob('../../../../packages/ui/src/forms/**/examples/*.tsx', {
   eager: true,
   query: '?raw',
   import: 'default',
@@ -71,6 +71,8 @@ const forProduct = (code) =>
 const forFormsProduct = (code) =>
   forProduct(
     code
+      .replace(/from '\.\.\/\.\.'/g, "from '@gntik-ai/ui/forms'")
+      .replace(/from '\.\.\/\.\.\/\.\.\/(?:components\/[A-Za-z]+|i18n)'/g, "from '@gntik-ai/ui'")
       .replace(/from '\.\.'/g, "from '@gntik-ai/ui/forms'")
       .replace(/from '\.\.\/(FieldArray|FormField|useFieldProps|schemaResolver)'/g, "from '@gntik-ai/ui/forms'"),
   );
@@ -136,6 +138,7 @@ const COMPONENTS = sortEntries([
 ]);
 
 const entryImports = {
+  SchemaForm: 'SchemaForm, SchemaFields',
   FormActions: 'FormSubmit, FormReset, useFormActions',
   ChoiceCard: 'ClickableCard, SelectableCardGroup, SelectableCard',
   Resizable: 'ResizablePanelGroup, ResizablePanel, ResizeHandle',

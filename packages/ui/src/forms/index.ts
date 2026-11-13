@@ -32,3 +32,8 @@ export {
   type FormSubmitProps,
   type UseFormActionsResult,
 } from './FormActions';
+
+export { SchemaForm } from './schema-form/SchemaForm';
+export { SchemaFields } from './schema-form/SchemaFields';
+export type { JsonSchema, SchemaWidget, SchemaFormProps, SchemaFieldsProps } from './schema-form/types';
+export { doc as schemaFormDoc } from './schema-form/SchemaForm.doc';

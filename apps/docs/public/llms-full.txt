@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 136 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 137 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -4878,6 +4878,80 @@ export default function ScheduleInputBasic() {
         now={now}
         name="schedule"
       />
+    </div>
+  );
+}
+```
+
+### SchemaForm (`schema-form`)
+
+SchemaForm renders an object JSON Schema using kit controls from @gntik-ai/ui/forms; SchemaFields renders the same fields using control or the nearest FormProvider (including useFormDialog). Supported keywords: type, properties, required, title, description, default, enum, oneOf const/title choices, const, minimum, maximum, multipleOf, minLength, maxLength, pattern, format (email, uri, date, date-time, password), writeOnly, items, minItems, maxItems, uniqueItems and local #/$defs refs. Strings with maxLength >255 use Textarea; enums with at most five options use RadioGroup, otherwise SimpleSelect. String arrays use TokenInput or MultiSelect; object arrays use FieldArray. Dates are ISO calendar days; date-times are ISO instants edited in the system zone. Numbers are numeric and optional empty strings/arrays are omitted on SchemaForm submit. Unsupported keywords (including conditionals, remote or cyclic refs) show a JSON textarea and one development warning per field/keyword. Schema text is always plain text. Invalid patterns produce a validation error; pattern input is capped at maxLength or 1000 characters before regex evaluation (this limits input size, not regex execution time). ui overrides by dotted property path support widget, label, description, placeholder, hidden and order; explicitly ordered fields come first. widgets receive name, schema, controlProps and fieldState; use toValueProps/toCheckedProps to wire kit controls. SchemaForm resolver fully replaces built-in validation and value transformation. SchemaFields uses field rules, so a parent resolver replaces them; configure the parent resolver to transform values when needed. defaultValues are initial values; remount or use the parent form reset API to replace them. columns defaults to 1; 2 uses two columns from sm. disabled disables all fields and submission. onChange receives prepared current values; submitLabel overrides the translated Save label. Validation runs on submit. Hidden fields keep schema defaults and validation, so make them optional or provide valid values. Schemas must have an object root. Client validation is a subset; the server remains authoritative.
+
+- Package: `@gntik-ai/ui` · export `SchemaForm` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/forms/schema-form/SchemaForm.doc.ts
+- Primitive: `@base-ui/react/field`
+- ARIA pattern: labelled schema fields with inline errors
+- Registry dependencies: button, date-picker, field, input, live-announcer, multi-select, number-input, password-input, radio-group, select, switch, textarea, token-input, ui-utils
+- Install: `gntik-ui add schema-form`; own the source with `gntik-ui eject schema-form`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Moves between enabled fields in rendered order |
+| Enter on Save | Validates and focuses the first invalid field |
+| Arrow keys in choices | Selects a radio option or navigates select options |
+| Enter in tags | Commits the pending token |
+| Escape in a date popup | Closes the calendar and returns focus to the field |
+
+Tokens: foreground, muted-foreground, destructive-text, focus-ring, border
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { Input } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
+import { SchemaForm, toValueProps, type SchemaWidget } from '@gntik-ai/ui/forms';
+const ModelPicker: SchemaWidget = ({ controlProps }) => {
+  const { t } = useI18n();
+  const p = toValueProps(controlProps);
+  return (
+    <Input
+      {...p}
+      value={typeof p.value === 'string' ? p.value : ''}
+      placeholder={t('schemaForm.example.modelPlaceholder')}
+    />
+  );
+};
+export default function SchemaFormCustomWidget() {
+  const { t } = useI18n();
+  const [saved, setSaved] = useState(false);
+  return (
+    <div className="grid gap-4">
+      <SchemaForm
+        schema={{
+          type: 'object',
+          title: t('schemaForm.example.custom'),
+          required: ['model'],
+          properties: {
+            model: { type: 'string', title: t('schemaForm.example.model'), minLength: 3 },
+            internal: { type: 'string', default: 'standard' },
+          },
+        }}
+        defaultValues={{ model: '' }}
+        widgets={{ model: ModelPicker }}
+        ui={{
+          model: {
+            widget: 'model',
+            label: t('schemaForm.example.model'),
+            description: t('schemaForm.example.modelHelp'),
+          },
+          internal: { hidden: true },
+        }}
+        onSubmit={() => setSaved(true)}
+      />
+      <p role="status">{saved ? t('schemaForm.example.saved') : ''}</p>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { schemaFormExamplesEs } from './schema-form-example-messages';
+import { schemaFormEs } from './schema-form-messages';
 import { flowEs } from './flow-messages';
 import { textareaEs } from './textarea-messages';
 import { switchEs } from './switch-messages';
@@ -33,6 +35,8 @@ import { passwordEs } from './password-messages';
 import { radioInlineEs } from './radio-inline-messages';
 import type { Messages } from './en';
 export const es: Messages = {
+  ...schemaFormExamplesEs,
+  ...schemaFormEs,
   ...textareaEs,
   ...sliderInputEs,
   ...switchEs,
