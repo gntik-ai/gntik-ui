@@ -1,5 +1,21 @@
 # @gntik-ai/ui
 
+## 0.14.0
+
+### Minor Changes
+
+- b4cd3df: Calendar adds tone-coded day markers (getDayMarkers), highlightedDates, a loading state and renderDay, and DatePicker and DateRangePicker forward them with onMonthChange.
+- 945bd97: Add async server results, onQueryChange, filter, limit, renderItem and an external store to CommandPalette, and forward loadItems, debounceMs, minQueryLength, onQueryChange and store from GlobalSearch.
+- 8c44e1c: Add useStateHistory and an opt-in history option for useFlowState (undo, redo, canUndo, canRedo, resetHistory), and Undo and Redo in FlowBuilder (header buttons, Mod+Z, Shift+Mod+Z and Ctrl+Y, announcements in en and es) with a history prop that WorkflowBuilderPage passes through. FlowGraphChange type gains "undo" and "redo": widen any exhaustive switch over it.
+- f8fd960: Add QrCode, a scannable SVG QR code for otpauth URIs and pairing links, with the qrCodeSvg helper, the qr-module and qr-surface colour pairs, and an optional QR code in the security settings MFA setup dialog.
+- 9368ef5: Add a `granularity` prop (week, month, quarter, year) to DatePicker and DateRangePicker so a whole period is one value, forward `month` and `defaultMonth` from DatePicker to its Calendar, and let `startOfPeriod`, `endOfPeriod` and the week grid follow `weekStartsOn`.
+- 913bb2d: Add SchemaForm and SchemaFields to the optional forms entry with kit controls, translated schema validation and custom widgets.
+
+### Patch Changes
+
+- Updated dependencies [f8fd960]
+  - @gntik-ai/tokens@0.5.0
+
 ## 0.13.0
 
 ### Minor Changes
