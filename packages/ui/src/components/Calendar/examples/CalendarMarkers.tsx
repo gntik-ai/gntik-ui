@@ -22,6 +22,7 @@ function loadMonth(month: Date): Record<string, DayRuns> {
     [day(5)]: { passed: 8 },
     [day(8)]: { skipped: 4 },
     [day(12)]: { passed: 5, failed: 1 },
+    [day(15)]: { passed: 2, review: true },
     [day(18)]: { maintenance: true },
     [day(24)]: { passed: 3, failed: 1, maintenance: true, review: true },
   };
