@@ -1,5 +1,16 @@
 # @gntik-ai/flow
 
+## 0.14.0
+
+### Minor Changes
+
+- 8c44e1c: Add useStateHistory and an opt-in history option for useFlowState (undo, redo, canUndo, canRedo, resetHistory), and Undo and Redo in FlowBuilder (header buttons, Mod+Z, Shift+Mod+Z and Ctrl+Y, announcements in en and es) with a history prop that WorkflowBuilderPage passes through. FlowGraphChange type gains "undo" and "redo": widen any exhaustive switch over it.
+
+### Patch Changes
+
+- Updated dependencies [f8fd960]
+  - @gntik-ai/tokens@0.5.0
+
 ## 0.12.0
 
 ### Patch Changes

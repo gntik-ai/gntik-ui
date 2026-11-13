@@ -1,5 +1,28 @@
 # @gntik-ai/templates
 
+## 0.14.0
+
+### Minor Changes
+
+- 8c44e1c: Add useStateHistory and an opt-in history option for useFlowState (undo, redo, canUndo, canRedo, resetHistory), and Undo and Redo in FlowBuilder (header buttons, Mod+Z, Shift+Mod+Z and Ctrl+Y, announcements in en and es) with a history prop that WorkflowBuilderPage passes through. FlowGraphChange type gains "undo" and "redo": widen any exhaustive switch over it.
+- f8fd960: Add QrCode, a scannable SVG QR code for otpauth URIs and pairing links, with the qrCodeSvg helper, the qr-module and qr-surface colour pairs, and an optional QR code in the security settings MFA setup dialog.
+
+### Patch Changes
+
+- Updated dependencies [b4cd3df]
+- Updated dependencies [945bd97]
+- Updated dependencies [8c44e1c]
+- Updated dependencies [f8fd960]
+- Updated dependencies [9368ef5]
+- Updated dependencies [913bb2d]
+  - @gntik-ai/ui@0.14.0
+  - @gntik-ai/blocks@0.14.0
+  - @gntik-ai/flow@0.14.0
+  - @gntik-ai/tokens@0.5.0
+  - @gntik-ai/chat@0.14.0
+  - @gntik-ai/charts@0.14.0
+  - @gntik-ai/editor@0.14.0
+
 ## 0.13.0
 
 ### Patch Changes
