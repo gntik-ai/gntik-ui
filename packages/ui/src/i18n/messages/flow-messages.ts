@@ -1,4 +1,5 @@
 export const flowEn = {
+  'flow.canvas': 'Flow canvas',
   'flow.undo': 'Undo',
   'flow.redo': 'Redo',
   'flow.undid': 'Undid {action}',
@@ -11,6 +12,7 @@ export const flowEn = {
 } as const;
 
 export const flowEs = {
+  'flow.canvas': 'Lienzo de flujo',
   'flow.undo': 'Deshacer',
   'flow.redo': 'Rehacer',
   'flow.undid': 'Se deshizo: {action}',

@@ -86,15 +86,22 @@ export function useTimeline<T>(initial: T, options: StateHistoryOptions = {}) {
   );
 
   const back = useCallback((): TimelineMove<T> | undefined => {
-    const { steps, index } = timeline.current;
-    if (index === 0) return undefined;
+    const { steps, index, open } = timeline.current;
+    if (index === 0) {
+      // Even a move that goes nowhere closes the open batch.
+      if (open !== undefined) commit({ steps, index });
+      return undefined;
+    }
     commit({ steps, index: index - 1 });
     return { value: steps[index - 1]!.value, label: steps[index]!.label };
   }, [commit]);
 
   const forward = useCallback((): TimelineMove<T> | undefined => {
-    const { steps, index } = timeline.current;
-    if (index >= steps.length - 1) return undefined;
+    const { steps, index, open } = timeline.current;
+    if (index >= steps.length - 1) {
+      if (open !== undefined) commit({ steps, index });
+      return undefined;
+    }
     commit({ steps, index: index + 1 });
     return { value: steps[index + 1]!.value, label: steps[index + 1]!.label };
   }, [commit]);

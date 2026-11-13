@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { breakpointQuery } from '@gntik-ai/tokens/runtime';
 import { Play, Redo2, Undo2 } from '@gntik-ai/icons';
 import { FlowCanvas, type FlowCanvasProps, type FlowNode, type FlowNodeData, type FlowNodeKind } from '@gntik-ai/flow';
 import {
   Button,
   IconButton,
-  LiveAnnouncer,
+  type Announce,
   ResizablePanel,
   ResizablePanelGroup,
   ResizeHandle,
@@ -130,12 +130,28 @@ function clock() {
  */
 export function FlowBuilder<Kind extends string = FlowNodeKind>(props: FlowBuilderProps<Kind>) {
   const hasAnnouncer = useHasLiveAnnouncer();
-  const content = <FlowBuilderContent<Kind> {...props} />;
-  // Undo announcements need a live region: use the one above, else render our own.
-  return props.history === false || hasAnnouncer ? content : <LiveAnnouncer>{content}</LiveAnnouncer>;
+  const [message, setMessage] = useState('');
+  // Undo announcements need a live region: use the one above, else render our own beside the
+  // builder. The builder stays the first child either way, so toggling `history` never remounts it.
+  const ownRegion = props.history !== false && !hasAnnouncer;
+  const announceOwn = useCallback<Announce>(
+    (next) => setMessage((prev) => (prev === next ? `${next}\u00A0` : next)),
+    [],
+  );
+  return (
+    <>
+      <FlowBuilderContent<Kind> {...props} announceOwn={ownRegion ? announceOwn : undefined} />
+      {ownRegion && (
+        <div role="status" aria-live="polite" aria-atomic="true" className="sr-only" data-live-announcer="polite">
+          {message}
+        </div>
+      )}
+    </>
+  );
 }
 
 function FlowBuilderContent<Kind extends string = FlowNodeKind>({
+  announceOwn,
   title = 'Untitled flow',
   nodes: initialNodes = builderNodes,
   edges: initialEdges = builderEdges,
@@ -160,7 +176,7 @@ function FlowBuilderContent<Kind extends string = FlowNodeKind>({
   nodeStatus,
   onNodeSelect,
   className,
-}: FlowBuilderProps<Kind>) {
+}: FlowBuilderProps<Kind> & { announceOwn?: Announce }) {
   const runMode = mode === 'run';
   const root = useRef<HTMLElement>(null);
   const flow = useRef<
@@ -184,7 +200,8 @@ function FlowBuilderContent<Kind extends string = FlowNodeKind>({
   const selected = nodes.find((n) => n.selected);
   const historyOn = history !== false && !runMode;
   const { t } = useI18n();
-  const announce = useAnnounce();
+  const announceAbove = useAnnounce();
+  const announce = announceOwn ?? announceAbove;
   const [start] = useState(() => cleanFlowGraph<Kind>(graph ?? { nodes: initialNodes, edges: initialEdges }));
   const graphHistory = useGraphHistory<Kind>(start, history);
   // The graph last handed to the host. A controlled graph that is not that one came from elsewhere.
@@ -476,6 +493,12 @@ function FlowBuilderContent<Kind extends string = FlowNodeKind>({
     );
   }
 
+  const runButton = (
+    <Button size="sm" icon={Play} loading={running} onClick={() => void run()}>
+      Run
+    </Button>
+  );
+
   return (
     <section
       ref={root}
@@ -491,35 +514,32 @@ function FlowBuilderContent<Kind extends string = FlowNodeKind>({
             {nodes.length} nodes · {edges.length} edges
           </p>
         </div>
-        {!runMode && (
-          <div className="flex shrink-0 items-center gap-1.5">
-            {historyOn && (
-              <>
-                <IconButton
-                  icon={Undo2}
-                  label={t('flow.undo')}
-                  size="sm"
-                  disabled={!graphHistory.canUndo}
-                  focusableWhenDisabled
-                  aria-keyshortcuts="Meta+Z Control+Z"
-                  onClick={() => stepHistory('undo')}
-                />
-                <IconButton
-                  icon={Redo2}
-                  label={t('flow.redo')}
-                  size="sm"
-                  disabled={!graphHistory.canRedo}
-                  focusableWhenDisabled
-                  aria-keyshortcuts="Shift+Meta+Z Shift+Control+Z Control+Y"
-                  onClick={() => stepHistory('redo')}
-                />
-              </>
-            )}
-            <Button size="sm" icon={Play} loading={running} onClick={() => void run()}>
-              Run
-            </Button>
-          </div>
-        )}
+        {!runMode &&
+          (historyOn ? (
+            <div className="flex shrink-0 items-center gap-1.5">
+              <IconButton
+                icon={Undo2}
+                label={t('flow.undo')}
+                size="sm"
+                disabled={!graphHistory.canUndo}
+                focusableWhenDisabled
+                aria-keyshortcuts="Meta+Z Control+Z"
+                onClick={() => stepHistory('undo')}
+              />
+              <IconButton
+                icon={Redo2}
+                label={t('flow.redo')}
+                size="sm"
+                disabled={!graphHistory.canRedo}
+                focusableWhenDisabled
+                aria-keyshortcuts="Shift+Meta+Z Shift+Control+Z Control+Y"
+                onClick={() => stepHistory('redo')}
+              />
+              {runButton}
+            </div>
+          ) : (
+            runButton
+          ))}
       </header>
       {body}
     </section>

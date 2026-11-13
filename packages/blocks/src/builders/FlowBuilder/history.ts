@@ -140,12 +140,11 @@ export function useGraphHistory<Kind extends string>(initial: FlowGraph<Kind>, o
 
 /** True for fields with their own text undo: inputs, textareas, selects, contenteditable and Monaco. */
 export function isEditableTarget(target: EventTarget | null): boolean {
-  return (
-    target instanceof Element &&
-    target.closest(
-      'input, textarea, select, [contenteditable=""], [contenteditable="true"], [role="textbox"], .monaco-editor',
-    ) !== null
-  );
+  if (!(target instanceof Element)) return false;
+  if (target.closest('input, textarea, select, [role="textbox"], .monaco-editor')) return true;
+  // contenteditable is editable for "", "true" and "plaintext-only"; only "false" opts out (nearest wins).
+  const editable = target.closest('[contenteditable]');
+  return editable !== null && editable.getAttribute('contenteditable')?.trim().toLowerCase() !== 'false';
 }
 
 /** Which history move a key event asks for: Mod+Z undoes, Shift+Mod+Z and Ctrl+Y redo. */

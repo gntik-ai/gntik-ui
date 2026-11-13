@@ -88,6 +88,23 @@ describe('useFlowState history', () => {
     expect(result.current.canUndo).toBe(false);
   });
 
+  it('does not capture an unfinished drag when a selection-only setter runs mid-drag', () => {
+    const { result } = setup();
+    act(() =>
+      result.current.onNodesChange([{ type: 'position', id: 'store', position: { x: 780, y: 0 }, dragging: true }]),
+    );
+    act(() => result.current.setNodes((ns) => ns.map((n) => ({ ...n, selected: n.id === 'store' }))));
+    expect(result.current.canUndo).toBe(false);
+    act(() =>
+      result.current.onNodesChange([{ type: 'position', id: 'store', position: { x: 800, y: 0 }, dragging: false }]),
+    );
+    act(() => {
+      result.current.undo();
+    });
+    expect(result.current.nodes.find((n) => n.id === 'store')?.position).toEqual({ x: 768, y: 0 });
+    expect(result.current.canUndo).toBe(false);
+  });
+
   it('records an accepted connection and direct setNodes calls with their label', () => {
     const { result } = setup();
     const connection: Connection = { source: 'webhook', target: 'store', sourceHandle: null, targetHandle: null };

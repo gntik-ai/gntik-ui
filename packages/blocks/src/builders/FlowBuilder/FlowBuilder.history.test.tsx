@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { I18nProvider, LiveAnnouncer, es } from '@gntik-ai/ui';
 import { expectNoAxeViolations } from '../../test/a11y';
@@ -70,6 +70,16 @@ describe('FlowBuilder undo and redo', () => {
     canvas().append(editable);
     expect(fireEvent.keyDown(editable, { key: 'z', ...mod })).toBe(true);
     expect(title).toHaveValue('Check order');
+  });
+
+  it.each(['', 'plaintext-only'])('leaves Mod+Z inside contenteditable="%s" to native undo', async (value) => {
+    render(<FlowBuilder />);
+    await deleteRoute();
+    const editable = document.createElement('div');
+    editable.setAttribute('contenteditable', value);
+    canvas().append(editable);
+    expect(fireEvent.keyDown(editable, { key: 'z', ...mod })).toBe(true);
+    expect(screen.getByText('4 nodes · 1 edges')).toBeInTheDocument();
   });
 
   it('undoes consecutive title edits in one step', async () => {
@@ -267,5 +277,22 @@ describe('FlowBuilder undo and redo with a controlled graph', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Add Step' }));
     rerender(<FlowBuilder graph={graph} onGraphChange={() => {}} title="Renamed" />);
     expect(screen.getByRole('button', { name: 'Undo' })).toHaveAttribute('aria-disabled', 'false');
+  });
+
+  it('keeps the uncontrolled graph when history is switched off and on again', async () => {
+    const { rerender } = render(<FlowBuilder />);
+    await userEvent.click(screen.getByRole('button', { name: 'Add Step' }));
+    expect(screen.getByText('6 nodes · 4 edges')).toBeInTheDocument();
+    rerender(<FlowBuilder history={false} />);
+    expect(screen.getByText('6 nodes · 4 edges')).toBeInTheDocument();
+    rerender(<FlowBuilder />);
+    expect(screen.getByText('6 nodes · 4 edges')).toBeInTheDocument();
+  });
+
+  it('renders the Run button directly in the header, without a wrapper, when history is off', () => {
+    render(<FlowBuilder history={false} />);
+    const header = screen.getByRole('banner');
+    expect(within(header).getByRole('button', { name: 'Run' }).parentElement).toBe(header);
+    expect(document.querySelector('[data-live-announcer]')).toBeNull();
   });
 });

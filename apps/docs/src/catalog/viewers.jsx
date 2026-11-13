@@ -373,6 +373,37 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                   height={height}
                 />
               )}
+              {kind === 'block' && it.id === 'flow-builder' && (
+                <>
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">Undo and redo</h4>
+                  <p className="mb-3 max-w-[70ch] text-[13px] text-muted-foreground">
+                    FlowBuilder records every committed edit (add, delete, move, connect, inspector edit) as one step.
+                    Undo and Redo buttons and Mod+Z, Shift+Mod+Z and Ctrl+Y work inside the builder, outside text
+                    fields; history=false turns them off. Selection and in-progress drags are never steps.
+                  </p>
+                  <Viewer
+                    kind="block"
+                    id="flow-builder--history"
+                    title={`${it.title} · history`}
+                    file="../../../packages/blocks/src/builders/FlowBuilder/examples/History.tsx"
+                    height={height}
+                  />
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">useFlowState history</h4>
+                  <p className="mb-3 max-w-[70ch] text-[13px] text-muted-foreground">
+                    useFlowState(nodes, edges, {'{ history: true }'}) from @gntik-ai/flow also returns undo, redo,
+                    canUndo, canRedo and resetHistory, and its setters take an optional {'{ label, coalesce }'}.
+                    useStateHistory(initial, {'{ limit }'}) is the generic hook underneath: value, set(next, meta),
+                    back, forward, reset, index, length, canBack and canForward.
+                  </p>
+                  <Viewer
+                    kind="block"
+                    id="flow-builder--use-flow-state-history"
+                    title="useFlowState history"
+                    file="../../../packages/blocks/src/builders/FlowBuilder/examples/UseFlowStateHistory.tsx"
+                    height={height}
+                  />
+                </>
+              )}
               {kind === 'template' && it.id === 'contact' && (
                 <>
                   <Viewer

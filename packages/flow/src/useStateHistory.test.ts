@@ -50,6 +50,16 @@ describe('useStateHistory', () => {
     expect(result.current.value).toBe('a');
   });
 
+  it('closes the coalescing batch on a forward that goes nowhere', () => {
+    const { result } = renderHook(() => useStateHistory('Draft'));
+    act(() => result.current.set('D', { coalesce: 'title' }));
+    act(() => {
+      result.current.forward();
+    });
+    act(() => result.current.set('Do', { coalesce: 'title' }));
+    expect(result.current.length).toBe(3);
+  });
+
   it('reset empties the history and keeps the current value, or a given one', () => {
     const { result } = renderHook(() => useStateHistory(0));
     act(() => {

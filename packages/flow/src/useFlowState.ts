@@ -58,6 +58,16 @@ function withCurrent<T extends { id: string; selected?: boolean }>(restored: T[]
   });
 }
 
+/** Nodes still being dragged keep their last recorded position: an unfinished move is not a committed edit. */
+function settled<N extends Node>(nodes: N[], recorded: N[]): N[] {
+  if (!nodes.some((node) => node.dragging)) return nodes;
+  const before = new Map(recorded.map((node) => [node.id, node]));
+  return nodes.map((node) => {
+    const old = node.dragging ? before.get(node.id) : undefined;
+    return old ? { ...node, position: old.position } : node;
+  });
+}
+
 function nodeLabel(changes: NodeChange[]): string {
   const types = changes.map((change) => change.type);
   if (types.includes('add')) return 'add';
@@ -108,7 +118,11 @@ export function useFlowState<N extends Node = FlowNode, E extends Edge = Edge>(
     (label: string, meta?: StateHistoryMeta) => {
       if (!enabled) return;
       const snapshot = {
-        nodes: snapshotItems(nodesRef.current, recorded.current.nodes, ['selected', 'dragging', 'measured']),
+        nodes: snapshotItems(settled(nodesRef.current, recorded.current.nodes), recorded.current.nodes, [
+          'selected',
+          'dragging',
+          'measured',
+        ]),
         edges: snapshotItems(edgesRef.current, recorded.current.edges, ['selected']),
       };
       if (snapshot.nodes === recorded.current.nodes && snapshot.edges === recorded.current.edges) return;
