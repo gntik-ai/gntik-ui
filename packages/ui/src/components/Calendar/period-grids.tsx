@@ -11,6 +11,7 @@ import {
   toISODate,
   weekdayNames,
   type PeriodGranularity,
+  type WeekDay,
 } from './calendar-utils';
 import { periodGridVariants } from './period-grids.variants';
 
@@ -20,6 +21,8 @@ export interface PeriodGridProps {
   focused: Date;
   labelId: string;
   locale: string;
+  /** First day of the week grid; defaults to Monday (ISO). */
+  weekStartsOn?: WeekDay;
   label?: (date: Date) => string;
   accessibleLabel?: (date: Date) => string;
   isCurrent?: (date: Date) => boolean;
@@ -80,7 +83,7 @@ export function WeekGrid(props: PeriodGridProps) {
   return (
     <PeriodGrid
       {...props}
-      rows={monthWeeks(props.focused, 1)}
+      rows={monthWeeks(props.focused, props.weekStartsOn ?? 1)}
       granularity="week"
       label={(date) => String(date.getDate())}
     />
@@ -105,8 +108,8 @@ function PeriodGrid({
         ArrowRight: () => addDays(date, rtl),
         ArrowUp: () => addDays(date, -7),
         ArrowDown: () => addDays(date, 7),
-        Home: () => startOfWeek(date, 1),
-        End: () => endOfWeek(date, 1),
+        Home: () => startOfWeek(date, props.weekStartsOn ?? 1),
+        End: () => endOfWeek(date, props.weekStartsOn ?? 1),
         PageUp: () => addMonths(date, event.shiftKey ? -12 : -1),
         PageDown: () => addMonths(date, event.shiftKey ? 12 : 1),
       };
@@ -152,7 +155,7 @@ function PeriodGrid({
             <th scope="col">
               <span className="sr-only">{props.weekLabel?.(props.focused)}</span>
             </th>
-            {weekdayNames(props.locale, 1).map((day) => (
+            {weekdayNames(props.locale, props.weekStartsOn ?? 1).map((day) => (
               <th scope="col" key={day.long} className="text-[11px] font-normal text-muted-foreground">
                 <abbr title={day.long} className="no-underline">
                   {day.narrow}
@@ -163,52 +166,56 @@ function PeriodGrid({
         </thead>
       )}
       <tbody>
-        {rows.map((row, index) => (
-          <tr key={index}>
-            {granularity === 'week' && row[0] && (
-              <th
-                scope="row"
-                aria-label={props.weekLabel?.(row[0])}
-                className="px-1 text-[11px] font-normal text-muted-foreground"
-              >
-                {isoWeek(row[0]).week}
-              </th>
-            )}
-            {row.map((date) => {
-              const key = periodCellKey(date, granularity);
-              const selected = props.isSelected(date);
-              return (
-                <td
-                  role="gridcell"
-                  key={key}
-                  aria-selected={selected}
-                  data-in-range={props.isInRange?.(date) || undefined}
-                  className={s.cell()}
+        {rows.map((row, index) => {
+          // ISO weeks are numbered by their Monday, so a Sunday- or Saturday-first row uses its own Monday.
+          const monday = row.find((date) => date.getDay() === 1) ?? row[0];
+          return (
+            <tr key={index}>
+              {granularity === 'week' && monday && (
+                <th
+                  scope="row"
+                  aria-label={props.weekLabel?.(monday)}
+                  className="px-1 text-[11px] font-normal text-muted-foreground"
                 >
-                  <button
-                    type="button"
-                    data-period={key}
-                    data-selected={selected || undefined}
-                    aria-current={props.isCurrent?.(date) ? 'date' : undefined}
-                    aria-label={
-                      props.accessibleLabel?.(date) ??
-                      (granularity === 'week' ? formatDayLabel(date, props.locale) : undefined)
-                    }
-                    aria-disabled={props.isDisabled(date) || undefined}
-                    tabIndex={periodCellKey(props.focused, granularity) === key ? 0 : -1}
-                    className={s.period()}
-                    onMouseEnter={() => props.onPreview?.(date)}
-                    onKeyDown={(event) => onKeyDown(event, date)}
-                    onFocus={() => props.onFocus(date)}
-                    onClick={() => props.onSelect(date)}
+                  {isoWeek(monday).week}
+                </th>
+              )}
+              {row.map((date) => {
+                const key = periodCellKey(date, granularity);
+                const selected = props.isSelected(date);
+                return (
+                  <td
+                    role="gridcell"
+                    key={key}
+                    aria-selected={selected}
+                    data-in-range={props.isInRange?.(date) || undefined}
+                    className={s.cell()}
                   >
-                    {label(date)}
-                  </button>
-                </td>
-              );
-            })}
-          </tr>
-        ))}
+                    <button
+                      type="button"
+                      data-period={key}
+                      data-selected={selected || undefined}
+                      aria-current={props.isCurrent?.(date) ? 'date' : undefined}
+                      aria-label={
+                        props.accessibleLabel?.(date) ??
+                        (granularity === 'week' ? formatDayLabel(date, props.locale) : undefined)
+                      }
+                      aria-disabled={props.isDisabled(date) || undefined}
+                      tabIndex={periodCellKey(props.focused, granularity) === key ? 0 : -1}
+                      className={s.period()}
+                      onMouseEnter={() => props.onPreview?.(date)}
+                      onKeyDown={(event) => onKeyDown(event, date)}
+                      onFocus={() => props.onFocus(date)}
+                      onClick={() => props.onSelect(date)}
+                    >
+                      {label(date)}
+                    </button>
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );

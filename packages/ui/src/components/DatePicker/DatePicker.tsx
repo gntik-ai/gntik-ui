@@ -2,9 +2,11 @@ import { FieldVariantProvider } from '../../field-variant/FieldVariantProvider';
 import { type ClearableProps } from '../../utils/clear-control';
 import { useId, useRef, useState, type Ref } from 'react';
 import { Calendar, type CalendarSingleProps } from '../Calendar/Calendar';
-import { formatDate, startOfDay, toISODate } from '../Calendar/calendar-utils';
+import { formatDate, localeWeekStart, startOfDay, startOfPeriod, toISODate } from '../Calendar/calendar-utils';
 import { Button } from '../Button';
 import { Popover, PopoverContent } from '../Popover';
+import { PeriodCalendar } from '../PeriodPicker/PeriodCalendar';
+import { usePeriodI18n } from '../PeriodPicker/period-utils';
 import { TimePicker } from '../TimePicker/TimePicker';
 import { formatTimeOfDay, timeOfDay, withTimeOfDay, parseTimeOfDay } from '../TimePicker/time-utils';
 import { DateTrigger } from './DateTrigger';
@@ -12,6 +14,7 @@ import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { formatTimeZoneLabel, fromZonedParts, isValidTimeZone, zonedParts } from '../../i18n/time-zone';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
 import { presetState, type DatePreset } from './date-presets';
+import { focusPeriodCell, periodFieldText, type DatePickerGranularity } from './period-field';
 import { cn } from '../../utils/cn';
 
 type CalendarPassThrough = Pick<
@@ -29,6 +32,8 @@ type CalendarPassThrough = Pick<
   | 'highlightedLabel'
   | 'loading'
   | 'renderDay'
+  | 'month'
+  | 'defaultMonth'
   | 'onMonthChange'
 >;
 
@@ -47,6 +52,13 @@ export interface DatePickerProps extends CalendarPassThrough, DatePickerVariantP
    * returns the day to pick, or `null` to clear. Presets outside min/max/isDateDisabled are disabled.
    */
   presets?: DatePreset[];
+  /**
+   * What the popup picks. `day` (default) opens the day calendar; `week`, `month`, `quarter` and `year` open the
+   * matching period grid and emit the period's first day at local midnight. Weeks start on `weekStartsOn` (or the
+   * locale's first day), so the same click gives another value in another locale. `isDateDisabled` and `withTime`
+   * apply to `day` only; `min` and `max` disable periods that end before or start after them.
+   */
+  granularity?: DatePickerGranularity;
   /** Intl options for the field text. */
   formatOptions?: Intl.DateTimeFormatOptions;
   /** Display and edit in this IANA zone. Defaults to the provider zone, then the browser zone. */
@@ -124,20 +136,27 @@ export function DatePicker({
   highlightedLabel,
   loading,
   renderDay,
+  month,
+  defaultMonth,
   onMonthChange,
   today,
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
-  withTime = false,
+  withTime: withTimeProp = false,
   hourCycle,
   timeStep,
   withSeconds = false,
+  granularity = 'day',
 }: DatePickerProps) {
   const { t, timeZone: providerZone } = useI18n();
   const requestedZone = timeZoneProp ?? providerZone;
   const zone = isValidTimeZone(requestedZone) ? requestedZone : 'system';
   const providerLocale = useOptionalI18n()?.locale;
   const locale = localeProp ?? providerLocale;
+  const periodI18n = usePeriodI18n(locale);
+  const period = granularity === 'day' ? null : granularity;
+  const withTime = withTimeProp && !period;
+  const periodWeekStart = weekStartsOn ?? localeWeekStart(locale);
   const placeholder = placeholderProp ?? t(withTime ? 'datePicker.dateTimePlaceholder' : 'datePicker.placeholder');
   const [inner, setInner] = useState<Date | null>(defaultValue ?? null);
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
@@ -200,7 +219,16 @@ export function DatePicker({
   // Intl styles cannot be combined with timeZoneName; replace an embedded name or append it.
   const usesStyle = fieldFormat?.dateStyle !== undefined || fieldFormat?.timeStyle !== undefined;
   let text = '';
-  if (date) {
+  if (date && period) {
+    text = periodFieldText(
+      { start: zone === 'system' ? date : proxyDay(date), end: null },
+      period,
+      periodI18n.locale,
+      periodI18n.t,
+      periodWeekStart,
+      formatOptions,
+    );
+  } else if (date) {
     if (zone === 'system') text = formatDate(date, locale, fieldFormat);
     else if (usesStyle) {
       const formatter = new Intl.DateTimeFormat(locale, { ...fieldFormat, timeZone: zone });
@@ -233,6 +261,9 @@ export function DatePicker({
       hidden += `T${formatTimeOfDay(time, withSeconds)}${offset < 0 ? '-' : '+'}${pad(Math.floor(Math.abs(offset) / 60))}:${pad(Math.abs(offset) % 60)}`;
     }
   }
+  // A period value submits the first day of its period, whatever day it was given on.
+  if (date && period)
+    hidden = toISODate(startOfPeriod(zone === 'system' ? date : proxyDay(date), period, periodWeekStart));
   // Applies a calendar (proxy) day: keeps the time with `withTime` and leaves the popup open there.
   const pickDay = (d: Date, details: DatePickerChangeDetails) => {
     if (withTime) {
@@ -277,7 +308,7 @@ export function DatePicker({
   };
   const pickPreset = (preset: DatePreset, day: Date | null) => {
     const details: DatePickerChangeDetails = { reason: 'preset', presetId: preset.id };
-    if (day) pickDay(day, details);
+    if (day) pickDay(period ? startOfPeriod(day, period, periodWeekStart) : day, details);
     else {
       change(null, details);
       if (!withTime) setOpen(false);
@@ -291,7 +322,21 @@ export function DatePicker({
     max: zone === 'system' || !max ? max : proxyDay(max),
     isDateDisabled,
   };
-  const calendar = (
+  const calendar = period ? (
+    <PeriodCalendar
+      key={String(open)}
+      ref={calendarRef}
+      aria-label={t('datePicker.choose')}
+      granularity={period}
+      value={presetValue}
+      onValueChange={(d) => d && pickDay(d, { reason: 'calendar' })}
+      locale={periodI18n.locale}
+      weekStartsOn={periodWeekStart}
+      min={presetBounds.min}
+      max={presetBounds.max}
+      today={zone === 'system' ? today : proxyDay(today ?? new Date())}
+    />
+  ) : (
     <Calendar
       key={String(open)}
       ref={calendarRef}
@@ -310,6 +355,8 @@ export function DatePicker({
       highlightedLabel={highlightedLabel}
       loading={loading}
       renderDay={renderDay}
+      month={month}
+      defaultMonth={defaultMonth}
       onMonthChange={onMonthChange}
       today={zone === 'system' ? today : proxyDay(today ?? new Date())}
     />
@@ -341,7 +388,7 @@ export function DatePicker({
         align="start"
         sideOffset={6}
         padding="none"
-        initialFocus={() => focusCalendarDay(calendarRef.current)}
+        initialFocus={() => (period ? focusPeriodCell(calendarRef.current) : focusCalendarDay(calendarRef.current))}
       >
         <FieldVariantProvider variant="outline">
           {presets.length > 0 ? (

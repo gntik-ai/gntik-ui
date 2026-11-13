@@ -6,6 +6,7 @@ import { cn } from '../../utils/cn';
 import { Calendar, type CalendarRangeProps } from '../Calendar/Calendar';
 import {
   formatDateRange,
+  localeWeekStart,
   outsideRangeLimits,
   startOfDay,
   toISODate,
@@ -13,10 +14,13 @@ import {
   type DateRange,
 } from '../Calendar/calendar-utils';
 import { Popover, PopoverContent } from '../Popover';
+import { PeriodCalendar } from '../PeriodPicker/PeriodCalendar';
+import { usePeriodI18n } from '../PeriodPicker/period-utils';
 import { focusCalendarDay } from './DatePicker';
 import { DateTrigger } from './DateTrigger';
 import { DEFAULT_DATE_RANGE_PRESETS, matchPreset, type DateRangePreset } from './date-range-presets';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
+import { focusPeriodCell, periodFieldText, snapPeriodRange, type DatePickerGranularity } from './period-field';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
 
 type CalendarPassThrough = Pick<
@@ -49,7 +53,17 @@ export interface DateRangePickerProps extends CalendarPassThrough, DatePickerVar
   onValueChange?: (range: DateRange) => void;
   /** Fires on every calendar pick, including the partial `{ start, end: null }`. Presets do not fire it. */
   onCalendarChange?: (range: DateRange) => void;
-  /** Quick ranges shown beside the calendar; pass `[]` to hide them. */
+  /**
+   * What the popup picks. `day` (default) opens the two-month day calendar; `week`, `month`, `quarter` and `year`
+   * open the matching period grid and emit whole periods: the first day of the earlier period to the last day of
+   * the later one, in either click order. Weeks start on `weekStartsOn` (or the locale's first day). `isDateDisabled`,
+   * `maxRange`, `minRange` and `numberOfMonths` apply to `day` only; `min` and `max` disable periods outside them.
+   */
+  granularity?: DatePickerGranularity;
+  /**
+   * Quick ranges shown beside the calendar; pass `[]` to hide them. The day presets are hidden when `granularity`
+   * is not `day` unless you pass presets; their ranges are widened to whole periods.
+   */
   presets?: DateRangePreset[];
   /** "Today" for the presets and the marker. Defaults to the current date. */
   today?: Date;
@@ -81,7 +95,7 @@ export function DateRangePicker({
   defaultValue,
   onValueChange,
   onCalendarChange,
-  presets = DEFAULT_DATE_RANGE_PRESETS,
+  presets: presetsProp,
   today: todayProp,
   formatOptions,
   placeholder: placeholderProp,
@@ -115,23 +129,30 @@ export function DateRangePicker({
   renderDay,
   onMonthChange,
   numberOfMonths = 2,
+  granularity = 'day',
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
 }: DateRangePickerProps) {
   const { t } = useI18n();
   const providerLocale = useOptionalI18n()?.locale;
   const locale = localeProp ?? providerLocale;
+  const periodI18n = usePeriodI18n(locale);
+  const period = granularity === 'day' ? null : granularity;
+  const periodWeekStart = weekStartsOn ?? localeWeekStart(locale);
+  const presets = presetsProp ?? (period ? [] : DEFAULT_DATE_RANGE_PRESETS);
   const placeholder = placeholderProp ?? t('datePicker.rangePlaceholder');
   const [inner, setInner] = useState<DateRange>(defaultValue ?? EMPTY);
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [draft, setDraft] = useState<DateRange>(value ?? inner);
   const [customActive, setCustomActive] = useState(false);
   const [announceLimit, setAnnounceLimit] = useState(false);
-  const maximum = validRangeLimit(maxRange);
+  const maximum = period ? undefined : validRangeLimit(maxRange);
   const [now] = useState(() => startOfDay(new Date()));
   const today = todayProp ? startOfDay(todayProp) : now;
   const calendarRef = useRef<HTMLDivElement | null>(null);
   const range = value ?? inner;
+  // Period ranges always cover whole periods, whatever days a controlled value carries.
+  const shown = period ? snapPeriodRange(range, period, periodWeekStart) : range;
   const open = openProp ?? innerOpen;
   const [previousOpen, setPreviousOpen] = useState(open);
   if (previousOpen !== open) {
@@ -168,19 +189,31 @@ export function DateRangePicker({
 
   const pickPreset = (p: DateRangePreset) => {
     if (p.range) {
-      apply(p.range(today));
+      apply(period ? snapPeriodRange(p.range(today), period, periodWeekStart) : p.range(today));
       return;
     }
     setCustomActive(true);
-    const day = focusCalendarDay(calendarRef.current);
+    const day = period ? focusPeriodCell(calendarRef.current) : focusCalendarDay(calendarRef.current);
     if (day !== true) day.focus();
+  };
+
+  const pickRange = (r: DateRange) => {
+    setDraft(r);
+    setAnnounceLimit(!!r.start && !r.end);
+    onCalendarChange?.(r);
+    setCustomActive(true);
+    if (r.start && r.end) apply(r);
   };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <DateTrigger
         ref={ref}
-        text={formatDateRange(range, locale, formatOptions)}
+        text={
+          period
+            ? periodFieldText(shown, period, periodI18n.locale, periodI18n.t, periodWeekStart, formatOptions)
+            : formatDateRange(range, locale, formatOptions)
+        }
         placeholder={placeholder}
         id={id}
         disabled={disabled}
@@ -197,8 +230,8 @@ export function DateRangePicker({
       />
       {name && (
         <>
-          <input type="hidden" name={`${name}-start`} value={range.start ? toISODate(range.start) : ''} />
-          <input type="hidden" name={`${name}-end`} value={range.end ? toISODate(range.end) : ''} />
+          <input type="hidden" name={`${name}-start`} value={shown.start ? toISODate(shown.start) : ''} />
+          <input type="hidden" name={`${name}-end`} value={shown.end ? toISODate(shown.end) : ''} />
         </>
       )}
       <PopoverContent
@@ -206,7 +239,7 @@ export function DateRangePicker({
         align="start"
         sideOffset={6}
         padding="none"
-        initialFocus={() => focusCalendarDay(calendarRef.current)}
+        initialFocus={() => (period ? focusPeriodCell(calendarRef.current) : focusCalendarDay(calendarRef.current))}
       >
         <FieldVariantProvider variant="outline">
           {maximum !== undefined && (
@@ -219,7 +252,9 @@ export function DateRangePicker({
               <div role="group" aria-label={t('datePicker.presets')} className={s.presets()}>
                 {presets.map((p) => {
                   const presetRange =
-                    maximum !== undefined || validRangeLimit(minRange) !== undefined ? p.range?.(today) : undefined;
+                    !period && (maximum !== undefined || validRangeLimit(minRange) !== undefined)
+                      ? p.range?.(today)
+                      : undefined;
                   const presetDisabled =
                     !!presetRange?.start &&
                     !!presetRange.end &&
@@ -243,42 +278,53 @@ export function DateRangePicker({
                 })}
               </div>
             )}
-            <Calendar
-              key={String(open)}
-              ref={calendarRef}
-              mode="range"
-              aria-label={t('datePicker.chooseRange')}
-              value={draft}
-              onValueChange={(r) => {
-                setDraft(r);
-                setAnnounceLimit(!!r.start && !r.end);
-                onCalendarChange?.(r);
-                setCustomActive(true);
-                if (r.start && r.end) apply(r);
-              }}
-              numberOfMonths={numberOfMonths}
-              defaultMonth={
-                draft.end && numberOfMonths === 2
-                  ? new Date(draft.end.getFullYear(), draft.end.getMonth() - 1, 1)
-                  : undefined
-              }
-              locale={locale}
-              weekStartsOn={weekStartsOn}
-              min={min}
-              max={max}
-              maxRange={maxRange}
-              minRange={minRange}
-              isDateDisabled={isDateDisabled}
-              maxView={maxView}
-              captionLayout={captionLayout}
-              getDayMarkers={getDayMarkers}
-              highlightedDates={highlightedDates}
-              highlightedLabel={highlightedLabel}
-              loading={loading}
-              renderDay={renderDay}
-              onMonthChange={onMonthChange}
-              today={today}
-            />
+            {period ? (
+              <PeriodCalendar
+                key={String(open)}
+                ref={calendarRef}
+                mode="range"
+                aria-label={t('datePicker.chooseRange')}
+                granularity={period}
+                value={draft}
+                onValueChange={pickRange}
+                locale={periodI18n.locale}
+                weekStartsOn={periodWeekStart}
+                min={min}
+                max={max}
+                today={today}
+              />
+            ) : (
+              <Calendar
+                key={String(open)}
+                ref={calendarRef}
+                mode="range"
+                aria-label={t('datePicker.chooseRange')}
+                value={draft}
+                onValueChange={pickRange}
+                numberOfMonths={numberOfMonths}
+                defaultMonth={
+                  draft.end && numberOfMonths === 2
+                    ? new Date(draft.end.getFullYear(), draft.end.getMonth() - 1, 1)
+                    : undefined
+                }
+                locale={locale}
+                weekStartsOn={weekStartsOn}
+                min={min}
+                max={max}
+                maxRange={maxRange}
+                minRange={minRange}
+                isDateDisabled={isDateDisabled}
+                maxView={maxView}
+                captionLayout={captionLayout}
+                getDayMarkers={getDayMarkers}
+                highlightedDates={highlightedDates}
+                highlightedLabel={highlightedLabel}
+                loading={loading}
+                renderDay={renderDay}
+                onMonthChange={onMonthChange}
+                today={today}
+              />
+            )}
           </div>
           {clearable && (range.start || range.end) && !disabled && !readOnly && (
             <div className={s.timeRow()}>

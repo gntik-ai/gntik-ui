@@ -1,5 +1,5 @@
 import type { Ref } from 'react';
-import type { DateRange, PeriodGranularity } from '../Calendar/calendar-utils';
+import type { DateRange, PeriodGranularity, WeekDay } from '../Calendar/calendar-utils';
 import type { DatePickerVariantProps } from '../DatePicker/date-picker.variants';
 
 export interface PeriodCommonProps extends DatePickerVariantProps {
@@ -31,4 +31,9 @@ export interface PeriodRangeProps {
 }
 
 export type PeriodValueProps = PeriodSingleProps | PeriodRangeProps;
-export type PeriodCalendarProps = PeriodCommonProps & PeriodValueProps & { ref?: Ref<HTMLDivElement> };
+export type PeriodCalendarProps = PeriodCommonProps &
+  PeriodValueProps & {
+    ref?: Ref<HTMLDivElement>;
+    /** First day of the week grid and of week periods. Defaults to Monday (ISO). */
+    weekStartsOn?: WeekDay;
+  };

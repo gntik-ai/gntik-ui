@@ -147,10 +147,11 @@ export function isoWeek(d: Date): { year: number; week: number } {
   return { year, week };
 }
 
-export function startOfPeriod(d: Date, granularity: PeriodGranularity): Date {
+/** Weeks start on `weekStartsOn` (Monday, ISO, by default); other periods ignore it. */
+export function startOfPeriod(d: Date, granularity: PeriodGranularity, weekStartsOn: WeekDay = 1): Date {
   switch (granularity) {
     case 'week':
-      return startOfWeek(d, 1);
+      return startOfWeek(d, weekStartsOn);
     case 'month':
       return startOfMonth(d);
     case 'quarter':
@@ -160,10 +161,10 @@ export function startOfPeriod(d: Date, granularity: PeriodGranularity): Date {
   }
 }
 
-export function endOfPeriod(d: Date, granularity: PeriodGranularity): Date {
+export function endOfPeriod(d: Date, granularity: PeriodGranularity, weekStartsOn: WeekDay = 1): Date {
   switch (granularity) {
     case 'week':
-      return endOfWeek(d, 1);
+      return endOfWeek(d, weekStartsOn);
     case 'month':
       return endOfMonth(d);
     case 'quarter':
