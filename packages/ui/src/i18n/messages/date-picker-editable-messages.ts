@@ -11,6 +11,16 @@ export const datePickerEditableEn = {
   'datePicker.examples.typedValue': 'Value: {value}',
   'datePicker.examples.noValue': 'No value',
   'dateField.examples.utcLabel': 'Maintenance start (UTC)',
+  'datePicker.examples.expiresOn': 'Expires on',
+  'datePicker.examples.in7': 'In 7 days',
+  'datePicker.examples.in30': 'In 30 days',
+  'datePicker.examples.endOfQuarter': 'End of quarter',
+  'datePicker.examples.noExpiry': 'No expiry',
+  'datePicker.examples.hint': 'Pick a shortcut or an exact day.',
+  'datePicker.examples.expiresAt': 'Expires at',
+  'datePicker.examples.limitsHint':
+    'Presets keep the time and the popup stays open until Done. In 30 days is disabled: it falls after the latest allowed day.',
+  'datePicker.examples.pickedPreset': 'Picked the "{id}" shortcut.',
 } as const;
 
 export const datePickerEditableEs = {
@@ -26,4 +36,14 @@ export const datePickerEditableEs = {
   'datePicker.examples.typedValue': 'Valor: {value}',
   'datePicker.examples.noValue': 'Sin valor',
   'dateField.examples.utcLabel': 'Inicio del mantenimiento (UTC)',
+  'datePicker.examples.expiresOn': 'Caduca el',
+  'datePicker.examples.in7': 'En 7 días',
+  'datePicker.examples.in30': 'En 30 días',
+  'datePicker.examples.endOfQuarter': 'Fin del trimestre',
+  'datePicker.examples.noExpiry': 'Sin caducidad',
+  'datePicker.examples.hint': 'Elige un atajo o un día exacto.',
+  'datePicker.examples.expiresAt': 'Caduca a las',
+  'datePicker.examples.limitsHint':
+    'Los atajos conservan la hora y el panel sigue abierto hasta Listo. En 30 días está desactivado: cae después del último día permitido.',
+  'datePicker.examples.pickedPreset': 'Atajo «{id}» elegido.',
 } satisfies Record<keyof typeof datePickerEditableEn, string>;

@@ -5,6 +5,7 @@ import { Calendar, type CalendarSingleProps } from '../Calendar/Calendar';
 import {
   formatDate,
   isSameDay,
+  localDate,
   localeWeekStart,
   monthDiff,
   startOfDay,
@@ -198,7 +199,7 @@ export function DatePicker({
   // Calendar consumes local-midnight days; these proxies represent the zone's calendar date.
   const proxyDay = (instant: Date) => {
     const p = zonedParts(instant, zone);
-    return new Date(p.year, p.month - 1, p.day);
+    return localDate(p.year, p.month - 1, p.day);
   };
 
   const setOpen = (next: boolean) => {
@@ -321,6 +322,8 @@ export function DatePicker({
           details,
         );
       }
+      // Typed entry has its time in the field: a pick settles the date and hands focus back to the button.
+      if (typedEntry) setOpen(false);
       return;
     }
     change(

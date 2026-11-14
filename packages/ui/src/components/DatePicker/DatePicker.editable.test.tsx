@@ -158,6 +158,41 @@ describe('DatePicker editable', () => {
     await waitFor(() => expect(chooseButton()).toHaveFocus());
   });
 
+  it.each([
+    ['the button', async (user: ReturnType<typeof userEvent.setup>) => user.click(chooseButton())],
+    [
+      'Alt+ArrowDown',
+      async (user: ReturnType<typeof userEvent.setup>) => {
+        await user.click(screen.getByRole('spinbutton', { name: 'Day' }));
+        await user.keyboard('{Alt>}{ArrowDown}{/Alt}');
+      },
+    ],
+  ])('with withTime a calendar pick opened with %s closes and focuses the button', async (_how, open) => {
+    const { user, onValueChange } = renderPicker({
+      withTime: true,
+      hourCycle: 24,
+      timeZone: 'UTC',
+      defaultValue: new Date(Date.UTC(2026, 2, 20, 9, 30)),
+    });
+    await open(user);
+    const dialog = await screen.findByRole('dialog');
+    await user.click(within(dialog).getByRole('button', { name: 'Tuesday, March 3, 2026' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date(Date.UTC(2026, 2, 3, 9, 30)), { reason: 'calendar' });
+    await waitFor(() => expect(chooseButton()).toHaveFocus());
+  });
+
+  it('opens the calendar on the literal year of a typed year below 100', async () => {
+    const { user, onValueChange } = renderPicker();
+    await user.click(screen.getByRole('spinbutton', { name: 'Month' }));
+    await user.keyboard('10010099');
+    expect(onValueChange).toHaveBeenCalledTimes(1);
+    expect(onValueChange.mock.calls[0]?.[0]?.getFullYear()).toBe(99);
+    await user.click(chooseButton());
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByText(/^October 0?99$/)).toBeInTheDocument();
+  });
+
   it('fills every segment from an ISO paste into the day segment and emits once', () => {
     const { onValueChange } = renderPicker();
     fireEvent.paste(screen.getByRole('spinbutton', { name: 'Day' }), {

@@ -10,16 +10,23 @@ export interface DateRange {
   end: Date | null;
 }
 
-export const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-export const startOfMonth = (d: Date) => new Date(d.getFullYear(), d.getMonth(), 1);
-export const endOfMonth = (d: Date) => new Date(d.getFullYear(), d.getMonth() + 1, 0);
-export const addDays = (d: Date, n: number) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+/** Local-midnight date that keeps years 0-99 (the Date constructor maps them to 1900-1999). */
+export function localDate(year: number, month: number, day: number): Date {
+  const d = new Date(2000, 0, 1);
+  d.setFullYear(year, month, day);
+  return d;
+}
+
+export const startOfDay = (d: Date) => localDate(d.getFullYear(), d.getMonth(), d.getDate());
+export const startOfMonth = (d: Date) => localDate(d.getFullYear(), d.getMonth(), 1);
+export const endOfMonth = (d: Date) => localDate(d.getFullYear(), d.getMonth() + 1, 0);
+export const addDays = (d: Date, n: number) => localDate(d.getFullYear(), d.getMonth(), d.getDate() + n);
 
 /** Adds months, clamping the day to the target month's length (Jan 31 + 1 → Feb 28). */
 export function addMonths(d: Date, n: number) {
-  const target = new Date(d.getFullYear(), d.getMonth() + n, 1);
+  const target = localDate(d.getFullYear(), d.getMonth() + n, 1);
   const day = Math.min(d.getDate(), endOfMonth(target).getDate());
-  return new Date(target.getFullYear(), target.getMonth(), day);
+  return localDate(target.getFullYear(), target.getMonth(), day);
 }
 
 export const isSameDay = (a: Date | null | undefined, b: Date | null | undefined) =>
