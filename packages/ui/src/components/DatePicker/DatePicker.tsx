@@ -1,6 +1,6 @@
 import { FieldVariantProvider } from '../../field-variant/FieldVariantProvider';
 import { type ClearableProps } from '../../utils/clear-control';
-import { useContext, useId, useRef, useState, type Ref } from 'react';
+import { useContext, useEffect, useId, useRef, useState, type Ref } from 'react';
 import { Calendar, type CalendarSingleProps } from '../Calendar/Calendar';
 import {
   formatDate,
@@ -195,6 +195,11 @@ export function DatePicker({
   const [typedKey, setTypedKey] = useState(0);
   const timeLabelId = useId();
   const date = value !== undefined ? value : inner;
+  // The latest date, including one typed in this event before React re-renders (a segment flush then Alt+ArrowDown).
+  const latestDate = useRef<Date | null>(date);
+  useEffect(() => {
+    latestDate.current = date;
+  }, [date]);
   const open = openProp ?? innerOpen;
   // Calendar consumes local-midnight days; these proxies represent the zone's calendar date.
   const proxyDay = (instant: Date) => {
@@ -204,7 +209,8 @@ export function DatePicker({
 
   const setOpen = (next: boolean) => {
     if (next && (readOnly || fieldDisabled)) return;
-    if (next && typedEntry && shownMonth && date && !month) setShownMonth(startOfMonth(proxyDay(date)));
+    const current = latestDate.current;
+    if (next && typedEntry && shownMonth && current && !month) setShownMonth(startOfMonth(proxyDay(current)));
     setInnerOpen(next);
     onOpenChange?.(next);
   };
@@ -363,6 +369,7 @@ export function DatePicker({
   // A typed date becomes the calendar's month and focused day; the controlling parent hears about a new month.
   const typeDate = (d: Date | null) => {
     if (fieldDisabled || readOnly) return;
+    latestDate.current = d;
     setInner(d);
     onValueChange?.(d);
     if (!d) return;

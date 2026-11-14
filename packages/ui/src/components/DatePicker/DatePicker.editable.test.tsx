@@ -125,6 +125,17 @@ describe('DatePicker editable', () => {
     expect(within(await screen.findByRole('dialog')).getByText('March 2026')).toBeInTheDocument();
   });
 
+  it('opens on the month a pending segment edit just committed when Alt+ArrowDown flushes it', async () => {
+    const { user, onValueChange } = renderPicker();
+    await user.click(screen.getByRole('spinbutton', { name: 'Month' }));
+    await user.keyboard('10012026');
+    await user.click(screen.getByRole('spinbutton', { name: 'Month' }));
+    await user.keyboard('1');
+    await user.keyboard('{Alt>}{ArrowDown}{/Alt}');
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 0, 1));
+    expect(within(await screen.findByRole('dialog')).getByText('January 2026')).toBeInTheDocument();
+  });
+
   it.each([
     ['the button', async (user: ReturnType<typeof userEvent.setup>) => user.click(chooseButton())],
     [
