@@ -177,17 +177,19 @@ export function DateRangePicker({
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const range = value ?? inner;
   // Typed entry: the keys that remount the segments (after a change that did not come from them) and the calendar
-  // (after a typed one), and the last value the segments reported so that it does not remount them.
+  // (after a typed one), and the value the segments just reported so that its echo does not remount them.
   const [fieldKey, setFieldKey] = useState(0);
   const [typedKey, setTypedKey] = useState(0);
   const rangeKey = `${range.start?.getTime()}:${range.end?.getTime()}`;
   const [seenKey, setSeenKey] = useState(rangeKey);
-  const [typedRangeKey, setTypedRangeKey] = useState(rangeKey);
+  const [typedRangeKey, setTypedRangeKey] = useState<string | null>(null);
   // What the segments hold while the pair is not reportable (a start without an end, or an end before the start):
   // the calendar previews it even though nothing was emitted.
   const [typedPreview, setTypedPreview] = useState<DateRange | null>(null);
   if (seenKey !== rangeKey) {
     setSeenKey(rangeKey);
+    // Only the immediate echo of a typed value is skipped: a later external update to the same value refreshes.
+    setTypedRangeKey(null);
     if (typedEntry && rangeKey !== typedRangeKey) {
       setFieldKey((k) => k + 1);
       setTypedPreview(null);

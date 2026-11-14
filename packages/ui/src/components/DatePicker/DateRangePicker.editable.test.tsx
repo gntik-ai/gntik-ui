@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Field, FieldLabel } from '../Field';
 import { I18nProvider } from '../../i18n/I18nProvider';
+import type { DateRange } from '../Calendar/calendar-utils';
 import { DateRangePicker, type DateRangePickerProps } from './DateRangePicker';
 
 const today = new Date(2026, 2, 11);
@@ -192,6 +194,37 @@ describe('DateRangePicker editable', () => {
     expect(onValueChange).toHaveBeenCalledTimes(1);
     expect(document.querySelector('input[name="window-start"]')).toHaveValue('2026-03-10');
     expect(document.querySelector('input[name="window-end"]')).toHaveValue('2026-03-12');
+  });
+
+  it('refreshes the segments when a controlled value returns to a value that was typed earlier', async () => {
+    const march = { start: new Date(2026, 2, 10), end: new Date(2026, 2, 20) };
+    const april = { start: new Date(2026, 3, 1), end: new Date(2026, 3, 5) };
+    function Harness() {
+      const [value, setValue] = useState<DateRange>({ start: null, end: null });
+      return (
+        <Field>
+          <FieldLabel>Audit window</FieldLabel>
+          <DateRangePicker editable locale="en-US" today={today} name="window" value={value} onValueChange={setValue} />
+          <button type="button" onClick={() => setValue(april)}>
+            Set April
+          </button>
+          <button type="button" onClick={() => setValue(march)}>
+            Set March
+          </button>
+        </Field>
+      );
+    }
+    const user = userEvent.setup();
+    render(<Harness />);
+    paste('Start date, Day', '2026-03-10');
+    paste('End date, Day', '2026-03-20');
+    await user.click(screen.getByRole('button', { name: 'Set April' }));
+    expect(seg('Start date, Month')).toHaveTextContent('04');
+    expect(document.querySelector('input[name="window-start"]')).toHaveValue('2026-04-01');
+    await user.click(screen.getByRole('button', { name: 'Set March' }));
+    expect(seg('Start date, Month')).toHaveTextContent('03');
+    expect(seg('End date, Day')).toHaveTextContent('20');
+    expect(document.querySelector('input[name="window-start"]')).toHaveValue('2026-03-10');
   });
 
   it('previews a typed start in the calendar before the end is typed', async () => {
