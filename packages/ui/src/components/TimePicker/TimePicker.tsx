@@ -142,7 +142,7 @@ export function TimePicker({
   const { current, draft, commit, display, focusSegment, onKeyDown, buffer, segmentRefs } = useSegments({
     value,
     defaultValue: defaultValue ?? null,
-    onValueChange,
+    onValueChange: onValueChange && ((next) => onValueChange(next)),
     toDraft,
     toValue: (d) => draftToValue(d, withSeconds),
     keys,

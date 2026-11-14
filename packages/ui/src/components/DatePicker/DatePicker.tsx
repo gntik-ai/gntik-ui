@@ -1,15 +1,19 @@
 import { FieldVariantProvider } from '../../field-variant/FieldVariantProvider';
 import { type ClearableProps } from '../../utils/clear-control';
-import { useId, useRef, useState, type Ref } from 'react';
+import { useContext, useId, useRef, useState, type Ref } from 'react';
 import { Calendar, type CalendarSingleProps } from '../Calendar/Calendar';
 import {
   formatDate,
   isSameDay,
   localeWeekStart,
+  monthDiff,
   startOfDay,
+  startOfMonth,
   startOfPeriod,
   toISODate,
 } from '../Calendar/calendar-utils';
+import { calendarDay } from '../DateField/date-parts';
+import { InFieldContext } from '../../utils/in-field-context';
 import { Button } from '../Button';
 import { Popover, PopoverContent } from '../Popover';
 import { PeriodCalendar } from '../PeriodPicker/PeriodCalendar';
@@ -17,6 +21,8 @@ import { periodUnavailable, usePeriodI18n } from '../PeriodPicker/period-utils';
 import { TimePicker } from '../TimePicker/TimePicker';
 import { formatTimeOfDay, timeOfDay, withTimeOfDay, parseTimeOfDay } from '../TimePicker/time-utils';
 import { DateTrigger } from './DateTrigger';
+import { EditableDateTrigger } from './EditableDateTrigger';
+import { dayBoundary } from './editable-date';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { formatTimeZoneLabel, fromZonedParts, isValidTimeZone, zonedParts } from '../../i18n/time-zone';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
@@ -66,6 +72,13 @@ export interface DatePickerProps extends CalendarPassThrough, DatePickerVariantP
    * apply to `day` only; `min` and `max` disable periods that end before or start after them.
    */
   granularity?: DatePickerGranularity;
+  /**
+   * Type or paste the date into locale-ordered segments (a DateField, the Field control) with a calendar button
+   * that opens the popup, instead of the read-only trigger. Typed values are reported once complete and `null`
+   * when a segment is cleared; out-of-range dates are reported and marked invalid. With `withTime` the segments
+   * also hold the time. Applies to `granularity="day"`; `ref` and `variant` are not applied.
+   */
+  editable?: boolean;
   /** Intl options for the field text. */
   formatOptions?: Intl.DateTimeFormatOptions;
   /** Display and edit in this IANA zone. Defaults to the provider zone, then the browser zone. */
@@ -114,6 +127,7 @@ export function DatePicker({
   onValueChange,
   presets = [],
   formatOptions,
+  editable = false,
   timeZone: timeZoneProp,
   hideTimeZone = false,
   placeholder: placeholderProp,
@@ -162,6 +176,9 @@ export function DatePicker({
   const locale = localeProp ?? providerLocale;
   const periodI18n = usePeriodI18n(locale);
   const period = granularity === 'day' ? null : granularity;
+  const typedEntry = editable && !period;
+  const inheritedDisabled = !!useContext(InFieldContext)?.disabled;
+  const fieldDisabled = disabled || (typedEntry && inheritedDisabled);
   const withTime = withTimeProp && !period;
   const periodWeekStart = weekStartsOn ?? localeWeekStart(locale);
   const placeholder = placeholderProp ?? t(withTime ? 'datePicker.dateTimePlaceholder' : 'datePicker.placeholder');
@@ -169,6 +186,12 @@ export function DatePicker({
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [now] = useState(() => new Date());
   const calendarRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  // Typed entry: the month the calendar shows once it has followed a date, and the keys that remount the segments
+  // (after a calendar change) and the calendar (after a typed one).
+  const [shownMonth, setShownMonth] = useState<Date | null>(null);
+  const [fieldKey, setFieldKey] = useState(0);
+  const [typedKey, setTypedKey] = useState(0);
   const timeLabelId = useId();
   const date = value !== undefined ? value : inner;
   const open = openProp ?? innerOpen;
@@ -179,12 +202,16 @@ export function DatePicker({
   };
 
   const setOpen = (next: boolean) => {
-    if (next && (readOnly || disabled)) return;
+    if (next && (readOnly || fieldDisabled)) return;
+    if (next && typedEntry && shownMonth && date && !month) setShownMonth(startOfMonth(proxyDay(date)));
     setInnerOpen(next);
     onOpenChange?.(next);
   };
 
   const change = (d: Date | null, details?: DatePickerChangeDetails) => {
+    if (typedEntry && (fieldDisabled || readOnly)) return;
+    // The segments show the new value, not what was typed before it.
+    if (typedEntry) setFieldKey((k) => k + 1);
     setInner(d);
     if (details) onValueChange?.(d, details);
     else onValueChange?.(d);
@@ -273,6 +300,7 @@ export function DatePicker({
     hidden = toISODate(startOfPeriod(zone === 'system' ? date : proxyDay(date), period, periodWeekStart));
   // Applies a calendar (proxy) day: keeps the time with `withTime` and leaves the popup open there.
   const pickDay = (d: Date, details: DatePickerChangeDetails) => {
+    if (typedEntry) setShownMonth(startOfMonth(d));
     if (withTime) {
       if (zone === 'system') {
         change(withTimeOfDay(d, date ? timeOfDay(date) : { hours: 0, minutes: 0, seconds: 0 }), details);
@@ -329,6 +357,20 @@ export function DatePicker({
     max: zone === 'system' || !max ? max : proxyDay(max),
     isDateDisabled,
   };
+  // A typed date becomes the calendar's month and focused day; the controlling parent hears about a new month.
+  const typeDate = (d: Date | null) => {
+    if (fieldDisabled || readOnly) return;
+    setInner(d);
+    onValueChange?.(d);
+    if (!d) return;
+    const next = startOfMonth(proxyDay(d));
+    const visible = month
+      ? startOfMonth(month)
+      : (shownMonth ?? startOfMonth(defaultMonth ?? presetValue ?? presetToday));
+    setShownMonth(next);
+    setTypedKey((k) => k + 1);
+    if (monthDiff(visible, next) !== 0) onMonthChange?.(next);
+  };
   const calendar = period ? (
     <PeriodCalendar
       key={String(open)}
@@ -345,7 +387,7 @@ export function DatePicker({
     />
   ) : (
     <Calendar
-      key={String(open)}
+      key={typedEntry ? `${open}-${typedKey}` : String(open)}
       ref={calendarRef}
       aria-label={t('datePicker.choose')}
       value={presetValue}
@@ -362,9 +404,16 @@ export function DatePicker({
       highlightedLabel={highlightedLabel}
       loading={loading}
       renderDay={renderDay}
-      month={month}
-      defaultMonth={defaultMonth}
-      onMonthChange={onMonthChange}
+      month={typedEntry ? (month ?? shownMonth ?? undefined) : month}
+      defaultMonth={typedEntry && shownMonth ? undefined : defaultMonth}
+      onMonthChange={
+        typedEntry
+          ? (m) => {
+              setShownMonth(m);
+              onMonthChange?.(m);
+            }
+          : onMonthChange
+      }
       today={zone === 'system' ? today : proxyDay(today ?? new Date())}
     />
   );
@@ -372,23 +421,48 @@ export function DatePicker({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <DateTrigger
-        ref={ref}
-        text={text}
-        placeholder={placeholder}
-        id={id}
-        disabled={disabled}
-        readOnly={readOnly}
-        clearable={clearable}
-        clearLabel={clearLabel}
-        onClear={clear}
-        invalid={invalid}
-        size={size}
-        variant={variant}
-        className={className}
-        aria-label={ariaLabel}
-        aria-describedby={ariaDescribedBy}
-      />
+      {typedEntry ? (
+        <EditableDateTrigger
+          key={fieldKey}
+          buttonRef={buttonRef}
+          value={date}
+          onValueChange={typeDate}
+          onOpenRequest={() => setOpen(true)}
+          locale={locale}
+          granularity={withTime ? (withSeconds ? 'second' : 'minute') : 'day'}
+          hourCycle={hourCycle}
+          timeZone={zone}
+          min={min && withTime ? dayBoundary(min, zone, 'start') : min}
+          max={max && withTime ? dayBoundary(max, zone, 'end') : max}
+          isDateDisabled={isDateDisabled && ((d, context) => isDateDisabled(calendarDay(d, zone), context))}
+          id={id}
+          disabled={fieldDisabled}
+          readOnly={readOnly}
+          invalid={invalid}
+          size={size}
+          className={className}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedBy}
+        />
+      ) : (
+        <DateTrigger
+          ref={ref}
+          text={text}
+          placeholder={placeholder}
+          id={id}
+          disabled={disabled}
+          readOnly={readOnly}
+          clearable={clearable}
+          clearLabel={clearLabel}
+          onClear={clear}
+          invalid={invalid}
+          size={size}
+          variant={variant}
+          className={className}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedBy}
+        />
+      )}
       {name && <input type="hidden" name={name} value={hidden} />}
       <PopoverContent
         aria-label={t('datePicker.choose')}
@@ -396,6 +470,7 @@ export function DatePicker({
         sideOffset={6}
         padding="none"
         initialFocus={() => (period ? focusPeriodCell(calendarRef.current) : focusCalendarDay(calendarRef.current))}
+        finalFocus={typedEntry ? () => buttonRef.current : undefined}
       >
         <FieldVariantProvider variant="outline">
           {presets.length > 0 ? (

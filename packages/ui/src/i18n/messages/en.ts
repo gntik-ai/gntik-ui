@@ -9,6 +9,7 @@ import { commandPaletteEn } from './command-palette-messages';
 import { sliderInputEn } from './slider-input-messages';
 import { formActionsEn } from './form-action-messages';
 import { dateRangeExamplesEn } from './date-range-example-messages';
+import { datePickerEditableEn } from './date-picker-editable-messages';
 import { calendarMarkerExamplesEn } from './calendar-marker-messages';
 import { fileInputEn } from './file-input-messages';
 import { uploadEn } from './upload-messages';
@@ -44,6 +45,7 @@ export const en = {
   ...logViewerEn,
   ...commandPaletteEn,
   ...dateRangeExamplesEn,
+  ...datePickerEditableEn,
   ...calendarMarkerExamplesEn,
   ...fileInputEn,
   ...uploadEn,

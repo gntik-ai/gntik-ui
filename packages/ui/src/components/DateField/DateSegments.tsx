@@ -12,6 +12,7 @@ interface Props extends DateFieldVariantProps {
   prefix?: string;
   onPrevious?: () => void;
   onNext?: () => void;
+  onOpenRequest?: () => void;
 }
 
 export function DateSegments({
@@ -24,6 +25,7 @@ export function DateSegments({
   size,
   onPrevious,
   onNext,
+  onOpenRequest,
 }: Props) {
   const s = dateFieldVariants({ size });
   return (
@@ -94,7 +96,11 @@ export function DateSegments({
             }}
             onKeyDown={(e) => {
               if (disabled) return;
-              if (e.key === 'ArrowLeft' && index === 0 && onPrevious) {
+              if (e.altKey && e.key === 'ArrowDown' && onOpenRequest) {
+                e.preventDefault();
+                state.flush();
+                onOpenRequest();
+              } else if (e.key === 'ArrowLeft' && index === 0 && onPrevious) {
                 e.preventDefault();
                 onPrevious();
               } else if (e.key === 'ArrowRight' && index === state.keys.length - 1 && onNext) {

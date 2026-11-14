@@ -3,7 +3,9 @@ import { useRef, useState, type KeyboardEvent } from 'react';
 interface SegmentOptions<K extends string, D, V> {
   value?: V;
   defaultValue: V;
-  onValueChange?: (value: V) => void;
+  onValueChange?: (value: V, draft: D) => void;
+  /** Every applied edit, including one that leaves the value as it was (such as clearing a segment of an unfinished date). */
+  onCommit?: (draft: D, value: V) => void;
   toDraft: (value: V) => D;
   toValue: (draft: D) => V;
   keys: K[];
@@ -20,6 +22,8 @@ interface SegmentOptions<K extends string, D, V> {
   deferDigits?: (key: K) => boolean;
   resetOnExternalChange?: boolean;
   notifyDraft?: (draft: D) => boolean;
+  /** Called when focus moves past the last segment (auto-advance after typing), after pending digits are applied. */
+  onAdvance?: () => void;
   disabled?: boolean;
   readOnly?: boolean;
 }
@@ -52,9 +56,10 @@ export function useSegments<K extends string, D, V>(options: SegmentOptions<K, D
     setDraft(next);
     setCommittedDraft(next);
     const v = toValue(next);
+    options.onCommit?.(next, v);
     if (!equals(v, previous) || options.notifyDraft?.(next)) {
       if (controlled) setSynced(v);
-      onValueChange?.(v);
+      onValueChange?.(v, next);
     }
   };
   const flush = () => {
@@ -66,7 +71,8 @@ export function useSegments<K extends string, D, V>(options: SegmentOptions<K, D
   const focusSegment = (i: number) => {
     flush();
     buffer.current = null;
-    segmentRefs.current[Math.max(0, Math.min(keys.length - 1, i))]?.focus();
+    if (i >= keys.length && options.onAdvance) options.onAdvance();
+    else segmentRefs.current[Math.max(0, Math.min(keys.length - 1, i))]?.focus();
   };
   const spin = (key: K, delta: number) => {
     const [lo, hi] = range(key);

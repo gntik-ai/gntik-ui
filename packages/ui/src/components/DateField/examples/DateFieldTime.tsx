@@ -14,6 +14,16 @@ export default function DateFieldTime() {
         <FieldLabel>{t('dateField.end')}</FieldLabel>
         <DateField defaultValue={new Date(2026, 9, 1, 17, 45, 30)} granularity="second" hourCycle={12} name="until" />
       </Field>
+      <Field>
+        <FieldLabel>{t('dateField.examples.utcLabel')}</FieldLabel>
+        <DateField
+          defaultValue={new Date(Date.UTC(2026, 9, 1, 2, 30))}
+          granularity="minute"
+          hourCycle={24}
+          utc
+          name="maintenance"
+        />
+      </Field>
     </div>
   );
 }

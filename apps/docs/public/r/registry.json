@@ -403,6 +403,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -690,6 +695,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -1302,6 +1312,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -1607,6 +1622,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -1891,6 +1911,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -2178,6 +2203,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -2576,6 +2606,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -2862,6 +2897,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -3284,6 +3324,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -3556,6 +3601,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -3903,6 +3953,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -4722,6 +4777,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -5188,6 +5248,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -5502,6 +5567,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -6095,6 +6165,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -6685,6 +6760,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -7112,7 +7192,7 @@
       "name": "date-field",
       "type": "registry:ui",
       "title": "DateField",
-      "description": "Typed local date and date-time entry in Intl locale order. DateField and DateRangeField expose named spinbuttons, calendar/min/max/disabled-date validation, ISO or numeric locale paste, and hidden form values. Granularity adds hours, minutes or seconds; a 12-hour clock adds AM/PM. Two-digit years remain literal (26 means year 26); empty segments use the TimePicker placeholder. forceLeadingZeros pads supplied values; typed segments are padded. Works inside Field. DatePicker triggers remain read-only.",
+      "description": "Typed local date and date-time entry in Intl locale order. DateField and DateRangeField expose named spinbuttons, calendar/min/max/disabled-date validation, ISO or numeric locale paste, and hidden form values. Granularity adds hours, minutes or seconds; a 12-hour clock adds AM/PM. Two-digit years remain literal (26 means year 26); empty segments use the TimePicker placeholder. forceLeadingZeros pads supplied values; typed segments are padded. Works inside Field. DatePicker and DateRangePicker use these fields as their trigger with `editable`. `timeZone` (IANA) or `utc` reads and writes the wall clock of that zone without host-local Date math, and `utc` submits UTC wall times in the hidden inputs (DateFieldTime shows a UTC date-time). `isDateDisabled(date, { rangeStart })` gets the typed start as `rangeStart` for a range end. A 12-hour date-time is reported once its AM/PM is entered or pasted; an hour alone does not choose one. An invalid group also carries aria-invalid, including one inherited from a Field marked `invalid`.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.9.0",
@@ -7219,6 +7299,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -7416,7 +7501,7 @@
       "name": "date-picker",
       "type": "registry:ui",
       "title": "DatePicker",
-      "description": "Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. DateRangePickerRetention demonstrates maxRange={90}, minRange={3} and onCalendarChange for partial picks. Limits count inclusive calendar days, apply on both sides only while an end is pending, reset on reopening and disable presets outside the limits. Invalid limits (non-positive or non-integer) are ignored; minRange > maxRange leaves no selectable end. onCalendarChange reports every calendar pick, including { start, end: null }; onValueChange still applies only complete ranges. A polite live region announces the maximum once per start pick, in English or Spanish; minRange alone adds no announcement. isDateDisabled(date, { rangeStart }) receives the pending start in range mode and null otherwise, including DatePicker presets; one-argument predicates still work. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits. DatePicker accepts `timeZone` (IANA, UTC or system), defaulting to I18nProvider then the browser; invalid names fall back to the browser. Calendar days, today, min/max, time segments and edits use that wall clock while values stay Date instants. isDateDisabled receives a local-midnight proxy of the zoned calendar day. DST gaps move forward and overlaps choose the earlier occurrence. Non-system zones appear in field text and time labels unless `hideTimeZone` is true. With time, hidden values include the wall time and UTC offset (and seconds with `withSeconds`); date-only values submit YYYY-MM-DD and emit zoned midnight. Custom formatOptions retain their format but use the effective zone. DatePicker `presets` adds app-defined quick dates ({ id, label, date(today) }) in a Quick dates group before the calendar, wrapping into a row on narrow screens: activating one sets the day (with `withTime` it keeps the time, or 00:00 when empty, and the popup stays open), otherwise closes the popup and returns focus to the field; a preset returning null clears the value. Presets before `min`, after `max` or rejected by `isDateDisabled` are disabled; the preset on the value day (or the null preset when empty) has aria-pressed. Today for presets is the `today` prop or the current day in the effective zone. `onValueChange` receives an optional second argument { reason: calendar | preset | time, presetId? }. DatePickerExpiryPresets shows In 7 days, In 30 days, End of quarter and No expiry; DatePickerPresetsTimeLimits shows presets with `withTime` keeping the time and the popup open, and a preset disabled by `max`. DatePickerUtc demonstrates UTC, seconds, hidden zone labels and a provider-inherited date-only zone; DateRangePicker is unchanged. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. The internal calendar selectors and time field in the popup stay outlined, including inside a ghost or filled provider. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged. DatePicker and DateRangePicker forward the Calendar props getDayMarkers, highlightedDates, highlightedLabel, loading, renderDay and onMonthChange to the popup calendar, so a picker can show per-day markers and load the month the user pages to (see Calendar CalendarMarkers); with a non-system timeZone the dates they receive are calendar (proxy) days at local midnight. DatePicker also forwards the Calendar props `month` and `defaultMonth` in the day granularity (DatePickerVisibleMonth shows a controlled month with onMonthChange and a defaultMonth). `granularity` (day by default, week, month, quarter or year) on DatePicker and DateRangePicker opens the shared period grid instead of the day calendar, so a whole period is one value: DatePicker emits the period's first day at local midnight, and DateRangePicker emits the first day of the earlier period to the last day of the later one, in either click order, after a two-step pick with a whole-period hover preview. Weeks start on `weekStartsOn` (or the locale's first day when unset), so the same click yields another value in another locale. Field text is Intl-formatted (`Mar 2026`, `2026`, `Mar 2 – 8, 2026`, `Jan – Jun 2026`) with the catalog quarter label (`Q2 2026`, es `T2 2026`; quarter ranges join two labels with an en dash); `formatOptions` overrides it. `min` and `max` disable periods that end before or start after them; `isDateDisabled`, `withTime`, `maxRange`, `minRange` and `numberOfMonths` apply to day only. Hidden inputs keep `YYYY-MM-DD`: the period start, or `<name>-start` and `<name>-end` as the first and last day. The day presets of DateRangePicker are hidden for other granularities unless `presets` is passed (their ranges widen to whole periods). DatePicker presets in a period granularity snap to the period start and are disabled by `min` and `max` on the whole period, not by `isDateDisabled`. DatePickerMonth shows month, week and year pickers and DateRangePickerQuarters a quarter range.",
+      "description": "Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. DateRangePickerRetention demonstrates maxRange={90}, minRange={3} and onCalendarChange for partial picks. Limits count inclusive calendar days, apply on both sides only while an end is pending, reset on reopening and disable presets outside the limits. Invalid limits (non-positive or non-integer) are ignored; minRange > maxRange leaves no selectable end. onCalendarChange reports every calendar pick, including { start, end: null }; onValueChange still applies only complete ranges. A polite live region announces the maximum once per start pick, in English or Spanish; minRange alone adds no announcement. isDateDisabled(date, { rangeStart }) receives the pending start in range mode and null otherwise, including DatePicker presets; one-argument predicates still work. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits. DatePicker accepts `timeZone` (IANA, UTC or system), defaulting to I18nProvider then the browser; invalid names fall back to the browser. Calendar days, today, min/max, time segments and edits use that wall clock while values stay Date instants. isDateDisabled receives a local-midnight proxy of the zoned calendar day. DST gaps move forward and overlaps choose the earlier occurrence. Non-system zones appear in field text and time labels unless `hideTimeZone` is true. With time, hidden values include the wall time and UTC offset (and seconds with `withSeconds`); date-only values submit YYYY-MM-DD and emit zoned midnight. Custom formatOptions retain their format but use the effective zone. DatePicker `presets` adds app-defined quick dates ({ id, label, date(today) }) in a Quick dates group before the calendar, wrapping into a row on narrow screens: activating one sets the day (with `withTime` it keeps the time, or 00:00 when empty, and the popup stays open), otherwise closes the popup and returns focus to the field; a preset returning null clears the value. Presets before `min`, after `max` or rejected by `isDateDisabled` are disabled; the preset on the value day (or the null preset when empty) has aria-pressed. Today for presets is the `today` prop or the current day in the effective zone. `onValueChange` receives an optional second argument { reason: calendar | preset | time, presetId? }. DatePickerExpiryPresets shows In 7 days, In 30 days, End of quarter and No expiry; DatePickerPresetsTimeLimits shows presets with `withTime` keeping the time and the popup open, and a preset disabled by `max`. DatePickerUtc demonstrates UTC, seconds, hidden zone labels and a provider-inherited date-only zone; DateRangePicker is unchanged. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. The internal calendar selectors and time field in the popup stay outlined, including inside a ghost or filled provider. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged. DatePicker and DateRangePicker forward the Calendar props getDayMarkers, highlightedDates, highlightedLabel, loading, renderDay and onMonthChange to the popup calendar, so a picker can show per-day markers and load the month the user pages to (see Calendar CalendarMarkers); with a non-system timeZone the dates they receive are calendar (proxy) days at local midnight. DatePicker also forwards the Calendar props `month` and `defaultMonth` in the day granularity (DatePickerVisibleMonth shows a controlled month with onMonthChange and a defaultMonth). `granularity` (day by default, week, month, quarter or year) on DatePicker and DateRangePicker opens the shared period grid instead of the day calendar, so a whole period is one value: DatePicker emits the period's first day at local midnight, and DateRangePicker emits the first day of the earlier period to the last day of the later one, in either click order, after a two-step pick with a whole-period hover preview. Weeks start on `weekStartsOn` (or the locale's first day when unset), so the same click yields another value in another locale. Field text is Intl-formatted (`Mar 2026`, `2026`, `Mar 2 – 8, 2026`, `Jan – Jun 2026`) with the catalog quarter label (`Q2 2026`, es `T2 2026`; quarter ranges join two labels with an en dash); `formatOptions` overrides it. `min` and `max` disable periods that end before or start after them; `isDateDisabled`, `withTime`, `maxRange`, `minRange` and `numberOfMonths` apply to day only. Hidden inputs keep `YYYY-MM-DD`: the period start, or `<name>-start` and `<name>-end` as the first and last day. The day presets of DateRangePicker are hidden for other granularities unless `presets` is passed (their ranges widen to whole periods). DatePicker presets in a period granularity snap to the period start and are disabled by `min` and `max` on the whole period, not by `isDateDisabled`. DatePickerMonth shows month, week and year pickers and DateRangePickerQuarters a quarter range. `editable` (opt-in, default false) on DatePicker and DateRangePicker replaces the read-only trigger with a DateField or DateRangeField (the Field control, so FieldLabel and FieldDescription keep wiring) followed by a Choose date button that opens the same popup; it applies to granularity day, and `ref`, `variant` and the trigger clear button are not applied (the popup Clear action still is). Segments follow the locale order (month, day, year in en-US; day, month, year in es-ES). Typing reports `onValueChange` once the date is complete, with one argument, and `null` when a filled segment is cleared; a typed date before `min`, after `max` or rejected by `isDateDisabled` is reported and marks the group aria-invalid with the error border. Pasting an ISO `YYYY-MM-DD` date (or date-time) or a numeric date in the locale's order only (01/02/2026 is 1 February in es-ES, January 2 in en-US) into any segment fills them all. The calendar follows a typed date (visible month and focused day; a controlled `month` hears it through `onMonthChange`, and `defaultMonth` applies only to the first open); a calendar pick rewrites the segments, closes the popup and returns focus to the Choose date button, however the popup was opened. `withTime` adds hour and minute segments (seconds with `withSeconds`, AM/PM when the clock is 12-hour) and the popup keeps the Calendar and TimePicker; a typed 12-hour value is reported once its AM/PM is entered, never from an hour-inferred period, while a pasted value uses its own period. Zoned pickers (`timeZone`) type and report the wall time of that zone, whatever the browser zone. DateRangePicker `editable` names the ends Start date and End date (`datePicker.startDate`, `datePicker.endDate`) in one group: a complete valid pair is reported once, an incomplete pair (such as one cleared day) is not, and only fully cleared segments report an empty range; an end before the start is marked invalid and not reported, while a pair outside `min`, `max`, `isDateDisabled` (called with the typed start as `rangeStart`) or `minRange`/`maxRange` is reported and marked invalid. An inherited Field `disabled` disables the segments and the button, and an inherited Field `invalid` marks both. DatePickerEditable shows a key expiry and a UTC date-time, and DateRangePickerEditable an audit window.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.9.0",
@@ -7426,6 +7511,7 @@
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/button.json",
         "https://ui.gntik.ai/r/calendar.json",
+        "https://ui.gntik.ai/r/date-field.json",
         "https://ui.gntik.ai/r/period-picker.json",
         "https://ui.gntik.ai/r/popover.json",
         "https://ui.gntik.ai/r/time-picker.json",
@@ -7458,6 +7544,11 @@
           "target": "components/ui/date-picker/DateTrigger.tsx"
         },
         {
+          "path": "packages/ui/src/components/DatePicker/EditableDateTrigger.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/date-picker/EditableDateTrigger.tsx"
+        },
+        {
           "path": "packages/ui/src/components/DatePicker/date-picker.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/date-picker/date-picker.variants.ts"
@@ -7471,6 +7562,16 @@
           "path": "packages/ui/src/components/DatePicker/date-range-presets.ts",
           "type": "registry:ui",
           "target": "components/ui/date-picker/date-range-presets.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DatePicker/editable-date.ts",
+          "type": "registry:ui",
+          "target": "components/ui/date-picker/editable-date.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DatePicker/editable-trigger.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/date-picker/editable-trigger.variants.ts"
         },
         {
           "path": "packages/ui/src/components/DatePicker/index.ts",
@@ -7546,6 +7647,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -7876,6 +7982,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -8195,6 +8306,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -8557,6 +8673,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -8849,6 +8970,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -9164,6 +9290,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -9485,6 +9616,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -9765,6 +9901,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -10064,6 +10205,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -10358,6 +10504,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -11038,6 +11189,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -11560,6 +11716,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -12147,6 +12308,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -12529,6 +12695,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -12945,6 +13116,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -13333,6 +13509,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -13620,6 +13801,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -13905,6 +14091,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -14203,6 +14394,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -14539,6 +14735,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -14911,6 +15112,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -15196,6 +15402,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -15490,6 +15701,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -16076,6 +16292,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -16403,6 +16624,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -17005,6 +17231,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -17494,6 +17725,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -17787,6 +18023,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -18214,6 +18455,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -18506,6 +18752,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -18790,6 +19041,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -19084,6 +19340,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -19353,6 +19614,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -19750,6 +20016,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -20080,6 +20351,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -20511,6 +20787,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -20792,6 +21073,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -21173,6 +21459,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -21469,6 +21760,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -21827,6 +22123,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -22357,6 +22658,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -22655,6 +22961,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -23229,6 +23540,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -23860,6 +24176,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -24224,6 +24545,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -24612,6 +24938,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -24946,6 +25277,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -25237,6 +25573,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -25619,6 +25960,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -26144,6 +26490,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -26784,6 +27135,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -27468,6 +27824,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -27846,6 +28207,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -28113,6 +28479,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -28534,6 +28905,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -29033,6 +29409,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -29454,6 +29835,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -29866,6 +30252,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -30192,6 +30583,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -30476,6 +30872,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -30774,6 +31175,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -31234,6 +31640,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -31519,6 +31930,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -31826,6 +32242,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -32157,6 +32578,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -32449,6 +32875,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -32735,6 +33166,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -33069,6 +33505,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -33409,6 +33850,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -33813,6 +34259,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -34101,6 +34552,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -34437,6 +34893,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -34734,6 +35195,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -35161,6 +35627,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -35427,6 +35898,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -35993,6 +36469,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -36362,6 +36843,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/date-picker-period-messages.ts"
@@ -36646,6 +37132,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -36982,6 +37473,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
@@ -37339,6 +37835,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-editable-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-editable-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",

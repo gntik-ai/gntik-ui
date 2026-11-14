@@ -1,7 +1,7 @@
 import { FieldVariantProvider } from '../../field-variant/FieldVariantProvider';
 import { type ClearableProps } from '../../utils/clear-control';
 import { Button } from '../Button';
-import { useRef, useState, type Ref } from 'react';
+import { useContext, useRef, useState, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { Calendar, type CalendarRangeProps } from '../Calendar/Calendar';
 import {
@@ -13,11 +13,15 @@ import {
   validRangeLimit,
   type DateRange,
 } from '../Calendar/calendar-utils';
+import { compareFieldDates } from '../DateField/date-parts';
+import type { DateRangeChangeDetails } from '../DateField/DateRangeField';
 import { Popover, PopoverContent } from '../Popover';
+import { InFieldContext } from '../../utils/in-field-context';
 import { PeriodCalendar } from '../PeriodPicker/PeriodCalendar';
 import { usePeriodI18n } from '../PeriodPicker/period-utils';
 import { focusCalendarDay } from './DatePicker';
 import { DateTrigger } from './DateTrigger';
+import { EditableRangeTrigger } from './EditableDateTrigger';
 import { DEFAULT_DATE_RANGE_PRESETS, matchPreset, type DateRangePreset } from './date-range-presets';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import {
@@ -57,6 +61,15 @@ export interface DateRangePickerProps extends CalendarPassThrough, DatePickerVar
   defaultValue?: DateRange;
   /** Fires with complete ranges, or an empty range when cleared. */
   onValueChange?: (range: DateRange) => void;
+  /**
+   * Type or paste the two dates into locale-ordered segments (a DateRangeField, the Field control) with a calendar
+   * button that opens the popup, instead of the read-only trigger. A complete valid pair is reported once; an
+   * incomplete pair is not, and clearing every segment reports an empty range. An end before the start is marked
+   * invalid and not reported; a pair outside `min`, `max`, `isDateDisabled` (the typed start is its `rangeStart`) or
+   * the range limits is reported and marked invalid. Applies to `granularity="day"`; `ref` and `variant` are not
+   * applied.
+   */
+  editable?: boolean;
   /** Fires on every calendar pick, including the partial `{ start, end: null }`. Presets do not fire it. */
   onCalendarChange?: (range: DateRange) => void;
   /**
@@ -102,6 +115,7 @@ export function DateRangePicker({
   onValueChange,
   onCalendarChange,
   presets: presetsProp,
+  editable = false,
   today: todayProp,
   formatOptions,
   placeholder: placeholderProp,
@@ -144,6 +158,9 @@ export function DateRangePicker({
   const locale = localeProp ?? providerLocale;
   const periodI18n = usePeriodI18n(locale);
   const period = granularity === 'day' ? null : granularity;
+  const typedEntry = editable && !period;
+  const inheritedDisabled = !!useContext(InFieldContext)?.disabled;
+  const fieldDisabled = disabled || (typedEntry && inheritedDisabled);
   const periodWeekStart = weekStartsOn ?? localeWeekStart(locale);
   const presets = presetsProp ?? (period ? [] : DEFAULT_DATE_RANGE_PRESETS);
   const placeholder = placeholderProp ?? t('datePicker.rangePlaceholder');
@@ -156,7 +173,19 @@ export function DateRangePicker({
   const [now] = useState(() => startOfDay(new Date()));
   const today = todayProp ? startOfDay(todayProp) : now;
   const calendarRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   const range = value ?? inner;
+  // Typed entry: the keys that remount the segments (after a change that did not come from them) and the calendar
+  // (after a typed one), and the last value the segments reported so that it does not remount them.
+  const [fieldKey, setFieldKey] = useState(0);
+  const [typedKey, setTypedKey] = useState(0);
+  const rangeKey = `${range.start?.getTime()}:${range.end?.getTime()}`;
+  const [seenKey, setSeenKey] = useState(rangeKey);
+  const [typedRangeKey, setTypedRangeKey] = useState(rangeKey);
+  if (seenKey !== rangeKey) {
+    setSeenKey(rangeKey);
+    if (typedEntry && rangeKey !== typedRangeKey) setFieldKey((k) => k + 1);
+  }
   // Period ranges always cover whole periods, whatever days a controlled value carries.
   const shown = period ? snapPeriodRange(range, period, periodWeekStart) : range;
   const open = openProp ?? innerOpen;
@@ -175,12 +204,15 @@ export function DateRangePicker({
     : (matchPreset(presets, draft, today) ?? (draft.start ? presets.find((p) => !p.range) : undefined));
 
   const setOpen = (next: boolean) => {
-    if (next && (readOnly || disabled)) return;
+    if (next && (readOnly || fieldDisabled)) return;
     setInnerOpen(next);
     onOpenChange?.(next);
   };
 
   const apply = (next: DateRange) => {
+    if (typedEntry && (fieldDisabled || readOnly)) return;
+    // The segments show the new value, not what was typed before it.
+    if (typedEntry) setFieldKey((k) => k + 1);
     setInner(next);
     onValueChange?.(next);
     setOpen(false);
@@ -208,7 +240,31 @@ export function DateRangePicker({
     if (day !== true) day.focus();
   };
 
+  // The segments report a pair only when both ends are complete, in order and valid, or all cleared.
+  const typeRange = (r: DateRange, { startFill, endFill }: DateRangeChangeDetails) => {
+    if (fieldDisabled || readOnly) return;
+    const empty = startFill === 'empty' && endFill === 'empty';
+    if (
+      !empty &&
+      (startFill !== 'complete' ||
+        endFill !== 'complete' ||
+        !r.start ||
+        !r.end ||
+        compareFieldDates(r.end, r.start, 'day') < 0)
+    )
+      return;
+    const next = empty ? EMPTY : r;
+    const key = `${next.start?.getTime()}:${next.end?.getTime()}`;
+    if (key === rangeKey) return;
+    setTypedRangeKey(key);
+    setInner(next);
+    setDraft(next);
+    setTypedKey((k) => k + 1);
+    onValueChange?.(next);
+  };
+
   const pickRange = (r: DateRange) => {
+    if (typedEntry && (fieldDisabled || readOnly)) return;
     setDraft(r);
     setAnnounceLimit(!!r.start && !r.end);
     onCalendarChange?.(r);
@@ -218,27 +274,57 @@ export function DateRangePicker({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <DateTrigger
-        ref={ref}
-        text={
-          period
-            ? periodFieldText(shown, period, periodI18n.locale, periodI18n.t, periodWeekStart, formatOptions)
-            : formatDateRange(range, locale, formatOptions)
-        }
-        placeholder={placeholder}
-        id={id}
-        disabled={disabled}
-        readOnly={readOnly}
-        clearable={clearable}
-        clearLabel={clearLabel}
-        onClear={clear}
-        invalid={invalid}
-        size={size}
-        variant={variant}
-        className={className}
-        aria-label={ariaLabel}
-        aria-describedby={ariaDescribedBy}
-      />
+      {typedEntry ? (
+        <EditableRangeTrigger
+          key={fieldKey}
+          buttonRef={buttonRef}
+          value={range}
+          onEdit={typeRange}
+          startLabel={t('datePicker.startDate')}
+          endLabel={t('datePicker.endDate')}
+          onOpenRequest={() => setOpen(true)}
+          locale={locale}
+          min={min}
+          max={max}
+          isDateDisabled={
+            isDateDisabled || maximum !== undefined || validRangeLimit(minRange) !== undefined
+              ? (date, context) =>
+                  !!isDateDisabled?.(date, context) ||
+                  (!!context.rangeStart && outsideRangeLimits(context.rangeStart, date, minRange, maxRange))
+              : undefined
+          }
+          id={id}
+          disabled={fieldDisabled}
+          readOnly={readOnly}
+          invalid={invalid}
+          size={size}
+          className={className}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedBy}
+        />
+      ) : (
+        <DateTrigger
+          ref={ref}
+          text={
+            period
+              ? periodFieldText(shown, period, periodI18n.locale, periodI18n.t, periodWeekStart, formatOptions)
+              : formatDateRange(range, locale, formatOptions)
+          }
+          placeholder={placeholder}
+          id={id}
+          disabled={disabled}
+          readOnly={readOnly}
+          clearable={clearable}
+          clearLabel={clearLabel}
+          onClear={clear}
+          invalid={invalid}
+          size={size}
+          variant={variant}
+          className={className}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedBy}
+        />
+      )}
       {name && (
         <>
           <input type="hidden" name={`${name}-start`} value={shown.start ? toISODate(shown.start) : ''} />
@@ -251,6 +337,7 @@ export function DateRangePicker({
         sideOffset={6}
         padding="none"
         initialFocus={() => (period ? focusPeriodCell(calendarRef.current) : focusCalendarDay(calendarRef.current))}
+        finalFocus={typedEntry ? () => buttonRef.current : undefined}
       >
         <FieldVariantProvider variant="outline">
           {maximum !== undefined && (
@@ -307,7 +394,7 @@ export function DateRangePicker({
               />
             ) : (
               <Calendar
-                key={String(open)}
+                key={typedEntry ? `${open}-${typedKey}` : String(open)}
                 ref={calendarRef}
                 mode="range"
                 aria-label={t('datePicker.chooseRange')}

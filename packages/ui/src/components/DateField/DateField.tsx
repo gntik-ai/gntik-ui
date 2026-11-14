@@ -3,7 +3,7 @@ import { CalendarDays } from 'lucide-react';
 import type { ComponentProps } from 'react';
 import { cn } from '../../utils/cn';
 import { DateSegments } from './DateSegments';
-import { formatFormDate, type Granularity } from './date-parts';
+import { fieldZone, formatFormDate, type Granularity } from './date-parts';
 import { dateFieldVariants, type DateFieldVariantProps } from './date-field.variants';
 import { useDateSegments } from './use-date-segments';
 
@@ -19,7 +19,17 @@ export interface DateFieldProps extends DateFieldVariantProps {
   forceLeadingZeros?: boolean;
   min?: Date;
   max?: Date;
-  isDateDisabled?: (date: Date) => boolean;
+  /** Receives the date; a range end also gets the typed start as `rangeStart` (null otherwise). */
+  isDateDisabled?: (date: Date, context: { rangeStart: Date | null }) => boolean;
+  /**
+   * IANA zone whose wall clock the segments read and write; values stay Date instants and never pass through the
+   * host's local clock. Defaults to the runtime's local clock.
+   */
+  timeZone?: string;
+  /** Shorthand for `timeZone="UTC"`; the submitted values are UTC wall times. */
+  utc?: boolean;
+  /** Alt+ArrowDown on a segment, for a host that opens a calendar. */
+  onOpenRequest?: () => void;
   name?: string;
   id?: string;
   disabled?: boolean;
@@ -32,9 +42,16 @@ export interface DateFieldProps extends DateFieldVariantProps {
   'aria-describedby'?: string;
 }
 
+/** Invalid state an enclosing Field passes to its control (`invalid` or a failed validation). */
+export function inheritedInvalid(controlProps: object): boolean {
+  const p = controlProps as { 'aria-invalid'?: boolean | 'true' | 'false'; 'data-invalid'?: unknown };
+  return p['aria-invalid'] === true || p['aria-invalid'] === 'true' || p['data-invalid'] !== undefined;
+}
+
 /** Locale-ordered date/date-time spinbuttons, with local calendar validation and form submission. */
 export function DateField(props: DateFieldProps) {
-  const state = useDateSegments(props);
+  const state = useDateSegments({ ...props, onValueChange: (date) => props.onValueChange?.(date) });
+  const zone = fieldZone(props.timeZone, props.utc);
   const s = dateFieldVariants({ size: props.size });
   return (
     <>
@@ -44,11 +61,13 @@ export function DateField(props: DateFieldProps) {
         render={(controlProps) => {
           const p = controlProps as ComponentProps<'div'> & { disabled?: boolean };
           const disabled = props.disabled || p.disabled;
+          const invalid = state.invalid || inheritedInvalid(p);
           return (
             <div
               role="group"
               id={p.id}
-              data-invalid={state.invalid || undefined}
+              aria-invalid={invalid || undefined}
+              data-invalid={invalid || undefined}
               data-disabled={disabled || undefined}
               aria-label={
                 props['aria-label'] ??
@@ -69,13 +88,13 @@ export function DateField(props: DateFieldProps) {
               {(props.icon ?? true) && (
                 <CalendarDays size={props.size === 'sm' ? 14 : 15} aria-hidden className={s.icon()} />
               )}
-              <DateSegments state={state} {...props} disabled={disabled} invalid={state.invalid} />
+              <DateSegments state={state} {...props} disabled={disabled} invalid={invalid} />
             </div>
           );
         }}
       />
       {props.name && (
-        <input type="hidden" name={props.name} value={formatFormDate(state.currentDate, state.granularity)} />
+        <input type="hidden" name={props.name} value={formatFormDate(state.currentDate, state.granularity, zone)} />
       )}
     </>
   );
