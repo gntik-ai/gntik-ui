@@ -6,6 +6,7 @@ import { cn } from '../../utils/cn';
 import { Calendar, type CalendarRangeProps } from '../Calendar/Calendar';
 import {
   formatDateRange,
+  localDate,
   localeWeekStart,
   outsideRangeLimits,
   startOfDay,
@@ -182,9 +183,15 @@ export function DateRangePicker({
   const rangeKey = `${range.start?.getTime()}:${range.end?.getTime()}`;
   const [seenKey, setSeenKey] = useState(rangeKey);
   const [typedRangeKey, setTypedRangeKey] = useState(rangeKey);
+  // What the segments hold while the pair is not reportable (a start without an end, or an end before the start):
+  // the calendar previews it even though nothing was emitted.
+  const [typedPreview, setTypedPreview] = useState<DateRange | null>(null);
   if (seenKey !== rangeKey) {
     setSeenKey(rangeKey);
-    if (typedEntry && rangeKey !== typedRangeKey) setFieldKey((k) => k + 1);
+    if (typedEntry && rangeKey !== typedRangeKey) {
+      setFieldKey((k) => k + 1);
+      setTypedPreview(null);
+    }
   }
   // Period ranges always cover whole periods, whatever days a controlled value carries.
   const shown = period ? snapPeriodRange(range, period, periodWeekStart) : range;
@@ -194,7 +201,7 @@ export function DateRangePicker({
     setPreviousOpen(open);
     setAnnounceLimit(false);
     if (open) {
-      setDraft(range);
+      setDraft(typedEntry && typedPreview ? typedPreview : range);
       setCustomActive(false);
     }
   }
@@ -212,7 +219,10 @@ export function DateRangePicker({
   const apply = (next: DateRange) => {
     if (typedEntry && (fieldDisabled || readOnly)) return;
     // The segments show the new value, not what was typed before it.
-    if (typedEntry) setFieldKey((k) => k + 1);
+    if (typedEntry) {
+      setFieldKey((k) => k + 1);
+      setTypedPreview(null);
+    }
     setInner(next);
     onValueChange?.(next);
     setOpen(false);
@@ -251,11 +261,26 @@ export function DateRangePicker({
         !r.start ||
         !r.end ||
         compareFieldDates(r.end, r.start, 'day') < 0)
-    )
+    ) {
+      // Not reportable, but the calendar still follows the typed start (and end, when it is not before it).
+      const start = startFill === 'complete' ? r.start : null;
+      const end =
+        endFill === 'complete' && r.end && (!start || compareFieldDates(r.end, start, 'day') >= 0) ? r.end : null;
+      setTypedPreview({ start, end });
+      setDraft({ start, end });
+      setTypedKey((k) => k + 1);
       return;
+    }
+    setTypedPreview(null);
     const next = empty ? EMPTY : r;
     const key = `${next.start?.getTime()}:${next.end?.getTime()}`;
-    if (key === rangeKey) return;
+    if (key === rangeKey) {
+      if (typedPreview) {
+        setDraft(next);
+        setTypedKey((k) => k + 1);
+      }
+      return;
+    }
     setTypedRangeKey(key);
     setInner(next);
     setDraft(next);
@@ -403,7 +428,7 @@ export function DateRangePicker({
                 numberOfMonths={numberOfMonths}
                 defaultMonth={
                   draft.end && numberOfMonths === 2
-                    ? new Date(draft.end.getFullYear(), draft.end.getMonth() - 1, 1)
+                    ? localDate(draft.end.getFullYear(), draft.end.getMonth() - 1, 1)
                     : undefined
                 }
                 locale={locale}

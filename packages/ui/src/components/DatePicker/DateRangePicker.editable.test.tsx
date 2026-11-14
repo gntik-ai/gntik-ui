@@ -193,4 +193,26 @@ describe('DateRangePicker editable', () => {
     expect(document.querySelector('input[name="window-start"]')).toHaveValue('2026-03-10');
     expect(document.querySelector('input[name="window-end"]')).toHaveValue('2026-03-12');
   });
+
+  it('previews a typed start in the calendar before the end is typed', async () => {
+    const { user, onValueChange } = renderRange();
+    await user.click(seg('Start date, Month'));
+    await user.keyboard('10012026');
+    expect(onValueChange).not.toHaveBeenCalled();
+    await user.click(screen.getByRole('button', { name: 'Choose date' }));
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByRole('button', { name: 'Thursday, October 1, 2026' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('button', { name: 'Wednesday, March 11, 2026' })).not.toBeInTheDocument();
+  });
+
+  it('shows a typed range with years below 100 in its own year in the calendar', async () => {
+    const { user } = renderRange();
+    await user.click(seg('Start date, Month'));
+    await user.keyboard('03010050');
+    await user.keyboard('03200050');
+    await user.click(screen.getByRole('button', { name: 'Choose date' }));
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByText('February 50')).toBeInTheDocument();
+    expect(within(dialog).queryByText(/19\d\d/)).not.toBeInTheDocument();
+  });
 });
