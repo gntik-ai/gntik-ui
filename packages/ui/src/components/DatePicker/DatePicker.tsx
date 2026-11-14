@@ -186,6 +186,8 @@ export function DatePicker({
   const [inner, setInner] = useState<Date | null>(defaultValue ?? null);
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [now] = useState(() => new Date());
+  // Typed entry applies `defaultMonth` on the first open only; later reopenings keep that month.
+  const [initialDefaultMonth] = useState(defaultMonth);
   const calendarRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   // Typed entry: the month the calendar shows once it has followed a date, and the keys that remount the segments
@@ -376,7 +378,7 @@ export function DatePicker({
     const next = startOfMonth(proxyDay(d));
     const visible = month
       ? startOfMonth(month)
-      : (shownMonth ?? startOfMonth(defaultMonth ?? presetValue ?? presetToday));
+      : (shownMonth ?? startOfMonth(initialDefaultMonth ?? presetValue ?? presetToday));
     setShownMonth(next);
     setTypedKey((k) => k + 1);
     if (monthDiff(visible, next) !== 0) onMonthChange?.(next);
@@ -415,7 +417,7 @@ export function DatePicker({
       loading={loading}
       renderDay={renderDay}
       month={typedEntry ? (month ?? shownMonth ?? undefined) : month}
-      defaultMonth={typedEntry && shownMonth ? undefined : defaultMonth}
+      defaultMonth={typedEntry ? (shownMonth ? undefined : initialDefaultMonth) : defaultMonth}
       onMonthChange={
         typedEntry
           ? (m) => {

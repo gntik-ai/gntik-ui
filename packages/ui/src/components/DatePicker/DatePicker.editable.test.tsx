@@ -344,6 +344,48 @@ describe('DatePicker editable in a zone', () => {
   });
 });
 
+describe('DatePicker editable re-zoning', () => {
+  const instant = new Date(Date.UTC(2026, 9, 1, 14, 30));
+  const field = (props: DatePickerProps) => (
+    <Field>
+      <FieldLabel>Expires on</FieldLabel>
+      <DatePicker editable locale="en-US" withTime hourCycle={24} value={instant} {...props} />
+    </Field>
+  );
+
+  it('redisplays and edits the same instant in the new zone when timeZone changes', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    const { rerender } = render(field({ timeZone: 'UTC', onValueChange }));
+    expect(texts().slice(3)).toEqual(['14', '30']);
+    rerender(field({ timeZone: 'America/New_York', onValueChange }));
+    expect(texts().slice(3)).toEqual(['10', '30']);
+    await user.click(screen.getByRole('spinbutton', { name: 'Minutes' }));
+    await user.keyboard('{ArrowUp}');
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date(Date.UTC(2026, 9, 1, 14, 31)));
+  });
+});
+
+describe('DatePicker editable defaultMonth', () => {
+  it('keeps the default month the picker first opened on when defaultMonth changes later', async () => {
+    const user = userEvent.setup();
+    const field = (defaultMonth: Date) => (
+      <Field>
+        <FieldLabel>Expires on</FieldLabel>
+        <DatePicker editable locale="en-US" today={today} defaultMonth={defaultMonth} />
+      </Field>
+    );
+    const { rerender } = render(field(new Date(2026, 0, 1)));
+    await user.click(chooseButton());
+    expect(await screen.findByRole('dialog')).toHaveTextContent('January 2026');
+    rerender(field(new Date(2026, 3, 1)));
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    await user.click(chooseButton());
+    expect(await screen.findByRole('dialog')).toHaveTextContent('January 2026');
+  });
+});
+
 describe('DatePicker editable catalog', () => {
   it('uses the provider catalog for the button name', () => {
     render(

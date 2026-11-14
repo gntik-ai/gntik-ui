@@ -21,6 +21,8 @@ interface SegmentOptions<K extends string, D, V> {
   digitCount?: (key: K) => number;
   deferDigits?: (key: K) => boolean;
   resetOnExternalChange?: boolean;
+  /** When this changes, the draft is rebuilt from the current value (for example after the zone it is shown in changed). */
+  resetKey?: unknown;
   notifyDraft?: (draft: D) => boolean;
   /** Called when focus moves past the last segment (auto-advance after typing), after pending digits are applied. */
   onAdvance?: () => void;
@@ -43,6 +45,16 @@ export function useSegments<K extends string, D, V>(options: SegmentOptions<K, D
     setDraft(toDraft(value));
     setCommittedDraft(toDraft(value));
   }
+  const [latest, setLatest] = useState<V>(controlled ? value : defaultValue);
+  const [seenKey, setSeenKey] = useState(options.resetKey);
+  if (!Object.is(options.resetKey, seenKey)) {
+    // The value is unchanged but its draft is not: rebuild it, and drop typing that targeted the old draft.
+    const base = controlled ? value : latest;
+    setSeenKey(options.resetKey);
+    setGeneration(generation + 1);
+    setDraft(toDraft(base));
+    setCommittedDraft(toDraft(base));
+  }
   const buffer = useRef<{ key: K; text: string; generation: number } | null>(null);
   const pending = useRef<{ draft: D; previous: V; generation: number } | null>(null);
   const segmentRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -56,6 +68,7 @@ export function useSegments<K extends string, D, V>(options: SegmentOptions<K, D
     setDraft(next);
     setCommittedDraft(next);
     const v = toValue(next);
+    setLatest(v);
     options.onCommit?.(next, v);
     if (!equals(v, previous) || options.notifyDraft?.(next)) {
       if (controlled) setSynced(v);

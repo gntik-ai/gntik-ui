@@ -34,6 +34,7 @@ export const doc: ComponentDoc = {
   ],
   dataAttributes: [
     ['data-popup-open', 'input', 'The associated popup is open.'],
+    ['data-popup-open', 'calendarButton', 'The calendar popup of an editable picker is open.'],
     ['data-invalid', 'input', 'The control value is invalid.'],
   ],
   tokens: [

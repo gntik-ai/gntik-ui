@@ -52,6 +52,7 @@ export function useDateSegments(props: DateSegmentsOptions) {
     notifyDraft: (draft) =>
       dateComplete(draft, granularity, hourCycle) && draftDate(draft, granularity, hourCycle, zone) === null,
     resetOnExternalChange: true,
+    resetKey: zone,
     digitCount: (key) => (key === 'year' ? 4 : 2),
     // A typed segment is reported once it is finished (full, or left), never at its first digit.
     deferDigits: () => true,
