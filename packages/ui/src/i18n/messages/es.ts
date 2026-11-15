@@ -1,3 +1,4 @@
+import { fieldStatusEs } from './field-status-messages';
 import { dateFieldEs } from './date-field-messages';
 import { schemaFormExamplesEs } from './schema-form-example-messages';
 import { schemaFormEs } from './schema-form-messages';
@@ -38,6 +39,9 @@ import { radioInlineEs } from './radio-inline-messages';
 import type { Messages } from './en';
 export const es: Messages = {
   ...dateFieldEs,
+  'field.validationFailed': 'No se pudo validar. Inténtalo de nuevo.',
+  ...fieldStatusEs,
+  'field.validating': 'Comprobando…',
   ...schemaFormExamplesEs,
   ...schemaFormEs,
   ...textareaEs,

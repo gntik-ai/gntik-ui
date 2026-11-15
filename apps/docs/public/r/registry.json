@@ -438,6 +438,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -730,6 +735,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -1347,6 +1357,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -1657,6 +1672,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -1946,6 +1966,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -2238,6 +2263,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -2641,6 +2671,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -2932,6 +2967,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -3360,6 +3400,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -3637,6 +3682,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -3989,6 +4039,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -4813,6 +4868,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -5284,6 +5344,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -5603,6 +5668,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -6201,6 +6271,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -6796,6 +6871,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -7347,6 +7427,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -7690,6 +7775,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -8023,6 +8113,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -8347,6 +8442,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -8714,6 +8814,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -9011,6 +9116,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -9331,6 +9441,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -9657,6 +9772,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -9942,6 +10062,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -10246,6 +10371,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -10545,6 +10675,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -11038,7 +11173,7 @@
       "name": "field",
       "type": "registry:ui",
       "title": "Field",
-      "description": "Accessible form field scaffolding: Field, FieldLabel, FieldDescription, FieldError and FieldItem wire ids and aria-describedby for any kit control; Fieldset and FieldsetLegend group related fields under one name.",
+      "description": "Accessible form field scaffolding: Field, FieldLabel, FieldDescription, FieldError and FieldItem wire ids and aria-describedby for any kit control; Fieldset and FieldsetLegend group related fields under one name. Optional status=idle|validating|warning|success and feedbackIcon provide non-blocking feedback; invalid always resolves to error. FieldWarning and FieldSuccess are linked descriptions with hideIcon and match overrides (invalid still hides them). useFieldStatus returns {status, invalid, validating}, or idle outside Field. Input and NumberInput show decorative status icons when feedbackIcon is enabled; only warning tints their border. Passing status mounts a polite region: validating is localized and the settled message is announced once. Unset props preserve the existing DOM. See FieldAsyncStatus and the FormAsyncValidation example for debounced checks.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.9.0",
@@ -11046,6 +11181,7 @@
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/spinner.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -11065,6 +11201,16 @@
           "target": "components/ui/field/Field.tsx"
         },
         {
+          "path": "packages/ui/src/components/Field/field-feedback-icon.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/field/field-feedback-icon.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Field/field-status.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/field/field-status.tsx"
+        },
+        {
           "path": "packages/ui/src/components/Field/field.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/field/field.variants.ts"
@@ -11073,6 +11219,251 @@
           "path": "packages/ui/src/components/Field/index.ts",
           "type": "registry:ui",
           "target": "components/ui/field/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/calendar-marker-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/calendar-marker-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/command-palette-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/command-palette-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-field-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-field-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-picker-period-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-picker-period-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/date-range-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/date-range-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/flow-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/flow-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-action-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-action-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/log-viewer-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/log-viewer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/password-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/password-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/qr-code-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/qr-code-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/schema-form-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/schema-form-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/schema-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/switch-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/switch-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/textarea-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/textarea-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/toggle-group-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/toggle-group-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tool-call-en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Field/Field.doc.ts",
@@ -11228,6 +11619,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -11757,6 +12153,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -12349,6 +12750,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -12738,6 +13144,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -12993,6 +13404,7 @@
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/field.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -13035,11 +13447,6 @@
           "path": "packages/ui/src/components/Input/Input.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/input/Input.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
         }
       ]
     },
@@ -13155,6 +13562,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -13550,6 +13962,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -13842,6 +14259,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -14132,6 +14554,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -14435,6 +14862,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -14776,6 +15208,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -15153,6 +15590,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -15443,6 +15885,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -15742,6 +16189,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -16333,6 +16785,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -16665,6 +17122,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -17272,6 +17734,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -17766,6 +18233,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -18064,6 +18536,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -18496,6 +18973,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -18669,6 +19151,7 @@
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/field.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -18791,6 +19274,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -18951,11 +19439,6 @@
           "path": "packages/ui/src/components/NumberInput/NumberInput.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/number-input/NumberInput.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
         }
       ]
     },
@@ -19082,6 +19565,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -19381,6 +19869,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -19655,6 +20148,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -20057,6 +20555,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -20392,6 +20895,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -20828,6 +21336,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -21114,6 +21627,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -21500,6 +22018,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -21801,6 +22324,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -22164,6 +22692,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -22699,6 +23232,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -23002,6 +23540,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -23581,6 +24124,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -24217,6 +24765,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -24493,6 +25046,11 @@
           "target": "components/forms/serverErrors.ts"
         },
         {
+          "path": "packages/ui/src/forms/useAsyncValidation.ts",
+          "type": "registry:ui",
+          "target": "components/forms/useAsyncValidation.ts"
+        },
+        {
           "path": "packages/ui/src/forms/useFieldProps.ts",
           "type": "registry:ui",
           "target": "components/forms/useFieldProps.ts"
@@ -24586,6 +25144,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -24979,6 +25542,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -25318,6 +25886,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -25614,6 +26187,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -26001,6 +26579,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -26531,6 +27114,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -27176,6 +27764,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -27865,6 +28458,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -28248,6 +28846,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -28520,6 +29123,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -28946,6 +29554,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -29450,6 +30063,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -29876,6 +30494,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -30293,6 +30916,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -30624,6 +31252,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -30913,6 +31546,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -31216,6 +31854,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -31681,6 +32324,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -31971,6 +32619,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -32283,6 +32936,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -32619,6 +33277,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -32916,6 +33579,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -33207,6 +33875,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -33546,6 +34219,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -33891,6 +34569,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -34300,6 +34983,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -34593,6 +35281,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -34934,6 +35627,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -35236,6 +35934,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -35668,6 +36371,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -35939,6 +36647,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -36510,6 +37223,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -36884,6 +37602,11 @@
           "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
@@ -37173,6 +37896,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -37514,6 +38242,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -37876,6 +38609,11 @@
           "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-status-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-status-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",

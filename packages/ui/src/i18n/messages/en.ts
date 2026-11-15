@@ -1,3 +1,4 @@
+import { fieldStatusEn } from './field-status-messages';
 import { dateFieldEn } from './date-field-messages';
 import { schemaFormExamplesEn } from './schema-form-example-messages';
 import { schemaFormEn } from './schema-form-messages';
@@ -37,6 +38,9 @@ import { passwordEn } from './password-messages';
 import { radioInlineEn } from './radio-inline-messages';
 export const en = {
   ...dateFieldEn,
+  'field.validationFailed': 'Unable to validate. Try again.',
+  ...fieldStatusEn,
+  'field.validating': 'Checking…',
   ...schemaFormExamplesEn,
   ...schemaFormEn,
   ...textareaEn,
