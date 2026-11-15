@@ -1,3 +1,5 @@
+import { useFieldStatus } from '../Field/field-status';
+import { useFieldFeedbackIcon } from '../Field/field-feedback-icon';
 import { Input as BaseInput } from '@base-ui/react/input';
 import { useState, type ComponentType, type ReactNode, type Ref } from 'react';
 import { useRender } from '@base-ui/react/use-render';
@@ -58,6 +60,7 @@ export function Input({
   ...props
 }: InputProps) {
   const fieldVariant = useFieldVariant(variant);
+  const { status } = useFieldStatus();
   const [control, setControl] = useState<HTMLInputElement | null>(null);
   const [inner, setInner] = useState(props.defaultValue ?? '');
   const current = String(props.value ?? inner);
@@ -104,9 +107,13 @@ export function Input({
   });
   const s = inputVariants({ size, variant: fieldVariant });
   const px = INPUT_ICON_SIZE[size];
+  const feedback = useFieldFeedbackIcon(px);
   return (
     <InputSizeContext value={size}>
-      <div className={cn(s.root(), className)} data-invalid={invalid || undefined}>
+      <div
+        className={cn(s.root(), status === 'warning' && 'border-warning/70', className)}
+        data-invalid={invalid || undefined}
+      >
         {LeadingIcon && <LeadingIcon size={px} aria-hidden className={s.icon()} />}
         {leadingAddon != null && <span className={s.addon()}>{leadingAddon}</span>}
         {input}
@@ -115,7 +122,14 @@ export function Input({
         {clearable && hasValue && !props.disabled && !props.readOnly && (
           <ClearControlButton control={control} clearLabel={clearLabel} onClick={clear} />
         )}
-        {TrailingIcon && <TrailingIcon size={px} aria-hidden className={s.icon()} />}
+        {feedback ? (
+          <>
+            {feedback}
+            {TrailingIcon && <TrailingIcon size={px} aria-hidden className={s.icon()} />}
+          </>
+        ) : (
+          TrailingIcon && <TrailingIcon size={px} aria-hidden className={s.icon()} />
+        )}
       </div>
     </InputSizeContext>
   );

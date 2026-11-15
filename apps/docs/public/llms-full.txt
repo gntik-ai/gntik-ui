@@ -3871,13 +3871,13 @@ export default function Controlled() {
 
 ### Field (`field`)
 
-Accessible form field scaffolding: Field, FieldLabel, FieldDescription, FieldError and FieldItem wire ids and aria-describedby for any kit control; Fieldset and FieldsetLegend group related fields under one name.
+Optional status=idle|validating|warning|success and feedbackIcon provide non-blocking feedback; invalid always resolves to error. FieldWarning and FieldSuccess are linked descriptions with hideIcon and match overrides (invalid still hides them). useFieldStatus returns {status, invalid, validating}, or idle outside Field. Input and NumberInput show decorative status icons when feedbackIcon is enabled; only warning tints their border. Passing status mounts a polite region: validating is localized and the settled message is announced once. Unset props preserve the existing DOM. See FieldAsyncStatus and the FormAsyncValidation example for debounced checks. Accessible form field scaffolding: Field, FieldLabel, FieldDescription, FieldError and FieldItem wire ids and aria-describedby for any kit control; Fieldset and FieldsetLegend group related fields under one name.
 
 - Package: `@gntik-ai/ui` · export `Field` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Field/Field.doc.ts
 - Primitive: `@base-ui/react/field, @base-ui/react/fieldset`
 - ARIA pattern: form field (label + description + error), fieldset/legend
-- Registry dependencies: ui-utils
+- Registry dependencies: spinner, ui-utils
 - Install: `gntik-ui add field`; own the source with `gntik-ui eject field`
 
 Keyboard:
@@ -3887,50 +3887,71 @@ Keyboard:
 | Click on label | Moves focus to the field control |
 | Tab | Moves focus to the control; its description and error are announced via aria-describedby |
 
-Tokens: foreground, muted-foreground, destructive-text
+Tokens: foreground, muted-foreground, destructive-text, warning-text, success-text, warning
 
 Usage:
 
 ```tsx
 import { useState } from 'react';
-import { Button } from '@gntik-ai/ui';
+import { Field, FieldError, FieldLabel, FieldSuccess, FieldWarning, useFieldStatus, type FieldStatus } from '@gntik-ai/ui';
 import { Input } from '@gntik-ai/ui';
-import { Field, FieldDescription, FieldError, FieldLabel } from '@gntik-ai/ui';
+import { NumberInput } from '@gntik-ai/ui';
+import { Checkbox } from '@gntik-ai/ui';
+import { Button } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
 
-const isWorkEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-
-export default function FieldValidation() {
-  const [email, setEmail] = useState('member@example');
-  const [submitted, setSubmitted] = useState(true);
-  const emailInvalid = submitted && !isWorkEmail(email);
+function CustomStatus() {
+  const { status } = useFieldStatus();
+  const { t } = useI18n();
+  const text = status === 'warning' ? t('fieldStatus.warningStatus') : t(`fieldStatus.${status}`);
   return (
-    <form
-      noValidate
-      className="grid max-w-md gap-5"
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSubmitted(true);
-      }}
-    >
-      <Field>
-        <FieldLabel>Project name</FieldLabel>
-        <Input defaultValue="billing-dashboard" />
-        <FieldDescription>Lowercase letters, numbers and dashes.</FieldDescription>
-      </Field>
-      <Field invalid={emailInvalid}>
-        <FieldLabel required>Work email</FieldLabel>
-        <Input type="email" required value={email} onValueChange={setEmail} />
-        <FieldError match={emailInvalid}>Enter a valid work email.</FieldError>
-      </Field>
-      <Field disabled>
-        <FieldLabel>Role</FieldLabel>
-        <Input defaultValue="Owner" />
-        <FieldDescription>Only an admin can change your role.</FieldDescription>
-      </Field>
-      <div>
-        <Button type="submit">Save</Button>
+    <span className="text-[12px] text-muted-foreground">
+      {t('fieldStatus.custom')}: {text}
+    </span>
+  );
+}
+
+/** Manual statuses also work for custom controls through useFieldStatus. */
+export default function FieldAsyncStatus() {
+  const { t } = useI18n();
+  const [status, setStatus] = useState<FieldStatus>('idle');
+  const [feedbackIcon, setFeedbackIcon] = useState(true);
+  const [hideIcon, setHideIcon] = useState(false);
+  const [match, setMatch] = useState(false);
+  return (
+    <div className="grid max-w-md gap-5" data-field-status-example="">
+      <div className="flex flex-wrap gap-2">
+        {(['idle', 'validating', 'success', 'warning'] as const).map((value) => (
+          <Button key={value} variant="secondary" onClick={() => setStatus(value)}>
+            {value === 'warning' ? t('fieldStatus.warningStatus') : t(`fieldStatus.${value}`)}
+          </Button>
+        ))}
       </div>
-    </form>
+      <Checkbox checked={feedbackIcon} onCheckedChange={setFeedbackIcon} label={t('fieldStatus.feedback')} />
+      <Checkbox checked={hideIcon} onCheckedChange={setHideIcon} label={t('fieldStatus.hideIcon')} />
+      <Checkbox checked={match} onCheckedChange={setMatch} label={t('fieldStatus.match')} />
+      <Field status={status} feedbackIcon={feedbackIcon}>
+        <FieldLabel>{t('fieldStatus.slug')}</FieldLabel>
+        <Input defaultValue="workspace" />
+        <FieldWarning hideIcon={hideIcon} match={match || undefined}>
+          {t('fieldStatus.warning')}
+        </FieldWarning>
+        <FieldSuccess hideIcon={hideIcon}>{t('fieldStatus.available')}</FieldSuccess>
+        <CustomStatus />
+      </Field>
+      <Field status={status} feedbackIcon={feedbackIcon}>
+        <FieldLabel>{t('fieldStatus.limit')}</FieldLabel>
+        <NumberInput defaultValue={9} />
+        <FieldWarning hideIcon={hideIcon}>{t('fieldStatus.warning')}</FieldWarning>
+      </Field>
+      <Field invalid status="success" feedbackIcon={feedbackIcon}>
+        <FieldLabel>{t('fieldStatus.slug')}</FieldLabel>
+        <Input defaultValue="taken" />
+        <FieldError hideIcon={hideIcon}>{t('fieldStatus.taken')}</FieldError>
+        <FieldSuccess>{t('fieldStatus.available')}</FieldSuccess>
+        <CustomStatus />
+      </Field>
+    </div>
   );
 }
 ```
@@ -3998,7 +4019,7 @@ Single-line text input with auto, sm, md and lg sizes with optional leading/trai
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Input/Input.doc.ts
 - Primitive: `@base-ui/react/input`
 - ARIA pattern: textbox
-- Registry dependencies: ui-utils
+- Registry dependencies: field, ui-utils
 - Install: `gntik-ui add input`; own the source with `gntik-ui eject input`
 
 Keyboard:
@@ -4366,7 +4387,7 @@ Numeric input with − / + steppers, a unit suffix, min/max/step clamping, local
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/NumberInput/NumberInput.doc.ts
 - Primitive: `@base-ui/react/number-field`
 - ARIA pattern: spinbutton-like textbox (number field)
-- Registry dependencies: ui-utils
+- Registry dependencies: field, ui-utils
 - Install: `gntik-ui add number-input`; own the source with `gntik-ui eject number-input`
 
 Keyboard:

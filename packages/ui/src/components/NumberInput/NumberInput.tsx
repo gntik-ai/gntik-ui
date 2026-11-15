@@ -1,3 +1,5 @@
+import { useFieldStatus } from '../Field/field-status';
+import { useFieldFeedbackIcon } from '../Field/field-feedback-icon';
 import { NumberField } from '@base-ui/react/number-field';
 import { Minus, MoveHorizontal, Plus } from 'lucide-react';
 import { useId, type KeyboardEvent, type ReactNode, type Ref } from 'react';
@@ -73,6 +75,7 @@ export function NumberInput({
   ...props
 }: NumberInputProps) {
   const fieldVariant = useFieldVariant(variant);
+  const { status } = useFieldStatus();
   const { t } = useI18n();
   const decrementLabel = decrementLabelProp ?? t('numberInput.decrease');
   const incrementLabel = incrementLabelProp ?? t('numberInput.increase');
@@ -80,6 +83,7 @@ export function NumberInput({
   const inputId = id ?? (scrubLabel != null ? autoId : undefined);
   const s = numberInputVariants({ variant: fieldVariant, size, align });
   const px = NUMBER_INPUT_ICON_SIZE[size];
+  const feedback = useFieldFeedbackIcon(px, 'me-2');
   return (
     <NumberField.Root
       id={inputId}
@@ -95,7 +99,10 @@ export function NumberInput({
           </NumberField.ScrubAreaCursor>
         </NumberField.ScrubArea>
       )}
-      <NumberField.Group className={s.group()} data-invalid={invalid || undefined}>
+      <NumberField.Group
+        className={cn(s.group(), status === 'warning' && 'border-warning/70')}
+        data-invalid={invalid || undefined}
+      >
         {!hideSteppers && (
           <NumberField.Decrement aria-label={decrementLabel} className={cn(s.stepper(), s.decrement())}>
             <Minus size={px} aria-hidden />
@@ -116,10 +123,21 @@ export function NumberInput({
           onKeyDown={onPageKey}
           className={cn(s.input(), inputClassName)}
         />
-        {unit != null && (
-          <span aria-hidden className={s.unit()}>
-            {unit}
-          </span>
+        {feedback ? (
+          <>
+            {unit != null && (
+              <span aria-hidden className={s.unit()}>
+                {unit}
+              </span>
+            )}
+            {feedback}
+          </>
+        ) : (
+          unit != null && (
+            <span aria-hidden className={s.unit()}>
+              {unit}
+            </span>
+          )
         )}
         {!hideSteppers && (
           <NumberField.Increment aria-label={incrementLabel} className={cn(s.stepper(), s.increment())}>

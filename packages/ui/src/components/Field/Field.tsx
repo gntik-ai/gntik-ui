@@ -1,6 +1,6 @@
 import { Field as BaseField } from '@base-ui/react/field';
 import { Fieldset as BaseFieldset } from '@base-ui/react/fieldset';
-import { CircleAlert } from 'lucide-react';
+import { CircleAlert, CircleCheck, TriangleAlert } from 'lucide-react';
 import { useContext, useMemo, useState, type HTMLAttributes, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import {
@@ -9,6 +9,8 @@ import {
   InFieldContext,
   useRegisterFieldLabel,
 } from '../../utils/in-field-context';
+import { FieldRootElement, FieldStatusContext, type FieldStatus } from './field-status';
+export { useFieldStatus, type FieldStatus, type FieldStatusState } from './field-status';
 import { fieldVariants } from './field.variants';
 
 const s = fieldVariants();
@@ -16,6 +18,10 @@ const s = fieldVariants();
 export interface FieldProps extends Omit<BaseField.Root.Props, 'className'> {
   className?: string;
   ref?: Ref<HTMLDivElement>;
+  /** Optional non-blocking feedback; invalid always takes precedence. */
+  status?: FieldStatus;
+  /** Show a decorative status icon inside Input and NumberInput. */
+  feedbackIcon?: boolean;
 }
 
 /**
@@ -23,14 +29,28 @@ export interface FieldProps extends Omit<BaseField.Root.Props, 'className'> {
  * targets the control, and the description and error are linked with aria-describedby.
  * Pass `invalid` to drive the error from outside (e.g. a form library).
  */
-export function Field({ className, ...props }: FieldProps) {
+export function Field({ className, status, feedbackIcon = false, children, render, ...props }: FieldProps) {
   const [labels] = useState(createFieldLabelStore);
   const inDisabledFieldset = useContext(FieldsetDisabledContext);
   const disabled = (props.disabled ?? false) || inDisabledFieldset;
   const value = useMemo(() => ({ labels, disabled }), [labels, disabled]);
   return (
     <InFieldContext value={value}>
-      <BaseField.Root className={cn(s.root(), className)} {...props} />
+      <BaseField.Root
+        className={cn(s.root(), className)}
+        {...props}
+        render={(rootProps, state) => (
+          <FieldRootElement
+            rootProps={rootProps}
+            state={state}
+            render={render}
+            status={status}
+            feedbackIcon={feedbackIcon}
+          >
+            {children}
+          </FieldRootElement>
+        )}
+      />
     </InFieldContext>
   );
 }
@@ -79,12 +99,67 @@ export interface FieldErrorProps extends Omit<BaseField.Error.Props, 'className'
  * and linked to the control through aria-describedby.
  */
 export function FieldError({ className, hideIcon, children, ...props }: FieldErrorProps) {
+  const { registerMessage, statusEnabled, invalid } = useContext(FieldStatusContext);
   return (
-    <BaseField.Error className={cn(s.error(), className)} {...props}>
+    <BaseField.Error
+      className={cn(s.error(), className)}
+      {...props}
+      match={props.match ?? (statusEnabled && invalid ? true : undefined)}
+    >
       {!hideIcon && <CircleAlert size={13} aria-hidden className="mt-[3px] shrink-0" />}
-      <span>{children}</span>
+      <span
+        ref={(node) => {
+          registerMessage?.('error', node);
+        }}
+      >
+        {children}
+      </span>
     </BaseField.Error>
   );
+}
+
+export interface FieldFeedbackProps extends FieldDescriptionProps {
+  /** Hide the leading decorative icon. */
+  hideIcon?: boolean;
+  /** Show regardless of requested status; invalid still takes precedence. */
+  match?: boolean;
+}
+
+function FieldFeedback({
+  tone,
+  className,
+  hideIcon,
+  match,
+  children,
+  ...props
+}: FieldFeedbackProps & {
+  tone: 'warning' | 'success';
+}) {
+  const { status, invalid, registerMessage } = useContext(FieldStatusContext);
+  if (invalid || !(match ?? status === tone)) return null;
+  const Icon = tone === 'warning' ? TriangleAlert : CircleCheck;
+  return (
+    <BaseField.Description className={cn(s[tone](), className)} {...props}>
+      {!hideIcon && <Icon size={13} aria-hidden className="mt-[3px] shrink-0" />}
+      <span
+        ref={(node) => {
+          registerMessage?.(tone, node);
+        }}
+      >
+        {children}
+      </span>
+    </BaseField.Description>
+  );
+}
+
+/** Non-blocking warning linked by Base UI to the control's accessible description. */
+export function FieldWarning(props: FieldFeedbackProps) {
+  return <FieldFeedback tone="warning" {...props} />;
+}
+
+/** Success feedback linked by Base UI to the control's accessible description. */
+export function FieldSuccess(props: FieldFeedbackProps) {
+  return <FieldFeedback tone="success" {...props} />;
 }
 
 export interface FieldItemProps extends Omit<BaseField.Item.Props, 'className'> {

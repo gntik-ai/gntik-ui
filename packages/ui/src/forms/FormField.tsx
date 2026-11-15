@@ -23,11 +23,19 @@ import type {
   UseFormReturn,
 } from 'react-hook-form';
 import { FormProvider, useFormState } from 'react-hook-form';
+import {
+  AsyncValidationContext,
+  useAsyncValidation,
+  validateAsyncFields,
+  snapshotFormValues,
+  type AsyncValidate,
+  type AsyncField,
+} from './useAsyncValidation';
 import { FormActionsContext } from './FormActions';
 import { cn } from '../utils/cn';
 import { toValueProps, toCheckedProps, type ValueBindingProps, type CheckedBindingProps } from './bindings';
-import { Field, FieldDescription, FieldError, FieldLabel } from '../components/Field';
-import { createServerErrorStore, ServerErrorsContext, type FormServerErrors } from './serverErrors';
+import { Field, FieldDescription, FieldError, FieldLabel, FieldWarning, FieldSuccess } from '../components/Field';
+import { createServerErrorStore, ServerErrorsContext, isEqualValue, type FormServerErrors } from './serverErrors';
 import { useFieldProps, type UseFieldPropsOptions, type UseFieldPropsResult } from './useFieldProps';
 
 export interface EnhancedFieldProps {
@@ -69,6 +77,15 @@ export type FormFieldProps<
   /** Shows the required marker (validation comes from rules or the schema). */
   required?: boolean;
   description?: ReactNode;
+  /** Non-blocking warning, optionally derived from the current value. */
+  warning?: ReactNode | ((value: FieldPathValue<TValues, TName>) => ReactNode);
+  /** Feedback after a passing async check (or immediately without asyncValidate). */
+  success?: ReactNode;
+  /** Debounced, abortable check. Returned messages become type 'async' errors. */
+  asyncValidate?: AsyncValidate<TValues, TName>;
+  asyncDebounceMs?: number;
+  /** Decorative feedback inside Input and NumberInput. */
+  feedbackIcon?: boolean;
   className?: string;
   /** Optional maximum width; unset fills the available width. */
   width?: FormFieldWidth;
@@ -102,6 +119,33 @@ export function FormField<TValues extends FieldValues, TName extends FieldPath<T
   const enhanced = enhance?.({ name });
   const fieldDisabled = enhanced?.disabled ?? disabled;
   const state = useFieldProps<TValues, TName>(name, { control, rules, disabled: fieldDisabled });
+  const async = useAsyncValidation<TValues, TName>(
+    name,
+    state.controlProps.value,
+    props.asyncValidate,
+    props.asyncDebounceMs ?? 300,
+    fieldDisabled,
+  );
+  const warning = typeof props.warning === 'function' ? props.warning(state.controlProps.value) : props.warning;
+  const status =
+    props.asyncValidate || props.warning !== undefined || props.success !== undefined
+      ? async.status === 'validating'
+        ? 'validating'
+        : warning
+          ? 'warning'
+          : props.success && (!props.asyncValidate || async.status === 'success')
+            ? 'success'
+            : 'idle'
+      : undefined;
+  const fieldRootRef = state.fieldProps.ref;
+  const asyncRootRef = async.rootRef;
+  const rootRef = useCallback(
+    (element: HTMLElement | null) => {
+      fieldRootRef(element);
+      asyncRootRef(element);
+    },
+    [fieldRootRef, asyncRootRef],
+  );
   const controlProps = enhanced ? { ...state.controlProps, ...enhanced } : state.controlProps;
   const child =
     props.bind === 'value'
@@ -112,6 +156,9 @@ export function FormField<TValues extends FieldValues, TName extends FieldPath<T
   return (
     <Field
       {...state.fieldProps}
+      ref={rootRef}
+      status={status}
+      feedbackIcon={props.feedbackIcon}
       disabled={fieldDisabled}
       className={width ? cn('w-full', widths[width], className) : className}
     >
@@ -119,6 +166,8 @@ export function FormField<TValues extends FieldValues, TName extends FieldPath<T
       {child}
       {description && <FieldDescription>{description}</FieldDescription>}
       <FieldError match={!!state.error}>{state.error}</FieldError>
+      {warning && <FieldWarning>{warning}</FieldWarning>}
+      {props.success && <FieldSuccess>{props.success}</FieldSuccess>}
     </Field>
   );
 }
@@ -161,6 +210,7 @@ export function Form<TValues extends FieldValues, TTransformed = TValues>({
   const { isDirty, isSubmitting } = useFormState({ control: form.control });
   const formElement = useRef<HTMLFormElement>(null);
   const inFlight = useRef(false);
+  const [asyncFields] = useState(() => new Map<string, AsyncField>());
   const serverErrors = useServerErrors(form, errors, formElement);
   const reset = serverErrors.reset;
   const submit = async (event: FormEvent<HTMLFormElement>) => {
@@ -168,8 +218,22 @@ export function Form<TValues extends FieldValues, TTransformed = TValues>({
     if (inFlight.current) return;
     inFlight.current = true;
     serverErrors.store.reset();
+    const asyncSnapshot = asyncFields.size ? snapshotFormValues(form.getValues()) : undefined;
     try {
       await form.handleSubmit(async (values, event) => {
+        if (asyncSnapshot && !isEqualValue(asyncSnapshot, form.getValues())) return;
+        if (!(await validateAsyncFields(asyncFields))) {
+          const failed = [...asyncFields.values()].filter(
+            (field) => form.getFieldState(field.name as FieldPath<TValues>).error,
+          );
+          failed.sort((a, b) => {
+            if (!a.root.current || !b.root.current) return 0;
+            return a.root.current.compareDocumentPosition(b.root.current) & Node.DOCUMENT_POSITION_PRECEDING ? 1 : -1;
+          });
+          if (failed[0]) form.setFocus(failed[0].name as FieldPath<TValues>);
+          return;
+        }
+        if (asyncSnapshot && !isEqualValue(asyncSnapshot, form.getValues())) return;
         await onSubmit(values, event);
         if (afterSubmit === 'rebase') reset(form.getValues());
         else if (afterSubmit === 'reset') reset();
@@ -181,27 +245,29 @@ export function Form<TValues extends FieldValues, TTransformed = TValues>({
   const provider = { ...form, reset } as unknown as FormProviderProps<TValues, unknown, TTransformed>;
   return (
     <FormProvider {...provider}>
-      <ServerErrorsContext.Provider value={serverErrors.store}>
-        <FieldEnhancerContext.Provider value={enhanceFieldProps}>
-          <FormActionsContext.Provider
-            value={{
-              isDirty,
-              isSubmitting,
-              submit: () => {
-                const element = formElement.current;
-                if (!element) return;
-                if (typeof element.requestSubmit === 'function') element.requestSubmit();
-                else element.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-              },
-              reset: () => reset(),
-            }}
-          >
-            <form noValidate {...props} ref={formElement} onSubmit={submit}>
-              {children}
-            </form>
-          </FormActionsContext.Provider>
-        </FieldEnhancerContext.Provider>
-      </ServerErrorsContext.Provider>
+      <AsyncValidationContext value={asyncFields}>
+        <ServerErrorsContext.Provider value={serverErrors.store}>
+          <FieldEnhancerContext.Provider value={enhanceFieldProps}>
+            <FormActionsContext.Provider
+              value={{
+                isDirty,
+                isSubmitting,
+                submit: () => {
+                  const element = formElement.current;
+                  if (!element) return;
+                  if (typeof element.requestSubmit === 'function') element.requestSubmit();
+                  else element.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                },
+                reset: () => reset(),
+              }}
+            >
+              <form noValidate {...props} ref={formElement} onSubmit={submit}>
+                {children}
+              </form>
+            </FormActionsContext.Provider>
+          </FieldEnhancerContext.Provider>
+        </ServerErrorsContext.Provider>
+      </AsyncValidationContext>
     </FormProvider>
   );
 }
