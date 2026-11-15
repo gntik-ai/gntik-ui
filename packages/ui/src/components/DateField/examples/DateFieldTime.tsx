@@ -8,7 +8,13 @@ export default function DateFieldTime() {
     <div className="grid max-w-3xl gap-6 sm:grid-cols-2">
       <Field>
         <FieldLabel>{t('dateField.start')}</FieldLabel>
-        <DateField defaultValue={new Date(2026, 9, 1, 14, 30)} granularity="minute" hourCycle={24} name="from" />
+        <DateField
+          utc
+          defaultValue={new Date('2026-10-01T14:30:00Z')}
+          granularity="minute"
+          hourCycle={24}
+          name="from"
+        />
       </Field>
       <Field>
         <FieldLabel>{t('dateField.end')}</FieldLabel>

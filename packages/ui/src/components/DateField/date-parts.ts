@@ -1,5 +1,17 @@
-import { compareDay, toISODate } from '../Calendar/calendar-utils';
 import { formatTimeOfDay } from '../TimePicker/time-utils';
+
+/** Native calendar construction without the constructor's 1900 offset for years 0–99. */
+export function fieldDate(year: number, month: number, day: number, utc = false): Date {
+  const date = new Date(0);
+  if (utc) {
+    date.setUTCHours(0, 0, 0, 0);
+    date.setUTCFullYear(year, month, day);
+  } else {
+    date.setHours(0, 0, 0, 0);
+    date.setFullYear(year, month, day);
+  }
+  return date;
+}
 
 export type DateKey = 'year' | 'month' | 'day';
 export type SegmentKey = DateKey | 'hour' | 'minute' | 'second' | 'period';
@@ -7,9 +19,11 @@ export type Granularity = 'day' | 'hour' | 'minute' | 'second';
 export type DatePart = { key: SegmentKey } | { literal: string };
 
 /** Day fields ignore time; date-time fields retain timestamp constraints. */
-export function compareFieldDates(a: Date, b: Date, granularity: Granularity): number {
-  // compareDay's Date constructor remaps years below 100; compare years before days.
-  return granularity === 'day' ? a.getFullYear() - b.getFullYear() || compareDay(a, b) : a.getTime() - b.getTime();
+export function compareFieldDates(a: Date, b: Date, granularity: Granularity, utc = false): number {
+  if (granularity !== 'day') return a.getTime() - b.getTime();
+  const partsA = toDateDraft(a, utc);
+  const partsB = toDateDraft(b, utc);
+  return partsA.year! - partsB.year! || partsA.month! - partsB.month! || partsA.day! - partsB.day!;
 }
 
 /** Numeric order and separators; unsupported locales fall back to ISO order. */
@@ -59,16 +73,16 @@ export const emptyDate = (): DateDraft => ({
   pm: null,
   edited: {},
 });
-export const toDateDraft = (value: Date | null): DateDraft =>
+export const toDateDraft = (value: Date | null, utc = false): DateDraft =>
   value && Number.isFinite(value.getTime())
     ? {
-        year: value.getFullYear(),
-        month: value.getMonth() + 1,
-        day: value.getDate(),
-        hour: value.getHours(),
-        minute: value.getMinutes(),
-        second: value.getSeconds(),
-        pm: value.getHours() >= 12,
+        year: utc ? value.getUTCFullYear() : value.getFullYear(),
+        month: (utc ? value.getUTCMonth() : value.getMonth()) + 1,
+        day: utc ? value.getUTCDate() : value.getDate(),
+        hour: utc ? value.getUTCHours() : value.getHours(),
+        minute: utc ? value.getUTCMinutes() : value.getMinutes(),
+        second: utc ? value.getUTCSeconds() : value.getSeconds(),
+        pm: (utc ? value.getUTCHours() : value.getHours()) >= 12,
         edited: {},
       }
     : emptyDate();
@@ -85,22 +99,21 @@ export function dateComplete(draft: DateDraft, granularity: Granularity = 'day')
 }
 
 /** Build locally and compare the calendar parts so Date's rollover cannot accept 31 February. */
-export function draftDate(draft: DateDraft, granularity: Granularity = 'day'): Date | null {
+export function draftDate(draft: DateDraft, granularity: Granularity = 'day', utc = false): Date | null {
   const { year, month, day } = draft;
   if (!dateComplete(draft, granularity) || year === null || month === null || day === null) return null;
-  const date = new Date(0);
-  date.setHours(0, 0, 0, 0);
-  date.setFullYear(year, month - 1, day);
-  date.setHours(
+  const date = fieldDate(year, month - 1, day, utc);
+  const setHours = utc ? date.setUTCHours.bind(date) : date.setHours.bind(date);
+  setHours(
     granularity === 'day' ? 0 : (draft.hour ?? 0),
     granularity === 'day' || granularity === 'hour' ? 0 : (draft.minute ?? 0),
     granularity === 'second' ? (draft.second ?? 0) : 0,
   );
   return year >= 1 &&
     year <= 9999 &&
-    date.getFullYear() === year &&
-    date.getMonth() === month - 1 &&
-    date.getDate() === day
+    (utc ? date.getUTCFullYear() : date.getFullYear()) === year &&
+    (utc ? date.getUTCMonth() : date.getMonth()) === month - 1 &&
+    (utc ? date.getUTCDate() : date.getDate()) === day
     ? date
     : null;
 }
@@ -128,7 +141,8 @@ export function segmentRange(key: SegmentKey, draft: DateDraft, hourCycle: 12 | 
 
 export function withDateSegment(draft: DateDraft, key: SegmentKey, n: number | null, hourCycle: 12 | 24): DateDraft {
   const next = { ...draft, edited: { ...draft.edited, [key]: true } };
-  const pm = draft.hour !== null ? draft.hour >= 12 : draft.pm;
+  // An hour can display an inferred period, but only a period edit or paste confirms it.
+  const pm = draft.pm;
   if (key === 'period') {
     next.pm = n === null ? null : n === 1;
     // Clearing a required period makes the date-time incomplete too.
@@ -163,14 +177,17 @@ export function parseDatePaste(text: string, locale?: string): DateDraft | null 
     });
     draft.hour = draft.minute = draft.second = 0;
   }
+  draft.pm = (draft.hour ?? 0) >= 12;
   return draft.year && draft.year <= 9999 && draft.month && draft.month <= 12 && draft.day && draft.day <= 31
     ? draft
     : null;
 }
 
-export function formatFormDate(date: Date | null, granularity: Granularity): string {
+export function formatFormDate(date: Date | null, granularity: Granularity, utc = false): string {
   if (!date) return '';
-  const day = toISODate(date).replace(/^\d+-/, `${String(date.getFullYear()).padStart(4, '0')}-`);
+  const parts = toDateDraft(date, utc);
+  const pad = (n: number | null, count = 2) => String(n).padStart(count, '0');
+  const day = `${pad(parts.year, 4)}-${pad(parts.month)}-${pad(parts.day)}`;
   if (granularity === 'day') return day;
-  return `${day}T${formatTimeOfDay({ hours: date.getHours(), minutes: granularity === 'hour' ? 0 : date.getMinutes(), seconds: date.getSeconds() }, granularity === 'second')}`;
+  return `${day}T${formatTimeOfDay({ hours: parts.hour!, minutes: granularity === 'hour' ? 0 : parts.minute!, seconds: parts.second! }, granularity === 'second')}`;
 }

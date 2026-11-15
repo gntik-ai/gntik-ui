@@ -1,3 +1,4 @@
+import { fieldDate } from '../DateField/date-parts';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode, type Ref } from 'react';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
@@ -187,6 +188,12 @@ export function Calendar(props: CalendarProps) {
   const months = Array.from({ length: numberOfMonths }, (_, i) => addMonths(visibleMonth, i));
 
   const [focused, setFocused] = useState(() => startOfDay(anchor));
+  const anchorStamp = anchor.getTime();
+  const [previousAnchor, setPreviousAnchor] = useState(anchorStamp);
+  if (previousAnchor !== anchorStamp) {
+    setPreviousAnchor(anchorStamp);
+    setFocused(startOfDay(anchor));
+  }
   const [innerView, setInnerView] = useState<CalendarView>(defaultView);
   const view = viewProp ?? innerView;
   const [periodFocus, setPeriodFocus] = useState(() => startOfMonth(visibleMonth));
@@ -261,7 +268,7 @@ export function Calendar(props: CalendarProps) {
   };
 
   const focusPeriod = (date: Date) => {
-    setPeriodFocus(view === 'year' ? new Date(date.getFullYear(), periodFocus.getMonth(), 1) : date);
+    setPeriodFocus(view === 'year' ? fieldDate(date.getFullYear(), periodFocus.getMonth(), 1) : date);
   };
   const periodDisabled = (date: Date) => (view === 'year' ? yearOutsideBounds : monthOutsideBounds)(date, min, max);
   const pageDisabled = (date: Date) => {
@@ -417,7 +424,7 @@ export function Calendar(props: CalendarProps) {
               if (periodDisabled(date)) return;
               if (view === 'year') {
                 focusPeriod(date);
-                changeView('month', new Date(date.getFullYear(), periodFocus.getMonth(), 1));
+                changeView('month', fieldDate(date.getFullYear(), periodFocus.getMonth(), 1));
               } else pickMonth(date);
             }}
             isDisabled={periodDisabled}

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  calendarDaySpan,
   endOfPeriod,
   endOfQuarter,
   endOfYear,
@@ -12,6 +13,9 @@ import {
 } from './calendar-utils';
 
 describe('whole-period date helpers', () => {
+  it('counts inclusive days across the year 99 boundary', () => {
+    expect(calendarDaySpan(new Date('0099-12-31T00:00:00'), new Date('0100-01-01T00:00:00'))).toBe(2);
+  });
   it.each([
     [new Date(2025, 11, 29), 2026, 1, '2026-W01', new Date(2025, 11, 29)],
     [new Date(2026, 0, 1), 2026, 1, '2026-W01', new Date(2025, 11, 29)],

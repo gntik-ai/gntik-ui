@@ -1,3 +1,4 @@
+import { dateFieldEn } from './date-field-messages';
 import { schemaFormExamplesEn } from './schema-form-example-messages';
 import { schemaFormEn } from './schema-form-messages';
 import { flowEn } from './flow-messages';
@@ -35,6 +36,7 @@ import { hookExampleEn } from './hook-example-messages';
 import { passwordEn } from './password-messages';
 import { radioInlineEn } from './radio-inline-messages';
 export const en = {
+  ...dateFieldEn,
   ...schemaFormExamplesEn,
   ...schemaFormEn,
   ...textareaEn,
@@ -751,13 +753,6 @@ export const en = {
   'terminal.nextMatch': 'Next match',
   'terminal.previousMatch': 'Previous match',
   // DateField and DateRangeField
-  'dateField.label': 'Date',
-  'dateField.year': 'Year',
-  'dateField.month': 'Month',
-  'dateField.day': 'Day',
-  'dateField.start': 'Start date',
-  'dateField.end': 'End date',
-  'dateField.segmentInRange': '{range}, {segment}',
   // TimePicker, DatePicker withTime, DateTimeRangePicker, PermissionMatrix, QueryBuilder, ScheduleInput (cron)
   'timePicker.label': 'Time',
   'timePicker.hours': 'Hours',

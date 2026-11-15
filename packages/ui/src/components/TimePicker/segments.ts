@@ -19,7 +19,9 @@ interface SegmentOptions<K extends string, D, V> {
   digitCount?: (key: K) => number;
   deferDigits?: (key: K) => boolean;
   resetOnExternalChange?: boolean;
+  draftKey?: string;
   notifyDraft?: (draft: D) => boolean;
+  onDraftChange?: (draft: D, value: V) => void;
   disabled?: boolean;
   readOnly?: boolean;
 }
@@ -33,6 +35,14 @@ export function useSegments<K extends string, D, V>(options: SegmentOptions<K, D
   const [committedDraft, setCommittedDraft] = useState(draft);
   const [synced, setSynced] = useState(value);
   const [generation, setGeneration] = useState(0);
+  const [draftKey, setDraftKey] = useState(options.draftKey);
+  const [resetValue, setResetValue] = useState(controlled ? value : defaultValue);
+  if (draftKey !== options.draftKey) {
+    setDraftKey(options.draftKey);
+    setGeneration(generation + 1);
+    setDraft(toDraft(controlled ? value : resetValue));
+    setCommittedDraft(toDraft(controlled ? value : resetValue));
+  }
   if (controlled && !equals(value, synced as V)) {
     setSynced(value);
     if (options.resetOnExternalChange) setGeneration(generation + 1);
@@ -52,6 +62,8 @@ export function useSegments<K extends string, D, V>(options: SegmentOptions<K, D
     setDraft(next);
     setCommittedDraft(next);
     const v = toValue(next);
+    setResetValue(v);
+    options.onDraftChange?.(next, v);
     if (!equals(v, previous) || options.notifyDraft?.(next)) {
       if (controlled) setSynced(v);
       onValueChange?.(v);
