@@ -2,6 +2,25 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DateRangePicker } from './DateRangePicker';
 import { DatePicker } from './DatePicker';
+import { Field } from '../Field';
+
+it.each(['single', 'range'])(
+  'preserves read-only trigger spacing when disabled is inherited from Field (%s)',
+  (kind) => {
+    render(
+      <Field disabled>
+        {kind === 'single' ? (
+          <DatePicker clearable aria-label="Period" defaultValue={date} />
+        ) : (
+          <DateRangePicker clearable aria-label="Period" defaultValue={{ start: date, end: date }} />
+        )}
+      </Field>,
+    );
+    expect(screen.getByRole('combobox', { name: 'Period' })).toBeDisabled();
+    expect(screen.getByRole('combobox', { name: 'Period' })).toHaveClass('pe-16');
+    expect(screen.queryByRole('button', { name: 'Clear Period' })).not.toBeInTheDocument();
+  },
+);
 
 const date = new Date(2026, 2, 20);
 it.each(['button', '{Delete}', '{Backspace}'])('clears DatePicker through %s', async (action) => {

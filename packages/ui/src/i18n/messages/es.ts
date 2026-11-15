@@ -751,7 +751,6 @@ export const es: Messages = {
   'terminal.noMatches': 'Sin coincidencias',
   'terminal.nextMatch': 'Coincidencia siguiente',
   'terminal.previousMatch': 'Coincidencia anterior',
-  // DateField and DateRangeField
   'timePicker.label': 'Hora',
   'timePicker.hours': 'Horas',
   'timePicker.minutes': 'Minutos',

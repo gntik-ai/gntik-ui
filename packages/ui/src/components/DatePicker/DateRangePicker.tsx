@@ -8,6 +8,7 @@ import { Calendar, type CalendarRangeProps } from '../Calendar/Calendar';
 import {
   formatDateRange,
   localeWeekStart,
+  isSameMonth,
   outsideRangeLimits,
   startOfDay,
   toISODate,
@@ -57,7 +58,7 @@ type CalendarPassThrough = Pick<
 export interface DateRangePickerProps extends CalendarPassThrough, DatePickerVariantProps, ClearableProps {
   editable?: boolean;
   readOnly?: boolean;
-  /** Ref to the trigger input. Focusing it leaves the popup closed. */
+  /** Ref to the read-only trigger input (editable=false). Focusing it leaves the popup closed. */
   ref?: Ref<HTMLInputElement>;
   value?: DateRange;
   defaultValue?: DateRange;
@@ -170,7 +171,10 @@ export function DateRangePicker({
   const [previewMonth, setPreviewMonth] = useState<Date>();
   const calendarRef = useRef<HTMLDivElement | null>(null);
   const range = value ?? inner;
-  if (fieldValue !== range) {
+  if (
+    editable &&
+    (fieldValue.start?.getTime() !== range.start?.getTime() || fieldValue.end?.getTime() !== range.end?.getTime())
+  ) {
     setFieldValue(range);
     setFieldRange(range);
     setDraft(range);
@@ -264,12 +268,7 @@ export function DateRangePicker({
                 if (next.start) {
                   const nextMonth = fieldDate(next.start.getFullYear(), next.start.getMonth(), 1);
                   setPreviewMonth(nextMonth);
-                  if (
-                    !previewMonth ||
-                    previewMonth.getFullYear() !== nextMonth.getFullYear() ||
-                    previewMonth.getMonth() !== nextMonth.getMonth()
-                  )
-                    onMonthChange?.(nextMonth);
+                  if (!previewMonth || !isSameMonth(previewMonth, nextMonth)) onMonthChange?.(nextMonth);
                 }
                 const changed =
                   next.start?.getTime() !== range.start?.getTime() || next.end?.getTime() !== range.end?.getTime();
@@ -318,7 +317,7 @@ export function DateRangePicker({
           }
           placeholder={placeholder}
           id={id}
-          disabled={disabled}
+          disabled={disabledProp}
           readOnly={readOnly}
           clearable={clearable}
           clearLabel={clearLabel}

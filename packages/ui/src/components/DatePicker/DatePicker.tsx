@@ -8,6 +8,7 @@ import {
   formatDate,
   isSameDay,
   localeWeekStart,
+  isSameMonth,
   startOfDay,
   startOfPeriod,
   toISODate,
@@ -56,7 +57,7 @@ export type DatePickerChangeDetails = { reason: 'calendar' | 'preset' | 'time'; 
 export interface DatePickerProps extends CalendarPassThrough, DatePickerVariantProps, ClearableProps {
   editable?: boolean;
   readOnly?: boolean;
-  /** Ref to the trigger input. Focusing it leaves the popup closed. */
+  /** Ref to the read-only trigger input (editable=false). Focusing it leaves the popup closed. */
   ref?: Ref<HTMLInputElement>;
   value?: Date | null;
   defaultValue?: Date | null;
@@ -432,12 +433,7 @@ export function DatePicker({
                   const nextMonth = fieldDate(day.getFullYear(), day.getMonth(), 1);
                   const currentMonth = month ?? typedMonth;
                   setTypedMonth(nextMonth);
-                  if (
-                    !currentMonth ||
-                    currentMonth.getFullYear() !== nextMonth.getFullYear() ||
-                    currentMonth.getMonth() !== nextMonth.getMonth()
-                  )
-                    onMonthChange?.(nextMonth);
+                  if (!currentMonth || !isSameMonth(currentMonth, nextMonth)) onMonthChange?.(nextMonth);
                 }
                 change(next);
               }}
@@ -472,7 +468,7 @@ export function DatePicker({
           text={text}
           placeholder={placeholder}
           id={id}
-          disabled={disabled}
+          disabled={disabledProp}
           readOnly={readOnly}
           clearable={clearable}
           clearLabel={clearLabel}

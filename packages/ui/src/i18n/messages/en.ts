@@ -752,7 +752,6 @@ export const en = {
   'terminal.noMatches': 'No matches',
   'terminal.nextMatch': 'Next match',
   'terminal.previousMatch': 'Previous match',
-  // DateField and DateRangeField
   // TimePicker, DatePicker withTime, DateTimeRangePicker, PermissionMatrix, QueryBuilder, ScheduleInput (cron)
   'timePicker.label': 'Time',
   'timePicker.hours': 'Hours',
