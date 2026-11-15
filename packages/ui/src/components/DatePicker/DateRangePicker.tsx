@@ -188,7 +188,7 @@ export function DateRangePicker({
     setPreviousOpen(open);
     setAnnounceLimit(false);
     if (open) {
-      if (!editable) setDraft(range);
+      setDraft(editable ? fieldRange : range);
       setCustomActive(false);
     }
   }

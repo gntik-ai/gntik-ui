@@ -106,6 +106,39 @@ it('rewrites typed endpoints after calendar picks and restores Choose date focus
   await waitFor(() => expect(screen.getByRole('button', { name: 'Choose date' })).toHaveFocus());
 });
 
+it('restores the field range when reopening after an abandoned partial calendar pick', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  render(
+    <DateRangePicker
+      editable
+      locale="en-US"
+      presets={[]}
+      defaultValue={{ start: new Date(2026, 2, 10), end: new Date(2026, 2, 12) }}
+      onValueChange={change}
+    />,
+  );
+  const choose = screen.getByRole('button', { name: 'Choose date' });
+  await user.click(choose);
+  await user.click(await screen.findByRole('button', { name: 'Tuesday, March 3, 2026' }));
+  await user.keyboard('{Escape}');
+  expect(screen.getByRole('spinbutton', { name: 'Start date, Day' })).toHaveTextContent('10');
+  expect(screen.getByRole('spinbutton', { name: 'End date, Day' })).toHaveTextContent('12');
+  expect(change).not.toHaveBeenCalled();
+
+  await user.click(choose);
+  expect(await screen.findByRole('button', { name: 'Tuesday, March 10, 2026' })).toHaveAttribute('data-selected');
+  expect(screen.getByRole('button', { name: 'Thursday, March 12, 2026' })).toHaveAttribute('data-selected');
+  expect(screen.getByRole('button', { name: 'Tuesday, March 3, 2026' })).not.toHaveAttribute('data-selected');
+  await user.click(screen.getByRole('button', { name: 'Sunday, March 15, 2026' }));
+  expect(change).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name: 'Tuesday, March 17, 2026' }));
+  expect(change).toHaveBeenCalledExactlyOnceWith({ start: new Date(2026, 2, 15), end: new Date(2026, 2, 17) });
+  expect(screen.getByRole('spinbutton', { name: 'Start date, Day' })).toHaveTextContent('15');
+  expect(screen.getByRole('spinbutton', { name: 'End date, Day' })).toHaveTextContent('17');
+  await waitFor(() => expect(choose).toHaveFocus());
+});
+
 it('inherits invalid and disabled Field states without allowing popup Clear', async () => {
   const user = userEvent.setup();
   const clear = vi.fn();
