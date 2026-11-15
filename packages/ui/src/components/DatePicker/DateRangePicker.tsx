@@ -1,12 +1,14 @@
+import { InFieldContext } from '../../utils/in-field-context';
 import { FieldVariantProvider } from '../../field-variant/FieldVariantProvider';
 import { type ClearableProps } from '../../utils/clear-control';
 import { Button } from '../Button';
-import { useRef, useState, type Ref } from 'react';
+import { useContext, useRef, useState, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { Calendar, type CalendarRangeProps } from '../Calendar/Calendar';
 import {
   formatDateRange,
   localeWeekStart,
+  isSameMonth,
   outsideRangeLimits,
   startOfDay,
   toISODate,
@@ -18,6 +20,10 @@ import { PeriodCalendar } from '../PeriodPicker/PeriodCalendar';
 import { usePeriodI18n } from '../PeriodPicker/period-utils';
 import { focusCalendarDay } from './DatePicker';
 import { DateTrigger } from './DateTrigger';
+import { EditableDateTrigger, keepEditableOpen } from './EditableDateTrigger';
+import { DateRangeField } from '../DateField';
+import { RangeFieldContext } from '../DateField/range-field-context';
+import { compareFieldDates, fieldDate } from '../DateField/date-parts';
 import { DEFAULT_DATE_RANGE_PRESETS, matchPreset, type DateRangePreset } from './date-range-presets';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import {
@@ -50,8 +56,9 @@ type CalendarPassThrough = Pick<
 >;
 
 export interface DateRangePickerProps extends CalendarPassThrough, DatePickerVariantProps, ClearableProps {
+  editable?: boolean;
   readOnly?: boolean;
-  /** Ref to the trigger input. Focusing it leaves the popup closed. */
+  /** Ref to the read-only trigger input (editable=false). Focusing it leaves the popup closed. */
   ref?: Ref<HTMLInputElement>;
   value?: DateRange;
   defaultValue?: DateRange;
@@ -97,6 +104,7 @@ const EMPTY: DateRange = { start: null, end: null };
  */
 export function DateRangePicker({
   ref,
+  editable = false,
   value,
   defaultValue,
   onValueChange,
@@ -110,7 +118,7 @@ export function DateRangePicker({
   onOpenChange,
   name,
   id,
-  disabled,
+  disabled: disabledProp,
   readOnly,
   clearable,
   clearLabel,
@@ -139,6 +147,8 @@ export function DateRangePicker({
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
 }: DateRangePickerProps) {
+  const field = useContext(InFieldContext);
+  const disabled = disabledProp || field?.disabled;
   const { t } = useI18n();
   const providerLocale = useOptionalI18n()?.locale;
   const locale = localeProp ?? providerLocale;
@@ -155,8 +165,21 @@ export function DateRangePicker({
   const maximum = period ? undefined : validRangeLimit(maxRange);
   const [now] = useState(() => startOfDay(new Date()));
   const today = todayProp ? startOfDay(todayProp) : now;
+  const chooseRef = useRef<HTMLButtonElement | null>(null);
+  const [fieldRange, setFieldRange] = useState<DateRange>(value ?? inner);
+  const [fieldValue, setFieldValue] = useState(value ?? inner);
+  const [previewMonth, setPreviewMonth] = useState<Date>();
   const calendarRef = useRef<HTMLDivElement | null>(null);
   const range = value ?? inner;
+  if (
+    editable &&
+    (fieldValue.start?.getTime() !== range.start?.getTime() || fieldValue.end?.getTime() !== range.end?.getTime())
+  ) {
+    setFieldValue(range);
+    setFieldRange(range);
+    setDraft(range);
+    if (range.start) setPreviewMonth(fieldDate(range.start.getFullYear(), range.start.getMonth(), 1));
+  }
   // Period ranges always cover whole periods, whatever days a controlled value carries.
   const shown = period ? snapPeriodRange(range, period, periodWeekStart) : range;
   const open = openProp ?? innerOpen;
@@ -165,7 +188,7 @@ export function DateRangePicker({
     setPreviousOpen(open);
     setAnnounceLimit(false);
     if (open) {
-      setDraft(range);
+      setDraft(editable ? fieldRange : range);
       setCustomActive(false);
     }
   }
@@ -181,12 +204,19 @@ export function DateRangePicker({
   };
 
   const apply = (next: DateRange) => {
+    if (disabled || readOnly) return;
+    if (editable) {
+      setFieldRange(next);
+      setFieldValue(next);
+      if (next.start) setPreviewMonth(fieldDate(next.start.getFullYear(), next.start.getMonth(), 1));
+    }
     setInner(next);
     onValueChange?.(next);
     setOpen(false);
   };
 
   const clear = () => {
+    if (disabled || readOnly) return;
     setDraft(EMPTY);
     setCustomActive(false);
     apply(EMPTY);
@@ -209,6 +239,7 @@ export function DateRangePicker({
   };
 
   const pickRange = (r: DateRange) => {
+    if (disabled || readOnly) return;
     setDraft(r);
     setAnnounceLimit(!!r.start && !r.end);
     onCalendarChange?.(r);
@@ -217,28 +248,88 @@ export function DateRangePicker({
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <DateTrigger
-        ref={ref}
-        text={
-          period
-            ? periodFieldText(shown, period, periodI18n.locale, periodI18n.t, periodWeekStart, formatOptions)
-            : formatDateRange(range, locale, formatOptions)
-        }
-        placeholder={placeholder}
-        id={id}
-        disabled={disabled}
-        readOnly={readOnly}
-        clearable={clearable}
-        clearLabel={clearLabel}
-        onClear={clear}
-        invalid={invalid}
-        size={size}
-        variant={variant}
-        className={className}
-        aria-label={ariaLabel}
-        aria-describedby={ariaDescribedBy}
-      />
+    <Popover
+      open={open}
+      onOpenChange={(next, details) => {
+        if (editable && !next && keepEditableOpen(details, chooseRef.current)) return;
+        setOpen(next);
+      }}
+    >
+      {editable ? (
+        <EditableDateTrigger buttonRef={chooseRef} disabled={disabled} readOnly={readOnly} className={className}>
+          <RangeFieldContext
+            value={{
+              startLabel: t('datePicker.startDate'),
+              endLabel: t('datePicker.endDate'),
+              isDateDisabled,
+              onDraftChange: (next, empty, wasEmpty) => {
+                setFieldRange(next);
+                setDraft(next);
+                if (next.start) {
+                  const nextMonth = fieldDate(next.start.getFullYear(), next.start.getMonth(), 1);
+                  setPreviewMonth(nextMonth);
+                  if (!previewMonth || !isSameMonth(previewMonth, nextMonth)) onMonthChange?.(nextMonth);
+                }
+                const changed =
+                  next.start?.getTime() !== range.start?.getTime() || next.end?.getTime() !== range.end?.getTime();
+                if (
+                  (empty && !wasEmpty) ||
+                  (changed && next.start && next.end && compareFieldDates(next.end, next.start, 'day') >= 0)
+                ) {
+                  setInner(next);
+                  setFieldValue(next);
+                  onValueChange?.(next);
+                }
+              },
+            }}
+          >
+            <DateRangeField
+              value={fieldRange}
+              locale={locale}
+              size={size}
+              variant={variant}
+              id={id}
+              disabled={disabled}
+              readOnly={readOnly}
+              invalid={
+                invalid ||
+                !!(
+                  fieldRange.start &&
+                  fieldRange.end &&
+                  outsideRangeLimits(fieldRange.start, fieldRange.end, minRange, maxRange)
+                )
+              }
+              min={min}
+              max={max}
+              aria-label={ariaLabel}
+              aria-describedby={ariaDescribedBy}
+              forceLeadingZeros
+            />
+          </RangeFieldContext>
+        </EditableDateTrigger>
+      ) : (
+        <DateTrigger
+          ref={ref}
+          text={
+            period
+              ? periodFieldText(shown, period, periodI18n.locale, periodI18n.t, periodWeekStart, formatOptions)
+              : formatDateRange(range, locale, formatOptions)
+          }
+          placeholder={placeholder}
+          id={id}
+          disabled={disabledProp}
+          readOnly={readOnly}
+          clearable={clearable}
+          clearLabel={clearLabel}
+          onClear={clear}
+          invalid={invalid}
+          size={size}
+          variant={variant}
+          className={className}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedBy}
+        />
+      )}
       {name && (
         <>
           <input type="hidden" name={`${name}-start`} value={shown.start ? toISODate(shown.start) : ''} />
@@ -247,6 +338,7 @@ export function DateRangePicker({
       )}
       <PopoverContent
         aria-label={t('datePicker.chooseRange')}
+        finalFocus={editable ? chooseRef : undefined}
         align="start"
         sideOffset={6}
         padding="none"
@@ -275,7 +367,7 @@ export function DateRangePicker({
                     <button
                       key={p.id}
                       type="button"
-                      disabled={presetDisabled}
+                      disabled={disabled || presetDisabled}
                       aria-pressed={active?.id === p.id}
                       className={cn(
                         s.preset(),
@@ -314,9 +406,10 @@ export function DateRangePicker({
                 value={draft}
                 onValueChange={pickRange}
                 numberOfMonths={numberOfMonths}
+                month={editable ? previewMonth : undefined}
                 defaultMonth={
                   draft.end && numberOfMonths === 2
-                    ? new Date(draft.end.getFullYear(), draft.end.getMonth() - 1, 1)
+                    ? fieldDate(draft.end.getFullYear(), draft.end.getMonth() - 1, 1)
                     : undefined
                 }
                 locale={locale}
@@ -333,14 +426,17 @@ export function DateRangePicker({
                 highlightedLabel={highlightedLabel}
                 loading={loading}
                 renderDay={renderDay}
-                onMonthChange={onMonthChange}
+                onMonthChange={(next) => {
+                  if (editable) setPreviewMonth(next);
+                  onMonthChange?.(next);
+                }}
                 today={today}
               />
             )}
           </div>
-          {clearable && (range.start || range.end) && !disabled && !readOnly && (
+          {clearable && (range.start || range.end) && !readOnly && (
             <div className={s.timeRow()}>
-              <Button size="sm" variant="ghost" onClick={clear}>
+              <Button size="sm" variant="ghost" disabled={disabled} onClick={clear}>
                 {t('common.clear')}
               </Button>
             </div>

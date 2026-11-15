@@ -1,11 +1,14 @@
+import { DateFieldZoneContext } from '../DateField/date-field-zone-context';
+import { InFieldContext } from '../../utils/in-field-context';
 import { FieldVariantProvider } from '../../field-variant/FieldVariantProvider';
 import { type ClearableProps } from '../../utils/clear-control';
-import { useId, useRef, useState, type Ref } from 'react';
+import { useId, useContext, useRef, useState, type Ref } from 'react';
 import { Calendar, type CalendarSingleProps } from '../Calendar/Calendar';
 import {
   formatDate,
   isSameDay,
   localeWeekStart,
+  isSameMonth,
   startOfDay,
   startOfPeriod,
   toISODate,
@@ -17,6 +20,10 @@ import { periodUnavailable, usePeriodI18n } from '../PeriodPicker/period-utils';
 import { TimePicker } from '../TimePicker/TimePicker';
 import { formatTimeOfDay, timeOfDay, withTimeOfDay, parseTimeOfDay } from '../TimePicker/time-utils';
 import { DateTrigger } from './DateTrigger';
+import { editableWallDate, editableInstant } from './editable-date';
+import { EditableDateTrigger, keepEditableOpen } from './EditableDateTrigger';
+import { DateField } from '../DateField';
+import { fieldDate } from '../DateField/date-parts';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { formatTimeZoneLabel, fromZonedParts, isValidTimeZone, zonedParts } from '../../i18n/time-zone';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
@@ -48,8 +55,9 @@ type CalendarPassThrough = Pick<
 export type DatePickerChangeDetails = { reason: 'calendar' | 'preset' | 'time'; presetId?: string };
 
 export interface DatePickerProps extends CalendarPassThrough, DatePickerVariantProps, ClearableProps {
+  editable?: boolean;
   readOnly?: boolean;
-  /** Ref to the trigger input. Focusing it leaves the popup closed. */
+  /** Ref to the read-only trigger input (editable=false). Focusing it leaves the popup closed. */
   ref?: Ref<HTMLInputElement>;
   value?: Date | null;
   defaultValue?: Date | null;
@@ -109,6 +117,7 @@ export function focusCalendarDay(container: HTMLElement | null) {
  */
 export function DatePicker({
   ref,
+  editable = false,
   value,
   defaultValue,
   onValueChange,
@@ -122,7 +131,7 @@ export function DatePicker({
   onOpenChange,
   name,
   id,
-  disabled,
+  disabled: disabledProp,
   readOnly,
   clearable,
   clearLabel,
@@ -155,6 +164,8 @@ export function DatePicker({
   withSeconds = false,
   granularity = 'day',
 }: DatePickerProps) {
+  const field = useContext(InFieldContext);
+  const disabled = disabledProp || field?.disabled;
   const { t, timeZone: providerZone } = useI18n();
   const requestedZone = timeZoneProp ?? providerZone;
   const zone = isValidTimeZone(requestedZone) ? requestedZone : 'system';
@@ -168,15 +179,30 @@ export function DatePicker({
   const [inner, setInner] = useState<Date | null>(defaultValue ?? null);
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [now] = useState(() => new Date());
+  const chooseRef = useRef<HTMLButtonElement | null>(null);
+  const [typedMonth, setTypedMonth] = useState<Date | undefined>(defaultMonth);
   const calendarRef = useRef<HTMLDivElement | null>(null);
   const timeLabelId = useId();
   const date = value !== undefined ? value : inner;
   const open = openProp ?? innerOpen;
+  const stamp = date?.getTime() ?? null;
+  const [expectedStamp, setExpectedStamp] = useState(stamp);
+  const [expectedZone, setExpectedZone] = useState(zone);
+  const [monthEdited, setMonthEdited] = useState(false);
   // Calendar consumes local-midnight days; these proxies represent the zone's calendar date.
   const proxyDay = (instant: Date) => {
     const p = zonedParts(instant, zone);
-    return new Date(p.year, p.month - 1, p.day);
+    return fieldDate(p.year, p.month - 1, p.day);
   };
+
+  if (editable && (expectedStamp !== stamp || expectedZone !== zone)) {
+    setExpectedStamp(stamp);
+    setExpectedZone(zone);
+    if (date && (monthEdited || !defaultMonth)) {
+      const d = zone === 'system' ? date : proxyDay(date);
+      setTypedMonth(fieldDate(d.getFullYear(), d.getMonth(), 1));
+    }
+  }
 
   const setOpen = (next: boolean) => {
     if (next && (readOnly || disabled)) return;
@@ -185,18 +211,29 @@ export function DatePicker({
   };
 
   const change = (d: Date | null, details?: DatePickerChangeDetails) => {
+    if (disabled || readOnly) return;
+    if (editable) {
+      setExpectedStamp(d?.getTime() ?? null);
+      setMonthEdited(true);
+      if (d && details) {
+        const day = zone === 'system' ? d : proxyDay(d);
+        setTypedMonth(fieldDate(day.getFullYear(), day.getMonth(), 1));
+      }
+    }
     setInner(d);
     if (details) onValueChange?.(d, details);
     else onValueChange?.(d);
   };
   const clear = () => {
+    if (disabled || readOnly) return;
     change(null);
     onClear?.();
   };
   const clearAction =
-    clearable && date && !disabled && !readOnly ? (
+    clearable && date && !readOnly ? (
       <Button
         size="sm"
+        disabled={disabled}
         variant="ghost"
         onClick={() => {
           clear();
@@ -259,7 +296,7 @@ export function DatePicker({
     : '';
   if (date && parts && time) {
     const pad = (n: number) => String(n).padStart(2, '0');
-    hidden = `${parts.year}-${pad(parts.month)}-${pad(parts.day)}`;
+    hidden = `${String(parts.year).padStart(4, '0')}-${pad(parts.month)}-${pad(parts.day)}`;
     if (withTime) {
       const wall = new Date(0);
       wall.setUTCFullYear(parts.year, parts.month - 1, parts.day);
@@ -273,6 +310,7 @@ export function DatePicker({
     hidden = toISODate(startOfPeriod(zone === 'system' ? date : proxyDay(date), period, periodWeekStart));
   // Applies a calendar (proxy) day: keeps the time with `withTime` and leaves the popup open there.
   const pickDay = (d: Date, details: DatePickerChangeDetails) => {
+    if (disabled || readOnly) return;
     if (withTime) {
       if (zone === 'system') {
         change(withTimeOfDay(d, date ? timeOfDay(date) : { hours: 0, minutes: 0, seconds: 0 }), details);
@@ -293,6 +331,7 @@ export function DatePicker({
           details,
         );
       }
+      if (editable && details.reason === 'calendar') setOpen(false);
       return;
     }
     change(
@@ -362,36 +401,90 @@ export function DatePicker({
       highlightedLabel={highlightedLabel}
       loading={loading}
       renderDay={renderDay}
-      month={month}
-      defaultMonth={defaultMonth}
-      onMonthChange={onMonthChange}
+      month={editable ? (month ?? typedMonth) : month}
+      defaultMonth={editable ? undefined : defaultMonth}
+      onMonthChange={(next) => {
+        if (editable) setTypedMonth(next);
+        onMonthChange?.(next);
+      }}
       today={zone === 'system' ? today : proxyDay(today ?? new Date())}
     />
   );
   const s = datePickerVariants({ size });
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <DateTrigger
-        ref={ref}
-        text={text}
-        placeholder={placeholder}
-        id={id}
-        disabled={disabled}
-        readOnly={readOnly}
-        clearable={clearable}
-        clearLabel={clearLabel}
-        onClear={clear}
-        invalid={invalid}
-        size={size}
-        variant={variant}
-        className={className}
-        aria-label={ariaLabel}
-        aria-describedby={ariaDescribedBy}
-      />
+    <Popover
+      open={open}
+      onOpenChange={(next, details) => {
+        if (editable && !next && keepEditableOpen(details, chooseRef.current)) return;
+        setOpen(next);
+      }}
+    >
+      {editable ? (
+        <EditableDateTrigger buttonRef={chooseRef} disabled={disabled} readOnly={readOnly} className={className}>
+          <DateFieldZoneContext value={zone}>
+            <DateField
+              value={editableWallDate(date, zone)}
+              utc={zone !== 'system'}
+              onValueChange={(wall) => {
+                const next = editableInstant(wall, zone);
+                if (next) {
+                  const day = zone === 'system' ? next : proxyDay(next);
+                  const nextMonth = fieldDate(day.getFullYear(), day.getMonth(), 1);
+                  const currentMonth = month ?? typedMonth;
+                  setTypedMonth(nextMonth);
+                  if (!currentMonth || !isSameMonth(currentMonth, nextMonth)) onMonthChange?.(nextMonth);
+                }
+                change(next);
+              }}
+              locale={locale}
+              size={size}
+              variant={variant}
+              id={id}
+              disabled={disabled}
+              readOnly={readOnly}
+              invalid={invalid}
+              min={min ? (editableWallDate(min, zone) ?? undefined) : undefined}
+              max={max ? (editableWallDate(max, zone) ?? undefined) : undefined}
+              isDateDisabled={(d) =>
+                !!isDateDisabled?.(
+                  zone === 'system'
+                    ? fieldDate(d.getFullYear(), d.getMonth(), d.getDate())
+                    : fieldDate(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()),
+                  { rangeStart: null },
+                )
+              }
+              granularity={withTime ? (withSeconds ? 'second' : 'minute') : 'day'}
+              hourCycle={hourCycle}
+              aria-label={ariaLabel}
+              aria-describedby={ariaDescribedBy}
+              forceLeadingZeros
+            />
+          </DateFieldZoneContext>
+        </EditableDateTrigger>
+      ) : (
+        <DateTrigger
+          ref={ref}
+          text={text}
+          placeholder={placeholder}
+          id={id}
+          disabled={disabledProp}
+          readOnly={readOnly}
+          clearable={clearable}
+          clearLabel={clearLabel}
+          onClear={clear}
+          invalid={invalid}
+          size={size}
+          variant={variant}
+          className={className}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedBy}
+        />
+      )}
       {name && <input type="hidden" name={name} value={hidden} />}
       <PopoverContent
         aria-label={t('datePicker.choose')}
+        finalFocus={editable ? chooseRef : undefined}
         align="start"
         sideOffset={6}
         padding="none"
@@ -426,7 +519,7 @@ export function DatePicker({
                     <button
                       key={preset.id}
                       type="button"
-                      disabled={state.disabled}
+                      disabled={disabled || state.disabled}
                       aria-pressed={state.pressed}
                       className={cn(s.preset())}
                       onClick={() => pickPreset(preset, state.day)}

@@ -1,3 +1,5 @@
+import { fieldDate, compareFieldDates } from '../DateField/date-parts';
+
 /**
  * Date helpers for Calendar / DatePicker. Native Date + Intl only; every date is a local
  * calendar day (time stripped to 00:00).
@@ -10,16 +12,16 @@ export interface DateRange {
   end: Date | null;
 }
 
-export const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-export const startOfMonth = (d: Date) => new Date(d.getFullYear(), d.getMonth(), 1);
-export const endOfMonth = (d: Date) => new Date(d.getFullYear(), d.getMonth() + 1, 0);
-export const addDays = (d: Date, n: number) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+export const startOfDay = (d: Date) => fieldDate(d.getFullYear(), d.getMonth(), d.getDate());
+export const startOfMonth = (d: Date) => fieldDate(d.getFullYear(), d.getMonth(), 1);
+export const endOfMonth = (d: Date) => fieldDate(d.getFullYear(), d.getMonth() + 1, 0);
+export const addDays = (d: Date, n: number) => fieldDate(d.getFullYear(), d.getMonth(), d.getDate() + n);
 
 /** Adds months, clamping the day to the target month's length (Jan 31 + 1 → Feb 28). */
 export function addMonths(d: Date, n: number) {
-  const target = new Date(d.getFullYear(), d.getMonth() + n, 1);
+  const target = fieldDate(d.getFullYear(), d.getMonth() + n, 1);
   const day = Math.min(d.getDate(), endOfMonth(target).getDate());
-  return new Date(target.getFullYear(), target.getMonth(), day);
+  return fieldDate(target.getFullYear(), target.getMonth(), day);
 }
 
 export const isSameDay = (a: Date | null | undefined, b: Date | null | undefined) =>
@@ -27,11 +29,11 @@ export const isSameDay = (a: Date | null | undefined, b: Date | null | undefined
 
 export const isSameMonth = (a: Date, b: Date) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth();
 
-export const compareDay = (a: Date, b: Date) => startOfDay(a).getTime() - startOfDay(b).getTime();
+export const compareDay = (a: Date, b: Date) => compareFieldDates(a, b, 'day');
 
 /** Inclusive calendar-day span; UTC date parts avoid daylight-saving length changes. */
 export function calendarDaySpan(a: Date, b: Date): number {
-  const utc = (d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
+  const utc = (d: Date) => fieldDate(d.getFullYear(), d.getMonth(), d.getDate(), true).getTime();
   return Math.abs(utc(b) - utc(a)) / 86400000 + 1;
 }
 
@@ -56,7 +58,7 @@ export function clampDay(d: Date, min?: Date, max?: Date) {
 /** `YYYY-MM-DD` for the local day (stable keys, data attributes, form values). */
 export function toISODate(d: Date) {
   const pad = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  return `${String(d.getFullYear()).padStart(4, '0')}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
 export const startOfWeek = (d: Date, weekStartsOn: WeekDay) => addDays(d, -((d.getDay() - weekStartsOn + 7) % 7));
@@ -126,10 +128,10 @@ export function normalizeRange(a: Date, b: Date): DateRange {
 export type PeriodGranularity = 'week' | 'month' | 'quarter' | 'year';
 
 export const quarterOf = (d: Date) => Math.floor(d.getMonth() / 3) + 1;
-export const startOfQuarter = (d: Date) => new Date(d.getFullYear(), (quarterOf(d) - 1) * 3, 1);
-export const endOfQuarter = (d: Date) => new Date(d.getFullYear(), quarterOf(d) * 3, 0);
-export const startOfYear = (d: Date) => new Date(d.getFullYear(), 0, 1);
-export const endOfYear = (d: Date) => new Date(d.getFullYear(), 11, 31);
+export const startOfQuarter = (d: Date) => fieldDate(d.getFullYear(), (quarterOf(d) - 1) * 3, 1);
+export const endOfQuarter = (d: Date) => fieldDate(d.getFullYear(), quarterOf(d) * 3, 0);
+export const startOfYear = (d: Date) => fieldDate(d.getFullYear(), 0, 1);
+export const endOfYear = (d: Date) => fieldDate(d.getFullYear(), 11, 31);
 
 /** A period is unavailable only when every day is outside the inclusive bounds. */
 export const monthOutsideBounds = (d: Date, min?: Date, max?: Date) =>
@@ -140,10 +142,10 @@ export const yearOutsideBounds = (d: Date, min?: Date, max?: Date) =>
 
 /** ISO week and week-year; UTC arithmetic on local date parts avoids DST-length days. */
 export function isoWeek(d: Date): { year: number; week: number } {
-  const thursday = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const thursday = new Date(fieldDate(d.getFullYear(), d.getMonth(), d.getDate(), true).getTime());
   thursday.setUTCDate(thursday.getUTCDate() + 4 - (thursday.getUTCDay() || 7));
   const year = thursday.getUTCFullYear();
-  const week = Math.ceil(((thursday.getTime() - Date.UTC(year, 0, 1)) / 86400000 + 1) / 7);
+  const week = Math.ceil(((thursday.getTime() - fieldDate(year, 0, 1, true).getTime()) / 86400000 + 1) / 7);
   return { year, week };
 }
 

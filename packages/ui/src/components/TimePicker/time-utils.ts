@@ -30,7 +30,9 @@ export const timeToSeconds = (t: TimeOfDay) => t.hours * 3600 + t.minutes * 60 +
 
 /** Copies the time of day onto a date (local time). */
 export function withTimeOfDay(date: Date, t: TimeOfDay): Date {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), t.hours, t.minutes, t.seconds);
+  const next = new Date(date.getTime());
+  next.setHours(t.hours, t.minutes, t.seconds, 0);
+  return next;
 }
 
 /** The time of day of a date (local time). */

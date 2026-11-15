@@ -1,3 +1,4 @@
+import { dateFieldEs } from './date-field-messages';
 import { schemaFormExamplesEs } from './schema-form-example-messages';
 import { schemaFormEs } from './schema-form-messages';
 import { flowEs } from './flow-messages';
@@ -36,6 +37,7 @@ import { passwordEs } from './password-messages';
 import { radioInlineEs } from './radio-inline-messages';
 import type { Messages } from './en';
 export const es: Messages = {
+  ...dateFieldEs,
   ...schemaFormExamplesEs,
   ...schemaFormEs,
   ...textareaEs,
@@ -749,14 +751,6 @@ export const es: Messages = {
   'terminal.noMatches': 'Sin coincidencias',
   'terminal.nextMatch': 'Coincidencia siguiente',
   'terminal.previousMatch': 'Coincidencia anterior',
-  // DateField and DateRangeField
-  'dateField.label': 'Fecha',
-  'dateField.year': 'Año',
-  'dateField.month': 'Mes',
-  'dateField.day': 'Día',
-  'dateField.start': 'Fecha de inicio',
-  'dateField.end': 'Fecha de fin',
-  'dateField.segmentInRange': '{range}, {segment}',
   'timePicker.label': 'Hora',
   'timePicker.hours': 'Horas',
   'timePicker.minutes': 'Minutos',

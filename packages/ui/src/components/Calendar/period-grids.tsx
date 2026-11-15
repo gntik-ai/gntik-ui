@@ -1,3 +1,4 @@
+import { fieldDate } from '../DateField/date-parts';
 import type { KeyboardEvent } from 'react';
 import {
   addDays,
@@ -40,7 +41,7 @@ export interface PeriodGridProps {
 export function MonthGrid(props: PeriodGridProps) {
   const { focused, locale, labelId } = props;
   const rows = Array.from({ length: 4 }, (_, row) =>
-    Array.from({ length: 3 }, (_, col) => new Date(focused.getFullYear(), row * 3 + col, 1)),
+    Array.from({ length: 3 }, (_, col) => fieldDate(focused.getFullYear(), row * 3 + col, 1)),
   );
   return (
     <PeriodGrid
@@ -54,7 +55,7 @@ export function MonthGrid(props: PeriodGridProps) {
 }
 
 export function QuarterGrid(props: PeriodGridProps) {
-  const rows = [Array.from({ length: 4 }, (_, quarter) => new Date(props.focused.getFullYear(), quarter * 3, 1))];
+  const rows = [Array.from({ length: 4 }, (_, quarter) => fieldDate(props.focused.getFullYear(), quarter * 3, 1))];
   return <PeriodGrid {...props} rows={rows} granularity="quarter" label={props.label ?? String} />;
 }
 
@@ -64,7 +65,7 @@ export const yearPageStart = (year: number) => 2020 + Math.floor((year - 2020) /
 export function YearGrid(props: PeriodGridProps) {
   const first = yearPageStart(props.focused.getFullYear());
   const rows = Array.from({ length: 4 }, (_, row) =>
-    Array.from({ length: 3 }, (_, col) => new Date(first + row * 3 + col, 0, 1)),
+    Array.from({ length: 3 }, (_, col) => fieldDate(first + row * 3 + col, 0, 1)),
   );
   return (
     <PeriodGrid

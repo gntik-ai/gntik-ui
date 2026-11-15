@@ -1,3 +1,4 @@
+import { fieldDate } from '../DateField/date-parts';
 import { useI18n } from '../../i18n/I18nProvider';
 import { SimpleSelect } from '../Select';
 import { Spinner } from '../Spinner';
@@ -48,10 +49,10 @@ export function CalendarCaption({
         items={monthNames(locale).map((label, index) => ({
           value: String(index),
           label,
-          disabled: monthOutsideBounds(new Date(year, index, 1), min, max),
+          disabled: monthOutsideBounds(fieldDate(year, index, 1), min, max),
         }))}
         onValueChange={(value) => {
-          if (value !== null) onChange(new Date(year, Number(value), 1));
+          if (value !== null) onChange(fieldDate(year, Number(value), 1));
         }}
       />
       <SimpleSelect
@@ -60,12 +61,12 @@ export function CalendarCaption({
         value={String(year)}
         items={years.map((value) => ({
           value: String(value),
-          label: new Intl.DateTimeFormat(locale, { year: 'numeric' }).format(new Date(value, 0, 1)),
-          disabled: yearOutsideBounds(new Date(value, 0, 1), min, max),
+          label: new Intl.DateTimeFormat(locale, { year: 'numeric' }).format(fieldDate(value, 0, 1)),
+          disabled: yearOutsideBounds(fieldDate(value, 0, 1), min, max),
         }))}
         onValueChange={(value) => {
           if (value !== null) {
-            const target = new Date(Number(value), month.getMonth(), 1);
+            const target = fieldDate(Number(value), month.getMonth(), 1);
             if (min && monthOutsideBounds(target, min)) onChange(min);
             else if (max && monthOutsideBounds(target, undefined, max)) onChange(max);
             else onChange(target);

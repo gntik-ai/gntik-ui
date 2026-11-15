@@ -10,6 +10,7 @@ interface Props extends DateFieldVariantProps {
   invalid?: boolean;
   forceLeadingZeros?: boolean;
   prefix?: string;
+  groupLabel?: string;
   onPrevious?: () => void;
   onNext?: () => void;
 }
@@ -21,13 +22,20 @@ export function DateSegments({
   invalid,
   forceLeadingZeros,
   prefix,
+  groupLabel,
   size,
   onPrevious,
   onNext,
 }: Props) {
   const s = dateFieldVariants({ size });
   return (
-    <div dir="ltr" className={s.segments()}>
+    <div
+      dir="ltr"
+      role={groupLabel ? 'group' : undefined}
+      aria-label={groupLabel}
+      aria-invalid={groupLabel ? invalid || undefined : undefined}
+      className={s.segments()}
+    >
       {state.parts.map((part, i) => {
         if ('literal' in part)
           return (

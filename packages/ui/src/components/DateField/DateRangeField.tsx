@@ -1,11 +1,12 @@
 import { Field } from '@base-ui/react/field';
 import { CalendarDays } from 'lucide-react';
-import type { ComponentProps } from 'react';
+import { useContext, type ComponentProps } from 'react';
+import { RangeFieldContext } from './range-field-context';
 import { cn } from '../../utils/cn';
 import type { DateRange } from '../Calendar/calendar-utils';
 import type { DateFieldProps } from './DateField';
 import { DateSegments } from './DateSegments';
-import { compareFieldDates, formatFormDate } from './date-parts';
+import { compareFieldDates, formatFormDate, type DateDraft } from './date-parts';
 import { dateFieldVariants } from './date-field.variants';
 import { useDateSegments, type DateSegmentsState } from './use-date-segments';
 
@@ -18,25 +19,57 @@ export interface DateRangeFieldProps extends Omit<DateFieldProps, 'value' | 'def
 
 /** Start and end date segments in a single labelled Field control. */
 export function DateRangeField(props: DateRangeFieldProps) {
-  const start: DateSegmentsState = useDateSegments({
-    ...props,
-    value: props.value === undefined ? undefined : props.value.start,
-    defaultValue: props.defaultValue?.start,
-    onValueChange: (next) => props.onValueChange?.({ start: next, end: end.currentDate }),
-  });
-  const end: DateSegmentsState = useDateSegments({
-    ...props,
-    value: props.value === undefined ? undefined : props.value.end,
-    defaultValue: props.defaultValue?.end,
-    onValueChange: (next) => props.onValueChange?.({ start: start.currentDate, end: next }),
-  });
+  const picker = useContext(RangeFieldContext);
+  const empty = (state: DateSegmentsState) => state.keys.every((key) => state.display(key) === null);
+  const start: DateSegmentsState = useDateSegments(
+    {
+      ...props,
+      isDateDisabled: picker ? (date) => !!picker.isDateDisabled?.(date, { rangeStart: null }) : props.isDateDisabled,
+      value: props.value === undefined ? undefined : props.value.start,
+      defaultValue: props.defaultValue?.start,
+      onValueChange: changeStart,
+    },
+    draftStart,
+  );
+  const end: DateSegmentsState = useDateSegments(
+    {
+      ...props,
+      isDateDisabled: picker
+        ? (date) => !!picker.isDateDisabled?.(date, { rangeStart: start.currentDate })
+        : props.isDateDisabled,
+      value: props.value === undefined ? undefined : props.value.end,
+      defaultValue: props.defaultValue?.end,
+      onValueChange: changeEnd,
+    },
+    draftEnd,
+  );
+  function changeStart(next: Date | null) {
+    props.onValueChange?.({ start: next, end: end.currentDate });
+  }
+  function changeEnd(next: Date | null) {
+    props.onValueChange?.({ start: start.currentDate, end: next });
+  }
+  function draftStart(draft: DateDraft, date: Date | null) {
+    picker?.onDraftChange(
+      { start: date, end: end.currentDate },
+      draft.year === null && draft.month === null && draft.day === null && empty(end),
+      empty(start) && empty(end),
+    );
+  }
+  function draftEnd(draft: DateDraft, date: Date | null) {
+    picker?.onDraftChange(
+      { start: start.currentDate, end: date },
+      draft.year === null && draft.month === null && draft.day === null && empty(start),
+      empty(start) && empty(end),
+    );
+  }
   const invalid =
     start.invalid ||
     end.invalid ||
     !!(
       start.currentDate &&
       end.currentDate &&
-      compareFieldDates(end.currentDate, start.currentDate, start.granularity) < 0
+      compareFieldDates(end.currentDate, start.currentDate, start.granularity, props.utc) < 0
     );
   const s = dateFieldVariants({ size: props.size });
   return (
@@ -44,14 +77,16 @@ export function DateRangeField(props: DateRangeFieldProps) {
       <Field.Control
         id={props.id}
         disabled={props.disabled}
-        render={(controlProps) => {
+        render={(controlProps, controlState) => {
           const p = controlProps as ComponentProps<'div'> & { disabled?: boolean };
           const disabled = props.disabled || p.disabled;
+          const fieldInvalid = invalid || controlState.valid === false;
           return (
             <div
               role="group"
               id={p.id}
-              data-invalid={invalid || undefined}
+              data-invalid={fieldInvalid || undefined}
+              aria-invalid={fieldInvalid || undefined}
               data-disabled={disabled || undefined}
               aria-label={
                 props['aria-label'] ??
@@ -77,9 +112,10 @@ export function DateRangeField(props: DateRangeFieldProps) {
               )}
               <DateSegments
                 state={start}
+                groupLabel={picker?.startLabel}
                 {...props}
                 disabled={disabled}
-                invalid={invalid}
+                invalid={fieldInvalid}
                 prefix={start.t('dateField.start')}
                 onNext={() => end.focusSegment(0)}
               />
@@ -88,9 +124,10 @@ export function DateRangeField(props: DateRangeFieldProps) {
               </span>
               <DateSegments
                 state={end}
+                groupLabel={picker?.endLabel}
                 {...props}
                 disabled={disabled}
-                invalid={invalid}
+                invalid={fieldInvalid}
                 prefix={end.t('dateField.end')}
                 onPrevious={() => start.focusSegment(start.keys.length - 1)}
               />
@@ -103,9 +140,13 @@ export function DateRangeField(props: DateRangeFieldProps) {
           <input
             type="hidden"
             name={`${props.name}-start`}
-            value={formatFormDate(start.currentDate, start.granularity)}
+            value={formatFormDate(start.currentDate, start.granularity, props.utc)}
           />
-          <input type="hidden" name={`${props.name}-end`} value={formatFormDate(end.currentDate, end.granularity)} />
+          <input
+            type="hidden"
+            name={`${props.name}-end`}
+            value={formatFormDate(end.currentDate, end.granularity, props.utc)}
+          />
         </>
       )}
     </>

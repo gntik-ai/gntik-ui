@@ -89,3 +89,28 @@ it('wires a single Field label and description and inherits disabled state', asy
   expect(screen.getAllByRole('spinbutton')).not.toContain(document.activeElement);
   expect(onValueChange).not.toHaveBeenCalled();
 });
+
+it('edits UTC range parts and submits UTC hidden values', () => {
+  const change = vi.fn();
+  const { container } = render(
+    <DateRangeField
+      utc
+      locale="en-US"
+      granularity="minute"
+      hourCycle={24}
+      name="utcRange"
+      defaultValue={{ start: new Date('2026-03-08T02:30:00Z'), end: new Date('2026-03-09T02:30:00Z') }}
+      onValueChange={change}
+    />,
+  );
+  expect(screen.getByRole('spinbutton', { name: 'Start date, Hours' })).toHaveAttribute('aria-valuenow', '2');
+  expect(container.querySelector('input[name="utcRange-start"]')).toHaveValue('2026-03-08T02:30');
+  fireEvent.paste(screen.getByRole('spinbutton', { name: 'End date, Day' }), {
+    clipboardData: { getData: () => '2026-03-10T02:31' },
+  });
+  expect(change).toHaveBeenCalledExactlyOnceWith({
+    start: new Date('2026-03-08T02:30:00Z'),
+    end: new Date('2026-03-10T02:31:00Z'),
+  });
+  expect(container.querySelector('input[name="utcRange-end"]')).toHaveValue('2026-03-10T02:31');
+});

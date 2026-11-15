@@ -6,6 +6,33 @@ import { I18nProvider } from '../../i18n/I18nProvider';
 import { DateField, type DateFieldProps } from './DateField';
 
 describe('DateField', () => {
+  it('compares UTC day bounds by their UTC calendar parts', () => {
+    render(<DateField utc locale="en-US" min={new Date('2026-10-01T09:00:00Z')} />);
+    fireEvent.paste(screen.getByRole('spinbutton', { name: 'Day' }), {
+      clipboardData: { getData: () => '2026-10-01' },
+    });
+    expect(screen.getByRole('group')).not.toHaveAttribute('aria-invalid');
+  });
+  it('edits and submits UTC parts independently of the host clock', () => {
+    const change = vi.fn();
+    const { container } = render(
+      <DateField
+        utc
+        locale="en-US"
+        granularity="minute"
+        hourCycle={24}
+        name="utc"
+        defaultValue={new Date('2026-03-08T02:30:00Z')}
+        onValueChange={change}
+      />,
+    );
+    expect(screen.getByRole('spinbutton', { name: 'Hours' })).toHaveAttribute('aria-valuenow', '2');
+    fireEvent.paste(screen.getByRole('spinbutton', { name: 'Day' }), {
+      clipboardData: { getData: () => '2026-03-08T02:31' },
+    });
+    expect(change).toHaveBeenCalledExactlyOnceWith(new Date('2026-03-08T02:31:00Z'));
+    expect(container.querySelector('input[name="utc"]')).toHaveValue('2026-03-08T02:31');
+  });
   it.each([
     ['en-US', ['Month', 'Day', 'Year'], 'Date'],
     ['es-ES', ['Día', 'Mes', 'Año'], 'Fecha'],

@@ -13,6 +13,8 @@ export interface DateFieldProps extends DateFieldVariantProps {
   /** Complete local date, or null for an incomplete or impossible date. */
   onValueChange?: (date: Date | null) => void;
   granularity?: Granularity;
+  /** Read, edit and submit UTC parts instead of host-local parts. */
+  utc?: boolean;
   hourCycle?: 12 | 24;
   /** I18nProvider locale; English when no provider is present. */
   locale?: string;
@@ -41,14 +43,16 @@ export function DateField(props: DateFieldProps) {
       <Field.Control
         id={props.id}
         disabled={props.disabled}
-        render={(controlProps) => {
+        render={(controlProps, controlState) => {
           const p = controlProps as ComponentProps<'div'> & { disabled?: boolean };
           const disabled = props.disabled || p.disabled;
+          const fieldInvalid = state.invalid || controlState.valid === false;
           return (
             <div
               role="group"
               id={p.id}
-              data-invalid={state.invalid || undefined}
+              data-invalid={fieldInvalid || undefined}
+              aria-invalid={fieldInvalid || undefined}
               data-disabled={disabled || undefined}
               aria-label={
                 props['aria-label'] ??
@@ -69,13 +73,17 @@ export function DateField(props: DateFieldProps) {
               {(props.icon ?? true) && (
                 <CalendarDays size={props.size === 'sm' ? 14 : 15} aria-hidden className={s.icon()} />
               )}
-              <DateSegments state={state} {...props} disabled={disabled} invalid={state.invalid} />
+              <DateSegments state={state} {...props} disabled={disabled} invalid={fieldInvalid} />
             </div>
           );
         }}
       />
       {props.name && (
-        <input type="hidden" name={props.name} value={formatFormDate(state.currentDate, state.granularity)} />
+        <input
+          type="hidden"
+          name={props.name}
+          value={formatFormDate(state.currentDate, state.granularity, props.utc)}
+        />
       )}
     </>
   );

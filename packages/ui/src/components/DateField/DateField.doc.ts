@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'beta',
   description:
-    'Typed local date and date-time entry in Intl locale order. DateField and DateRangeField expose named spinbuttons, calendar/min/max/disabled-date validation, ISO or numeric locale paste, and hidden form values. Granularity adds hours, minutes or seconds; a 12-hour clock adds AM/PM. Two-digit years remain literal (26 means year 26); empty segments use the TimePicker placeholder. forceLeadingZeros pads supplied values; typed segments are padded. Works inside Field. DatePicker triggers remain read-only.',
+    'Typed local date and date-time entry in Intl locale order. DateField and DateRangeField expose named spinbuttons, calendar/min/max/disabled-date validation, ISO or numeric locale paste, and hidden form values. Granularity adds hours, minutes or seconds; a 12-hour clock adds AM/PM. Two-digit years remain literal (26 means year 26); empty segments use the TimePicker placeholder. forceLeadingZeros pads supplied values; typed segments are padded. Works inside Field. The utc prop reads, edits and submits UTC parts; DateFieldTime and DateRangeFieldBasic demonstrate UTC fields without host DST conversion. DatePicker and DateRangePicker can opt into these segments with editable. A 12-hour date-time waits for an explicit period; pasting supplies the parsed or default period.',
   primitive: '@base-ui/react/field (control) + spinbutton segments',
   pattern: 'group of spinbuttons (date field)',
   keyboard: [
