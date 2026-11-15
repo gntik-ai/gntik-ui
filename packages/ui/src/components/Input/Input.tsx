@@ -1,7 +1,7 @@
-import { useFieldStatus } from '../Field/field-status';
-import { useFieldFeedbackIcon } from '../Field/field-feedback-icon';
+import { FieldStatusContext } from '../Field/field-status';
+import { FieldFeedbackIcon } from '../Field/field-feedback-icon';
 import { Input as BaseInput } from '@base-ui/react/input';
-import { useState, type ComponentType, type ReactNode, type Ref } from 'react';
+import { useContext, useState, type ComponentType, type ReactNode, type Ref } from 'react';
 import { useRender } from '@base-ui/react/use-render';
 import { ClearControlButton, resetNativeValue, type ClearableProps } from '../../utils/clear-control';
 import { useFieldVariant } from '../../field-variant/field-variant-context';
@@ -60,7 +60,7 @@ export function Input({
   ...props
 }: InputProps) {
   const fieldVariant = useFieldVariant(variant);
-  const { status } = useFieldStatus();
+  const { status, feedbackIcon } = useContext(FieldStatusContext);
   const [control, setControl] = useState<HTMLInputElement | null>(null);
   const [inner, setInner] = useState(props.defaultValue ?? '');
   const current = String(props.value ?? inner);
@@ -107,7 +107,6 @@ export function Input({
   });
   const s = inputVariants({ size, variant: fieldVariant });
   const px = INPUT_ICON_SIZE[size];
-  const feedback = useFieldFeedbackIcon(px);
   return (
     <InputSizeContext value={size}>
       <div
@@ -122,9 +121,9 @@ export function Input({
         {clearable && hasValue && !props.disabled && !props.readOnly && (
           <ClearControlButton control={control} clearLabel={clearLabel} onClick={clear} />
         )}
-        {feedback ? (
+        {feedbackIcon && status !== 'idle' ? (
           <>
-            {feedback}
+            <FieldFeedbackIcon size={px} />
             {TrailingIcon && <TrailingIcon size={px} aria-hidden className={s.icon()} />}
           </>
         ) : (

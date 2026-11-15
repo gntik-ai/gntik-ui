@@ -57,6 +57,7 @@ export function useAsyncValidation<TValues extends FieldValues, TName extends Fi
   const config = useRef({ validate, disabled });
   const active = useRef<Run<TValues> | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const previousValue = useRef(value);
   const root = useRef<HTMLElement | null>(null);
   const [result, setResult] = useState<{ value: unknown; status: 'idle' | 'validating' | 'success' }>({
     value,
@@ -111,10 +112,15 @@ export function useAsyncValidation<TValues extends FieldValues, TName extends Fi
   }, [cancel, getValues, getFieldState, setError, clearErrors, name, t]);
 
   useEffect(() => {
-    if (!enabled) return;
-    timer.current = setTimeout(() => {
-      void run();
-    }, debounceMs);
+    const changed = !isEqualValue(previousValue.current, value);
+    previousValue.current = value;
+    // Untouched fields stay idle, including during StrictMode's mount effect replay.
+    // Keep cleanup even without a timer: submitting a pristine field can start a run.
+    if (enabled && changed) {
+      timer.current = setTimeout(() => {
+        void run();
+      }, debounceMs);
+    }
     return cancel;
   }, [value, enabled, debounceMs, run, cancel]);
   useEffect(() => {

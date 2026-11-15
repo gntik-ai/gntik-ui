@@ -218,26 +218,40 @@ export function Form<TValues extends FieldValues, TTransformed = TValues>({
     if (inFlight.current) return;
     inFlight.current = true;
     serverErrors.store.reset();
-    const asyncSnapshot = asyncFields.size ? snapshotFormValues(form.getValues()) : undefined;
     try {
-      await form.handleSubmit(async (values, event) => {
-        if (asyncSnapshot && !isEqualValue(asyncSnapshot, form.getValues())) return;
-        if (!(await validateAsyncFields(asyncFields))) {
-          const failed = [...asyncFields.values()].filter(
-            (field) => form.getFieldState(field.name as FieldPath<TValues>).error,
-          );
-          failed.sort((a, b) => {
-            if (!a.root.current || !b.root.current) return 0;
-            return a.root.current.compareDocumentPosition(b.root.current) & Node.DOCUMENT_POSITION_PRECEDING ? 1 : -1;
-          });
-          if (failed[0]) form.setFocus(failed[0].name as FieldPath<TValues>);
-          return;
-        }
-        if (asyncSnapshot && !isEqualValue(asyncSnapshot, form.getValues())) return;
-        await onSubmit(values, event);
-        if (afterSubmit === 'rebase') reset(form.getValues());
-        else if (afterSubmit === 'reset') reset();
-      }, onInvalid)(event);
+      let changed: boolean;
+      do {
+        changed = false;
+        const asyncSnapshot = asyncFields.size ? snapshotFormValues(form.getValues()) : undefined;
+        const valuesChanged = () => !!asyncSnapshot && !isEqualValue(asyncSnapshot, form.getValues());
+        await form.handleSubmit(async (values, event) => {
+          if (valuesChanged()) {
+            changed = true;
+            return;
+          }
+          const valid = await validateAsyncFields(asyncFields);
+          // Edits invalidate the schema output as well as async checks. Retry both under
+          // the same submit guard so the user's submit is neither stale nor silently lost.
+          if (valuesChanged()) {
+            changed = true;
+            return;
+          }
+          if (!valid) {
+            const failed = [...asyncFields.values()].filter(
+              (field) => form.getFieldState(field.name as FieldPath<TValues>).error,
+            );
+            failed.sort((a, b) => {
+              if (!a.root.current || !b.root.current) return 0;
+              return a.root.current.compareDocumentPosition(b.root.current) & Node.DOCUMENT_POSITION_PRECEDING ? 1 : -1;
+            });
+            if (failed[0]) form.setFocus(failed[0].name as FieldPath<TValues>);
+            return;
+          }
+          await onSubmit(values, event);
+          if (afterSubmit === 'rebase') reset(form.getValues());
+          else if (afterSubmit === 'reset') reset();
+        }, onInvalid)(event);
+      } while (changed);
     } finally {
       inFlight.current = false;
     }

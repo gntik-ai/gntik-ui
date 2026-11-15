@@ -6,7 +6,14 @@ React-hook-form adapter with debounced async checks alongside schema validation.
 
 ### Requirement: Debounce async validation and abort stale runs
 
-FormField asyncValidate(value, {signal, values}) SHALL run after asyncDebounceMs (default 300), abort previous runs on edits and unmount, clear pending timers and ignore aborted results. StrictMode SHALL NOT duplicate validators. Pending runs SHALL show validating. Returned messages SHALL use setError with type async; only async errors SHALL be cleared on a passing run. Schema and server errors SHALL NOT be overwritten. Optional warning and success messages SHALL remain non-blocking.
+FormField asyncValidate(value, {signal, values}) SHALL run after an edit and asyncDebounceMs (default 300), abort previous runs on edits and unmount, clear pending timers and ignore aborted results. Untouched initial values SHALL remain idle until submission. StrictMode SHALL NOT duplicate validators. Pending runs SHALL show validating. Returned messages SHALL use setError with type async; only async errors SHALL be cleared on a passing run. Schema and server errors SHALL NOT be overwritten. Optional warning and success messages SHALL remain non-blocking.
+
+#### Scenario: Untouched field
+
+- **GIVEN** a newly mounted field, including under StrictMode
+- **WHEN** 300 ms elapses without an edit
+- **THEN** the validator has not run and the field remains idle
+- **AND** submitting still runs the validator for its default value
 
 #### Scenario: Fast typing
 
@@ -47,6 +54,12 @@ After schema validation passes, Form SHALL await every mounted async validator, 
 
 - **WHEN** the user submits again during an async gate
 - **THEN** no duplicate validator or onSubmit call is made
+
+#### Scenario: Edit during submission
+
+- **WHEN** a value changes during the async gate
+- **THEN** schema validation and async checks restart for the current values under the same submit guard
+- **AND** onSubmit receives only the newly validated schema output, once all checks pass
 
 #### Scenario: Existing forms
 

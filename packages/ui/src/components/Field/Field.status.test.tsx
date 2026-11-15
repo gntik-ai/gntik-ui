@@ -83,3 +83,21 @@ it('preserves the focused control when optional status is enabled after the firs
   expect(screen.getByRole('textbox')).toBe(input);
   expect(input).toHaveFocus();
 });
+
+it('leaves the status region empty for synchronous invalid changes', () => {
+  const field = (invalid: boolean) => (
+    <Field status="idle" invalid={invalid}>
+      <FieldLabel>Slug</FieldLabel>
+      <Input />
+      <FieldError>Required.</FieldError>
+    </Field>
+  );
+  const view = render(field(false));
+  const region = screen.getByRole('status');
+  expect(region).toBeEmptyDOMElement();
+  view.rerender(field(true));
+  expect(screen.getByRole('textbox')).toHaveAccessibleDescription('Required.');
+  expect(region).toBeEmptyDOMElement();
+  view.rerender(field(false));
+  expect(region).toBeEmptyDOMElement();
+});

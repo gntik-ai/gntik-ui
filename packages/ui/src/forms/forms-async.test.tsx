@@ -56,6 +56,10 @@ it('debounces the final value once in StrictMode and ignores an aborted result',
     </StrictMode>,
   );
   const input = screen.getByRole('textbox');
+  await advance();
+  expect(validate).not.toHaveBeenCalled();
+  expect(screen.getByRole('status')).toBeEmptyDOMElement();
+  expect(screen.queryByText('Slug is available.')).not.toBeInTheDocument();
   fireEvent.change(input, { target: { value: 'acme' } });
   await advance(299);
   expect(validate).not.toHaveBeenCalled();
@@ -113,28 +117,36 @@ it('gates concurrent submissions, focuses the async error, and clears it after a
   expect(submit.mock.calls[0]?.[0]).toEqual({ slug: 'free' });
 });
 
-it('aborts on unmount even when the callback ignores cancellation', async () => {
-  let finish!: (message: string) => void;
-  const validate = vi.fn<Validator>(
-    () =>
-      new Promise((resolve) => {
-        finish = resolve;
-      }),
-  );
-  const error = vi.spyOn(console, 'error').mockImplementation(() => {});
-  try {
-    const view = render(<Example validate={validate} />);
-    await advance();
-    const signal = validate.mock.calls[0]![1].signal;
-    view.rerender(<Example validate={validate} show={false} />);
-    expect(signal.aborted).toBe(true);
-    await act(async () => finish('Too late.'));
-    expect(error).not.toHaveBeenCalled();
-    expect(screen.queryByText('Too late.')).not.toBeInTheDocument();
-  } finally {
-    error.mockRestore();
-  }
-});
+it.each(['edit', 'submit'])(
+  'aborts a pending %s check on unmount even when the callback ignores cancellation',
+  async (trigger) => {
+    let finish!: (message: string) => void;
+    const validate = vi.fn<Validator>(
+      () =>
+        new Promise((resolve) => {
+          finish = resolve;
+        }),
+    );
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    try {
+      const view = render(<Example validate={validate} />);
+      if (trigger === 'edit') fireEvent.change(screen.getByRole('textbox'), { target: { value: 'checking' } });
+      else
+        await act(async () => {
+          fireEvent.submit(screen.getByRole('form'));
+        });
+      await advance();
+      const signal = validate.mock.calls[0]![1].signal;
+      view.rerender(<Example validate={validate} show={false} />);
+      expect(signal.aborted).toBe(true);
+      await act(async () => finish('Too late.'));
+      expect(error).not.toHaveBeenCalled();
+      expect(screen.queryByText('Too late.')).not.toBeInTheDocument();
+    } finally {
+      error.mockRestore();
+    }
+  },
+);
 
 it('uses the resolver before the submit gate and supplies the raw values to the validator', async () => {
   const validate = vi.fn<Validator>().mockResolvedValue('That slug is taken.');
@@ -191,6 +203,7 @@ it('does not erase or overwrite a non-async error when a pending check settles',
     );
   }
   render(<ManualError />);
+  fireEvent.change(screen.getByRole('textbox'), { target: { value: 'edited' } });
   await advance();
   fireEvent.click(screen.getByRole('button'));
   await act(async () => finish(null));
@@ -198,8 +211,11 @@ it('does not erase or overwrite a non-async error when a pending check settles',
   expect(screen.getByRole('textbox')).toHaveAttribute('aria-invalid', 'true');
 });
 
-it('shares a pending edit check with submission and cancels the submission on a superseding edit', async () => {
-  const validate = vi.fn<Validator>(() => new Promise(() => {}));
+it('shares a pending edit check with submission and retries after a superseding edit', async () => {
+  const validate = vi
+    .fn<Validator>()
+    .mockImplementationOnce(() => new Promise(() => {}))
+    .mockResolvedValue(null);
   const submit = vi.fn();
   render(<Example validate={validate} submit={submit} />);
   fireEvent.change(screen.getByRole('textbox'), { target: { value: 'checking' } });
@@ -212,7 +228,8 @@ it('shares a pending edit check with submission and cancels the submission on a 
   fireEvent.change(screen.getByRole('textbox'), { target: { value: 'changed' } });
   await act(async () => {});
   expect(signal.aborted).toBe(true);
-  expect(submit).not.toHaveBeenCalled();
+  expect(validate).toHaveBeenCalledTimes(2);
+  expect(submit).toHaveBeenCalledExactlyOnceWith({ slug: 'changed' }, expect.anything());
 });
 
 it('focuses the first failing field in document order after every mounted check resolves', async () => {
@@ -243,7 +260,7 @@ it('focuses the first failing field in document order after every mounted check 
   expect(submit).not.toHaveBeenCalled();
 });
 
-it('does not submit a schema snapshot after an edit during the async gate', async () => {
+it('revalidates current values instead of dropping submission after an edit during the async gate', async () => {
   let finish!: (message: null) => void;
   const validate = vi.fn<Validator>(
     () =>
@@ -253,7 +270,10 @@ it('does not submit a schema snapshot after an edit during the async gate', asyn
   );
   const submit = vi.fn();
   function RelatedValues() {
-    const form = useForm({ defaultValues: { slug: 'slug', region: 'old' } });
+    const form = useForm({
+      defaultValues: { slug: 'slug', region: 'old' },
+      resolver: async (values) => ({ values: { ...values, slug: values.slug.toUpperCase() }, errors: {} }),
+    });
     return (
       <Form form={form} onSubmit={submit} aria-label="Create">
         <FormField name="slug" label="Slug" asyncValidate={validate}>
@@ -272,4 +292,12 @@ it('does not submit a schema snapshot after an edit during the async gate', asyn
   fireEvent.change(screen.getByRole('textbox', { name: 'Region' }), { target: { value: 'new' } });
   await act(async () => finish(null));
   expect(submit).not.toHaveBeenCalled();
+  expect(validate).toHaveBeenCalledTimes(2);
+  expect(validate.mock.calls[1]?.[1].values).toEqual({ slug: 'slug', region: 'new' });
+  await act(async () => {
+    fireEvent.submit(screen.getByRole('form'));
+  });
+  expect(validate).toHaveBeenCalledTimes(2);
+  await act(async () => finish(null));
+  expect(submit).toHaveBeenCalledExactlyOnceWith({ slug: 'SLUG', region: 'new' }, expect.anything());
 });

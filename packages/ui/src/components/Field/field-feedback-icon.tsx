@@ -5,7 +5,7 @@ import { FieldStatusContext } from './field-status';
 import { cn } from '../../utils/cn';
 
 /** Shared decorative feedback for the two single-line controls. */
-export function useFieldFeedbackIcon(size: number, className?: string) {
+export function FieldFeedbackIcon({ size, className }: { size: number; className?: string }) {
   const { status, feedbackIcon } = useContext(FieldStatusContext);
   if (!feedbackIcon || status === 'idle') return null;
   const Icon =
