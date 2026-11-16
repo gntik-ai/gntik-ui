@@ -12,6 +12,7 @@ import { CATALOG } from '../preview-registry.js';
 import { Viewer } from './viewer-frame.jsx';
 import { ITEM_PAGES } from './item-inventory.js';
 import { GalleryItemHeader } from './gallery-item-header.jsx';
+import { tablePaginationMessages } from '../i18n/table-pagination-messages.js';
 
 const { SectionHead, CodeBlock, ApiReference } = window;
 
@@ -26,7 +27,8 @@ const LABEL_EXAMPLES = {
 const titleCase = (s) => s.replace(/-/g, ' ').replace(/^\w/, (c) => c.toUpperCase());
 
 function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const paginationCopy = tablePaginationMessages[locale.split('-')[0]] ?? tablePaginationMessages.en;
   const names = groups.map(([g]) => g);
   const [group, setGroup] = useState('All');
   const item = ITEM_PAGES.find(
@@ -281,6 +283,20 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
               )}
               {kind === 'block' && it.id === 'data-table' && (
                 <>
+                  <Viewer
+                    kind="block"
+                    id="data-table--url-pagination"
+                    title={paginationCopy.url}
+                    file="../../../packages/blocks/src/tables/DataTable/examples/url-pagination.tsx"
+                    height={height}
+                  />
+                  <Viewer
+                    kind="block"
+                    id="data-table--auto-page-size"
+                    title={paginationCopy.auto}
+                    file="../../../packages/blocks/src/tables/DataTable/examples/auto-page-size.tsx"
+                    height={600}
+                  />
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">Header help and rich labels</h4>
                   <p className="mb-4 text-[13px] leading-relaxed text-muted-foreground">
                     Use column.description only for columns needing a definition: each info button adds a keyboard stop.
@@ -325,6 +341,15 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                     height={height}
                   />
                 </>
+              )}
+              {kind === 'block' && it.id === 'pagination-footer' && (
+                <Viewer
+                  kind="block"
+                  id="pagination-footer--without-page-size"
+                  title={paginationCopy.hidden}
+                  file="../../../packages/blocks/src/tables/PaginationFooter/examples/without-page-size.tsx"
+                  height={height}
+                />
               )}
               {kind === 'block' && it.id === 'log-viewer' && (
                 <>

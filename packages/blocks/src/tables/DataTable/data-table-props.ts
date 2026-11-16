@@ -180,13 +180,23 @@ interface DataTableCommonProps<T> {
 interface ClientPaginationProps {
   paginationMode?: 'client';
   rowCount?: never;
-  page?: never;
-  pageSize?: never;
-  onPageChange?: never;
-  onPageSizeChange?: never;
+  /** Current client page, 1-based (controlled); pair with onPageChange. */
+  page?: number;
+  /** Initial uncontrolled client page (default 1). */
+  defaultPage?: number;
+  /** Requests a client page; controlled tables wait for the page prop to change. */
+  onPageChange?: (page: number) => void;
+  /** Controlled client rows per page; pair with onPageSizeChange. */
+  pageSize?: number;
+  /** Requests a size; may also request the page retaining the first visible row. */
+  onPageSizeChange?: (size: number) => void;
+  /** Fit whole rows to a definite parent height (default false). Owns page size and hides its select. */
+  autoPageSize?: boolean;
 }
 
 interface ServerPaginationProps {
+  defaultPage?: never;
+  autoPageSize?: never;
   /** Rows arrive as one server page without client sorting or slicing. Sortable headers require onSortChange or onQueryChange; sorting requests page 1. */
   paginationMode: 'server';
   /** Total number of rows across all pages; required even for an empty result. */

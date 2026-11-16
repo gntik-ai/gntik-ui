@@ -184,6 +184,10 @@ export const PREVIEW_LOADERS = {
     'data-table--single-selection': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/single-selection'),
     'data-table--header-help': () => import('../../../packages/blocks/src/tables/DataTable/examples/header-help'),
+    'data-table--url-pagination': () => import('../../../packages/blocks/src/tables/DataTable/examples/url-pagination'),
+    'data-table--auto-page-size': () => import('../../../packages/blocks/src/tables/DataTable/examples/auto-page-size'),
+    'pagination-footer--without-page-size': () =>
+      import('../../../packages/blocks/src/tables/PaginationFooter/examples/without-page-size'),
     'data-table--csv-export': () => import('../../../packages/blocks/src/tables/DataTable/examples/csv-export'),
     'data-table--cursor-load-more': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/cursor-load-more'),

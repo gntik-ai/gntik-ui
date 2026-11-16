@@ -25,6 +25,8 @@ export interface PaginationFooterProps {
   defaultPageSize?: number;
   onPageSizeChange?: (pageSize: number) => void;
   pageSizeOptions?: readonly number[];
+  /** Show the rows-per-page label and select (default true). */
+  showPageSize?: boolean;
   /** What the rows are, for the accessible names ("Deployments"). */
   noun?: string;
   locale?: string;
@@ -41,6 +43,7 @@ export function PaginationFooter({
   defaultPageSize = 10,
   onPageSizeChange,
   pageSizeOptions = [10, 25, 50, 100],
+  showPageSize = true,
   noun: nounProp,
   locale: localeProp,
   className,
@@ -74,19 +77,21 @@ export function PaginationFooter({
 
   return (
     <div className={cn('flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between', className)}>
-      <div className="flex items-center gap-2.5">
-        <span className="text-[12.5px] text-muted-foreground" aria-hidden>
-          {labels?.rowsPerPage ?? t('table.rowsPerPage')}
-        </span>
-        <SimpleSelect
-          aria-label={labels?.rowsPerPageLabel ?? t('table.rowsPerPage')}
-          size="sm"
-          className="w-[76px] font-mono"
-          value={String(pageSize)}
-          onValueChange={resize}
-          items={pageSizeOptions.map((n) => ({ value: String(n), label: String(n) }))}
-        />
-      </div>
+      {showPageSize && (
+        <div className="flex items-center gap-2.5">
+          <span className="text-[12.5px] text-muted-foreground" aria-hidden>
+            {labels?.rowsPerPage ?? t('table.rowsPerPage')}
+          </span>
+          <SimpleSelect
+            aria-label={labels?.rowsPerPageLabel ?? t('table.rowsPerPage')}
+            size="sm"
+            className="w-[76px] font-mono"
+            value={String(pageSize)}
+            onValueChange={resize}
+            items={pageSizeOptions.map((n) => ({ value: String(n), label: String(n) }))}
+          />
+        </div>
+      )}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <p className="text-[12.5px] text-muted-foreground tabular-nums" aria-live="polite">
           {labels?.rangeSummary ? (
