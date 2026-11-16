@@ -176,3 +176,18 @@ it('uses the existing Spanish Cancel, Retry and Close messages', async () => {
   await user.click(await screen.findByRole('button', { name: 'Reintentar' }));
   expect(await screen.findByRole('button', { name: 'Cerrar' })).toHaveFocus();
 });
+
+it.each([
+  ['en', 'Type db to confirm'],
+  ['es', 'Escribe db para confirmar'],
+])('preserves resource-name emphasis in the %s confirmation label', (locale, label) => {
+  render(
+    <I18nProvider locale={locale}>
+      <ConfirmDestructive defaultOpen triggerLabel={null} resourceName="db" />
+    </I18nProvider>,
+  );
+  const input = screen.getByRole('textbox', { name: label });
+  const fieldLabel = (input as HTMLInputElement).labels?.[0];
+  expect(fieldLabel).toBeDefined();
+  expect(fieldLabel?.querySelector('.font-mono.font-semibold')).toHaveTextContent('db');
+});

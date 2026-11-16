@@ -13,6 +13,71 @@ const columns: DataTableColumn<Row>[] = [
   { id: 'quota', header: 'Quota', accessor: (row) => row.quota, editable: true, editor: { type: 'number' } },
 ];
 
+it.each(['controlled', 'default'] as const)('leaves focus alone when %s editing rows first render', async (mode) => {
+  const user = userEvent.setup();
+  const view = render(<button>Outside table</button>);
+  const outside = screen.getByRole('button', { name: 'Outside table' });
+  await user.click(outside);
+  view.rerender(
+    <>
+      <button>Outside table</button>
+      <DataTable
+        rows={rows}
+        columns={columns}
+        editMode="row"
+        {...(mode === 'controlled' ? { editingRowIds: ['a', 'b'] } : { defaultEditingRowIds: ['a', 'b'] })}
+      />
+    </>,
+  );
+  expect(screen.getAllByRole('textbox')).toHaveLength(2);
+  expect(outside).toHaveFocus();
+});
+
+it('keeps focus on pagination when editing rows mount on the next page and back', async () => {
+  const user = userEvent.setup();
+  render(
+    <DataTable
+      rows={[...rows, { id: 'c', name: 'worker', quota: 300 }]}
+      columns={columns}
+      editMode="row"
+      editingRowIds={['a', 'b']}
+      defaultPageSize={1}
+      pageSizeOptions={[1]}
+    />,
+  );
+  await user.click(screen.getByRole('button', { name: 'Next page' }));
+  expect(screen.getByRole('textbox', { name: 'Name for billing' })).toBeVisible();
+  expect(screen.getByRole('button', { name: 'Next page' })).toHaveFocus();
+  await user.click(screen.getByRole('button', { name: 'Page 1' }));
+  expect(screen.getByRole('textbox', { name: 'Name for api-gateway' })).toBeVisible();
+  expect(screen.getByRole('button', { name: 'Page 1' })).toHaveFocus();
+});
+
+it('consumes an Edit focus request before a virtualized row unmounts and remounts', async () => {
+  const user = userEvent.setup();
+  render(
+    <>
+      <button>Outside table</button>
+      <DataTable
+        rows={Array.from({ length: 100 }, (_, index) => ({ id: String(index), name: `Item ${index}`, quota: index }))}
+        columns={columns}
+        editMode="row"
+        paginated={false}
+        virtualize
+      />
+    </>,
+  );
+  await user.click(screen.getByRole('button', { name: 'Edit Item 0' }));
+  expect(screen.getByRole('textbox', { name: 'Name for Item 0' })).toHaveFocus();
+  await user.click(screen.getByRole('button', { name: 'Outside table' }));
+  const viewport = screen.getByRole('table').parentElement!;
+  fireEvent.scroll(viewport, { target: { scrollTop: 2200 } });
+  await vi.waitFor(() => expect(screen.queryByRole('textbox', { name: 'Name for Item 0' })).toBeNull());
+  fireEvent.scroll(viewport, { target: { scrollTop: 0 } });
+  expect(await screen.findByRole('textbox', { name: 'Name for Item 0' })).toBeVisible();
+  expect(screen.getByRole('button', { name: 'Outside table' })).toHaveFocus();
+});
+
 it('edits a whole row, tabs without saving, saves once and restores focus on save or Escape', async () => {
   const user = userEvent.setup();
   const save = vi.fn();
@@ -221,6 +286,31 @@ it('discards a controlled draft when its owner removes the editing id', async ()
   view.rerender(<DataTable {...props} editingRowIds={[]} />);
   view.rerender(<DataTable {...props} editingRowIds={['a']} />);
   expect(screen.getByRole('textbox', { name: 'Name for api-gateway' })).toHaveValue('api-gateway');
+});
+
+it('leaves outside focus alone when the owner closes a controlled row', async () => {
+  const user = userEvent.setup();
+  const content = (ids: string[]) => (
+    <>
+      <button>Outside table</button>
+      <DataTable rows={rows} columns={columns} editMode="row" editingRowIds={ids} />
+    </>
+  );
+  const view = render(content(['a']));
+  await user.click(screen.getByRole('button', { name: 'Outside table' }));
+  view.rerender(content([]));
+  expect(screen.getByRole('button', { name: 'Outside table' })).toHaveFocus();
+});
+
+it('does not move focus into a row when Save all accepts it', async () => {
+  const user = userEvent.setup();
+  render(<DataTable rows={rows} columns={columns} editMode="row" onRowsSave={() => ({ b: 'Try again' })} />);
+  for (const label of ['api-gateway', 'billing']) {
+    await user.click(screen.getByRole('button', { name: `Edit ${label}` }));
+    await user.type(screen.getByRole('textbox', { name: `Name for ${label}` }), '-draft');
+  }
+  await user.click(screen.getByRole('button', { name: 'Save all' }));
+  expect(screen.getByRole('button', { name: 'Save all' })).toHaveFocus();
 });
 
 it('closes both rows when independent async saves settle in the same turn', async () => {

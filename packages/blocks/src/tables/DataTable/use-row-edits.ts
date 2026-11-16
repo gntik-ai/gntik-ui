@@ -1,4 +1,4 @@
-import { useId, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useId, useLayoutEffect, useRef, useState } from 'react';
 import { useI18n } from '@gntik-ai/ui';
 import type { DataTableProps } from './data-table-props';
 import type { DataTableColumn } from './data-table-utils';
@@ -36,6 +36,14 @@ export function useRowEdits<T>(
     (next) => options.onEditingRowIdsChange?.([...next]),
   );
   const [drafts, setDrafts] = useState<Record<string, RowDraft<T>>>({});
+  const [focusRequestedId, setFocusRequestedId] = useState<string | null>(null);
+  const consumeFocus = useCallback((id: string) => {
+    setFocusRequestedId((current) => (current === id ? null : current));
+  }, []);
+  const [actionFocusId, setActionFocusId] = useState<string | null>(null);
+  const consumeActionFocus = useCallback((id: string) => {
+    setActionFocusId((current) => (current === id ? null : current));
+  }, []);
   const newId = useId();
   const [newRow, setNewRow] = useState<T | null>(null);
   const [previousIds, setPreviousIds] = useState(ids);
@@ -66,12 +74,16 @@ export function useRowEdits<T>(
   const patch = (draft: RowDraft<T>) => setDrafts((current) => ({ ...current, [draft.rowId]: draft }));
   const start = (row: T) => {
     const id = options.getRowId(row);
+    setFocusRequestedId(id);
+    setActionFocusId(null);
     patch(create(row));
     const next = [...new Set([...latestIds.current, id])];
     latestIds.current = next;
     setIds(next);
   };
-  const finish = (finished: readonly string[]) => {
+  const finish = (finished: readonly string[], returnFocus = false) => {
+    if (returnFocus) setActionFocusId(finished[0] ?? null);
+    setFocusRequestedId((current) => (current !== null && finished.includes(current) ? null : current));
     for (const id of finished) sessions.current.delete(id);
     if (finished.includes(newId)) {
       setNewRow(null);
@@ -158,7 +170,7 @@ export function useRowEdits<T>(
     if (sessions.current.get(draft.rowId) !== token) return false;
     sessions.current.delete(draft.rowId);
     if (reject(draft, result)) return false;
-    finish([draft.rowId]);
+    finish([draft.rowId], true);
     return true;
   };
   const changed = Object.values(drafts).filter(
@@ -208,12 +220,17 @@ export function useRowEdits<T>(
       ),
     };
     setNewRow(row);
+    setFocusRequestedId(newId);
     patch({ row, rowId: newId, values, previous: { ...values }, fieldErrors: {} });
   };
   return {
     ids: newRow ? [...ids, newId] : ids,
     newRow,
     newId,
+    focusRequestedId,
+    consumeFocus,
+    actionFocusId,
+    consumeActionFocus,
     add,
     get,
     start,
@@ -223,7 +240,7 @@ export function useRowEdits<T>(
     saveAll,
     changedCount: changed.length,
     discardAll: () => finish(ids),
-    cancel: (row: T) => finish([idOf(row)]),
+    cancel: (row: T, returnFocus = true) => finish([idOf(row)], returnFocus),
   };
 }
 export type RowEdits<T> = ReturnType<typeof useRowEdits<T>>;

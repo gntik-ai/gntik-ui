@@ -55,7 +55,7 @@ export function NewRow<T>({
                 rowLabel={label}
                 column={column}
                 edits={edits}
-                autoFocus={editable[0]?.id === column.id}
+                autoFocus={edits.focusRequestedId === edits.newId && editable[0]?.id === column.id}
                 labels={labels}
               />
             )}

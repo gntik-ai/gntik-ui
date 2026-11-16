@@ -15,7 +15,7 @@ import {
   Input,
   useI18n,
 } from '@gntik-ai/ui';
-import { useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
+import { Fragment, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { ErrorPanel } from '../ErrorPanel/ErrorPanel';
 import { NotFoundEmpty } from '../EmptyStates/EmptyStates';
 
@@ -270,7 +270,16 @@ export function ConfirmDestructive({
             <>
               {children}
               <Field>
-                <FieldLabel>{t('dialogs.typeToConfirm', { value: resourceName })}</FieldLabel>
+                <FieldLabel>
+                  {t('dialogs.typeToConfirm')
+                    .split('{value}')
+                    .map((text, index) => (
+                      <Fragment key={index}>
+                        {index > 0 && <span className="font-mono font-semibold">{resourceName}</span>}
+                        {text}
+                      </Fragment>
+                    ))}
+                </FieldLabel>
                 <Input
                   ref={inputRef}
                   value={typed}

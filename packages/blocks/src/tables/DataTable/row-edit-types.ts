@@ -18,6 +18,6 @@ export interface DataTableEditorContext<T> {
   commit: () => void;
   cancel: () => void;
   error?: string;
-  inputProps: AriaAttributes & { 'aria-label': string; autoFocus: boolean };
+  inputProps: AriaAttributes & { 'aria-label': string; autoFocus?: boolean };
 }
 export type DataTableRenderEditor<T> = (context: DataTableEditorContext<T>) => ReactNode;

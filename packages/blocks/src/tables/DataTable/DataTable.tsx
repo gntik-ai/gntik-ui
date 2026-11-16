@@ -301,7 +301,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     onRowDelete: onRowDelete
       ? async (row: T) => {
           await onRowDelete(row);
-          rowEdits.cancel(row);
+          rowEdits.cancel(row, false);
         }
       : undefined,
     tableRef,

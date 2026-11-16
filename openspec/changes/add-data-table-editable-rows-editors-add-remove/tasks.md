@@ -8,4 +8,5 @@
 - [x] Translate chrome into English and Spanish and deprecate InlineEditRow/InlineEditTable.
 - [x] Add live row/cell/virtualization and useFieldArray examples.
 - [x] Add focused public-interface tests and retain existing editing tests unchanged.
+- [x] Run `openspec validate add-data-table-editable-rows-editors-add-remove --strict`.
 - [x] Run final repository validation, regenerate registry and commit the minor changeset.

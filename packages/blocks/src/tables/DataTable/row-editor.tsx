@@ -34,6 +34,10 @@ export function RowEditor<T>({
   );
   const errorId = useId();
   const draft = edits.get(row);
+  const consumeFocus = edits.consumeFocus;
+  useLayoutEffect(() => {
+    if (autoFocus) consumeFocus(draft.rowId);
+  }, [autoFocus, consumeFocus, draft.rowId]);
   const error = draft.fieldErrors[column.id];
   const editor = column.editor;
   const { t } = useI18n();
@@ -42,7 +46,7 @@ export function RowEditor<T>({
       labels?.editLabel?.(column.header, rowLabel) ?? t('table.editLabel', { column: column.header, row: rowLabel }),
     'aria-invalid': !!error || undefined,
     'aria-describedby': error ? errorId : undefined,
-    autoFocus,
+    ...(autoFocus ? { autoFocus: true } : {}),
   };
   const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     if (
@@ -116,11 +120,13 @@ export function RowEditActions<T>({
   const { t } = useI18n();
   const container = useRef<HTMLSpanElement>(null);
   const editing = edits.ids.includes(rowId);
-  const previousEditing = useRef(editing);
+  const { actionFocusId, consumeActionFocus } = edits;
   useLayoutEffect(() => {
-    if (previousEditing.current && !editing) focusRowAction(container.current?.closest('table') ?? null, rowId);
-    previousEditing.current = editing;
-  }, [editing, rowId]);
+    if (!editing && actionFocusId === rowId) {
+      focusRowAction(container.current?.closest('table') ?? null, rowId);
+      consumeActionFocus(rowId);
+    }
+  }, [editing, rowId, actionFocusId, consumeActionFocus]);
   return (
     <span ref={container} className="inline-flex gap-1">
       {editing ? (

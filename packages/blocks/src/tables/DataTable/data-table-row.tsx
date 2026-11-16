@@ -144,7 +144,9 @@ export function DataTableRow<T>({
                 column={c}
                 edits={rowEdits}
                 labels={labels}
-                autoFocus={columns.find((column) => isCellEditable(column, row))?.id === c.id}
+                autoFocus={
+                  rowEdits.focusRequestedId === id && columns.find((column) => isCellEditable(column, row))?.id === c.id
+                }
               />
             ) : editable ? (
               <EditableCell
