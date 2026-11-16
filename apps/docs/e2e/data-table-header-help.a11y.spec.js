@@ -17,7 +17,11 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
         const result = await axe.run(document.body, {
           runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
         });
-        return result.violations.map((violation) => `${violation.id}: ${violation.help}`);
+        return result.violations.map((violation) => ({
+          id: violation.id,
+          help: violation.help,
+          nodes: violation.nodes.map((node) => ({ target: node.target, summary: node.failureSummary })),
+        }));
       });
       expect(violations).toEqual([]);
     };
@@ -26,11 +30,19 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       const trigger = page.getByRole('button', { name: `More information about ${label}`, exact: true });
       await trigger.focus();
       await page.keyboard.press('Enter');
-      await expect(page.getByRole('dialog', { name: label, exact: true })).toBeVisible();
+      const dialog = page.getByRole('dialog', { name: label, exact: true });
+      await expect(dialog).toBeVisible();
+      // Visibility can precede Base UI's queued keyboard focus and opening transition.
+      // Scan the settled open state, retaining every axe rule and the whole-body scope.
+      await expect(dialog).toBeFocused();
+      await expect(dialog).not.toHaveAttribute('data-starting-style');
       await expect(header).toHaveAttribute('aria-sort', 'none');
       await scan();
       await page.keyboard.press('Escape');
       await expect(page.getByRole('dialog')).toHaveCount(0);
+      // A removed popup can still have portal guards awaiting cleanup. Do not carry
+      // those aria-hidden tab stops into the next header's open-state scan.
+      await expect(page.locator('[data-base-ui-focus-guard]')).toHaveCount(0);
       await expect(trigger).toBeFocused();
     }
   });
