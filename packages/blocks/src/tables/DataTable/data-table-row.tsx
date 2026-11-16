@@ -21,6 +21,8 @@ import {
 } from './data-table-utils';
 import { EditableCell, isCellEditable, type DataTableCellEditHandler } from './editable-cell';
 import type { DataTableLabels } from './labels';
+import { RowEditor, RowEditActions } from './row-editor';
+import type { RowEdits } from './use-row-edits';
 import type { SingleSelection } from './single-selection';
 
 /** A group as the body renders it: its rows on the current page plus header data. */
@@ -50,6 +52,8 @@ export interface RowContext<T> {
   onToggleRow: (id: string) => void;
   rowActions?: (row: T) => Array<MoreMenuAction | 'separator'>;
   layout?: TableLayout;
+  hasRowActions?: boolean;
+  rowEdits?: RowEdits<T>;
   onCellEdit?: DataTableCellEditHandler<T>;
   /** Id of the "Press Enter or F2 to edit" hint. */
   editHintId?: string;
@@ -76,6 +80,8 @@ export function DataTableRow<T>({
   rowActions,
   layout,
   onCellEdit,
+  rowEdits,
+  hasRowActions,
   editHintId,
   ariaRowIndex,
   style,
@@ -131,7 +137,16 @@ export function DataTableRow<T>({
               tint(cl),
             )}
           >
-            {editable ? (
+            {rowEdits?.ids.includes(id) && isCellEditable(c, row) ? (
+              <RowEditor
+                row={row}
+                rowLabel={label}
+                column={c}
+                edits={rowEdits}
+                labels={labels}
+                autoFocus={columns.find((column) => isCellEditable(column, row))?.id === c.id}
+              />
+            ) : editable ? (
               <EditableCell
                 labels={labels}
                 row={row}
@@ -149,18 +164,21 @@ export function DataTableRow<T>({
           </TableCell>
         );
       })}
-      {rowActions && (
+      {(hasRowActions || rowActions || rowEdits) && (
         <TableCell
           align="right"
           className={cn('w-12 py-0', layout?.trail.className, tint(layout?.trail))}
           style={layout?.trail.style}
         >
-          <MoreMenu
-            items={rowActions(row)}
-            label={labels?.rowActions?.(label) ?? t('table.rowActions', { label })}
-            variant="ghost"
-            size="sm"
-          />
+          {rowEdits && <RowEditActions row={row} rowId={id} label={label} edits={rowEdits} labels={labels} />}
+          {rowActions && (
+            <MoreMenu
+              items={rowActions(row)}
+              label={labels?.rowActions?.(label) ?? t('table.rowActions', { label })}
+              variant="ghost"
+              size="sm"
+            />
+          )}
         </TableCell>
       )}
     </TableRow>

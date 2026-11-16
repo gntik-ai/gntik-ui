@@ -1,4 +1,12 @@
 import type { ReactNode } from 'react';
+import type { DataTableEditValue, DataTableRenderEditor } from './row-edit-types';
+export type {
+  DataTableEditValue,
+  DataTableRowEdit,
+  DataTableRowSaveResult,
+  DataTableRowsSaveResult,
+  DataTableEditorContext,
+} from './row-edit-types';
 
 export type SortDirectionValue = 'ascending' | 'descending';
 /** Include lists selected ids; exclude selects every match except the listed ids. */
@@ -70,12 +78,18 @@ export interface DataTableColumn<T> {
   /** Editor of an editable cell (default a text input). */
   editor?: DataTableCellEditor;
   /** Value the editor starts from (default the accessor's value). */
-  editValue?: (row: T) => string | number | null | undefined;
+  editValue?: (row: T) => DataTableEditValue | undefined;
+  validate?: (value: DataTableEditValue, row: T) => string | undefined;
+  renderEditor?: DataTableRenderEditor<T>;
 }
 
 /** Editor of an editable column. */
 export type DataTableCellEditor =
   | { type: 'text'; placeholder?: string }
+  | { type: 'textarea'; rows?: number }
+  | { type: 'switch' }
+  | { type: 'date' }
+  | { type: 'combobox'; options: ReadonlyArray<{ value: string; label: string }> }
   | { type: 'number'; min?: number; max?: number; step?: number }
   | { type: 'select'; options: ReadonlyArray<{ value: string; label: string }> };
 

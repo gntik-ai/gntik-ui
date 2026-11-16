@@ -270,9 +270,7 @@ export function ConfirmDestructive({
             <>
               {children}
               <Field>
-                <FieldLabel>
-                  Type <span className="font-mono font-semibold text-foreground">{resourceName}</span> to confirm
-                </FieldLabel>
+                <FieldLabel>{t('dialogs.typeToConfirm', { value: resourceName })}</FieldLabel>
                 <Input
                   ref={inputRef}
                   value={typed}

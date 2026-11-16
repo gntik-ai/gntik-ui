@@ -15,6 +15,7 @@ const templateMetas = import.meta.glob('../../../packages/templates/src/*/templa
 const layoutExamples = import.meta.glob('../../../packages/ui/src/layouts/*/examples/*.tsx');
 const layoutDocs = import.meta.glob('../../../packages/ui/src/layouts/*/*.doc.ts', { eager: true, import: 'doc' });
 const sourcesRaw = {
+  ...import.meta.glob('../../../packages/ui/examples/*.tsx', { query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/templates/src/*/examples/*.tsx', { query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/blocks/src/*/*/examples/*.tsx', { query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/blocks/src/*/*/*.tsx', { query: '?raw', import: 'default' }),
@@ -183,6 +184,8 @@ export const PREVIEW_LOADERS = {
     'load-more-footer--cards': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/cards'),
     'data-table--single-selection': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/single-selection'),
+    'data-table--editable-rows': () => import('../../../packages/blocks/src/tables/DataTable/examples/editable-rows'),
+    'data-table--field-array': () => import('../../../packages/ui/examples/data-table-field-array'),
     'data-table--header-help': () => import('../../../packages/blocks/src/tables/DataTable/examples/header-help'),
     'data-table--url-pagination': () => import('../../../packages/blocks/src/tables/DataTable/examples/url-pagination'),
     'data-table--auto-page-size': () => import('../../../packages/blocks/src/tables/DataTable/examples/auto-page-size'),

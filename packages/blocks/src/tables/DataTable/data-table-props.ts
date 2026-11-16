@@ -5,6 +5,12 @@ import type { DataTableColumn, DataTableGroupBy, DataTableSelectionModel, SortSt
 import type { DataTableCellEditHandler } from './editable-cell';
 import type { DataTableLabels } from './labels';
 import type { DataTableView } from './views';
+import type {
+  DataTableRowEdit,
+  DataTableRowSaveResult,
+  DataTableRowsSaveResult,
+  DataTableEditValue,
+} from './row-edit-types';
 
 /** Complete next query, emitted synchronously once per user action in either pagination mode. */
 export interface DataTableQuery {
@@ -157,6 +163,17 @@ interface DataTableCommonProps<T> {
    * message (or throw) to reject: the message is shown inline under the editor.
    */
   onCellEdit?: DataTableCellEditHandler<T>;
+  /** Opt-in whole-row editing; cell mode remains the default. */
+  editMode?: 'cell' | 'row';
+  onRowAdd?: (values: Record<string, DataTableEditValue>) => DataTableRowSaveResult | Promise<DataTableRowSaveResult>;
+  newRowPosition?: 'top' | 'bottom';
+  newRowDefaults?: () => Record<string, DataTableEditValue>;
+  onRowDelete?: (row: T) => void | Promise<void>;
+  editingRowIds?: readonly string[];
+  defaultEditingRowIds?: readonly string[];
+  onEditingRowIdsChange?: (ids: string[]) => void;
+  onRowsSave?: (edits: DataTableRowEdit<T>[]) => DataTableRowsSaveResult | Promise<DataTableRowsSaveResult>;
+  onRowSave?: (edit: DataTableRowEdit<T>) => DataTableRowSaveResult | Promise<DataTableRowSaveResult>;
 
   /** Saved views (controlled). Each captures filters, sort, visible columns, widths, pinning and grouping. */
   views?: readonly DataTableView[];

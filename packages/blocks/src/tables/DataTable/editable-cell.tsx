@@ -1,6 +1,9 @@
-import { cn, Input, useInlineEdit } from '@gntik-ai/ui';
+import { cn, useInlineEdit, useI18n } from '@gntik-ai/ui';
 import { useCallback, useId, useRef, type FocusEvent, type KeyboardEvent, type ReactNode } from 'react';
 import type { DataTableLabels } from './labels';
+import { startValue, useEditorValue } from './edit-values';
+import { CellEditor } from './cell-editors';
+import type { DataTableEditValue } from './row-edit-types';
 import type { DataTableColumn } from './data-table-utils';
 
 /** One committed cell edit, as `onCellEdit` receives it. */
@@ -9,9 +12,9 @@ export interface DataTableCellEdit<T> {
   rowId: string;
   columnId: string;
   /** Parsed value: a string (text, select) or a number / null (number editor). */
-  value: string | number | null;
+  value: DataTableEditValue;
   /** Value the editor started from. */
-  previous: string | number | null;
+  previous: DataTableEditValue;
 }
 
 /**
@@ -36,17 +39,6 @@ export interface EditableCellProps<T> {
   hintId: string;
   /** The cell's display content. */
   children: ReactNode;
-}
-
-const GENERIC_ERROR = 'The change could not be saved.';
-
-/** Starting value of the editor for a row. */
-function startValue<T>(row: T, column: DataTableColumn<T>): string | number | null {
-  const raw = column.editValue ? column.editValue(row) : column.accessor?.(row);
-  if (raw == null) return null;
-  if (typeof raw === 'number' || typeof raw === 'string') return raw;
-  if (raw instanceof Date) return raw.toISOString();
-  return String(raw);
 }
 
 /** Focuses the next or previous editable cell of the table (Tab / Shift+Tab while editing). */
@@ -74,40 +66,62 @@ export function EditableCell<T>({
   children,
   labels,
 }: EditableCellProps<T>) {
+  const { t } = useI18n();
   const errorId = useId();
   const editor = column.editor ?? { type: 'text' as const };
+  const enhanced =
+    column.validate != null || column.renderEditor != null || !['text', 'number', 'select'].includes(editor.type);
+  const custom = useEditorValue();
   const trigger = useRef<HTMLButtonElement>(null);
-  const field = useRef<HTMLInputElement | HTMLSelectElement | null>(null);
+  const field = useRef<HTMLElement | null>(null);
 
-  const focusOnMount = useCallback((el: HTMLInputElement | HTMLSelectElement | null) => {
-    field.current = el;
-    if (!el) return;
-    el.focus();
-    if (el instanceof HTMLInputElement) el.select();
-  }, []);
+  const focusOnMount = useCallback(
+    (el: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | HTMLButtonElement | null) => {
+      field.current = el;
+      if (!el) return;
+      el.focus();
+      if (el instanceof HTMLInputElement) el.select();
+    },
+    [],
+  );
 
   const parse = (draft: string): { ok: true; value: string | number | null } | { ok: false; message: string } => {
-    if (editor.type !== 'number') return { ok: true, value: draft };
-    const text = draft.trim();
+    const value = column.renderEditor ? custom.getValue() : draft;
+    if (editor.type !== 'number') return { ok: true, value };
+    const text = String(value ?? '').trim();
     if (text === '') return { ok: true, value: null };
     const n = Number(text);
-    if (!Number.isFinite(n)) return { ok: false, message: labels?.enterNumber ?? 'Enter a number.' };
+    if (!Number.isFinite(n))
+      return { ok: false, message: labels?.enterNumber ?? (enhanced ? t('table.enterNumber') : 'Enter a number.') };
     if (editor.min != null && n < editor.min)
-      return { ok: false, message: labels?.minimumValue?.(editor.min) ?? `Enter ${editor.min} or more.` };
+      return {
+        ok: false,
+        message:
+          labels?.minimumValue?.(editor.min) ??
+          (enhanced ? t('table.minimumValue', { min: editor.min }) : `Enter ${editor.min} or more.`),
+      };
     if (editor.max != null && n > editor.max)
-      return { ok: false, message: labels?.maximumValue?.(editor.max) ?? `Enter ${editor.max} or less.` };
+      return {
+        ok: false,
+        message:
+          labels?.maximumValue?.(editor.max) ??
+          (enhanced ? t('table.maximumValue', { max: editor.max }) : `Enter ${editor.max} or less.`),
+      };
     return { ok: true, value: n };
   };
 
   const { editing, draft, setDraft, error, pending, busy, start, cancel, commit } = useInlineEdit({
     value: startValue(row, column),
     parse,
-    genericError: labels?.editError ?? GENERIC_ERROR,
+    validate: (value) => column.validate?.(value, row),
+    genericError: labels?.editError ?? (enhanced ? t('table.editSaveError') : 'The change could not be saved.'),
     focusEditor: (after) => {
       if (after !== null) field.current?.focus();
     },
     isEqual: (next, previous) =>
-      next === previous || (previous != null && String(previous) === String(next) && editor.type !== 'number'),
+      column.renderEditor
+        ? Object.is(next, previous)
+        : next === previous || (previous != null && String(previous) === String(next) && editor.type !== 'number'),
     onSave: (value, previous) => onCellEdit({ row, rowId, columnId: column.id, value, previous }),
     onMove: (dir) => {
       if (dir === 'self') trigger.current?.focus();
@@ -115,7 +129,15 @@ export function EditableCell<T>({
     },
   });
 
-  const onEditorKeyDown = (e: KeyboardEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const startEditor = () => {
+    if (column.renderEditor) {
+      const value = startValue(row, column);
+      custom.setValue(value);
+    }
+    start();
+  };
+  const onEditorKeyDown = (e: KeyboardEvent<HTMLElement>) => {
+    if (e.defaultPrevented || (e.key === 'Enter' && e.shiftKey && e.target instanceof HTMLTextAreaElement)) return;
     if (e.key === 'Escape') {
       e.preventDefault();
       e.stopPropagation();
@@ -128,7 +150,7 @@ export function EditableCell<T>({
       void commit(e.shiftKey ? 'prev' : 'next');
     }
   };
-  const onEditorBlur = (e: FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const onEditorBlur = (e: FocusEvent<HTMLElement>) => {
     // Focus left the editor (a click elsewhere): commit in place, without moving focus.
     if (!editing || busy.current || e.currentTarget.contains(e.relatedTarget as Node | null)) return;
     void commit(null);
@@ -141,11 +163,11 @@ export function EditableCell<T>({
         type="button"
         data-cell-edit-trigger=""
         aria-describedby={hintId}
-        onClick={start}
+        onClick={startEditor}
         onKeyDown={(e) => {
           if (e.key === 'F2') {
             e.preventDefault();
-            start();
+            startEditor();
           }
         }}
         className={cn(
@@ -159,7 +181,9 @@ export function EditableCell<T>({
     );
   }
 
-  const label = labels?.editLabel?.(column.header, rowLabel) ?? `${column.header} for ${rowLabel}`;
+  const label =
+    labels?.editLabel?.(column.header, rowLabel) ??
+    (enhanced ? t('table.editLabel', { column: column.header, row: rowLabel }) : `${column.header} for ${rowLabel}`);
   const common = {
     'aria-label': label,
     'aria-invalid': error ? true : undefined,
@@ -167,46 +191,36 @@ export function EditableCell<T>({
     'aria-busy': pending || undefined,
     // Not `disabled`: the field keeps focus while an async onCellEdit runs.
     'aria-disabled': pending || undefined,
-    onKeyDown: onEditorKeyDown,
-    onBlur: onEditorBlur,
   };
   return (
-    <div className="-my-1 min-w-0" data-cell-editor="">
-      {editor.type === 'select' ? (
-        <select
-          ref={focusOnMount}
-          value={draft}
-          onChange={(e) => {
-            if (!pending) setDraft(e.target.value);
-          }}
-          className={cn(
-            'h-8 w-full rounded-md border border-input bg-background px-2 text-[13px] text-foreground',
-            'focus-ring',
-            error && 'border-destructive',
-          )}
-          {...common}
-        >
-          {editor.options.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+    <div className="-my-1 min-w-0" data-cell-editor="" onKeyDown={column.renderEditor ? onEditorKeyDown : undefined}>
+      {column.renderEditor ? (
+        column.renderEditor({
+          row,
+          value: custom.value,
+          setValue: (value) => {
+            if (!pending) {
+              custom.setValue(value);
+              setDraft(value == null ? '' : String(value));
+            }
+          },
+          commit: () => {
+            void commit('self');
+          },
+          cancel: () => cancel(),
+          error: error ?? undefined,
+          inputProps: { ...common, autoFocus: true },
+        })
       ) : (
-        <Input
-          ref={focusOnMount}
-          type={editor.type === 'number' ? 'number' : 'text'}
-          inputMode={editor.type === 'number' ? 'decimal' : undefined}
-          min={editor.type === 'number' ? editor.min : undefined}
-          max={editor.type === 'number' ? editor.max : undefined}
-          step={editor.type === 'number' ? editor.step : undefined}
-          placeholder={editor.type === 'text' ? editor.placeholder : undefined}
+        <CellEditor
+          editor={editor}
           value={draft}
-          readOnly={pending}
-          onChange={(e) => setDraft(e.target.value)}
-          invalid={error != null}
-          className="w-full"
-          {...common}
+          setValue={(value) => setDraft(value == null ? '' : String(value))}
+          inputProps={{ ...common, autoFocus: false }}
+          pending={pending}
+          focusRef={focusOnMount}
+          onKeyDown={onEditorKeyDown}
+          onBlur={onEditorBlur}
         />
       )}
       {error && (
