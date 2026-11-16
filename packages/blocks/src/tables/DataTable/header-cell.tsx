@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowUp, ChevronsUpDown } from '@gntik-ai/icons';
-import { cn, nextSortDirection, TableHead, tableVariants, type SortDirection } from '@gntik-ai/ui';
+import { cn, InfoTip, nextSortDirection, TableHead, tableVariants, type SortDirection } from '@gntik-ai/ui';
 import { stickyTint, type CellLayout } from './column-sizing';
 import { columnAlign, type DataTableColumn } from './data-table-utils';
 import type { DataTableLabels } from './labels';
@@ -16,8 +16,8 @@ export interface DataTableHeadCellProps<T> {
 }
 
 /**
- * Column header of the DataTable. Without a resize handle it is the kit TableHead; with one, the
- * sort button and the handle sit side by side (the handle never nests inside the button).
+ * Column header of the DataTable. With help or resizing, the label and interactive controls
+ * sit side by side so the info button and resize handle never nest inside the sort button.
  */
 export function DataTableHeadCell<T>({
   column,
@@ -28,12 +28,16 @@ export function DataTableHeadCell<T>({
   labels,
 }: DataTableHeadCellProps<T>) {
   const align = columnAlign(column);
+  const hasDescription = column.description != null;
+  const headerName = hasDescription || column.renderHeader ? column.header : undefined;
+  const label = column.renderHeader ? column.renderHeader() : column.header;
   const pinnedClass = layout?.pinned
     ? cn(layout.className, 'z-sticky-pinned', stickyTint(layout, { head: true }), 'bg-card')
     : undefined;
-  if (!resize) {
+  if (!resize && !hasDescription) {
     return (
       <TableHead
+        aria-label={headerName}
         align={align}
         className={cn(column.headClassName, pinnedClass)}
         style={layout?.style}
@@ -42,49 +46,62 @@ export function DataTableHeadCell<T>({
         onSortChange={onSortChange}
         data-column-id={column.id}
       >
-        {column.header}
+        {label}
       </TableHead>
     );
   }
   const v = tableVariants({ align: align ?? 'left', active: sortDirection !== 'none' });
   const SortIcon =
     sortDirection === 'ascending' ? ArrowUp : sortDirection === 'descending' ? ArrowDown : ChevronsUpDown;
+  const HeaderContent = hasDescription ? 'div' : 'span';
+  const resizeHandle = resize && (
+    <ColumnResizeHandle
+      labels={labels}
+      label={column.header}
+      width={resize.width}
+      min={resize.min}
+      max={resize.max}
+      onResize={resize.onResize}
+    />
+  );
   return (
     <TableHead
+      aria-label={headerName}
       align={align}
       className={cn('relative overflow-visible', column.headClassName, pinnedClass)}
       style={layout?.style}
       aria-sort={column.sortable ? sortDirection : undefined}
       data-column-id={column.id}
     >
-      <span
+      <HeaderContent
         className={cn(
-          'block min-w-0 truncate pe-2',
-          align === 'right' && 'text-end',
-          align === 'center' && 'text-center',
+          hasDescription ? 'flex min-w-0 items-center gap-1 pe-2' : 'block min-w-0 truncate pe-2',
+          align === 'right' && (hasDescription ? 'justify-end' : 'text-end'),
+          align === 'center' && (hasDescription ? 'justify-center' : 'text-center'),
         )}
       >
         {column.sortable ? (
           <button
             type="button"
-            className={cn(v.sortButton(), 'max-w-full')}
+            className={cn(v.sortButton(), 'max-w-full', hasDescription && 'min-w-0')}
             onClick={() => onSortChange(nextSortDirection(sortDirection))}
           >
-            <span className="truncate">{column.header}</span>
+            <span className="truncate">{label}</span>
             <SortIcon size={13} aria-hidden className={sortDirection === 'none' ? 'opacity-40' : undefined} />
           </button>
+        ) : hasDescription ? (
+          <span className="min-w-0 truncate">{label}</span>
         ) : (
-          column.header
+          label
         )}
-      </span>
-      <ColumnResizeHandle
-        labels={labels}
-        label={column.header}
-        width={resize.width}
-        min={resize.min}
-        max={resize.max}
-        onResize={resize.onResize}
-      />
+        {hasDescription && (
+          <InfoTip size="sm" label={column.header}>
+            {column.description}
+          </InfoTip>
+        )}
+        {hasDescription && resizeHandle}
+      </HeaderContent>
+      {!hasDescription && resizeHandle}
     </TableHead>
   );
 }

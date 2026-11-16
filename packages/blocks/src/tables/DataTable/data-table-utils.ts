@@ -24,8 +24,12 @@ export function columnAlign<T>(column: DataTableColumn<T>): DataTableColumn<T>['
 export interface DataTableColumn<T> {
   /** Stable key (sorting, visibility). */
   id: string;
-  /** Header text; also the column's name in the visibility menu. */
+  /** Plain column name for the menu, resize separator, editor labels and export. */
   header: string;
+  /** Help shown in an InfoTip beside the header label. Use only for columns needing a definition. */
+  description?: ReactNode;
+  /** Visible label only; use non-interactive content and aria-hidden icons. `header` keeps naming the column. */
+  renderHeader?: () => ReactNode;
   /** Raw value: used to sort, and rendered when `cell` is absent. */
   accessor?: (row: T) => CellValue;
   /** Raw CSV/clipboard value; nullish results fall back to the accessor. */
