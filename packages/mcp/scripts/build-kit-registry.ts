@@ -23,6 +23,7 @@ const OUT = path.join(ROOT, 'kit-registry.json');
 type Kind = 'component' | 'layout' | 'block' | 'template';
 interface Meta {
   labels?: BlockLabelMeta[];
+  registryDependencies?: string[];
   name: string;
   group?: string;
   status?: string;
@@ -304,7 +305,7 @@ async function build() {
           : `${targetRoot}/${path.relative(srcRoot, f).split(path.sep).join('/')}`,
       })),
       dependencies,
-      registryDependencies,
+      registryDependencies: [...new Set([...registryDependencies, ...(meta.registryDependencies ?? [])])].sort(),
       ...(s.metaFile ? { docs: rel(s.metaFile) } : {}),
     });
   }

@@ -281,6 +281,19 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
               )}
               {kind === 'block' && it.id === 'data-table' && (
                 <>
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">Header help and rich labels</h4>
+                  <p className="mb-4 text-[13px] leading-relaxed text-muted-foreground">
+                    Use column.description only for columns needing a definition: each info button adds a keyboard stop.
+                    column.renderHeader shows non-interactive icons and units; keep icons aria-hidden. The header string
+                    still names the column in menus, resize handles, editor labels and exports.
+                  </p>
+                  <Viewer
+                    kind="block"
+                    id="data-table--header-help"
+                    title="Data table · header help and rich labels"
+                    file="../../../packages/blocks/src/tables/DataTable/examples/header-help.tsx"
+                    height={height}
+                  />
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">Server requests with useTableData</h4>
                   <p className="mb-4 text-[13px] leading-relaxed text-muted-foreground">
                     Import useTableData from @gntik-ai/blocks (npm only; copy-install does not include the hook).
