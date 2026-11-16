@@ -6,10 +6,10 @@ export const meta: BlockMeta = {
   family: 'tables',
   status: 'beta',
   description:
-    'Table footer with a rows-per-page Select, a "1–10 of 97" summary and numbered Pagination; controlled or uncontrolled.',
+    'Table footer with a rows-per-page Select, a "1–10 of 97" summary and numbered Pagination; controlled or uncontrolled. showPageSize defaults to true; false omits both the rows-per-page label and select while retaining the summary and numbered page navigation. See examples/without-page-size.tsx.',
   labels: [
-    { key: 'rowsPerPage', type: 'string', state: 'Always: visible page-size text' },
-    { key: 'rowsPerPageLabel', type: 'string', state: 'Always: page-size Select accessible name' },
+    { key: 'rowsPerPage', type: 'string', state: 'showPageSize=true: visible page-size text' },
+    { key: 'rowsPerPageLabel', type: 'string', state: 'showPageSize=true: page-size Select accessible name' },
     {
       key: 'rangeSummary',
       type: '(from: number, to: number, total: number) => string',

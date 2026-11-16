@@ -51,6 +51,7 @@ import { useVirtualRows } from './use-virtual-rows';
 import { ViewSwitcher, type DataTableViewState } from './views';
 import { ExportMenu } from './export-menu';
 import { useTableExport } from './use-table-export';
+import { useAutoPageSize } from './use-auto-page-size';
 
 export type { DataTableLabels } from './labels';
 export type {
@@ -111,10 +112,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   paginationMode = 'client',
   rowCount,
   page: controlledPage,
+  defaultPage = 1,
   pageSize: controlledPageSize,
   onPageChange,
   onPageSizeChange,
   defaultPageSize = 10,
+  autoPageSize = false,
   pageSizeOptions = [10, 25, 50],
   density: densityProp,
   defaultDensity,
@@ -169,8 +172,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const selectable = selectionMode === undefined ? selectableProp : selectionMode === 'multiple';
   const selectionColumn = selectable || singleMode;
   const paginated = paginatedProp ?? (serverMode || !singleMode);
+  const autoSizing = !serverMode && paginated && autoPageSize;
   const editHintId = useId();
   const tableRef = useRef<HTMLTableElement>(null);
+  const autoSizeViewport = useRef<HTMLDivElement>(null);
   const pageCheckboxRef = useRef<HTMLElement>(null);
   // A view active at mount seeds the initial state.
   const [initialView] = useState(() =>
@@ -200,8 +205,16 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   );
   // `undefined`: follow the groupBy prop; a string or null: set by a saved view.
   const [groupOverride, setGroupOverride] = useState<string | null | undefined>(seed.groupBy);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(defaultPageSize);
+  const [page, setPage] = useControllable(
+    serverMode ? undefined : controlledPage,
+    defaultPage,
+    serverMode ? undefined : onPageChange,
+  );
+  const [pageSize, setPageSize] = useControllable(
+    serverMode || autoSizing ? undefined : controlledPageSize,
+    defaultPageSize,
+    serverMode ? undefined : onPageSizeChange,
+  );
 
   const hidden: ReadonlySet<string> = new Set(hiddenList);
   const effectiveGroupBy: DataTableGroupBy<T> | undefined =
@@ -250,7 +263,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const sortedRows = serverMode ? rows : manualSorting ? [...rows] : sortRows(rows, columns, sort);
   const allGroups = effectiveGroupBy ? groupRows(sortedRows, effectiveGroupBy, rows) : null;
   const sorted = allGroups ? allGroups.flatMap((g) => g.rows) : sortedRows;
-  const pageRows = serverMode ? rows : paginated ? paginate(sorted, page, pageSize) : sorted;
+  const clientPage = Math.min(Math.max(1, page), Math.max(1, Math.ceil(sorted.length / Math.max(1, pageSize))));
+  const pageRows = serverMode ? rows : paginated ? paginate(sorted, clientPage, pageSize) : sorted;
   // Rows in collapsed groups are hidden, so select-all leaves them alone.
   const pageIds = (
     effectiveGroupBy ? pageRows.filter((row) => !collapsed.has(groupKeyOf(row, effectiveGroupBy))) : pageRows
@@ -258,7 +272,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     .filter((row) => !isRowDisabled?.(row))
     .map(getRowId);
   const header = selectionState(pageIds, selected);
-  const queryPage = serverMode ? (controlledPage ?? 1) : page;
+  const queryPage = serverMode ? (controlledPage ?? 1) : clientPage;
   const queryPageSize = serverMode ? (controlledPageSize ?? defaultPageSize) : pageSize;
   const reportQuery = (cause: DataTableQuery['cause'], next: Partial<DataTableQuery>) =>
     onQueryChange?.({ page: queryPage, pageSize: queryPageSize, sort, filters, ...next, cause });
@@ -286,6 +300,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     else setPageSize(next);
     if (nextPage !== displayedPage) resizingTo.current = next;
     else reportQuery('pageSize', { page: nextPage, pageSize: next });
+    return nextPage;
   };
   const changeSort = (columnId: string, direction: SortState['direction']) => {
     if (!sortingEnabled) return;
@@ -294,7 +309,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     onSortChange?.(next);
     if (serverMode) {
       if (queryPage !== 1) onPageChange?.(1);
-    } else setPage(1);
+    } else if (page !== 1) setPage(1);
     reportQuery('sort', { page: 1, sort: next });
   };
   const toggleGroup = (key: string) => {
@@ -381,8 +396,9 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     setGroupOverride(nextGroup === groupName(groupBy) && typeof groupBy !== 'function' ? undefined : nextGroup);
     if (nextGroup !== currentState.groupBy) onGroupByChange?.(nextGroup);
     if (state.filters !== filters) onFiltersChange?.(state.filters);
-    if (!serverMode) setPage(1);
-    else if (sortChanged && queryPage !== 1) onPageChange?.(1);
+    if (!serverMode) {
+      if (page !== 1) setPage(1);
+    } else if (sortChanged && queryPage !== 1) onPageChange?.(1);
     reportQuery('view', {
       page: !serverMode || sortChanged ? 1 : queryPage,
       sort: nextSort,
@@ -417,6 +433,19 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const virtualOn =
     !singleMode && !loading && (virtualize === true || (virtualize === 'auto' && items > virtualizeThreshold));
   const rowHeight = rowHeightProp ?? ROW_HEIGHT[density];
+  useAutoPageSize({
+    enabled: autoSizing,
+    viewportRef: autoSizeViewport,
+    tableRef,
+    rowHeight,
+    pageSize,
+    defaultPageSize,
+    showCaption,
+    onResize: (next) => {
+      const nextPage = changePageSize(next);
+      if (nextPage !== clientPage) changePage(Math.max(1, nextPage));
+    },
+  });
   const virtual = useVirtualRows({ enabled: virtualOn, count: items, rowHeight, tableRef, viewportHeight: 512 });
 
   const exportSelectedIds = singleMode
@@ -459,14 +488,136 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     : (labels?.pageSelected?.(pageIds.length) ?? t('table.pageSelected', { count: formatNumber(pageIds.length) }));
   const selectionCount = labels?.selectionCount ? labels.selectionCount(selectedCount) : <>{selectedCount} selected</>;
 
+  const tableContent = (
+    <SelectionGroup single={singleMode} legend={legend} aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>
+      <DensityProvider density={density}>
+        <Table
+          ref={tableRef}
+          tabIndex={selectable && selectAllMatching ? -1 : undefined}
+          aria-busy={loading || undefined}
+          aria-rowcount={virtual ? items + 1 : undefined}
+          stickyHeader={virtualOn || autoSizing}
+          containerClassName={autoSizing ? 'h-full' : virtualOn ? virtualContainerClassName : undefined}
+          containerLabel={virtualOn ? caption : labels?.scrollRegion}
+          // Keep single-mode resize handles inside their cells. Overflow at the
+          // final column would add a scroll-container stop before the header.
+          className={cn(
+            layout.tableClassName,
+            selectable && selectAllMatching && 'focus-visible:outline-2 focus-visible:outline-focus-ring',
+            singleMode && '[&_[data-column-resizer]]:end-0 [&_[data-column-resizer]]:justify-end',
+          )}
+          style={layout.tableStyle}
+          data-virtualized={virtualOn || undefined}
+        >
+          <TableCaption srOnly={!showCaption}>{caption}</TableCaption>
+          <TableHeader>
+            <TableRow className="hover:bg-transparent" aria-rowindex={virtual ? 1 : undefined}>
+              {selectionColumn && (
+                <TableHead
+                  className={cn(
+                    'w-10 pe-0',
+                    layout.lead.className,
+                    layout.lead.pinned && 'z-sticky-pinned bg-card',
+                    stickyTint(layout.lead, { head: true }),
+                  )}
+                  style={layout.lead.style}
+                >
+                  {(singleMode || hideSelectAll) && (
+                    <span className="sr-only">{labels?.selection ?? t('table.selection')}</span>
+                  )}
+                  {selectable && !hideSelectAll && (
+                    <Checkbox
+                      ref={pageCheckboxRef}
+                      aria-label={labels?.selectAll ?? t('table.selectAllPage')}
+                      checked={header.checked}
+                      indeterminate={header.indeterminate}
+                      disabled={loading || pageIds.length === 0}
+                      onCheckedChange={() => setSelected(toggleAll(pageIds, selected))}
+                    />
+                  )}
+                </TableHead>
+              )}
+              {visibleColumns.map((c) => {
+                const bounds = widthBounds(c);
+                return (
+                  <DataTableHeadCell
+                    labels={labels}
+                    key={c.id}
+                    column={sortingEnabled ? c : { ...c, sortable: false }}
+                    layout={layout.columns.get(c.id)}
+                    sortDirection={sortingEnabled && sort?.columnId === c.id ? sort.direction : 'none'}
+                    onSortChange={(dir) => changeSort(c.id, dir)}
+                    resize={
+                      resizable && c.resizable !== false
+                        ? {
+                            width: columnWidthOf(c, widths),
+                            min: bounds.min,
+                            max: bounds.max,
+                            onResize: (w) => resizeColumn(c, w),
+                          }
+                        : undefined
+                    }
+                  />
+                );
+              })}
+              {rowActions && (
+                <TableHead
+                  className={cn(
+                    'w-12',
+                    layout.trail.className,
+                    layout.trail.pinned && 'z-sticky-pinned bg-card',
+                    stickyTint(layout.trail, { head: true }),
+                  )}
+                  style={layout.trail.style}
+                >
+                  <span className="sr-only">{labels?.actions ?? t('table.actions')}</span>
+                </TableHead>
+              )}
+            </TableRow>
+          </TableHeader>
+          <DataTableBody
+            labels={labels}
+            rows={pageRows}
+            columns={visibleColumns}
+            getRowId={getRowId}
+            getRowLabel={labelOf}
+            selectable={selectable}
+            isRowDisabled={isRowDisabled}
+            selected={selected}
+            singleSelection={singleMode ? singleSelection : undefined}
+            onToggleRow={(id) => setSelected(toggleOne(id, selected))}
+            rowActions={rowActions}
+            loading={loading}
+            loadingRows={loadingRows}
+            emptyState={emptyState}
+            groups={groupsForBody}
+            collapsedGroups={collapsed}
+            collapsibleGroups={collapsibleGroups}
+            onToggleGroup={toggleGroup}
+            onToggleGroupRows={(ids) => setSelected(toggleAll(ids, selected))}
+            layout={layout}
+            onCellEdit={onCellEdit}
+            editHintId={anyEditable ? editHintId : undefined}
+            virtual={virtual}
+          />
+        </Table>
+      </DensityProvider>
+    </SelectionGroup>
+  );
+
   return (
     <div
-      className={cn('overflow-hidden rounded-xl border border-border bg-card shadow-sm', className)}
+      className={cn(
+        'overflow-hidden rounded-xl border border-border bg-card shadow-sm',
+        autoSizing && 'flex h-full min-h-0 flex-col',
+        className,
+      )}
       onKeyDown={exportApi.enabled ? exportApi.onCopyKeyDown : undefined}
     >
       <div
         className={cn(
           !showToolbar && 'sr-only',
+          autoSizing && 'shrink-0',
           'flex min-h-12 flex-wrap items-center gap-2 border-b border-border px-3 py-2 transition-colors motion-reduce:transition-none',
           hasSelection ? 'bg-primary/8' : 'bg-secondary/30',
         )}
@@ -562,121 +713,21 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           {labels?.editHint ?? 'Press Enter or F2 to edit.'}
         </span>
       )}
-      {/* The toggle drives a density context for the table: its rows and the controls inside them. */}
-      <SelectionGroup single={singleMode} legend={legend} aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>
-        <DensityProvider density={density}>
-          <Table
-            ref={tableRef}
-            tabIndex={selectable && selectAllMatching ? -1 : undefined}
-            aria-busy={loading || undefined}
-            aria-rowcount={virtual ? items + 1 : undefined}
-            stickyHeader={virtualOn}
-            containerClassName={virtualOn ? virtualContainerClassName : undefined}
-            containerLabel={virtualOn ? caption : labels?.scrollRegion}
-            // Keep single-mode resize handles inside their cells. Overflow at the
-            // final column would add a scroll-container stop before the header.
-            className={cn(
-              layout.tableClassName,
-              selectable && selectAllMatching && 'focus-visible:outline-2 focus-visible:outline-focus-ring',
-              singleMode && '[&_[data-column-resizer]]:end-0 [&_[data-column-resizer]]:justify-end',
-            )}
-            style={layout.tableStyle}
-            data-virtualized={virtualOn || undefined}
-          >
-            <TableCaption srOnly={!showCaption}>{caption}</TableCaption>
-            <TableHeader>
-              <TableRow className="hover:bg-transparent" aria-rowindex={virtual ? 1 : undefined}>
-                {selectionColumn && (
-                  <TableHead
-                    className={cn(
-                      'w-10 pe-0',
-                      layout.lead.className,
-                      layout.lead.pinned && 'z-sticky-pinned bg-card',
-                      stickyTint(layout.lead, { head: true }),
-                    )}
-                    style={layout.lead.style}
-                  >
-                    {(singleMode || hideSelectAll) && (
-                      <span className="sr-only">{labels?.selection ?? t('table.selection')}</span>
-                    )}
-                    {selectable && !hideSelectAll && (
-                      <Checkbox
-                        ref={pageCheckboxRef}
-                        aria-label={labels?.selectAll ?? t('table.selectAllPage')}
-                        checked={header.checked}
-                        indeterminate={header.indeterminate}
-                        disabled={loading || pageIds.length === 0}
-                        onCheckedChange={() => setSelected(toggleAll(pageIds, selected))}
-                      />
-                    )}
-                  </TableHead>
-                )}
-                {visibleColumns.map((c) => {
-                  const bounds = widthBounds(c);
-                  return (
-                    <DataTableHeadCell
-                      labels={labels}
-                      key={c.id}
-                      column={sortingEnabled ? c : { ...c, sortable: false }}
-                      layout={layout.columns.get(c.id)}
-                      sortDirection={sortingEnabled && sort?.columnId === c.id ? sort.direction : 'none'}
-                      onSortChange={(dir) => changeSort(c.id, dir)}
-                      resize={
-                        resizable && c.resizable !== false
-                          ? {
-                              width: columnWidthOf(c, widths),
-                              min: bounds.min,
-                              max: bounds.max,
-                              onResize: (w) => resizeColumn(c, w),
-                            }
-                          : undefined
-                      }
-                    />
-                  );
-                })}
-                {rowActions && (
-                  <TableHead
-                    className={cn(
-                      'w-12',
-                      layout.trail.className,
-                      layout.trail.pinned && 'z-sticky-pinned bg-card',
-                      stickyTint(layout.trail, { head: true }),
-                    )}
-                    style={layout.trail.style}
-                  >
-                    <span className="sr-only">{labels?.actions ?? t('table.actions')}</span>
-                  </TableHead>
-                )}
-              </TableRow>
-            </TableHeader>
-            <DataTableBody
-              labels={labels}
-              rows={pageRows}
-              columns={visibleColumns}
-              getRowId={getRowId}
-              getRowLabel={labelOf}
-              selectable={selectable}
-              isRowDisabled={isRowDisabled}
-              selected={selected}
-              singleSelection={singleMode ? singleSelection : undefined}
-              onToggleRow={(id) => setSelected(toggleOne(id, selected))}
-              rowActions={rowActions}
-              loading={loading}
-              loadingRows={loadingRows}
-              emptyState={emptyState}
-              groups={groupsForBody}
-              collapsedGroups={collapsed}
-              collapsibleGroups={collapsibleGroups}
-              onToggleGroup={toggleGroup}
-              onToggleGroupRows={(ids) => setSelected(toggleAll(ids, selected))}
-              layout={layout}
-              onCellEdit={onCellEdit}
-              editHintId={anyEditable ? editHintId : undefined}
-              virtual={virtual}
-            />
-          </Table>
-        </DensityProvider>
-      </SelectionGroup>
+      {autoSizing ? (
+        <div className="min-h-0 flex-1">
+          {/* A zero-width percentage-height probe has no intrinsic height. In a content-sized
+              parent it stays zero, so row count cannot feed back into the measurement. */}
+          <div
+            ref={autoSizeViewport}
+            data-auto-page-size-viewport
+            aria-hidden
+            className="pointer-events-none float-left h-full w-0"
+          />
+          {tableContent}
+        </div>
+      ) : (
+        tableContent
+      )}
       {loading && (
         <p role="status" className="sr-only">
           {labels?.loading ? labels.loading(caption) : <>Loading {caption.toLowerCase()}…</>}
@@ -685,9 +736,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       {paginated && !loading && (serverMode || rows.length > 0) && (
         <PaginationFooter
           labels={labels}
-          className="border-t border-border px-4 py-3"
+          className={cn('border-t border-border px-4 py-3', autoSizing && 'shrink-0')}
+          showPageSize={!autoSizing}
           total={serverMode ? rowCount : rows.length}
-          page={serverMode ? controlledPage : page}
+          page={serverMode ? controlledPage : clientPage}
           onPageChange={changePage}
           pageSize={serverMode ? controlledPageSize : pageSize}
           onPageSizeChange={changePageSize}
