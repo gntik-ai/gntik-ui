@@ -1,7 +1,33 @@
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
-import { createServer } from 'vite';
+import { build, createServer } from 'vite';
+
+test('the field-array preview builds from source without generated UI exports', async () => {
+  const uiDist = fileURLToPath(new URL('../../../packages/ui/dist/', import.meta.url));
+  const result = await build({
+    root: fileURLToPath(new URL('..', import.meta.url)),
+    configLoader: 'runner',
+    logLevel: 'error',
+    plugins: [
+      {
+        name: 'fresh-ui-checkout',
+        enforce: 'pre',
+        load(id) {
+          if (id.startsWith(uiDist)) throw new Error('The field-array preview must build without packages/ui/dist');
+        },
+      },
+    ],
+    build: {
+      write: false,
+      minify: false,
+      rollupOptions: {
+        input: fileURLToPath(new URL('../../../packages/ui/examples/data-table-field-array.tsx', import.meta.url)),
+      },
+    },
+  });
+  assert.ok(result.output.some((file) => file.type === 'chunk' && file.isEntry));
+});
 
 test('DataTable editing examples expose loadable previews and their source in the gallery', async () => {
   const server = await createServer({
