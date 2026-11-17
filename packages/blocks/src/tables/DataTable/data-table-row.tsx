@@ -1,5 +1,6 @@
 import { ChevronRight } from '@gntik-ai/icons';
 import {
+  Button,
   Checkbox,
   cn,
   MoreMenu,
@@ -23,6 +24,7 @@ import { EditableCell, isCellEditable, type DataTableCellEditHandler } from './e
 import type { DataTableLabels } from './labels';
 import { RowEditor, RowEditActions } from './row-editor';
 import type { RowEdits } from './use-row-edits';
+import type { DetailRows } from './use-detail-rows';
 import type { SingleSelection } from './single-selection';
 
 /** A group as the body renders it: its rows on the current page plus header data. */
@@ -41,6 +43,7 @@ export interface DataTableBodyGroup<T> {
 
 /** Row rendering shared by the plain, grouped and virtualized bodies. */
 export interface RowContext<T> {
+  details?: DetailRows<T>;
   labels?: Partial<DataTableLabels>;
   columns: ReadonlyArray<DataTableColumn<T>>;
   getRowId: (row: T) => string;
@@ -68,6 +71,7 @@ export interface DataTableRowProps<T> extends RowContext<T> {
 
 export function DataTableRow<T>({
   labels,
+  details,
   row,
   columns,
   getRowId,
@@ -94,7 +98,27 @@ export function DataTableRow<T>({
   const label = getRowLabel(row);
   const tint = (l: TableLayout['lead'] | undefined) => stickyTint(l, { selected: selectionColumn && isSelected });
   return (
-    <TableRow selected={selectionColumn && isSelected} aria-rowindex={ariaRowIndex} data-row-id={id} style={style}>
+    <TableRow
+      selected={selectionColumn && isSelected}
+      aria-rowindex={ariaRowIndex}
+      data-row-id={id}
+      style={style}
+      onClick={
+        details?.onRowClick && details.canExpand(row)
+          ? (event) => {
+              const target = event.target;
+              if (
+                target instanceof Element &&
+                event.currentTarget.contains(target) &&
+                !target.closest(
+                  'button, a, input, select, textarea, [role="checkbox"], [role="button"], [contenteditable], [data-cell-editor], [data-cell-edit-trigger], [data-detail-interactive]',
+                )
+              )
+                details.toggle(id);
+            }
+          : undefined
+      }
+    >
       {selectionColumn && (
         <TableCell className={cn('w-10 pe-0', layout?.lead.className, tint(layout?.lead))} style={layout?.lead.style}>
           {singleSelection ? (
@@ -114,6 +138,34 @@ export function DataTableRow<T>({
           )}
         </TableCell>
       )}
+      {details && (
+        <TableCell
+          className={cn('w-10 px-1 py-0', layout?.detail?.className, tint(layout?.detail))}
+          style={layout?.detail?.style}
+        >
+          {details.canExpand(row) && (
+            <Button
+              variant="ghost"
+              size="sm"
+              iconOnly
+              id={details.ids(id).toggle}
+              aria-label={labels?.rowDetails?.(label) ?? t('table.rowDetails', { label })}
+              aria-expanded={details.isExpanded(id)}
+              aria-controls={details.ids(id).panel}
+              onClick={() => details.toggle(id)}
+            >
+              <ChevronRight
+                size={14}
+                aria-hidden
+                className={cn(
+                  'shrink-0 text-muted-foreground transition-transform motion-reduce:transition-none',
+                  details.isExpanded(id) ? 'rotate-90' : 'rtl:-scale-x-100',
+                )}
+              />
+            </Button>
+          )}
+        </TableCell>
+      )}
       {columns.map((c) => {
         const cl = layout?.columns.get(c.id);
         const content = c.cell
@@ -126,6 +178,7 @@ export function DataTableRow<T>({
         return (
           <TableCell
             key={c.id}
+            data-detail-interactive={details && (editable || (rowEdits && isCellEditable(c, row))) ? '' : undefined}
             align={columnAlign(c)}
             style={cl?.style}
             className={cn(

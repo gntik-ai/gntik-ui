@@ -55,6 +55,7 @@ import { AddRowButton, NewRow } from './new-row';
 import { useRowDeletion } from './row-delete';
 import { RowEditBar } from './row-edit-bar';
 import { useRowEdits } from './use-row-edits';
+import { useDetailRows, useDetailVirtualizationWarning } from './use-detail-rows';
 import { useAutoPageSize } from './use-auto-page-size';
 
 export type { DataTableLabels } from './labels';
@@ -107,6 +108,13 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   bulkActions,
   selectionSummary = true,
   rowActions,
+  renderDetail,
+  hasDetail,
+  expandedDetailIds,
+  defaultExpandedDetailIds,
+  onExpandedDetailIdsChange,
+  detailExpandMode,
+  detailOnRowClick,
   sort: sortProp,
   defaultSort = null,
   onSortChange,
@@ -180,6 +188,15 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
 }: DataTableProps<T>) {
   const caption = captionProp ?? 'Deployments';
   const { t, formatNumber } = useI18n();
+  const details = useDetailRows({
+    renderDetail,
+    hasDetail,
+    expandedDetailIds,
+    defaultExpandedDetailIds,
+    onExpandedDetailIdsChange,
+    detailExpandMode,
+    detailOnRowClick,
+  });
   const addRowRef = useRef<HTMLButtonElement>(null);
   const rowEdits = useRowEdits({
     columns,
@@ -469,12 +486,17 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     pinned,
     sized: resizable || widthsProp != null || defaultColumnWidths !== EMPTY_WIDTHS,
     lead: selectionColumn,
+    detail: details != null,
     trail: hasActions,
   });
 
   const items = loading || pageRows.length === 0 ? 0 : flattenBody(pageRows, groupsForBody, collapsed).length;
+  useDetailVirtualizationWarning(details != null && virtualize === true);
   const virtualOn =
-    !singleMode && !loading && (virtualize === true || (virtualize === 'auto' && items > virtualizeThreshold));
+    !details &&
+    !singleMode &&
+    !loading &&
+    (virtualize === true || (virtualize === 'auto' && items > virtualizeThreshold));
   const rowHeight = rowHeightProp ?? ROW_HEIGHT[density];
   useAutoPageSize({
     enabled: autoSizing,
@@ -548,12 +570,13 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           stickyHeader={virtualOn || autoSizing}
           containerClassName={autoSizing ? 'h-full' : virtualOn ? virtualContainerClassName : undefined}
           containerLabel={virtualOn ? caption : labels?.scrollRegion}
-          // Keep single-mode resize handles inside their cells. Overflow at the
-          // final column would add a scroll-container stop before the header.
+          // Keep resize handles inside single-mode and expandable cells. Overflow at
+          // the final column adds a scroll stop and moves sticky detail panels past
+          // their containing cell at the end of the horizontal scroll range.
           className={cn(
             layout.tableClassName,
             selectable && selectAllMatching && 'focus-visible:outline-2 focus-visible:outline-focus-ring',
-            singleMode && '[&_[data-column-resizer]]:end-0 [&_[data-column-resizer]]:justify-end',
+            (singleMode || details != null) && '[&_[data-column-resizer]]:end-0 [&_[data-column-resizer]]:justify-end',
           )}
           style={layout.tableStyle}
           data-virtualized={virtualOn || undefined}
@@ -584,6 +607,19 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                       onCheckedChange={() => setSelected(toggleAll(pageIds, selected))}
                     />
                   )}
+                </TableHead>
+              )}
+              {details && (
+                <TableHead
+                  className={cn(
+                    'w-10',
+                    layout.detail?.className,
+                    layout.detail?.pinned && 'z-sticky-pinned bg-card',
+                    stickyTint(layout.detail, { head: true }),
+                  )}
+                  style={layout.detail?.style}
+                >
+                  <span className="sr-only">{labels?.details ?? t('table.details')}</span>
                 </TableHead>
               )}
               {visibleColumns.map((c) => {
@@ -625,9 +661,16 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             </TableRow>
           </TableHeader>
           {onRowAdd && newRowPosition === 'top' && (
-            <NewRow edits={rowEdits} columns={visibleColumns} selectionColumn={selectionColumn} labels={labels} />
+            <NewRow
+              edits={rowEdits}
+              columns={visibleColumns}
+              selectionColumn={selectionColumn}
+              detailColumn={details != null}
+              labels={labels}
+            />
           )}
           <DataTableBody
+            details={details}
             labels={labels}
             rows={pageRows}
             columns={visibleColumns}
@@ -656,7 +699,13 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             virtual={virtual}
           />
           {onRowAdd && newRowPosition === 'bottom' && (
-            <NewRow edits={rowEdits} columns={visibleColumns} selectionColumn={selectionColumn} labels={labels} />
+            <NewRow
+              edits={rowEdits}
+              columns={visibleColumns}
+              selectionColumn={selectionColumn}
+              detailColumn={details != null}
+              labels={labels}
+            />
           )}
         </Table>
       </DensityProvider>

@@ -1,6 +1,7 @@
 import { Inbox } from '@gntik-ai/icons';
 import { cn, EmptyState, Skeleton, TableBody, TableCell, TableRow, useI18n } from '@gntik-ai/ui';
-import type { ReactNode } from 'react';
+import { Fragment, type ReactNode } from 'react';
+import { DetailRow } from './detail-row';
 import { columnAlign } from './data-table-utils';
 import { DataTableRow, GroupHeaderRow, type DataTableBodyGroup, type RowContext } from './data-table-row';
 import type { VirtualWindow } from './use-virtual-rows';
@@ -80,7 +81,10 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
   const { t } = useI18n();
   const selectionColumn = selectable || singleSelection != null;
   const span =
-    columns.length + (selectionColumn ? 1 : 0) + (props.hasRowActions || rowActions || props.rowEdits ? 1 : 0);
+    columns.length +
+    (props.details ? 1 : 0) +
+    (selectionColumn ? 1 : 0) +
+    (props.hasRowActions || rowActions || props.rowEdits ? 1 : 0);
   if (loading) {
     return (
       <TableBody>
@@ -89,6 +93,11 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
             {selectionColumn && (
               <TableCell className="w-10">
                 <Skeleton className="size-4 rounded-[4px]" />
+              </TableCell>
+            )}
+            {props.details && (
+              <TableCell className="w-10">
+                <Skeleton className="size-4" />
               </TableCell>
             )}
             {columns.map((c) => (
@@ -121,15 +130,26 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
       </TableBody>
     );
   }
-  const row = (r: T, extra?: { ariaRowIndex?: number; height?: number }) => (
-    <DataTableRow
-      key={props.getRowId(r)}
-      {...props}
-      row={r}
-      ariaRowIndex={extra?.ariaRowIndex}
-      style={extra?.height ? { height: extra.height } : undefined}
-    />
-  );
+  const row = (r: T, extra?: { ariaRowIndex?: number; height?: number }) => {
+    const id = props.getRowId(r);
+    const details = props.details;
+    const ids = details?.ids(id);
+    return (
+      <Fragment key={id}>
+        <DataTableRow
+          {...props}
+          row={r}
+          ariaRowIndex={extra?.ariaRowIndex}
+          style={extra?.height ? { height: extra.height } : undefined}
+        />
+        {details?.canExpand(r) && details.isExpanded(id) && ids && (
+          <DetailRow id={ids.panel} labelledBy={ids.toggle} span={span}>
+            {details.render(r)}
+          </DetailRow>
+        )}
+      </Fragment>
+    );
+  };
   const header = (group: DataTableBodyGroup<T>, open: boolean, extra?: { ariaRowIndex?: number; height?: number }) => (
     <GroupHeaderRow
       key={`group-${group.key}`}

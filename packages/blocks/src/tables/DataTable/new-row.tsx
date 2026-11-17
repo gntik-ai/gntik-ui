@@ -31,11 +31,13 @@ export function NewRow<T>({
   edits,
   columns,
   selectionColumn,
+  detailColumn = false,
   labels,
 }: {
   edits: RowEdits<T>;
   columns: ReadonlyArray<DataTableColumn<T>>;
   selectionColumn: boolean;
+  detailColumn?: boolean;
   labels?: Partial<DataTableLabels>;
 }) {
   const { t } = useI18n();
@@ -47,6 +49,7 @@ export function NewRow<T>({
     <TableBody>
       <TableRow data-row-id={edits.newId}>
         {selectionColumn && <TableCell />}
+        {detailColumn && <TableCell />}
         {columns.map((column) => (
           <TableCell key={column.id}>
             {isCellEditable(column, row) && (

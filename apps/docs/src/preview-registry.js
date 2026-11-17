@@ -191,6 +191,8 @@ export const PREVIEW_LOADERS = {
     'data-table--auto-page-size': () => import('../../../packages/blocks/src/tables/DataTable/examples/auto-page-size'),
     'pagination-footer--without-page-size': () =>
       import('../../../packages/blocks/src/tables/PaginationFooter/examples/without-page-size'),
+    'data-table--expandable-rows': () =>
+      import('../../../packages/blocks/src/tables/DataTable/examples/expandable-rows'),
     'data-table--csv-export': () => import('../../../packages/blocks/src/tables/DataTable/examples/csv-export'),
     'data-table--cursor-load-more': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/cursor-load-more'),
