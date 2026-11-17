@@ -185,6 +185,13 @@ export function HeaderFilter({
             <RadioGroup
               aria-label={header}
               value={draft?.operator ?? 'any'}
+              onKeyDown={(event) => {
+                // Radio consumes Enter to prevent activation; here it applies the selected draft.
+                if (event.key === 'Enter') {
+                  event.preventDefault();
+                  apply();
+                }
+              }}
               onValueChange={(value) =>
                 setDraft(value === 'isTrue' || value === 'isFalse' ? { operator: value } : null)
               }

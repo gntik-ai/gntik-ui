@@ -167,6 +167,30 @@ it('discards a draft with Escape and restores focus and the applied value', asyn
   expect(await screen.findByRole('checkbox', { name: 'Paused' })).not.toBeChecked();
 });
 
+it('applies the selected boolean draft with Enter and returns focus', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  render(
+    <DataTable
+      rows={[
+        { id: 'yes', enabled: true },
+        { id: 'no', enabled: false },
+      ]}
+      getRowLabel={(row) => row.id}
+      columns={[{ id: 'enabled', header: 'Enabled', accessor: (row) => row.enabled, filter: { type: 'boolean' } }]}
+      onFilterModelChange={change}
+    />,
+  );
+  const trigger = screen.getByRole('button', { name: 'Filter Enabled' });
+  await user.click(trigger);
+  await user.click(await screen.findByRole('radio', { name: 'Yes' }));
+  await user.keyboard('{Enter}');
+  expect(change).toHaveBeenCalledTimes(1);
+  expect(change.mock.lastCall![0].children).toMatchObject([{ field: 'enabled', operator: 'isTrue' }]);
+  expect(screen.queryByRole('checkbox', { name: 'Select no' })).toBeNull();
+  await waitFor(() => expect(trigger).toHaveFocus());
+});
+
 it.each([false, true])('labels enum search for a large or searchable list, searchable=%s', async (searchable) => {
   const user = userEvent.setup();
   render(
