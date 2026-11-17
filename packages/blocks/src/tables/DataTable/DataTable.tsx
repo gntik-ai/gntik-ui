@@ -570,12 +570,13 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           stickyHeader={virtualOn || autoSizing}
           containerClassName={autoSizing ? 'h-full' : virtualOn ? virtualContainerClassName : undefined}
           containerLabel={virtualOn ? caption : labels?.scrollRegion}
-          // Keep single-mode resize handles inside their cells. Overflow at the
-          // final column would add a scroll-container stop before the header.
+          // Keep resize handles inside single-mode and expandable cells. Overflow at
+          // the final column adds a scroll stop and moves sticky detail panels past
+          // their containing cell at the end of the horizontal scroll range.
           className={cn(
             layout.tableClassName,
             selectable && selectAllMatching && 'focus-visible:outline-2 focus-visible:outline-focus-ring',
-            singleMode && '[&_[data-column-resizer]]:end-0 [&_[data-column-resizer]]:justify-end',
+            (singleMode || details != null) && '[&_[data-column-resizer]]:end-0 [&_[data-column-resizer]]:justify-end',
           )}
           style={layout.tableStyle}
           data-virtualized={virtualOn || undefined}
