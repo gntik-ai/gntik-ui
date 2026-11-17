@@ -1,5 +1,36 @@
 # @gntik-ai/blocks
 
+## 0.14.0
+
+### Minor Changes
+
+- 945bd97: Add async server results, onQueryChange, filter, limit, renderItem and an external store to CommandPalette, and forward loadItems, debounceMs, minQueryLength, onQueryChange and store from GlobalSearch.
+- 8c44e1c: Add useStateHistory and an opt-in history option for useFlowState (undo, redo, canUndo, canRedo, resetHistory), and Undo and Redo in FlowBuilder (header buttons, Mod+Z, Shift+Mod+Z and Ctrl+Y, announcements in en and es) with a history prop that WorkflowBuilderPage passes through. FlowGraphChange type gains "undo" and "redo": widen any exhaustive switch over it.
+- 50cbcfd: Add controlled client pagination and automatic page sizing to DataTable, with an optional page-size control in PaginationFooter.
+- 804e937: Add optional sidebar theme, navigation and tenant controls plus empty workspace menus; defined topbar.user values now override the shared account (including when supplied through a spread), while null hides only the topbar menu.
+- eb5498c: Add optional DataTable column descriptions with header help buttons and rich header labels while preserving plain column names.
+- 140b942: Add opt-in DataTable row editing, validation, typed and custom editors, save all, row creation and confirmed deletion with English and Spanish labels, preserving focus across paging and virtual scrolling.
+- 5ada340: Add optional full-width DataTable detail panels with localized disclosure controls and controlled expansion.
+
+### Patch Changes
+
+- Updated dependencies [b4cd3df]
+- Updated dependencies [945bd97]
+- Updated dependencies [8c44e1c]
+- Updated dependencies [f8fd960]
+- Updated dependencies [804e937]
+- Updated dependencies [9368ef5]
+- Updated dependencies [140b942]
+- Updated dependencies [deea057]
+- Updated dependencies [5ada340]
+- Updated dependencies [a69a114]
+- Updated dependencies [913bb2d]
+  - @gntik-ai/ui@0.14.0
+  - @gntik-ai/flow@0.14.0
+  - @gntik-ai/tokens@0.5.0
+  - @gntik-ai/charts@0.14.0
+  - @gntik-ai/editor@0.14.0
+
 ## 0.13.0
 
 ### Patch Changes

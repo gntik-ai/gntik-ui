@@ -1,5 +1,11 @@
 # @gntik-ai/tokens
 
+## 0.5.0
+
+### Minor Changes
+
+- f8fd960: Add QrCode, a scannable SVG QR code for otpauth URIs and pairing links, with the qrCodeSvg helper, the qr-module and qr-surface colour pairs, and an optional QR code in the security settings MFA setup dialog.
+
 ## 0.4.0
 
 ### Minor Changes
