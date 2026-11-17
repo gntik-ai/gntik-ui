@@ -36,8 +36,11 @@ export interface AppSidebarHeaderProps {
   currentTenantId?: string | null;
   onTenantSelect?: (id: string | null) => void;
   tenantLabel?: string;
+  /** Placeholder for a non-empty tenant list with no selection; defaults to Select tenant. */
+  tenantPlaceholder?: string;
   tenantEmptyText?: string;
   workspaceLabel?: string;
+  /** Empty workspace copy. With an empty array, opts into the switcher instead of Logo. */
   workspaceEmptyText?: string;
   /** Platform-wide mode: hide all context controls and status. */
   hideWorkspaceContext?: boolean;
@@ -62,6 +65,7 @@ export function AppSidebarHeader({
   currentTenantId,
   onTenantSelect,
   tenantLabel = 'Tenant',
+  tenantPlaceholder = 'Select tenant',
   tenantEmptyText = 'No tenants',
   workspaceLabel,
   workspaceEmptyText,
@@ -79,7 +83,7 @@ export function AppSidebarHeader({
   // Stack the existing slot parent only for opted-in content, without adding a wrapper.
   const stackParent = '[:has(>_&)]:flex-col [:has(>_&)]:items-stretch [:has(>_&)]:gap-2';
   const workspaceControl =
-    !workspaces || workspaces.length === 0 ? (
+    !workspaces || (workspaces.length === 0 && workspaceEmptyText === undefined) ? (
       brand == null && (
         <Logo size={24} wordmark className={cn('px-1', contextStatus != null && stackParent, className)} />
       )
@@ -107,7 +111,7 @@ export function AppSidebarHeader({
           value={currentTenantId}
           onValueChange={(id) => onTenantSelect?.(id)}
           aria-label={tenantLabel}
-          placeholder={tenants.length === 0 ? tenantEmptyText : 'Select tenant'}
+          placeholder={tenants.length === 0 ? tenantEmptyText : tenantPlaceholder}
           clearable
           className="w-full [&+button]:min-h-6 [&+button]:min-w-6 [:has(>_*_>_&)]:flex-col [:has(>_*_>_&)]:items-stretch [:has(>_*_>_&)]:gap-2"
         />
@@ -175,6 +179,8 @@ export interface AppSidebarFooterProps {
   /** Signed-in user; `null` hides the user menu. */
   user?: UserMenuUser | null;
   userMenuItems?: UserMenuEntry[];
+  /** Include the account menu's Theme submenu (defaults to true). */
+  userMenuShowTheme?: boolean;
   /** Extra content inside the account menu popup, before sign out. */
   userMenuChildren?: ReactNode;
   onSignOut?: () => void;
@@ -189,6 +195,7 @@ export function AppSidebarFooter({
   helpLabel = 'Help & docs',
   user = appSidebarUser,
   userMenuItems,
+  userMenuShowTheme,
   userMenuChildren,
   onSignOut,
   className,
@@ -226,6 +233,7 @@ export function AppSidebarFooter({
         <UserMenu
           user={user}
           items={userMenuItems}
+          showTheme={userMenuShowTheme}
           onSignOut={onSignOut}
           showName={!collapsed}
           className={collapsed ? undefined : 'w-full justify-start'}
@@ -262,6 +270,7 @@ export function AppSidebar({
   helpLabel,
   user,
   userMenuItems,
+  userMenuShowTheme,
   userMenuChildren,
   onSignOut,
   className,
@@ -289,6 +298,7 @@ export function AppSidebar({
           helpLabel={helpLabel}
           user={user}
           userMenuItems={userMenuItems}
+          userMenuShowTheme={userMenuShowTheme}
           userMenuChildren={userMenuChildren}
           onSignOut={onSignOut}
         />

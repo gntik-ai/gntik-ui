@@ -9,6 +9,8 @@ export default function UserMenuChildren() {
       shell={{
         usage: null,
         helpHref: '',
+        topbar: { user: null },
+        userMenuShowTheme: false,
         userMenuItems: [{ label: 'Account settings', href: '#account' }],
         userMenuChildren: (
           <MenuRadioGroup value={language} onValueChange={setLanguage}>

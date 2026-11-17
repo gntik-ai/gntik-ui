@@ -159,9 +159,17 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                     contextStatus follows the controls without a wrapper. The consumer owns contextBusy and must reset
                     it after loading. hideWorkspaceContext hides controls and status while keeping the brand.
                     userMenuChildren extends the footer menu; usage=null and helpHref="" hide usage and help.
+                    userMenuShowTheme=false hides the footer Theme item. topbar.user=null keeps only the footer account
+                    menu; a defined topbar.user overrides the shared user for the topbar, while an omitted or undefined
+                    value shares user. navLabel names desktop and mobile navigation (default Main). tenantPlaceholder
+                    customizes the unselected tenant prompt (default Select tenant); empty lists still use
+                    tenantEmptyText. An empty workspaces array with workspaceEmptyText keeps the switcher and shows that
+                    message; Create workspace appears only with onCreateWorkspace. Without workspaceEmptyText, empty or
+                    null workspaces keep the Logo/brand fallback.
                   </p>
                   {[
                     ['tenants', 'Tenants'],
+                    ['empty-workspaces', 'EmptyWorkspaces'],
                     ['platform-wide', 'PlatformWide'],
                     ['context-region', 'ContextRegion'],
                     ['user-menu-children', 'UserMenuChildren'],

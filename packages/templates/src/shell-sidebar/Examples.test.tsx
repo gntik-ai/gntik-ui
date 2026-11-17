@@ -3,6 +3,23 @@ import userEvent from '@testing-library/user-event';
 import { ToastProvider, Toaster } from '@gntik-ai/ui';
 
 describe('Sidebar shell examples', () => {
+  it('demonstrates the tenant placeholder, navigation name and optional empty-workspace creation', async () => {
+    const { default: EmptyWorkspaces } = await import('./examples/EmptyWorkspaces');
+    const user = userEvent.setup();
+    render(<EmptyWorkspaces />);
+    expect(screen.getByRole('combobox', { name: 'Organization' })).toHaveTextContent('Choose an organization');
+    expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toBeInTheDocument();
+    const trigger = screen.getByRole('button', { name: 'Team spaces' });
+    await user.click(trigger);
+    expect(within(await screen.findByRole('menu')).getByText('No team spaces yet')).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Create workspace' })).toBeNull();
+    await user.keyboard('{Escape}');
+    await user.click(screen.getByRole('button', { name: 'Enable workspace creation' }));
+    await user.click(trigger);
+    await user.click(await screen.findByRole('menuitem', { name: 'Create workspace' }));
+    expect(screen.getByRole('status')).toHaveTextContent('Ready to create a workspace');
+  });
+
   it('demonstrates the brand slot in the sidebar, rail and mobile topbar', async () => {
     const { default: Brand } = await import('./examples/Brand');
     render(<Brand />);
