@@ -54,6 +54,8 @@ export interface DataTableLabels extends PaginationFooterLabels {
   groupRows: (count: number) => string;
   noGroup: string;
   actions: string;
+  details?: string;
+  rowDetails?: (label: string) => string;
   rowActions: (label: string) => string;
   emptyTitle: string;
   emptyDescription: string;

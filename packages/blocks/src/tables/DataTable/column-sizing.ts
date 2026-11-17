@@ -77,6 +77,8 @@ export interface TableLayout {
   columns: ReadonlyMap<string, CellLayout>;
   /** Selection column (sticky at the start when any column is start-pinned). */
   lead: CellLayout;
+  /** Optional leading detail toggle column. */
+  detail?: CellLayout;
   /** Row-actions column (sticky at the end when any column is end-pinned). */
   trail: CellLayout;
   /** Table classes and style (fixed layout and total width when columns are sized). */
@@ -101,6 +103,7 @@ export function tableLayout<T>({
   sized,
   lead,
   trail,
+  detail = false,
 }: {
   columns: ReadonlyArray<DataTableColumn<T>>;
   widths: ColumnWidths;
@@ -108,6 +111,7 @@ export function tableLayout<T>({
   sized: boolean;
   lead: boolean;
   trail: boolean;
+  detail?: boolean;
 }): TableLayout {
   const map = new Map<string, CellLayout>();
   const hasStart = columns.some((c) => pinSideOf(c.id, pinned) === 'left');
@@ -120,7 +124,7 @@ export function tableLayout<T>({
   const widthOf = (c: DataTableColumn<T>) => columnWidthOf(c, widths);
   const fixed = (w: number): CSSProperties => ({ width: w, minWidth: w, maxWidth: w });
 
-  let start = lead ? LEAD_WIDTH : 0;
+  let start = (lead ? LEAD_WIDTH : 0) + (detail ? LEAD_WIDTH : 0);
   const startIds = columns.filter((c) => pinSideOf(c.id, pinned) === 'left');
   startIds.forEach((c, i) => {
     const w = widthOf(c);
@@ -144,10 +148,21 @@ export function tableLayout<T>({
   });
   for (const c of columns) if (!map.has(c.id)) map.set(c.id, { style: fixed(widthOf(c)) });
 
-  const total = columns.reduce((sum, c) => sum + widthOf(c), 0) + (lead ? LEAD_WIDTH : 0) + (trail ? TRAIL_WIDTH : 0);
+  const total =
+    columns.reduce((sum, c) => sum + widthOf(c), 0) +
+    (lead ? LEAD_WIDTH : 0) +
+    (trail ? TRAIL_WIDTH : 0) +
+    (detail ? LEAD_WIDTH : 0);
   return {
     columns: map,
     lead: hasStart ? { pinned: 'left', style: { insetInlineStart: 0 }, className: STICKY } : {},
+    ...(detail
+      ? {
+          detail: hasStart
+            ? { pinned: 'left' as const, style: { insetInlineStart: lead ? LEAD_WIDTH : 0 }, className: STICKY }
+            : {},
+        }
+      : {}),
     trail: hasEnd ? { pinned: 'right', style: { insetInlineEnd: 0 }, className: STICKY } : {},
     tableClassName: 'table-fixed',
     tableStyle: { width: total, minWidth: '100%' },

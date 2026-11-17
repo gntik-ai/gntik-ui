@@ -285,6 +285,13 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                 <>
                   <Viewer
                     kind="block"
+                    id="data-table--expandable-rows"
+                    title={t('table.example.expandableRowsViewer')}
+                    file="../../../packages/blocks/src/tables/DataTable/examples/expandable-rows.tsx"
+                    height={1600}
+                  />
+                  <Viewer
+                    kind="block"
                     id="data-table--editable-rows"
                     title={t('table.example.rowExampleViewer')}
                     file="../../../packages/blocks/src/tables/DataTable/examples/editable-rows.tsx"

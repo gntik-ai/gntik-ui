@@ -1,3 +1,4 @@
+import { detailRowsEs } from './detail-row-messages';
 import { fieldStatusEs } from './field-status-messages';
 import { dateFieldEs } from './date-field-messages';
 import { schemaFormExamplesEs } from './schema-form-example-messages';
@@ -519,6 +520,7 @@ export const es: Messages = {
   'table.selectRow': 'Seleccionar {label}',
   'table.selection': 'Selección',
   'table.actions': 'Acciones',
+  ...detailRowsEs,
   'table.rowActions': 'Acciones de {label}',
   'table.emptyDescription': 'Nada coincide con los filtros actuales.',
   'filters.label': 'Filtros',

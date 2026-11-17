@@ -1,3 +1,4 @@
+import { detailRowsEn } from './detail-row-messages';
 import { fieldStatusEn } from './field-status-messages';
 import { dateFieldEn } from './date-field-messages';
 import { schemaFormExamplesEn } from './schema-form-example-messages';
@@ -520,6 +521,7 @@ export const en = {
   'table.selectRow': 'Select {label}',
   'table.selection': 'Selection',
   'table.actions': 'Actions',
+  ...detailRowsEn,
   'table.rowActions': 'Actions for {label}',
   'table.emptyDescription': 'Nothing matches the current filters.',
   'filters.label': 'Filters',

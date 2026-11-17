@@ -80,6 +80,21 @@ interface DataTableCommonProps<T> {
    */
   selectionSummary?: boolean;
 
+  /** Opt-in full-width panel. Called only while an eligible row is expanded; disables virtualization. */
+  renderDetail?: (row: T) => ReactNode;
+  /** Whether a row can expand (default: every row). Ineligible rows retain an empty toggle cell. */
+  hasDetail?: (row: T) => boolean;
+  /** Controlled detail ids; requests do not update the DOM until this prop changes. */
+  expandedDetailIds?: readonly string[];
+  /** Initially expanded detail ids; retained across pages and sorting. */
+  defaultExpandedDetailIds?: readonly string[];
+  /** Requests the next expanded detail ids. */
+  onExpandedDetailIdsChange?: (ids: string[]) => void;
+  /** Opening a row replaces other ids in single mode (default: multiple). */
+  detailExpandMode?: 'single' | 'multiple';
+  /** Toggle on plain row content clicks, excluding interactive descendants (default: false). */
+  detailOnRowClick?: boolean;
+
   /** Row-actions menu items. */
   rowActions?: (row: T) => Array<MoreMenuAction | 'separator'>;
 
