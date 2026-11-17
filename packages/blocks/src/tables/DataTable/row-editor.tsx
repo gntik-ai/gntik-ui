@@ -97,7 +97,7 @@ export function RowEditor<T>({
       )}
 
       {error && (
-        <p id={errorId} role="alert" className="text-destructive-text">
+        <p id={errorId} role="alert" className="bg-background text-destructive-text">
           {error}
         </p>
       )}
@@ -156,7 +156,7 @@ export function RowEditActions<T>({
         </Button>
       )}
       {edits.get(row).error && (
-        <span role="alert" className="text-destructive-text">
+        <span role="alert" className="bg-background text-destructive-text">
           {edits.get(row).error}
         </span>
       )}

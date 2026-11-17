@@ -10,7 +10,11 @@ async function scan(page) {
     const result = await globalThis.axe.run(document.body, {
       runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
     });
-    return result.violations.map((violation) => `${violation.id}: ${violation.help}`);
+    return result.violations.map((violation) => ({
+      id: violation.id,
+      help: violation.help,
+      nodes: violation.nodes.map(({ target, failureSummary }) => ({ target, failureSummary })),
+    }));
   });
   expect(violations).toEqual([]);
 }
@@ -28,6 +32,8 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     await quota.press('Enter');
     await expect(quota).toHaveAccessibleDescription('Exceeds the plan limit');
     await expect(page.getByRole('button', { name: 'Save all', exact: true })).toBeVisible();
+    // Row hover tints must not lower the validation message's text contrast.
+    await table.getByRole('alert').hover();
     await scan(page);
     await table.getByRole('button', { name: 'Cancel', exact: true }).click();
     const add = page.getByRole('button', { name: 'Add row', exact: true });
