@@ -1,3 +1,4 @@
+import type { QueryCondition } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import type { DataTableEditValue, DataTableRenderEditor } from './row-edit-types';
 export type {
@@ -28,6 +29,21 @@ export function columnAlign<T>(column: DataTableColumn<T>): DataTableColumn<T>['
   return column.align ?? (column.variant === 'numeric' ? 'right' : undefined);
 }
 
+/** Draft edited by a header; identity and field are assigned on Apply. */
+export type DataTableFilterValue = Pick<QueryCondition, 'operator' | 'value'>;
+
+export interface DataTableFilterContext {
+  value: DataTableFilterValue | null;
+  setValue: (value: DataTableFilterValue | null) => void;
+  apply: () => void;
+  clear: () => void;
+}
+
+export type DataTableColumnFilter =
+  | { type: 'enum'; options: ReadonlyArray<{ value: string; label: string }>; searchable?: boolean }
+  | { type: 'text' | 'number' | 'date' | 'boolean' }
+  | { type: 'custom'; render: (context: DataTableFilterContext) => ReactNode };
+
 /** One typed column of a DataTable. */
 export interface DataTableColumn<T> {
   /** Stable key (sorting, visibility). */
@@ -47,6 +63,8 @@ export interface DataTableColumn<T> {
   /** Custom cell rendering. */
   cell?: (row: T) => ReactNode;
   sortable?: boolean;
+  /** Opt-in header editor; accessor results are evaluated using this type. */
+  filter?: DataTableColumnFilter;
   align?: 'left' | 'right' | 'center';
   /** Can be hidden from the column menu (default true). */
   hideable?: boolean;

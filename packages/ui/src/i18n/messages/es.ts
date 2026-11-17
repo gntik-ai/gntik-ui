@@ -1,3 +1,4 @@
+import { tableFiltersEs } from './table-filter-messages';
 import { detailRowsEs } from './detail-row-messages';
 import { fieldStatusEs } from './field-status-messages';
 import { dateFieldEs } from './date-field-messages';
@@ -513,12 +514,7 @@ export const es: Messages = {
     '{count, plural, one {Solo se muestra el primer {formattedCount} {noun}; hay más.} other {Solo se muestran los primeros {formattedCount} {noun}; hay más.}}',
   'table.rowsPerPage': 'Filas por página',
   'table.pagination': 'Paginación: {noun}',
-  'table.selectAllPage': 'Seleccionar todas las filas de esta página',
-  'table.pageSelected': 'Las {count} filas de esta página están seleccionadas.',
-  'table.selectAllMatching': 'Seleccionar las {count} filas',
-  'table.allMatchingSelected': 'Las {count} filas están seleccionadas.',
-  'table.selectRow': 'Seleccionar {label}',
-  'table.selection': 'Selección',
+  ...tableFiltersEs,
   'table.actions': 'Acciones',
   ...detailRowsEs,
   'table.rowActions': 'Acciones de {label}',

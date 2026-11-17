@@ -326,6 +326,13 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                     file="../../../packages/blocks/src/tables/DataTable/examples/auto-page-size.tsx"
                     height={600}
                   />
+                  <Viewer
+                    kind="block"
+                    id="data-table--header-filters"
+                    title={t('table.filterExample.title')}
+                    file="../../../packages/blocks/src/tables/DataTable/examples/header-filters.tsx"
+                    height={1200}
+                  />
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">Header help and rich labels</h4>
                   <p className="mb-4 text-[13px] leading-relaxed text-muted-foreground">
                     Use column.description only for columns needing a definition: each info button adds a keyboard stop.

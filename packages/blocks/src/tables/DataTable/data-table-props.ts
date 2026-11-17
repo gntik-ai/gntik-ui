@@ -1,4 +1,4 @@
-import type { MoreMenuAction, TableDensity } from '@gntik-ai/ui';
+import type { MoreMenuAction, QueryGroup, TableDensity } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import type { ColumnWidths, PinnedColumns } from './column-sizing';
 import type { DataTableColumn, DataTableGroupBy, DataTableSelectionModel, SortState } from './data-table-utils';
@@ -18,7 +18,8 @@ export interface DataTableQuery {
   pageSize: number;
   sort: SortState | null;
   filters: unknown;
-  cause: 'page' | 'pageSize' | 'sort' | 'view';
+  filterModel?: QueryGroup;
+  cause: 'page' | 'pageSize' | 'sort' | 'view' | 'filter';
 }
 
 export interface DataTableCsvExportOptions {
@@ -199,6 +200,11 @@ interface DataTableCommonProps<T> {
   onActiveViewChange?: (id: string | null) => void;
   /** Shows the view switcher (default: when views are in use). */
   showViewSwitcher?: boolean;
+  /** Typed header/query filters, controlled when supplied. */
+  filterModel?: QueryGroup;
+  /** Initial model and fallback for saved views without a model. */
+  defaultFilterModel?: QueryGroup;
+  onFilterModelChange?: (model: QueryGroup) => void;
   /** Opaque filter state of the page's toolbar, saved with views. */
   filters?: unknown;
   /** Called when a view (or a reset) restores filters. */

@@ -1,3 +1,4 @@
+import type { QueryGroup } from '@gntik-ai/ui';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import type { DataTableSelectionModel } from './data-table-utils';
 
@@ -15,6 +16,7 @@ export function useMultipleSelection(options: {
   selectAllMatching: boolean;
   total: number;
   filters?: unknown;
+  filterModel?: QueryGroup;
 }) {
   const needsModelCallback = options.serverMode && options.selectAllMatching && !options.onSelectionModelChange;
   useEffect(() => {
@@ -53,13 +55,29 @@ export function useMultipleSelection(options: {
     }
   }, [filterKey]);
 
+  const allMatchingSelected =
+    model.type === 'exclude' || (options.enabledIds.length > 0 && options.enabledIds.every((id) => selected.has(id)));
+  const typedKey = JSON.stringify(options.filterModel);
+  const previousTyped = useRef({ key: typedKey, allMatching: allMatchingSelected });
+  const resetForTypedModel = useEffectEvent(() => {
+    if (previousTyped.current.key !== typedKey && previousTyped.current.allMatching)
+      change({ type: 'include', ids: [] });
+    previousTyped.current = { key: typedKey, allMatching: allMatchingSelected };
+  });
+  useEffect(() => {
+    resetForTypedModel();
+  }, [typedKey, allMatchingSelected]);
+
   return {
     selected,
     selectedList,
     model,
     selectedCount: model.type === 'exclude' ? Math.max(0, options.total - model.ids.length) : selectedList.length,
-    allMatchingSelected:
-      model.type === 'exclude' || (options.enabledIds.length > 0 && options.enabledIds.every((id) => selected.has(id))),
+    allMatchingSelected,
+    clearForFilterModel: (next: QueryGroup) => {
+      previousTyped.current = { key: JSON.stringify(next), allMatching: false };
+      change({ type: 'include', ids: [] });
+    },
     selectAllMatching: () =>
       change(
         options.serverMode

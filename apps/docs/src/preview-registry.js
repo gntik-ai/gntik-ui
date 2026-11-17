@@ -186,6 +186,7 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/blocks/src/tables/DataTable/examples/single-selection'),
     'data-table--editable-rows': () => import('../../../packages/blocks/src/tables/DataTable/examples/editable-rows'),
     'data-table--field-array': () => import('../../../packages/ui/examples/data-table-field-array'),
+    'data-table--header-filters': () => import('../../../packages/blocks/src/tables/DataTable/examples/header-filters'),
     'data-table--header-help': () => import('../../../packages/blocks/src/tables/DataTable/examples/header-help'),
     'data-table--url-pagination': () => import('../../../packages/blocks/src/tables/DataTable/examples/url-pagination'),
     'data-table--auto-page-size': () => import('../../../packages/blocks/src/tables/DataTable/examples/auto-page-size'),

@@ -2,6 +2,14 @@ import type { PaginationFooterLabels } from '../PaginationFooter/PaginationFoote
 
 /** Per-instance table chrome, including the composed PaginationFooter. Caller data stays caller-owned. */
 export interface DataTableLabels extends PaginationFooterLabels {
+  filterColumn?: (header: string) => string;
+  filtered?: string;
+  applyFilter?: string;
+  filterAny?: string;
+  clearFilter?: string;
+  filterSearch?: string;
+  filterFrom?: string;
+  filterTo?: string;
   export?: string;
   exportAll?: (count: number) => string;
   exportPage?: string;

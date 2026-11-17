@@ -4,6 +4,7 @@ export {
   QUERY_OPERATORS,
   operatorsFor,
   operatorArity,
+  newQueryId,
   createQueryGroup,
   createQueryCondition,
   isConditionComplete,

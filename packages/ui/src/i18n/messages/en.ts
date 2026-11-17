@@ -1,3 +1,4 @@
+import { tableFiltersEn } from './table-filter-messages';
 import { detailRowsEn } from './detail-row-messages';
 import { fieldStatusEn } from './field-status-messages';
 import { dateFieldEn } from './date-field-messages';
@@ -514,12 +515,7 @@ export const en = {
     '{count, plural, one {Only the first {formattedCount} {noun} is shown; more exist.} other {Only the first {formattedCount} {noun} are shown; more exist.}}',
   'table.rowsPerPage': 'Rows per page',
   'table.pagination': '{noun} pagination',
-  'table.selectAllPage': 'Select all rows on this page',
-  'table.pageSelected': 'All {count} rows on this page are selected.',
-  'table.selectAllMatching': 'Select all {count} rows',
-  'table.allMatchingSelected': 'All {count} rows are selected.',
-  'table.selectRow': 'Select {label}',
-  'table.selection': 'Selection',
+  ...tableFiltersEn,
   'table.actions': 'Actions',
   ...detailRowsEn,
   'table.rowActions': 'Actions for {label}',

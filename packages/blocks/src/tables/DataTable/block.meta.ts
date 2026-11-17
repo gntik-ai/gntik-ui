@@ -7,6 +7,7 @@ export const meta: BlockMeta = {
   status: 'beta',
   description:
     'Typed data table with sorting, selection, pagination and saved views. ' +
+    'Optional column.filter adds a sibling header popover with draft edits, Apply/Enter, Clear and Escape discard with focus return. Types: enum (in, searchable or more than eight options shows search), text (contains), number (gte/lte for one bound, inclusive between for two), date (inclusive between via DateRangePicker), boolean (Any/Yes/No), custom (render receives value, setValue, apply, clear; drafts hold operator/value). Active headers have data-filtered and an accessible filtered suffix. Header tab order is sort, help, filter, resize. filterModel/defaultFilterModel/onFilterModelChange use QueryGroup; header edits replace all top-level conditions for a column in an and-group and preserve nested groups. Client evaluation uses column accessors and locale before sorting/grouping/paging; totals, selection and CSV use filtered rows. A model change requests page 1 and clears all-matching selection. Server mode renders supplied rows and emits one onQueryChange with filterModel and cause filter. Other query causes keep their payloads when the feature is unused. Saved views capture filterModel; older views restore defaultFilterModel. DataTableLabels supports filterColumn, filtered, applyFilter, filterAny, clearFilter, filterSearch, filterFrom and filterTo. See examples/header-filters.tsx for every editor, controlled state, views and server requests; newQueryId from the UI package is called only in event handlers. ' +
     'Opt-in renderDetail(row) adds a leading toggle and a full-width detail region, mounted only while expanded. hasDetail(row) limits eligibility. Use expandedDetailIds/onExpandedDetailIdsChange for controlled expansion or defaultExpandedDetailIds for initial state; ids persist across pages and sorting. detailExpandMode defaults to multiple; choose single for heavy panels. detailOnRowClick defaults to false and excludes controls, links and editor cells. Toggle buttons support Enter and Space, keep focus, and Tab continues through row controls into the panel. Details disable virtualization; virtualize=true warns in development, while auto stays off. Prefer pagination for large tables. Inline panels keep list context for payloads and errors; use a Drawer for longer independent workflows. See examples/expandable-rows.tsx for eligible failed rows, single mode, row clicks, initial expansion, controlled multiple panels and pinned/resizable columns. ' +
     'Opt-in editMode="row" edits every editable cell together. Edit focuses the first editor; Enter saves, Escape cancels and Tab moves without saving. Use editingRowIds/onEditingRowIdsChange or defaultEditingRowIds for multiple rows. Drafts are keyed by row id in DataTable and survive paging, sorting and virtualization. onRowSave receives {row, rowId, values, previous}; void/true accepts, false/string rejects with a row alert, and {fieldErrors} marks and describes each invalid editor. Thrown errors keep the draft. Column validate runs before row and cell callbacks. ' +
     'DataTableEditValue remains string|number|null: switch reports true/false text and date reports YYYY-MM-DD. Textarea uses Shift+Enter for a newline and Enter to commit. DatePicker uses Space to open its calendar and Enter to commit after selecting; Combobox owns Enter while choosing an option. renderEditor receives row, value, setValue, commit, cancel, error and inputProps (accessible name, invalid, description, autofocus); spread inputProps on the custom field. Custom commit saves a cell; in row mode setValue already updates the draft and commit leaves it pending for Save. ' +
@@ -165,7 +166,15 @@ export const meta: BlockMeta = {
       state: 'Always: numbered-page button name; number stays caller content',
     },
   ] satisfies Array<{ key: keyof DataTableLabels; type: string; state: string }>,
-  registryDependencies: ['info-tip', 'sticky-action-bar', 'confirm-destructive'],
+  registryDependencies: [
+    'info-tip',
+    'sticky-action-bar',
+    'confirm-destructive',
+    'popover',
+    'date-picker',
+    'number-input',
+    'radio-group',
+  ],
   uses: [
     'Table',
     'InfoTip',
@@ -183,6 +192,10 @@ export const meta: BlockMeta = {
     'Textarea',
     'Switch',
     'DatePicker',
+    'DateRangePicker',
+    'NumberInput',
+    'RadioGroup',
+    'Popover',
     'Combobox',
     'StickyActionBar',
     'ConfirmDestructive',

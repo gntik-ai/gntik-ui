@@ -1,3 +1,4 @@
+import { useFilterModel, EMPTY_FILTER_MODEL } from './use-filter-model';
 import {
   Checkbox,
   cn,
@@ -8,6 +9,8 @@ import {
   TableHeader,
   TableRow,
   type TableDensity,
+  type QueryGroup,
+  type QueryCondition,
   useDensity,
   useI18n,
 } from '@gntik-ai/ui';
@@ -179,6 +182,9 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   onActiveViewChange,
   showViewSwitcher,
   filters,
+  filterModel,
+  defaultFilterModel,
+  onFilterModelChange,
   onFiltersChange,
   toolbar,
   csvExport = false,
@@ -265,7 +271,21 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const effectiveGroupBy: DataTableGroupBy<T> | undefined =
     groupOverride === undefined ? groupBy : ((groupOverride ?? undefined) as DataTableGroupBy<T> | undefined);
   const sort = sortProp === undefined ? innerSort : sortProp;
-  const enabledIds = rows.filter((row) => !isRowDisabled?.(row)).map(getRowId);
+  const filtering = useFilterModel({
+    rows,
+    columns,
+    model: filterModel,
+    initial: seed.filterModel ?? defaultFilterModel,
+    onChange: onFilterModelChange,
+    serverMode,
+    onExternalChange: () => {
+      if (serverMode) {
+        if ((controlledPage ?? 1) !== 1) onPageChange?.(1);
+      } else if (page !== 1) setPage(1);
+    },
+  });
+  const filteredRows = filtering.rows;
+  const enabledIds = filteredRows.filter((row) => !isRowDisabled?.(row)).map(getRowId);
   const {
     selected,
     selectedList,
@@ -273,10 +293,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     model,
     selectedCount,
     allMatchingSelected,
+    clearForFilterModel,
     selectAllMatching: selectMatching,
     clear,
   } = useMultipleSelection({
-    rowIds: rows.map(getRowId),
+    rowIds: filteredRows.map(getRowId),
     selectedIds,
     defaultSelectedIds,
     onSelectionChange,
@@ -286,8 +307,9 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     onSelectionModelChange,
     serverMode,
     selectAllMatching: selectable && selectAllMatching,
-    total: rowCount ?? rows.length,
+    total: rowCount ?? filteredRows.length,
     filters,
+    filterModel: filtering.model,
   });
   const density = densityProp ?? innerDensity ?? contextDensity;
   const visibleColumns = orderColumns(
@@ -305,8 +327,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const [innerCollapsed, setInnerCollapsed] = useState<ReadonlySet<string>>(() => new Set(defaultCollapsedGroups));
   const collapsed: ReadonlySet<string> = collapsedProp ? new Set(collapsedProp) : innerCollapsed;
 
-  const sortedRows = serverMode ? rows : manualSorting ? [...rows] : sortRows(rows, columns, sort);
-  const allGroups = effectiveGroupBy ? groupRows(sortedRows, effectiveGroupBy, rows) : null;
+  const sortedRows = serverMode ? rows : manualSorting ? [...filteredRows] : sortRows(filteredRows, columns, sort);
+  const allGroups = effectiveGroupBy ? groupRows(sortedRows, effectiveGroupBy, filteredRows) : null;
   const sorted = allGroups ? allGroups.flatMap((g) => g.rows) : sortedRows;
   const clientPage = Math.min(Math.max(1, page), Math.max(1, Math.ceil(sorted.length / Math.max(1, pageSize))));
   const pageRows = serverMode ? rows : paginated ? paginate(sorted, clientPage, pageSize) : sorted;
@@ -335,7 +357,15 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const queryPage = serverMode ? (controlledPage ?? 1) : clientPage;
   const queryPageSize = serverMode ? (controlledPageSize ?? defaultPageSize) : pageSize;
   const reportQuery = (cause: DataTableQuery['cause'], next: Partial<DataTableQuery>) =>
-    onQueryChange?.({ page: queryPage, pageSize: queryPageSize, sort, filters, ...next, cause });
+    onQueryChange?.({
+      page: queryPage,
+      pageSize: queryPageSize,
+      sort,
+      filters,
+      ...(filtering.model !== EMPTY_FILTER_MODEL ? { filterModel: filtering.model } : {}),
+      ...next,
+      cause,
+    });
   // A resize that moves the page finishes in the footer's synchronous changePage
   // callback, so one query follows the legacy callbacks without scheduling or batching.
   const resizingTo = useRef<number | undefined>(undefined);
@@ -350,7 +380,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     });
   };
   const changePageSize = (next: number) => {
-    const total = serverMode ? (rowCount ?? 0) : rows.length;
+    const total = serverMode ? (rowCount ?? 0) : filteredRows.length;
     const pageCount = Math.max(1, Math.ceil(total / Math.max(1, queryPageSize)));
     const displayedPage = Math.min(Math.max(1, queryPage), pageCount);
     const from = total === 0 ? 0 : (displayedPage - 1) * queryPageSize + 1;
@@ -371,6 +401,14 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       if (queryPage !== 1) onPageChange?.(1);
     } else if (page !== 1) setPage(1);
     reportQuery('sort', { page: 1, sort: next });
+  };
+  const changeFilter = (next: QueryGroup) => {
+    filtering.setModel(next);
+    if (allMatchingSelected) clearForFilterModel(next);
+    if (serverMode) {
+      if (queryPage !== 1) onPageChange?.(1);
+    } else if (page !== 1) setPage(1);
+    reportQuery('filter', { page: 1, filterModel: next });
   };
   const toggleGroup = (key: string) => {
     const next = new Set(collapsed);
@@ -428,6 +466,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   // Saved views.
   const groupName = (g: DataTableGroupBy<T> | undefined): string | null => (typeof g === 'string' ? g : null);
   const currentState: DataTableViewState = {
+    filterModel: filtering.model,
     filters,
     sort,
     hiddenColumns: hiddenList,
@@ -436,6 +475,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     groupBy: groupOverride === undefined ? groupName(groupBy) : groupOverride,
   };
   const defaultState: DataTableViewState = {
+    filterModel: defaultFilterModel ?? EMPTY_FILTER_MODEL,
     filters: initialFilters,
     sort: defaultSort,
     hiddenColumns: defaultHidden,
@@ -444,6 +484,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     groupBy: groupName(groupBy),
   };
   const applyState = (state: DataTableViewState) => {
+    const nextModel = state.filterModel ?? defaultFilterModel ?? EMPTY_FILTER_MODEL;
+    const filterChanged = JSON.stringify(nextModel) !== JSON.stringify(filtering.model);
+    if (filterChanged) {
+      filtering.setModel(nextModel);
+      if (allMatchingSelected) clearForFilterModel(nextModel);
+    }
     const nextSort = state.sort ?? null;
     setInnerSort(nextSort);
     const sortChanged =
@@ -458,11 +504,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     if (state.filters !== filters) onFiltersChange?.(state.filters);
     if (!serverMode) {
       if (page !== 1) setPage(1);
-    } else if (sortChanged && queryPage !== 1) onPageChange?.(1);
+    } else if ((sortChanged || filterChanged) && queryPage !== 1) onPageChange?.(1);
     reportQuery('view', {
-      page: !serverMode || sortChanged ? 1 : queryPage,
+      page: !serverMode || sortChanged || filterChanged ? 1 : queryPage,
       sort: nextSort,
       filters: state.filters,
+      ...(nextModel !== EMPTY_FILTER_MODEL || filtering.model !== EMPTY_FILTER_MODEL ? { filterModel: nextModel } : {}),
     });
   };
   const viewsApi = useTableViews({
@@ -632,6 +679,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     layout={layout.columns.get(c.id)}
                     sortDirection={sortingEnabled && sort?.columnId === c.id ? sort.direction : 'none'}
                     onSortChange={(dir) => changeSort(c.id, dir)}
+                    filterCondition={filtering.model.children.find(
+                      (node): node is QueryCondition => node.type === 'condition' && node.field === c.id,
+                    )}
+                    onFilterApply={(value) => changeFilter(filtering.edit(c.id, value))}
                     resize={
                       resizable && c.resizable !== false
                         ? {
@@ -760,7 +811,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           {onRowAdd && <AddRowButton edits={rowEdits} labels={labels} buttonRef={addRowRef} />}
           {exportApi.enabled && (
             <ExportMenu
-              count={rowCount ?? rows.length}
+              count={rowCount ?? filteredRows.length}
               selectedCount={serverMode ? exportSelectedCount : exportApi.selectedRowCount}
               scopes={exportApi.scopes}
               busy={exportApi.busy}
@@ -848,7 +899,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           labels={labels}
           className={cn('border-t border-border px-4 py-3', autoSizing && 'shrink-0')}
           showPageSize={!autoSizing}
-          total={serverMode ? rowCount : rows.length}
+          total={serverMode ? rowCount : filteredRows.length}
           page={serverMode ? controlledPage : clientPage}
           onPageChange={changePage}
           pageSize={serverMode ? controlledPageSize : pageSize}
