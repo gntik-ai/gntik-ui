@@ -26233,7 +26233,7 @@
       "package": "@gntik-ai/ui",
       "group": "Navigation",
       "status": "beta",
-      "description": "Two-line workspace picker (logo, name, plan/role meta) for the topbar or sidebar header. Short lists open a menu with the current workspace checked; long lists (or `searchable`) open a combobox with a search field. An optional \"Create workspace\" action closes the list.",
+      "description": "Two-line workspace picker (logo, name, plan/role meta) for the topbar or sidebar header. Short lists open a menu with the current workspace checked; long lists (or `searchable`) open a combobox with a search field. Empty lists show emptyText as a disabled menu item, or the default empty message. An optional \"Create workspace\" action closes the list and appears only with onCreate.",
       "files": [
         {
           "path": "packages/ui/src/components/WorkspaceSwitcher/WorkspaceSearch.tsx",
@@ -30699,7 +30699,7 @@
       "package": "@gntik-ai/templates",
       "group": "Shells",
       "status": "stable",
-      "description": "Console starter: app sidebar, topbar and an empty Page. Optional tenant selection, workspace context, a named busy region, account-menu content and a brand slot are shared through ConsoleShell.",
+      "description": "Console starter: app sidebar, topbar and an empty Page. ConsoleShell shares optional tenant selection (tenantPlaceholder), empty workspace menus (workspaceEmptyText), navigation naming (navLabel), a named busy region, account-menu content and a brand slot. userMenuShowTheme=false hides the footer Theme item; a defined topbar.user overrides only the topbar account, with null hiding it.",
       "files": [
         {
           "path": "packages/templates/src/shared/ConsoleShell.tsx",

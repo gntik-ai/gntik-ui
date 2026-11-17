@@ -25,21 +25,23 @@ export interface ConsoleShellProps
     Omit<AppSidebarHeaderProps, 'collapsed' | 'className' | 'workspaces'>,
     Pick<
       AppSidebarFooterProps,
-      'usage' | 'helpHref' | 'helpLabel' | 'userMenuItems' | 'userMenuChildren' | 'onSignOut'
+      'usage' | 'helpHref' | 'helpLabel' | 'userMenuItems' | 'userMenuShowTheme' | 'userMenuChildren' | 'onSignOut'
     >,
     Pick<SidebarLayoutProps, 'sidebarLabel' | 'collapseMode'> {
   /** Page content (usually a <Page>). */
   children: ReactNode;
   /** Sidebar navigation; defaults to the NavigationProvider's groups, else the AppSidebar sample groups. */
   nav?: NavGroup[];
+  /** Accessible name of the primary navigation in the sidebar and mobile drawer; defaults to Main. */
+  navLabel?: string;
   /** Href of the current page, marks the active nav item; defaults to the NavigationProvider's active menu item. */
   currentHref?: string;
   /** Topbar trail; defaults to the NavigationProvider's active page. `null` hides it. */
   breadcrumbs?: BreadcrumbItem[] | null;
   workspaces?: Workspace[] | null;
   user?: UserMenuUser | null;
-  /** Extra AppTopbar props (environment, notifications, theme control…). */
-  topbar?: Omit<AppTopbarProps, 'breadcrumbs' | 'user'>;
+  /** Extra AppTopbar props. A defined user overrides the shared user; `null` hides only the topbar menu. */
+  topbar?: Omit<AppTopbarProps, 'breadcrumbs'>;
   /** localStorage key for the collapsed sidebar; `undefined` disables persistence. */
   storageKey?: string;
 }
@@ -55,6 +57,7 @@ export interface ConsoleShellProps
 export function ConsoleShell({
   children,
   nav: navProp,
+  navLabel,
   currentHref: currentHrefProp,
   breadcrumbs: breadcrumbsProp,
   workspaces,
@@ -66,6 +69,7 @@ export function ConsoleShell({
   helpHref,
   helpLabel,
   userMenuItems,
+  userMenuShowTheme,
   userMenuChildren,
   brand,
   onSignOut,
@@ -77,6 +81,7 @@ export function ConsoleShell({
 }: ConsoleShellProps) {
   const { locale } = useI18n();
   const navigation = useNavigation();
+  const topbarUser = topbar?.user !== undefined ? topbar.user : user;
   const nav = navProp ?? navigation?.groups;
   // No visible menu item for the active page (or no active page) leaves every item unmarked; the
   // raw pathname would re-activate routes getActivePage excludes, such as external ones.
@@ -101,7 +106,9 @@ export function ConsoleShell({
             {...contextProps}
           />
         )}
-        sidebar={({ collapsed }) => <AppSidebarNav groups={nav} currentHref={currentHref} collapsed={collapsed} />}
+        sidebar={({ collapsed }) => (
+          <AppSidebarNav groups={nav} label={navLabel} currentHref={currentHref} collapsed={collapsed} />
+        )}
         sidebarFooter={({ collapsed }) => (
           <AppSidebarFooter
             collapsed={collapsed}
@@ -110,17 +117,18 @@ export function ConsoleShell({
             helpHref={helpHref}
             helpLabel={helpLabel}
             userMenuItems={userMenuItems}
+            userMenuShowTheme={userMenuShowTheme}
             userMenuChildren={userMenuChildren}
             onSignOut={onSignOut}
           />
         )}
         topbar={
           brand == null ? (
-            <AppTopbar breadcrumbs={breadcrumbs} user={user} {...topbar} />
+            <AppTopbar breadcrumbs={breadcrumbs} {...topbar} user={topbarUser} />
           ) : (
             <>
               <div className="min-w-0 shrink-0 lg:hidden">{brand}</div>
-              <AppTopbar breadcrumbs={breadcrumbs} user={user} {...topbar} />
+              <AppTopbar breadcrumbs={breadcrumbs} {...topbar} user={topbarUser} />
             </>
           )
         }

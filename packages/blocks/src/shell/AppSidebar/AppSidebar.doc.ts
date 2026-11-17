@@ -7,14 +7,21 @@ export const doc: ComponentDoc = {
   status: 'beta',
   description:
     `${meta.description} Optional tenants render before the workspace control using the kit Select. ` +
-    'tenantLabel and tenantEmptyText customize its name and empty placeholder; clearing reports null. ' +
+    'tenantLabel names it; tenantPlaceholder customizes the unselected placeholder (default Select tenant), ' +
+    'while tenantEmptyText is used for an empty list; clearing reports null. ' +
     'workspaceLabel and workspaceEmptyText customize the workspace popup and search results. ' +
+    'An empty workspaces array with workspaceEmptyText keeps the switcher instead of Logo; ' +
+    'its empty message is disabled and Create workspace appears only with onCreateWorkspace. ' +
+    'Without workspaceEmptyText, an empty array or null keeps the existing Logo/brand fallback. ' +
     'hideWorkspaceContext hides both controls, contextStatus and the region, preserving brand or Logo. ' +
     'contextRegionLabel opts into a named section; without it, controls and contextStatus have no extra wrapper. ' +
     'The consumer owns contextBusy and must reset it when loading completes. The collapsed rail hides context; ' +
     'expand the sidebar or open its mobile drawer to switch tenants. brand replaces Logo in either state. ' +
-    'userMenuChildren adds popup content alongside userMenuItems; usage=null and helpHref="" hide usage and help. ' +
-    'ConsoleShell forwards these props and also shows brand in the mobile topbar. See the five Sidebar shell examples.',
+    'userMenuChildren adds popup content alongside userMenuItems; userMenuShowTheme=false hides the footer Theme item. ' +
+    'usage=null and helpHref="" hide usage and help. navLabel names the navigation landmark (default Main). ' +
+    'ConsoleShell forwards these props to both sidebar and mobile drawer and shows brand in the mobile topbar. ' +
+    'Its topbar.user overrides the shared user only when defined; null hides that menu, while undefined shares user. ' +
+    'See the Sidebar shell examples for tenant placeholders, empty workspaces and a single account menu.',
   primitive: 'Select, WorkspaceSwitcher, NavList and UserMenu from @gntik-ai/ui',
   pattern: 'Optional named context region, select-only combobox, navigation and account menu',
   keyboard: [

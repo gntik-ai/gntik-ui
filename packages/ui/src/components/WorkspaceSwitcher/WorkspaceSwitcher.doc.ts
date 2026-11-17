@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Navigation',
   status: 'beta',
   description:
-    'Two-line workspace picker (logo, name, plan/role meta) for the topbar or sidebar header. Short lists open a menu with the current workspace checked; long lists (or `searchable`) open a combobox with a search field. An optional "Create workspace" action closes the list.',
+    'Two-line workspace picker (logo, name, plan/role meta) for the topbar or sidebar header. Short lists open a menu with the current workspace checked; long lists (or `searchable`) open a combobox with a search field. Empty lists show emptyText as a disabled menu item, or the default empty message. An optional "Create workspace" action closes the list and appears only with onCreate.',
   primitive: '@base-ui/react/menu · @base-ui/react/combobox',
   pattern: 'menu button (short lists) / select-only combobox with search (long lists)',
   keyboard: [

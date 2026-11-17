@@ -268,6 +268,8 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/templates/src/code-editor/examples/PaletteTypography'),
     'assistant-chat--adapter': () => import('../../../packages/templates/src/assistant-chat/examples/AdapterChat'),
     'shell-sidebar--tenants': () => import('../../../packages/templates/src/shell-sidebar/examples/Tenants'),
+    'shell-sidebar--empty-workspaces': () =>
+      import('../../../packages/templates/src/shell-sidebar/examples/EmptyWorkspaces'),
     'shell-sidebar--platform-wide': () => import('../../../packages/templates/src/shell-sidebar/examples/PlatformWide'),
     'shell-sidebar--context-region': () =>
       import('../../../packages/templates/src/shell-sidebar/examples/ContextRegion'),

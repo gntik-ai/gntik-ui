@@ -52,6 +52,7 @@ export function WorkspaceSwitcher(props: WorkspaceSwitcherProps) {
     onCreate,
     createLabel: createLabelProp,
     label: labelProp,
+    emptyText,
     searchable,
     searchThreshold = 6,
   } = props;
@@ -76,11 +77,17 @@ export function WorkspaceSwitcher(props: WorkspaceSwitcherProps) {
           }}
         >
           <MenuGroupLabel>{label}</MenuGroupLabel>
-          {workspaces.map((w) => (
-            <MenuRadioItem key={w.id} value={w.id} label={w.name} className={s.option()}>
-              <WorkspaceOptionBody workspace={w} current={w.id === currentId} />
-            </MenuRadioItem>
-          ))}
+          {workspaces.length === 0 ? (
+            <MenuItem disabled className={s.searchEmpty()}>
+              {emptyText ?? t('workspace.empty')}
+            </MenuItem>
+          ) : (
+            workspaces.map((w) => (
+              <MenuRadioItem key={w.id} value={w.id} label={w.name} className={s.option()}>
+                <WorkspaceOptionBody workspace={w} current={w.id === currentId} />
+              </MenuRadioItem>
+            ))
+          )}
         </MenuRadioGroup>
         {onCreate && (
           <>

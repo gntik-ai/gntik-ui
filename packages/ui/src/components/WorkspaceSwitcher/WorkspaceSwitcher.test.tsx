@@ -6,6 +6,40 @@ import WorkspaceSwitcherMenu from './examples/WorkspaceSwitcherMenu';
 import WorkspaceSwitcherSearch from './examples/WorkspaceSwitcherSearch';
 
 describe('WorkspaceSwitcher (menu)', () => {
+  it.each([false, true])('shows an empty menu with optional creation (%s)', async (canCreate) => {
+    const user = userEvent.setup();
+    const onCreate = vi.fn();
+    const { rerender } = render(
+      <WorkspaceSwitcher
+        workspaces={[]}
+        currentId=""
+        onSelect={() => {}}
+        label="Team spaces"
+        emptyText="No spaces yet"
+        onCreate={canCreate ? onCreate : undefined}
+      />,
+    );
+    const trigger = screen.getByRole('button', { name: 'Team spaces' });
+    await user.click(trigger);
+    const menu = await screen.findByRole('menu');
+    expect(within(menu).getByText('No spaces yet')).toBeInTheDocument();
+    expect(within(menu).getByRole('menuitem', { name: 'No spaces yet' })).toHaveAttribute('aria-disabled', 'true');
+    expect(within(menu).queryByRole('menuitemradio')).toBeNull();
+    await expectNoAxeViolations();
+    if (canCreate) {
+      await user.click(within(menu).getByRole('menuitem', { name: 'Create workspace' }));
+      expect(onCreate).toHaveBeenCalledOnce();
+    } else {
+      expect(within(menu).queryByRole('menuitem', { name: 'Create workspace' })).toBeNull();
+      await user.keyboard('{Escape}');
+      await waitFor(() => expect(screen.queryByRole('menu')).toBeNull());
+      expect(trigger).toHaveFocus();
+    }
+    rerender(<WorkspaceSwitcher workspaces={[]} currentId="" onSelect={() => {}} />);
+    await user.click(screen.getByRole('button', { name: 'Switch workspace' }));
+    expect(within(await screen.findByRole('menu')).getByText('No workspaces match.')).toBeInTheDocument();
+  });
+
   async function open(key = '{Enter}') {
     const user = userEvent.setup();
     render(<WorkspaceSwitcherMenu />);
