@@ -14,5 +14,5 @@
     "types": ["vitest/globals", "@testing-library/jest-dom/vitest"],
     "noEmit": true
   },
-  "include": ["src", "vitest.config.ts", "tsdown.config.ts"]
+  "include": ["src", "examples", "vitest.config.ts", "tsdown.config.ts"]
 }

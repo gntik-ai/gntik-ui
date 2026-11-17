@@ -51,6 +51,10 @@ import { useVirtualRows } from './use-virtual-rows';
 import { ViewSwitcher, type DataTableViewState } from './views';
 import { ExportMenu } from './export-menu';
 import { useTableExport } from './use-table-export';
+import { AddRowButton, NewRow } from './new-row';
+import { useRowDeletion } from './row-delete';
+import { RowEditBar } from './row-edit-bar';
+import { useRowEdits } from './use-row-edits';
 import { useAutoPageSize } from './use-auto-page-size';
 
 export type { DataTableLabels } from './labels';
@@ -149,6 +153,16 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   rowHeight: rowHeightProp,
   virtualContainerClassName = 'max-h-[32rem]',
   onCellEdit,
+  editMode = 'cell',
+  editingRowIds,
+  defaultEditingRowIds,
+  onEditingRowIdsChange,
+  onRowSave,
+  onRowsSave,
+  onRowAdd,
+  newRowPosition = 'top',
+  newRowDefaults,
+  onRowDelete,
   views: viewsProp,
   defaultViews,
   onViewsChange,
@@ -166,6 +180,20 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
 }: DataTableProps<T>) {
   const caption = captionProp ?? 'Deployments';
   const { t, formatNumber } = useI18n();
+  const addRowRef = useRef<HTMLButtonElement>(null);
+  const rowEdits = useRowEdits({
+    columns,
+    getRowId,
+    editingRowIds,
+    defaultEditingRowIds,
+    onEditingRowIdsChange,
+    onRowSave,
+    onRowsSave,
+    onRowAdd,
+    newRowDefaults,
+    labels,
+    genericError: labels?.editError ?? t('table.editSaveError'),
+  });
   const singleMode = selectionMode === 'single';
   const serverMode = paginationMode === 'server';
   const sortingEnabled = !serverMode || onSortChange != null || onQueryChange != null;
@@ -265,6 +293,21 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const sorted = allGroups ? allGroups.flatMap((g) => g.rows) : sortedRows;
   const clientPage = Math.min(Math.max(1, page), Math.max(1, Math.ceil(sorted.length / Math.max(1, pageSize))));
   const pageRows = serverMode ? rows : paginated ? paginate(sorted, clientPage, pageSize) : sorted;
+  const deletion = useRowDeletion({
+    rows: sorted,
+    getRowId,
+    getRowLabel: labelOf,
+    rowActions,
+    onRowDelete: onRowDelete
+      ? async (row: T) => {
+          await onRowDelete(row);
+          rowEdits.cancel(row, false);
+        }
+      : undefined,
+    tableRef,
+    labels,
+  });
+  const hasActions = deletion.actions != null || editMode === 'row' || onRowAdd != null;
   // Rows in collapsed groups are hidden, so select-all leaves them alone.
   const pageIds = (
     effectiveGroupBy ? pageRows.filter((row) => !collapsed.has(groupKeyOf(row, effectiveGroupBy))) : pageRows
@@ -426,7 +469,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     pinned,
     sized: resizable || widthsProp != null || defaultColumnWidths !== EMPTY_WIDTHS,
     lead: selectionColumn,
-    trail: rowActions != null,
+    trail: hasActions,
   });
 
   const items = loading || pageRows.length === 0 ? 0 : flattenBody(pageRows, groupsForBody, collapsed).length;
@@ -472,7 +515,13 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   });
   const hasSelection = selectable && selectedCount > 0 && (selectionSummary || bulkActions != null);
   const showToolbar =
-    toolbar != null || showDensityToggle || showColumnMenu || showViews || hasSelection || exportApi.enabled;
+    onRowAdd != null ||
+    toolbar != null ||
+    showDensityToggle ||
+    showColumnMenu ||
+    showViews ||
+    hasSelection ||
+    exportApi.enabled;
   const anyEditable = onCellEdit != null && columns.some((c) => c.editable);
   const showSelectionStrip =
     selectable &&
@@ -560,7 +609,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                   />
                 );
               })}
-              {rowActions && (
+              {hasActions && (
                 <TableHead
                   className={cn(
                     'w-12',
@@ -575,6 +624,9 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
               )}
             </TableRow>
           </TableHeader>
+          {onRowAdd && newRowPosition === 'top' && (
+            <NewRow edits={rowEdits} columns={visibleColumns} selectionColumn={selectionColumn} labels={labels} />
+          )}
           <DataTableBody
             labels={labels}
             rows={pageRows}
@@ -586,7 +638,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             selected={selected}
             singleSelection={singleMode ? singleSelection : undefined}
             onToggleRow={(id) => setSelected(toggleOne(id, selected))}
-            rowActions={rowActions}
+            rowActions={deletion.actions}
             loading={loading}
             loadingRows={loadingRows}
             emptyState={emptyState}
@@ -596,10 +648,16 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             onToggleGroup={toggleGroup}
             onToggleGroupRows={(ids) => setSelected(toggleAll(ids, selected))}
             layout={layout}
-            onCellEdit={onCellEdit}
+            hasNewRow={rowEdits.newRow !== null}
+            hasRowActions={hasActions}
+            rowEdits={editMode === 'row' ? rowEdits : undefined}
+            onCellEdit={editMode === 'cell' ? onCellEdit : undefined}
             editHintId={anyEditable ? editHintId : undefined}
             virtual={virtual}
           />
+          {onRowAdd && newRowPosition === 'bottom' && (
+            <NewRow edits={rowEdits} columns={visibleColumns} selectionColumn={selectionColumn} labels={labels} />
+          )}
         </Table>
       </DensityProvider>
     </SelectionGroup>
@@ -650,6 +708,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           )}
         </div>
         <div className="flex items-center gap-2">
+          {onRowAdd && <AddRowButton edits={rowEdits} labels={labels} buttonRef={addRowRef} />}
           {exportApi.enabled && (
             <ExportMenu
               count={rowCount ?? rows.length}
@@ -703,6 +762,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           }}
         />
       )}
+      {deletion.dialog}
       {exportApi.enabled && (
         <span role="status" aria-live="polite" className="sr-only">
           {exportApi.announcement}
@@ -728,6 +788,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       ) : (
         tableContent
       )}
+      {editMode === 'row' && onRowsSave && <RowEditBar edits={rowEdits} labels={labels} />}
       {loading && (
         <p role="status" className="sr-only">
           {labels?.loading ? labels.loading(caption) : <>Loading {caption.toLowerCase()}…</>}

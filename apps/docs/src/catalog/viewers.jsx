@@ -285,6 +285,20 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                 <>
                   <Viewer
                     kind="block"
+                    id="data-table--editable-rows"
+                    title={t('table.example.rowExampleViewer')}
+                    file="../../../packages/blocks/src/tables/DataTable/examples/editable-rows.tsx"
+                    height={1600}
+                  />
+                  <Viewer
+                    kind="block"
+                    id="data-table--field-array"
+                    title={t('table.example.fieldArrayViewer')}
+                    file="../../../packages/ui/examples/data-table-field-array.tsx"
+                    height={700}
+                  />
+                  <Viewer
+                    kind="block"
                     id="data-table--url-pagination"
                     title={paginationCopy.url}
                     file="../../../packages/blocks/src/tables/DataTable/examples/url-pagination.tsx"

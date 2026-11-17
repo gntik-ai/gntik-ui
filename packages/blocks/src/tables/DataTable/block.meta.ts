@@ -7,6 +7,10 @@ export const meta: BlockMeta = {
   status: 'beta',
   description:
     'Typed data table with sorting, selection, pagination and saved views. ' +
+    'Opt-in editMode="row" edits every editable cell together. Edit focuses the first editor; Enter saves, Escape cancels and Tab moves without saving. Use editingRowIds/onEditingRowIdsChange or defaultEditingRowIds for multiple rows. Drafts are keyed by row id in DataTable and survive paging, sorting and virtualization. onRowSave receives {row, rowId, values, previous}; void/true accepts, false/string rejects with a row alert, and {fieldErrors} marks and describes each invalid editor. Thrown errors keep the draft. Column validate runs before row and cell callbacks. ' +
+    'DataTableEditValue remains string|number|null: switch reports true/false text and date reports YYYY-MM-DD. Textarea uses Shift+Enter for a newline and Enter to commit. DatePicker uses Space to open its calendar and Enter to commit after selecting; Combobox owns Enter while choosing an option. renderEditor receives row, value, setValue, commit, cancel, error and inputProps (accessible name, invalid, description, autofocus); spread inputProps on the custom field. Custom commit saves a cell; in row mode setValue already updates the draft and commit leaves it pending for Save. ' +
+    'Prefer onRowsSave when several rows can be edited: the StickyActionBar counts changed rows, validates all before one callback, keeps only rejected rows (a record keyed by row id with strings or fieldErrors), and Discard all restores drafts. onRowAdd enables one draft at newRowPosition (top by default), seeded by newRowDefaults. Defaults use column ids; validators and editable predicates receive these defaults as the new row, so provide fields those functions need. onRowAdd receives values and the consumer inserts the accepted row into rows. Cancel/Escape removes the draft and returns focus to Add row. onRowDelete appends Delete, asks for typed confirmation in ConfirmDestructive and waits for the callback; the consumer removes the row, and focus returns to the next actions trigger or the previous one. ' +
+    'See examples/editable-rows.tsx for row and cell editors, custom input, field validation, partial bulk rejection, controlled paging, persistent virtual drafts, add and delete. The docs-only packages/ui/examples/data-table-field-array.tsx uses useFieldArray with Form from @gntik-ai/ui/forms, without a blocks runtime dependency on react-hook-form. InlineEditRow and InlineEditTable are deprecated in favour of this API. ' +
     'Client pagination accepts optional page/onPageChange and pageSize/onPageSizeChange controlled pairs without paginationMode. Uncontrolled tables start at defaultPage=1 and defaultPageSize=10. Controlled tables request navigation and size changes, then wait for the consumer to update props. Stale pages clamp for the rows and footer without emitting callbacks. Sorting and applying a saved view request page 1 once unless already there. Size changes request the page retaining the first visible row, and onQueryChange receives the next page and size together. rowCount is only valid with paginationMode="server". See examples/url-pagination.tsx for URLSearchParams, one history.pushState per action, and popstate restoration. ' +
     'autoPageSize defaults to false. With client pagination enabled it fills a parent with a definite height, fits floor(bodyHeight / rowHeight) whole rows (minimum 1), and reports size changes through onPageSizeChange. rowHeight defaults to 44 for comfortable density or 36 for compact. Automatic sizing owns page size even if pageSize is supplied, hides the footer size control and keeps the first visible row on screen. Its viewport excludes toolbar, header, visible caption and footer, and never measures tbody or row-count-dependent content. Without a definite height it falls back to defaultPageSize and warns in development. Supply page/onPageChange together if controlling its page. It does not enable pagination in single selection or change server pagination. See examples/auto-page-size.tsx for a resizable 480px parent. ' +
     'Optional column.description (ReactNode) adds an InfoTip after the label, outside the sort button. Use descriptions only for columns needing a definition, since each info button adds a keyboard stop. Enter or Space opens help; Escape closes it and returns focus without sorting. column.renderHeader (() => ReactNode) replaces only the visible label; use non-interactive content with aria-hidden icons. The required header string remains the column name for accessibility, the Columns menu, resize separators, editor labels and CSV export. With either field, the header cell is named by header; rich units do not change that name. Help follows the label for every alignment, and the label truncates before the help button shrinks. See examples/header-help.tsx for usage metrics with definitions, an icon and units. ' +
@@ -20,6 +24,15 @@ export const meta: BlockMeta = {
     'selectAllMatching defaults to false and offers a strip after the page is fully selected: client mode includes every enabled row, while server mode requires onSelectionModelChange and reports an exclude model. The same button becomes Clear selection without moving focus; clearing returns focus to the page checkbox, or to the table when the checkbox is hidden or unavailable. An exclude model resets through both callbacks when filters changes by JSON value; filters must include every narrowing input, including search text. Paging, page size and sorting preserve selection. An exclude action covers the matching result set at action time, including later-created rows; the consumer executes it. isRowDisabled disables multiple-selection checkboxes and page/group/all-matching toggles skip known disabled rows. Server counts use rowCount minus explicit excluded ids, including disabled ids on the page where Select all is activated. isRowDisabled cannot evaluate unloaded rows, so the server must enforce eligibility for the complete matching result set; return only eligible matches and their rowCount when counts must exclude all unavailable rows. hideSelectAll defaults to false and hides just the header checkbox, retaining an accessible Selection heading. See examples/client-selection.tsx for client preservation, disabled rows and select-all-matching, and examples/server-pagination.tsx for controlled models, cross-page actions and the preservation/header options.',
 
   labels: [
+    { key: 'editRow', type: '(label: string) => string', state: 'Row mode: Edit button name' },
+    { key: 'saveRow', type: 'string', state: 'Row or new-row draft: Save button' },
+    { key: 'rowsChanged', type: '(count: number) => string', state: 'Bulk bar: changed row count' },
+    { key: 'saveAll', type: 'string', state: 'Bulk bar: Save all button' },
+    { key: 'discardAll', type: 'string', state: 'Bulk bar: Discard all button' },
+    { key: 'addRow', type: 'string', state: 'Add row button and new-row editor name' },
+    { key: 'deleteRow', type: 'string', state: 'Delete menu item and confirming button' },
+    { key: 'deleteRowTitle', type: '(label: string) => string', state: 'Delete confirmation: dialog title' },
+    { key: 'deleteRowDescription', type: '(label: string) => string', state: 'Delete confirmation: description' },
     { key: 'export', type: 'string', state: 'CSV export menu trigger text and name' },
     { key: 'exportAll', type: '(count: number) => string', state: 'CSV all rows item; server mode uses rowCount' },
     { key: 'exportPage', type: 'string', state: 'CSV current page item' },
@@ -149,7 +162,7 @@ export const meta: BlockMeta = {
       state: 'Always: numbered-page button name; number stays caller content',
     },
   ] satisfies Array<{ key: keyof DataTableLabels; type: string; state: string }>,
-  registryDependencies: ['info-tip'],
+  registryDependencies: ['info-tip', 'sticky-action-bar', 'confirm-destructive'],
   uses: [
     'Table',
     'InfoTip',
@@ -164,6 +177,12 @@ export const meta: BlockMeta = {
     'SimpleSelect',
     'StatusTag',
     'Input',
+    'Textarea',
+    'Switch',
+    'DatePicker',
+    'Combobox',
+    'StickyActionBar',
+    'ConfirmDestructive',
     'Dialog',
   ],
 };

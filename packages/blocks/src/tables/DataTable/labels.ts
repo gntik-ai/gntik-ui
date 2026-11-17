@@ -58,6 +58,15 @@ export interface DataTableLabels extends PaginationFooterLabels {
   emptyTitle: string;
   emptyDescription: string;
   loading: (caption: string) => string;
+  addRow?: string;
+  deleteRow?: string;
+  deleteRowTitle?: (label: string) => string;
+  deleteRowDescription?: (label: string) => string;
+  rowsChanged?: (count: number) => string;
+  saveAll?: string;
+  discardAll?: string;
+  editRow?: (label: string) => string;
+  saveRow?: string;
   editHint: string;
   editLabel: (column: string, row: string) => string;
   editError: string;

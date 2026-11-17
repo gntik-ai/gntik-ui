@@ -10,6 +10,8 @@ export type { DataTableBodyGroup } from './data-table-row';
 export interface DataTableBodyProps<T> extends RowContext<T> {
   rows: readonly T[];
   loading: boolean;
+  /** A separate new-row draft replaces the empty state. */
+  hasNewRow?: boolean;
   loadingRows: number;
   emptyState?: ReactNode;
   /** Grouped rendering: one `<tbody>` per group with a header row (replaces `rows`). */
@@ -77,7 +79,8 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
   } = props;
   const { t } = useI18n();
   const selectionColumn = selectable || singleSelection != null;
-  const span = columns.length + (selectionColumn ? 1 : 0) + (rowActions ? 1 : 0);
+  const span =
+    columns.length + (selectionColumn ? 1 : 0) + (props.hasRowActions || rowActions || props.rowEdits ? 1 : 0);
   if (loading) {
     return (
       <TableBody>
@@ -93,13 +96,14 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
                 <Skeleton className={cn('h-3.5', columnAlign(c) === 'right' ? 'ms-auto w-16' : 'w-24')} />
               </TableCell>
             ))}
-            {rowActions && <TableCell className="w-12" />}
+            {(props.hasRowActions || rowActions) && <TableCell className="w-12" />}
           </TableRow>
         ))}
       </TableBody>
     );
   }
   if (rows.length === 0) {
+    if (props.hasNewRow) return null;
     return (
       <TableBody>
         <TableRow className="hover:bg-transparent">

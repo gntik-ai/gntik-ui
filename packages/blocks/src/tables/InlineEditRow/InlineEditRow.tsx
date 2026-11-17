@@ -45,6 +45,7 @@ const read = <T extends object>(row: T, key: string): Editable => {
 };
 
 /**
+ * @deprecated Use DataTable with editMode="row" for sortable, paginated row editing.
  * A table row that switches into edit mode: inputs replace the cells, with Save and Cancel.
  * Enter saves, Escape cancels; focus moves to the first input and back to Edit afterwards.
  */
@@ -166,7 +167,10 @@ export interface InlineEditTableProps<T extends object> {
   className?: string;
 }
 
-/** Standalone demo of InlineEditRow: a small editable table that keeps its rows in state. */
+/**
+ * Standalone demo of InlineEditRow: a small editable table that keeps its rows in state.
+ * @deprecated Use DataTable with editMode="row".
+ */
 export function InlineEditTable<T extends object = EditableMember>({
   rows: initialRows = EDITABLE_MEMBERS as unknown as readonly T[],
   fields = EDITABLE_MEMBER_FIELDS as unknown as ReadonlyArray<InlineEditField<T>>,

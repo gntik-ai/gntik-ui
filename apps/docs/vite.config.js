@@ -24,6 +24,7 @@ export default defineConfig({
     // graph, so React context (theme, toasts, links) is shared and edits hot-reload.
     alias: [
       { find: /^@gntik-ai\/chat\/mermaid$/, replacement: pkg('chat', 'src/mermaid.ts') },
+      { find: /^@gntik-ai\/ui\/forms$/, replacement: pkg('ui', 'src/forms/index.ts') },
       // monaco-worker-manager still imports the legacy path; Monaco 0.57 exports shorter subpaths.
       {
         find: /^monaco-editor\/esm\/vs\//,
