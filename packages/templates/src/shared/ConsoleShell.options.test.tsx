@@ -68,11 +68,10 @@ describe('ConsoleShell account override', () => {
 });
 
 describe('ConsoleShell navigation name', () => {
-  it.each([undefined, 'Navegación principal'])('names desktop and mobile navigation (%s)', async (navLabel) => {
-    const user = userEvent.setup();
-    const originalWidth = window.innerWidth;
-    window.innerWidth = 375;
-    try {
+  it.each([undefined, 'Navegación principal'])(
+    'names navigation in the sidebar and opened drawer (%s)',
+    async (navLabel) => {
+      const user = userEvent.setup();
       render(<ConsoleShell navLabel={navLabel}>Content</ConsoleShell>);
       expect(
         within(screen.getByRole('complementary')).getByRole('navigation', { name: navLabel ?? 'Main' }),
@@ -80,10 +79,8 @@ describe('ConsoleShell navigation name', () => {
       await user.click(screen.getByRole('button', { name: 'Open navigation' }));
       const drawer = await screen.findByRole('dialog', { name: 'Sidebar' });
       expect(within(drawer).getByRole('navigation', { name: navLabel ?? 'Main' })).toBeInTheDocument();
-    } finally {
-      window.innerWidth = originalWidth;
-    }
-  });
+    },
+  );
 });
 
 describe('ConsoleShell footer theme control', () => {

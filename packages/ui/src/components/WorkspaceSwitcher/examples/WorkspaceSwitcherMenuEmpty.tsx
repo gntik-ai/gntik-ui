@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { WorkspaceSwitcher } from '../WorkspaceSwitcher';
 
-export default function WorkspaceSwitcherEmpty() {
+export default function WorkspaceSwitcherMenuEmpty() {
   const [message, setMessage] = useState('');
   return (
     <div className="flex flex-col items-start gap-3">

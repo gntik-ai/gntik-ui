@@ -7030,22 +7030,31 @@ Usage:
 
 ```tsx
 import { useState } from 'react';
-import { WorkspaceSwitcher } from '@gntik-ai/ui';
+import { WorkspaceSwitcher, type Workspace } from '@gntik-ai/ui';
 
-export default function WorkspaceSwitcherEmpty() {
-  const [message, setMessage] = useState('');
+const WORKSPACES: Workspace[] = [
+  { id: 'acme', name: 'Acme Industries', meta: 'Enterprise · Owner' },
+  { id: 'design', name: 'Design Team', meta: 'Pro · Admin' },
+  { id: 'platform', name: 'Platform', meta: 'Pro · Member' },
+  { id: 'personal', name: 'Personal', meta: 'Free · Owner' },
+];
+
+export default function WorkspaceSwitcherMenu() {
+  const [current, setCurrent] = useState('acme');
+  const [log, setLog] = useState('');
   return (
-    <div className="flex flex-col items-start gap-3">
+    <div className="flex flex-col items-center gap-3">
       <WorkspaceSwitcher
-        workspaces={[]}
-        currentId=""
-        onSelect={() => {}}
-        label="Team spaces"
-        emptyText="No team spaces yet"
-        onCreate={() => setMessage('Ready to create a workspace')}
+        workspaces={WORKSPACES}
+        currentId={current}
+        onSelect={(w) => {
+          setCurrent(w.id);
+          setLog(`Switched to ${w.name}`);
+        }}
+        onCreate={() => setLog('Create workspace')}
       />
-      <p role="status" className="text-sm text-muted-foreground">
-        {message}
+      <p aria-live="polite" className="h-4 font-mono text-[11px] text-muted-foreground">
+        {log}
       </p>
     </div>
   );

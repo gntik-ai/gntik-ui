@@ -166,6 +166,15 @@ test('get_component: kit component with keyboard, usage and source; legacy ids s
   assert.match(await call('get_component', { id: 'nope-nothing' }), /No component/);
 });
 
+test('get_component: workspace switcher keeps populated selectable usage alongside its empty example', async () => {
+  const md = await call('get_component', { id: 'workspace-switcher', include_source: false });
+  const usage = fenced(md);
+  assert.match(usage, /name: 'Acme Industries'/);
+  assert.match(usage, /workspaces=\{WORKSPACES\}/);
+  assert.match(usage, /setCurrent\(w\.id\)/);
+  assert.doesNotMatch(usage, /workspaces=\{\[\]\}/);
+});
+
 test('get_block: metadata, composed components, deps and source', async () => {
   const md = await call('get_block', { id: 'kpi-row' });
   assert.match(md, /\*\*Composes:\*\*/);
