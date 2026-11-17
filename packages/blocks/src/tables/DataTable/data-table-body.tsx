@@ -130,25 +130,26 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
       </TableBody>
     );
   }
-  const row = (r: T, extra?: { ariaRowIndex?: number; height?: number }) => (
-    <Fragment key={props.getRowId(r)}>
-      <DataTableRow
-        {...props}
-        row={r}
-        ariaRowIndex={extra?.ariaRowIndex}
-        style={extra?.height ? { height: extra.height } : undefined}
-      />
-      {props.details?.canExpand(r) && props.details.isExpanded(props.getRowId(r)) && (
-        <DetailRow
-          id={props.details.ids(props.getRowId(r)).panel}
-          labelledBy={props.details.ids(props.getRowId(r)).toggle}
-          span={span}
-        >
-          {props.details.render(r)}
-        </DetailRow>
-      )}
-    </Fragment>
-  );
+  const row = (r: T, extra?: { ariaRowIndex?: number; height?: number }) => {
+    const id = props.getRowId(r);
+    const details = props.details;
+    const ids = details?.ids(id);
+    return (
+      <Fragment key={id}>
+        <DataTableRow
+          {...props}
+          row={r}
+          ariaRowIndex={extra?.ariaRowIndex}
+          style={extra?.height ? { height: extra.height } : undefined}
+        />
+        {details?.canExpand(r) && details.isExpanded(id) && ids && (
+          <DetailRow id={ids.panel} labelledBy={ids.toggle} span={span}>
+            {details.render(r)}
+          </DetailRow>
+        )}
+      </Fragment>
+    );
+  };
   const header = (group: DataTableBodyGroup<T>, open: boolean, extra?: { ariaRowIndex?: number; height?: number }) => (
     <GroupHeaderRow
       key={`group-${group.key}`}
