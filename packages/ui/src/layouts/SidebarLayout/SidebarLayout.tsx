@@ -1,5 +1,5 @@
 import { Menu as MenuIcon, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
-import { createContext, useContext, useId, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useId, useState, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
 import { IconButton } from '../../components/Button';
 import { Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '../../components/Drawer';
@@ -66,6 +66,8 @@ export interface SidebarLayoutProps {
   sidebarLabel?: string;
   /** `id` of <main>, target of the skip link. */
   mainId?: string;
+  /** Accessible name of main when its overflowing content makes it a Tab stop. */
+  mainLabel?: string;
   skipLinkLabel?: string;
   menuLabel?: string;
   collapseLabel?: string;
@@ -100,6 +102,7 @@ export function SidebarLayout({
   onDrawerOpenChange,
   sidebarLabel: sidebarLabelProp,
   mainId = 'main',
+  mainLabel: mainLabelProp,
   skipLinkLabel: skipLinkLabelProp,
   menuLabel: menuLabelProp,
   collapseLabel: collapseLabelProp,
@@ -107,6 +110,7 @@ export function SidebarLayout({
   fullScreen = false,
 }: SidebarLayoutProps) {
   const { t } = useI18n();
+  const mainLabel = mainLabelProp ?? t('nav.mainContent');
   const sidebarLabel = sidebarLabelProp ?? t('nav.sidebar');
   const skipLinkLabel = skipLinkLabelProp ?? t('skip.main');
   const menuLabel = menuLabelProp ?? t('nav.openNavigation');
@@ -137,6 +141,37 @@ export function SidebarLayout({
     drawerOpen,
     setDrawerOpen,
   };
+  const [mainOverflows, setMainOverflows] = useState(false);
+  const measureMain = useCallback((main: HTMLElement | null) => {
+    if (!main || typeof ResizeObserver === 'undefined') return undefined;
+    const check = () => setMainOverflows(main.scrollHeight > main.clientHeight + 1);
+    const resize = new ResizeObserver(check);
+    resize.observe(main);
+    // Observe each content root without introducing a wrapper that changes layout semantics.
+    const observed = new Set<Element>();
+    const observeContent = () => {
+      for (const child of observed) {
+        if (child.parentElement !== main) {
+          resize.unobserve(child);
+          observed.delete(child);
+        }
+      }
+      for (const child of main.children) {
+        if (!observed.has(child)) {
+          observed.add(child);
+          resize.observe(child);
+        }
+      }
+      check();
+    };
+    observeContent();
+    const mutations = new MutationObserver(observeContent);
+    mutations.observe(main, { childList: true, subtree: true, characterData: true });
+    return () => {
+      resize.disconnect();
+      mutations.disconnect();
+    };
+  }, []);
   const hidden = state === 'offcanvas';
 
   return (
@@ -183,7 +218,17 @@ export function SidebarLayout({
             )}
             <div className={s.topbarContent()}>{topbar}</div>
           </header>
-          <main id={mainId} tabIndex={-1} className={s.main()}>
+          <main
+            ref={measureMain}
+            id={mainId}
+            tabIndex={mainOverflows ? 0 : -1}
+            aria-label={mainOverflows ? mainLabel : undefined}
+            className={cn(
+              s.main(),
+              mainOverflows &&
+                'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
+            )}
+          >
             {children}
           </main>
         </div>

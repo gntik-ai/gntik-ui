@@ -1,3 +1,4 @@
+import { I18nProvider, THEME_OPTIONS, ThemeProvider } from '@gntik-ai/ui';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../test/a11y';
@@ -95,4 +96,61 @@ describe('ConsoleShell footer theme control', () => {
     if (showTheme === false) expect(theme).toBeNull();
     else expect(theme).toBeInTheDocument();
   });
+});
+
+describe('ConsoleShell main and topbar options', () => {
+  it('forwards mainLabel to the overflowing main landmark', async () => {
+    vi.spyOn(HTMLElement.prototype, 'scrollHeight', 'get').mockImplementation(function (this: HTMLElement) {
+      return this.tagName === 'MAIN' ? 300 : 0;
+    });
+    vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(100);
+    try {
+      render(
+        <ConsoleShell mainLabel="Reading area">
+          <p>Static content</p>
+        </ConsoleShell>,
+      );
+      expect(await screen.findByRole('main', { name: 'Reading area' })).toHaveAttribute('tabindex', '0');
+    } finally {
+      vi.restoreAllMocks();
+    }
+  });
+});
+
+it.each([undefined, <span key="brand">Console identity</span>])(
+  'forwards two theme options through the topbar (brand: %s)',
+  async (brand) => {
+    const user = userEvent.setup();
+    render(
+      <ThemeProvider storageKey={null} defaultMode="dark">
+        <ConsoleShell brand={brand} topbar={{ themeOptions: THEME_OPTIONS.slice(0, 2) }}>
+          Content
+        </ConsoleShell>
+      </ThemeProvider>,
+    );
+    const banner = within(screen.getByRole('banner'));
+    await user.click(banner.getByRole('button', { name: 'Theme: Dark. Switch to Light' }));
+    expect(document.documentElement).not.toHaveClass('dark', 'high_contrast');
+    await user.click(banner.getByRole('button', { name: 'Theme: Light. Switch to Dark' }));
+    expect(document.documentElement).toHaveClass('dark');
+  },
+);
+
+it('keeps the four localized default theme modes through ConsoleShell', async () => {
+  const user = userEvent.setup();
+  render(
+    <I18nProvider locale="es">
+      <ThemeProvider storageKey={null} defaultMode="dark">
+        <ConsoleShell>Content</ConsoleShell>
+      </ThemeProvider>
+    </I18nProvider>,
+  );
+  for (const name of [
+    'Tema: Oscuro. Cambiar a Alto contraste',
+    'Tema: Alto contraste. Cambiar a Sistema',
+    'Tema: Sistema. Cambiar a Claro',
+    'Tema: Claro. Cambiar a Oscuro',
+  ]) {
+    await user.click(within(screen.getByRole('banner')).getByRole('button', { name }));
+  }
 });

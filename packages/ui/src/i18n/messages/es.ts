@@ -343,6 +343,7 @@ export const es: Messages = {
   'nav.navigation': 'Navegación',
   'nav.openNavigation': 'Abrir navegación',
   'nav.closeNavigation': 'Cerrar navegación',
+  'nav.mainContent': 'Contenido principal',
   'nav.sidebar': 'Barra lateral',
   'nav.expandSidebar': 'Expandir barra lateral',
   'nav.collapseSidebar': 'Contraer barra lateral',

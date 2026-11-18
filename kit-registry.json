@@ -102,7 +102,7 @@
       "package": "@gntik-ai/blocks",
       "group": "shell",
       "status": "beta",
-      "description": "Topbar contents for the application shell: breadcrumb and environment chip, ⌘K global search, notifications popover, theme control and user menu.",
+      "description": "Topbar contents for the application shell: breadcrumb and environment chip, ⌘K global search, notifications popover, theme control and user menu. Optional themeOptions limits the modes and labels offered by both cycle and segmented controls; omitted, the four localized modes remain available.",
       "files": [
         {
           "path": "packages/blocks/src/shell/AppTopbar/AppTopbar.tsx",
@@ -29279,7 +29279,7 @@
       "package": "@gntik-ai/ui",
       "group": "Layout",
       "status": "beta",
-      "description": "Application shell: a collapsible sidebar (expanded, 64px icon rail or off-canvas) with header, body and footer slots, a topbar (workspace switcher, breadcrumb, ⌘K, notifications, theme, user menu) and the main region. Below lg the sidebar moves into a left Drawer opened from the topbar menu button. The collapsed state is controllable and can persist in localStorage (storageKey). Fills its container; fullScreen switches to h-dvh.",
+      "description": "Application shell: a collapsible sidebar (expanded, 64px icon rail or off-canvas) with header, body and footer slots, a topbar (workspace switcher, breadcrumb, ⌘K, notifications, theme, user menu) and the main region. Below lg the sidebar moves into a left Drawer opened from the topbar menu button. The collapsed state is controllable and can persist in localStorage (storageKey). Fills its container; fullScreen switches to h-dvh. Overflowing main content becomes a named Tab stop; mainLabel overrides the localized Main content name (Contenido principal in Spanish). A fitting main stays outside the Tab order and remains the skip-link target.",
       "files": [
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",

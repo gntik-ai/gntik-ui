@@ -9077,7 +9077,7 @@ export default function SettingsLayoutWorkspace() {
 
 ### SidebarLayout (`sidebar-layout`)
 
-Application shell: a collapsible sidebar (expanded, 64px icon rail or off-canvas) with header, body and footer slots, a topbar (workspace switcher, breadcrumb, ⌘K, notifications, theme, user menu) and the main region. Below lg the sidebar moves into a left Drawer opened from the topbar menu button. The collapsed state is controllable and can persist in localStorage (storageKey). Fills its container; fullScreen switches to h-dvh.
+Application shell: a collapsible sidebar (expanded, 64px icon rail or off-canvas) with header, body and footer slots, a topbar (workspace switcher, breadcrumb, ⌘K, notifications, theme, user menu) and the main region. Below lg the sidebar moves into a left Drawer opened from the topbar menu button. The collapsed state is controllable and can persist in localStorage (storageKey). Fills its container; fullScreen switches to h-dvh. Overflowing main content becomes a named Tab stop; mainLabel overrides the localized Main content name (Contenido principal in Spanish). A fitting main stays outside the Tab order and remains the skip-link target.
 
 - Package: `@gntik-ai/ui` · export `SidebarLayout` · group Layout · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/layouts/SidebarLayout/SidebarLayout.doc.ts
@@ -9090,6 +9090,7 @@ Keyboard:
 
 | Key | Behaviour |
 | --- | --- |
+| Tab / Arrow keys | When main overflows, Tab reaches it and arrow keys scroll its content |
 | Tab (first stop) | Reveals the skip link; Enter moves focus to <main> |
 | Enter / Space | On the collapse toggle: collapses or expands the sidebar (aria-expanded reflects it) |
 | Enter / Space | On the menu button (small screens): opens the navigation drawer and moves focus inside |
@@ -9101,84 +9102,26 @@ Usage:
 
 ```tsx
 import { useState } from 'react';
-import { LinkProvider } from '@gntik-ai/ui';
-import { NavList } from '@gntik-ai/ui';
-import { NavigateContext, DemoRouterLink } from '@gntik-ai/ui';
-import { TooltipProvider } from '@gntik-ai/ui';
-import { WorkspaceSwitcher } from '@gntik-ai/ui';
-import { Logo } from '@gntik-ai/ui';
-import { ThemeProvider } from '@gntik-ai/ui';
+import { Button } from '@gntik-ai/ui';
 import { SidebarLayout } from '@gntik-ai/ui';
-import { DemoTopbar, NAV_GROUPS, WORKSPACES, pageTitle } from '@gntik-ai/ui';
 
-export default function SidebarLayoutApp() {
-  const [path, setPath] = useState('/projects');
-  const [workspace, setWorkspace] = useState('acme');
-  const title = pageTitle(path);
+export default function ScrollableMain() {
+  const [long, setLong] = useState(true);
   return (
-    // Apps mount ThemeProvider / LinkProvider once at the root; they are local so the example stands alone.
-    <ThemeProvider storageKey={null}>
-      <NavigateContext value={setPath}>
-        <LinkProvider component={DemoRouterLink}>
-          <TooltipProvider>
-            <div className="h-[560px] overflow-hidden rounded-lg border border-border">
-              <SidebarLayout
-                mainId="sidebar-layout-main"
-                storageKey="example-sidebar-collapsed"
-                sidebarHeader={({ collapsed }) =>
-                  collapsed ? (
-                    <Logo size={26} />
-                  ) : (
-                    <WorkspaceSwitcher
-                      className="w-full"
-                      workspaces={WORKSPACES}
-                      currentId={workspace}
-                      onSelect={(w) => setWorkspace(w.id)}
-                    />
-                  )
-                }
-                sidebar={({ collapsed, closeDrawer }) => (
-                  <NavList
-                    groups={NAV_GROUPS}
-                    currentHref={path}
-                    collapsed={collapsed}
-                    label="Workspace"
-                    onNavigate={closeDrawer}
-                  />
-                )}
-                sidebarFooter={({ collapsed }) =>
-                  collapsed ? null : (
-                    <div className="rounded-[10px] border border-border bg-card p-2.5">
-                      <div className="flex items-center gap-2 text-[11.5px] font-semibold">
-                        <span aria-hidden className="size-[7px] rounded-full bg-primary" />
-                        Control plane
-                      </div>
-                      <div className="mt-1 font-mono text-[10px] text-muted-foreground">Operational · 99.98%</div>
-                    </div>
-                  )
-                }
-                topbar={<DemoTopbar page={title} />}
-              >
-                <div className="px-6 py-6">
-                  <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
-                  <p className="mt-1 text-[13px] text-muted-foreground">12 projects · 3 environments · eu-west</p>
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                    {['web-frontend', 'billing-api', 'auth-service', 'search-indexer', 'media-worker', 'reports'].map(
-                      (name) => (
-                        <div key={name} className="rounded-[10px] border border-border bg-card p-4">
-                          <div className="font-mono text-[13px] font-semibold">{name}</div>
-                          <div className="mt-1 text-[12px] text-muted-foreground">Deployed 2h ago</div>
-                        </div>
-                      ),
-                    )}
-                  </div>
-                </div>
-              </SidebarLayout>
-            </div>
-          </TooltipProvider>
-        </LinkProvider>
-      </NavigateContext>
-    </ThemeProvider>
+    <div className="h-[320px] overflow-hidden rounded-lg border border-border">
+      <SidebarLayout
+        sidebar={<p className="text-sm">Navigation</p>}
+        mainLabel="Reading area"
+        collapsible={false}
+        topbar={<Button onClick={() => setLong(!long)}>{long ? 'Show short content' : 'Show long content'}</Button>}
+      >
+        <div className="space-y-4 p-6">
+          <h1 className="text-xl font-semibold">Keyboard scrolling</h1>
+          <p>Tab to the overflowing main, then use the arrow keys to scroll.</p>
+          {long && Array.from({ length: 20 }, (_, i) => <p key={i}>Content section {i + 1}</p>)}
+        </div>
+      </SidebarLayout>
+    </div>
   );
 }
 ```
@@ -11151,7 +11094,7 @@ import { AppSidebar } from '@gntik-ai/blocks';
 
 ### App topbar (`app-topbar`)
 
-Topbar contents for the application shell: breadcrumb and environment chip, ⌘K global search, notifications popover, theme control and user menu.
+Topbar contents for the application shell: breadcrumb and environment chip, ⌘K global search, notifications popover, theme control and user menu. Optional themeOptions limits the modes and labels offered by both cycle and segmented controls; omitted, the four localized modes remain available.
 
 - Package: `@gntik-ai/blocks` · export `AppTopbar` · group shell · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/shell/AppTopbar/block.meta.ts

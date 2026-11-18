@@ -296,10 +296,9 @@ export const en = {
   'common.unread': 'Unread:',
   'common.results': '{count, plural, one {# result} other {# results}}',
   'common.trend': 'Trend',
-  // Accessible label examples
+  // Accessible labels, skip links, landmarks and pagination
   'labelPrecedence.visible': 'Email me',
   'labelPrecedence.accessible': 'Email me about updates',
-  // Skip links and landmarks
   'skip.main': 'Skip to main content',
   'skip.content': 'Skip to content',
   'skip.canvas': 'Skip to canvas',
@@ -309,12 +308,12 @@ export const en = {
   'nav.navigation': 'Navigation',
   'nav.openNavigation': 'Open navigation',
   'nav.closeNavigation': 'Close navigation',
+  'nav.mainContent': 'Main content',
   'nav.sidebar': 'Sidebar',
   'nav.expandSidebar': 'Expand sidebar',
   'nav.collapseSidebar': 'Collapse sidebar',
   'nav.onThisPage': 'On this page',
   'nav.pageActions': 'Page actions',
-  // Breadcrumbs and pagination
   'breadcrumbs.label': 'Breadcrumb',
   'breadcrumbs.expand': '{count, plural, one {Show # more level} other {Show # more levels}}',
   'pagination.label': 'Pagination',

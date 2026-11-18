@@ -135,6 +135,7 @@ export const PREVIEW_LOADERS = {
     'flow-builder--use-flow-state-history': () =>
       import('../../../packages/blocks/src/builders/FlowBuilder/examples/UseFlowStateHistory'),
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'app-topbar--theme-options': () => import('../../../packages/blocks/src/shell/AppTopbar/examples/ThemeOptions'),
     'site-footer': () => import('../../../packages/blocks/src/marketing/SiteFooter/examples/Columns'),
     'logo-cloud': () => import('../../../packages/blocks/src/marketing/LogoCloud/examples/Row'),
     'logo-cloud--grid': () => import('../../../packages/blocks/src/marketing/LogoCloud/examples/Grid'),
@@ -279,6 +280,7 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/templates/src/shell-sidebar/examples/ContextRegion'),
     'shell-sidebar--user-menu-children': () =>
       import('../../../packages/templates/src/shell-sidebar/examples/UserMenuChildren'),
+    'shell-sidebar--keyboard-main': () => import('../../../packages/templates/src/shell-sidebar/examples/KeyboardMain'),
     'shell-sidebar--brand': () => import('../../../packages/templates/src/shell-sidebar/examples/Brand'),
     'shell-sidebar--navigation': () => import('../../../packages/templates/src/shell-sidebar/examples/Navigation'),
     'resource-detail--spanish': () => import('../../../packages/templates/src/resource-detail/examples/Spanish'),

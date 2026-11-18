@@ -134,6 +134,15 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                 </div>
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
+              {kind === 'block' && it.id === 'app-topbar' && (
+                <Viewer
+                  kind="block"
+                  id="app-topbar--theme-options"
+                  title="App topbar · Light and Dark options"
+                  file="../../../packages/blocks/src/shell/AppTopbar/examples/ThemeOptions.tsx"
+                  height={200}
+                />
+              )}
               {kind === 'block' &&
                 [
                   'sign-in-form',
@@ -166,7 +175,9 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                     tenantEmptyText. An empty workspaces array with workspaceEmptyText keeps the switcher and shows that
                     message; Create workspace appears only with onCreateWorkspace. Without workspaceEmptyText, empty or
                     null workspaces keep the Logo/brand fallback. onNavigate receives the clicked nav item after a nav
-                    click closes the mobile drawer.
+                    click closes the mobile drawer. topbar.themeOptions limits the offered themes in cycle or segmented
+                    mode. mainLabel overrides the localized name of the overflowing main; Tab reaches it and arrow keys
+                    scroll. A fitting main has no added Tab stop.
                   </p>
                   {[
                     ['tenants', 'Tenants'],
@@ -176,6 +187,7 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                     ['user-menu-children', 'UserMenuChildren'],
                     ['brand', 'Brand'],
                     ['navigation', 'Navigation'],
+                    ['keyboard-main', 'KeyboardMain'],
                   ].map(([id, example]) => (
                     <Viewer
                       key={id}
