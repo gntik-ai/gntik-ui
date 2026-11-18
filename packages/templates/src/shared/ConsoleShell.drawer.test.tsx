@@ -72,12 +72,15 @@ describe('ConsoleShell navigation clicks', () => {
         Content
       </ConsoleShell>,
     );
+    await user.click(screen.getByRole('button', { name: 'Collapse sidebar' }));
     const sidebar = screen.getByRole('complementary');
+    expect(screen.getByRole('button', { name: 'Expand sidebar' })).toBeInTheDocument();
     await user.click(within(sidebar).getByRole('link', { name: 'Projects' }));
     expect(onNavigate).toHaveBeenCalledTimes(1);
     expect(onNavigate).toHaveBeenCalledWith(expect.objectContaining({ label: 'Projects', href: '/projects' }));
     expect(screen.queryByRole('dialog')).toBeNull();
-    expect(within(sidebar).getByRole('link', { name: 'Projects' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Expand sidebar' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Collapse sidebar' })).toBeNull();
   });
 
   it('closes the drawer without an onNavigate prop', async () => {

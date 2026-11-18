@@ -280,6 +280,7 @@ export const PREVIEW_LOADERS = {
     'shell-sidebar--user-menu-children': () =>
       import('../../../packages/templates/src/shell-sidebar/examples/UserMenuChildren'),
     'shell-sidebar--brand': () => import('../../../packages/templates/src/shell-sidebar/examples/Brand'),
+    'shell-sidebar--navigation': () => import('../../../packages/templates/src/shell-sidebar/examples/Navigation'),
     'resource-detail--spanish': () => import('../../../packages/templates/src/resource-detail/examples/Spanish'),
     'resource-detail--embedded-custom-tabs': () =>
       import('../../../packages/templates/src/resource-detail/examples/embedded-custom-tabs'),
