@@ -466,7 +466,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   // Saved views.
   const groupName = (g: DataTableGroupBy<T> | undefined): string | null => (typeof g === 'string' ? g : null);
   const currentState: DataTableViewState = {
-    filterModel: filtering.model,
+    ...(filtering.model !== EMPTY_FILTER_MODEL ? { filterModel: filtering.model } : {}),
     filters,
     sort,
     hiddenColumns: hiddenList,
@@ -475,7 +475,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     groupBy: groupOverride === undefined ? groupName(groupBy) : groupOverride,
   };
   const defaultState: DataTableViewState = {
-    filterModel: defaultFilterModel ?? EMPTY_FILTER_MODEL,
+    ...(defaultFilterModel ? { filterModel: defaultFilterModel } : {}),
     filters: initialFilters,
     sort: defaultSort,
     hiddenColumns: defaultHidden,

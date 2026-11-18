@@ -165,6 +165,46 @@ it('restores typed and legacy saved views, marks edits modified and saves the mo
   expect(sameViewState({}, { filterModel: failed })).toBe(false);
 });
 
+it('preserves the legacy saved-view payload when typed filters have not been used', async () => {
+  const user = userEvent.setup();
+  const save = vi.fn();
+  render(
+    <DataTable
+      rows={rows.slice(0, 4)}
+      columns={[{ id: 'id', header: 'Id', accessor: (r) => r.id, sortable: true }]}
+      defaultViews={[{ id: 'legacy', name: 'Legacy', state: {} }]}
+      onViewsChange={save}
+    />,
+  );
+  await user.click(screen.getByRole('button', { name: 'Default view' }));
+  await user.click(await screen.findByRole('menuitemradio', { name: 'Legacy' }));
+  await user.click(screen.getByRole('button', { name: 'Legacy' }));
+  await user.click(await screen.findByRole('menuitem', { name: 'Save as new view…' }));
+  const dialog = await screen.findByRole('dialog', { name: 'Save view' });
+  await user.type(within(dialog).getByRole('textbox', { name: 'View name' }), 'Snapshot{Enter}');
+  const legacyState = {
+    filters: undefined,
+    sort: null,
+    hiddenColumns: [],
+    columnWidths: {},
+    pinnedColumns: {},
+    groupBy: null,
+  };
+  expect(save.mock.lastCall![0]).toStrictEqual([
+    { id: 'legacy', name: 'Legacy', state: {} },
+    { id: 'snapshot', name: 'Snapshot', state: legacyState },
+  ]);
+  await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+  await user.click(screen.getByRole('button', { name: 'Id' }));
+  await user.click(screen.getByRole('button', { name: 'Snapshot (modified)' }));
+  await user.click(await screen.findByRole('menuitem', { name: 'Save changes' }));
+  expect(save.mock.lastCall![0][1]).toStrictEqual({
+    id: 'snapshot',
+    name: 'Snapshot',
+    state: { ...legacyState, sort: { columnId: 'id', direction: 'ascending' } },
+  });
+});
+
 it('seeds an active saved view and restores the default model for legacy views', async () => {
   const user = userEvent.setup();
   render(
