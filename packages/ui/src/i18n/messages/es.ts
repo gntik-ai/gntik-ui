@@ -1,5 +1,6 @@
 import { tableFiltersEs } from './table-filter-messages';
 import { detailRowsEs } from './detail-row-messages';
+import { refreshExampleEs } from './refresh-example-messages';
 import { fieldStatusEs } from './field-status-messages';
 import { dateFieldEs } from './date-field-messages';
 import { schemaFormExamplesEs } from './schema-form-example-messages';
@@ -513,10 +514,12 @@ export const es: Messages = {
   'table.truncatedNote':
     '{count, plural, one {Solo se muestra el primer {formattedCount} {noun}; hay más.} other {Solo se muestran los primeros {formattedCount} {noun}; hay más.}}',
   'table.rowsPerPage': 'Filas por página',
+  'table.updating': 'Actualizando {caption}…',
   'table.pagination': 'Paginación: {noun}',
   ...tableFiltersEs,
   'table.actions': 'Acciones',
   ...detailRowsEs,
+  ...refreshExampleEs,
   'table.rowActions': 'Acciones de {label}',
   'table.emptyDescription': 'Nada coincide con los filtros actuales.',
   'filters.label': 'Filtros',

@@ -368,6 +368,25 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                     file="../../../packages/blocks/src/tables/DataTable/examples/cursor-load-more.tsx"
                     height={height}
                   />
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">
+                    Refreshing without losing rows, and empty states
+                  </h4>
+                  <p className="mb-4 text-[13px] leading-relaxed text-muted-foreground">
+                    loading="refresh" keeps the rows, selection, virtualization and footer on screen with every control
+                    enabled. The table gets aria-busy and a thin indeterminate bar on the top of the body that does not
+                    change the table height and holds still under reduced motion. With no rows it shows the skeleton
+                    rows like loading. A polite Updating status is spoken only after a page, page-size, sort, filter or
+                    view request the table emitted; a refresh the caller starts alone, such as polling, stays silent.
+                    With no rows, filtered picks noResultsState; otherwise emptyState or the default shows. The preview
+                    polls every 10 seconds, so rows stay put while it does.
+                  </p>
+                  <Viewer
+                    kind="block"
+                    id="data-table--refresh-loading"
+                    title={t('table.example.refresh.viewer')}
+                    file="../../../packages/blocks/src/tables/DataTable/examples/refresh-loading.tsx"
+                    height={height}
+                  />
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">CSV export and clipboard</h4>
                   <Viewer
                     kind="block"

@@ -68,6 +68,8 @@ export interface DataTableLabels extends PaginationFooterLabels {
   emptyTitle: string;
   emptyDescription: string;
   loading: (caption: string) => string;
+  /** Refresh status announcement and progress bar name; receives the original caller caption. */
+  updating?: (caption: string) => string;
   addRow?: string;
   deleteRow?: string;
   deleteRowTitle?: (label: string) => string;

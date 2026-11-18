@@ -118,9 +118,20 @@ interface DataTableCommonProps<T> {
   showDensityToggle?: boolean;
   showColumnMenu?: boolean;
 
-  loading?: boolean;
+  /**
+   * `true` replaces the rows with skeleton rows and hides the footer. `'refresh'` keeps the current
+   * rows, selection, virtualization and footer, sets `aria-busy` and overlays an indeterminate
+   * progress bar on the top of the body; with no rows it behaves like `true`. A refresh that follows a
+   * page, page-size, sort, filter or view request the table emitted is announced politely; one the
+   * caller starts alone (a poll) is not.
+   */
+  loading?: boolean | 'refresh';
   loadingRows?: number;
   emptyState?: ReactNode;
+  /** Shown instead of `emptyState` when there are no rows and `filtered` is true. */
+  noResultsState?: ReactNode;
+  /** The empty result comes from a search or filter, so `noResultsState` applies (default false). */
+  filtered?: boolean;
   /**
    * Groups rows under header rows (a field key or a function returning the group key). Groups keep
    * the order in which their keys first appear in `rows`; sorting applies inside each group, and

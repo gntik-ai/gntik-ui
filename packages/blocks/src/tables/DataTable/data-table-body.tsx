@@ -10,11 +10,14 @@ export type { DataTableBodyGroup } from './data-table-row';
 
 export interface DataTableBodyProps<T> extends RowContext<T> {
   rows: readonly T[];
-  loading: boolean;
+  loading: boolean | 'refresh';
   /** A separate new-row draft replaces the empty state. */
   hasNewRow?: boolean;
   loadingRows: number;
   emptyState?: ReactNode;
+  /** Replaces `emptyState` when there are no rows and `filtered` is true. */
+  noResultsState?: ReactNode;
+  filtered?: boolean;
   /** Grouped rendering: one `<tbody>` per group with a header row (replaces `rows`). */
   groups?: ReadonlyArray<DataTableBodyGroup<T>>;
   /** Keys of collapsed groups. */
@@ -71,6 +74,8 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
     loading,
     loadingRows,
     emptyState,
+    noResultsState,
+    filtered = false,
     groups,
     collapsedGroups,
     collapsibleGroups = true,
@@ -85,7 +90,8 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
     (props.details ? 1 : 0) +
     (selectionColumn ? 1 : 0) +
     (props.hasRowActions || rowActions || props.rowEdits ? 1 : 0);
-  if (loading) {
+  // 'refresh' keeps rows; with none to keep it falls back to the skeleton rows.
+  if (loading === true || (loading === 'refresh' && rows.length === 0)) {
     return (
       <TableBody>
         {Array.from({ length: loadingRows }, (_, i) => (
@@ -117,7 +123,7 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
       <TableBody>
         <TableRow className="hover:bg-transparent">
           <TableCell colSpan={span} className="py-10">
-            {emptyState ?? (
+            {(filtered ? (noResultsState ?? emptyState) : emptyState) ?? (
               <EmptyState
                 icon={Inbox}
                 size="sm"
