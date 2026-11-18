@@ -533,6 +533,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -840,6 +845,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -1472,6 +1482,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -1797,6 +1812,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -2101,6 +2121,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -2408,6 +2433,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -2826,6 +2856,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -3132,6 +3167,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -3575,6 +3615,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -3867,6 +3912,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -4234,6 +4284,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -5073,6 +5128,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -5559,6 +5619,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -5893,6 +5958,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -6506,6 +6576,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -7114,6 +7189,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -7765,6 +7845,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -8123,6 +8208,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -8471,6 +8561,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -8810,6 +8905,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -9192,6 +9292,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -9504,6 +9609,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -9839,6 +9949,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -10180,6 +10295,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -10480,6 +10600,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -10799,6 +10924,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -11113,6 +11243,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -11754,6 +11889,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -12077,6 +12217,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -12621,6 +12766,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -13228,6 +13378,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -13630,6 +13785,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -14062,6 +14222,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -14470,6 +14635,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -14777,6 +14947,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -15082,6 +15257,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -15400,6 +15580,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -15756,6 +15941,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -16148,6 +16338,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -16453,6 +16648,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -16767,6 +16967,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -17373,6 +17578,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -17720,6 +17930,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -18342,6 +18557,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -18851,6 +19071,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -19164,6 +19389,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -19611,6 +19841,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -19924,6 +20159,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -20223,6 +20463,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -20537,6 +20782,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -20826,6 +21076,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -21243,6 +21498,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -21593,6 +21853,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -22044,6 +22309,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -22345,6 +22615,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -22746,6 +23021,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -23062,6 +23342,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -23440,6 +23725,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -23990,6 +24280,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -24308,6 +24603,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -24902,6 +25202,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -25553,6 +25858,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -25942,6 +26252,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -26350,6 +26665,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -26704,6 +27024,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -27015,6 +27340,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -27417,6 +27747,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -27962,6 +28297,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -28622,6 +28962,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -29326,6 +29671,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -29724,6 +30074,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -30011,6 +30366,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -30452,6 +30812,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -30971,6 +31336,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -31412,6 +31782,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -31844,6 +32219,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -32190,6 +32570,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -32494,6 +32879,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -32812,6 +33202,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -33292,6 +33687,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -33597,6 +33997,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -33924,6 +34329,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -34275,6 +34685,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -34587,6 +35002,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -34893,6 +35313,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -35247,6 +35672,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -35607,6 +36037,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -36031,6 +36466,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -36339,6 +36779,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -36695,6 +37140,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -37012,6 +37462,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -37459,6 +37914,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -37745,6 +38205,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -38331,6 +38796,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -38720,6 +39190,11 @@
           "target": "components/i18n/messages/radio-inline-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/schema-form-example-messages.ts"
@@ -39024,6 +39499,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -39380,6 +39860,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",
@@ -39757,6 +40242,11 @@
           "path": "packages/ui/src/i18n/messages/radio-inline-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/radio-inline-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/refresh-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/refresh-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/schema-form-example-messages.ts",

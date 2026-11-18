@@ -1,5 +1,6 @@
 import { tableFiltersEs } from './table-filter-messages';
 import { detailRowsEs } from './detail-row-messages';
+import { refreshExampleEs } from './refresh-example-messages';
 import { fieldStatusEs } from './field-status-messages';
 import { dateFieldEs } from './date-field-messages';
 import { schemaFormExamplesEs } from './schema-form-example-messages';
@@ -518,6 +519,7 @@ export const es: Messages = {
   ...tableFiltersEs,
   'table.actions': 'Acciones',
   ...detailRowsEs,
+  ...refreshExampleEs,
   'table.rowActions': 'Acciones de {label}',
   'table.emptyDescription': 'Nada coincide con los filtros actuales.',
   'filters.label': 'Filtros',

@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-/** A request the table emitted counts toward the next refresh only for this long. */
-const REQUEST_WINDOW_MS = 5000;
-
 export interface RefreshStatus {
   /** Skeleton rows: `loading` true, or `'refresh'` with nothing to keep. */
   skeleton: boolean;
@@ -18,20 +15,20 @@ export interface RefreshStatus {
 export function useRefreshStatus(loading: boolean | 'refresh', hasRows: boolean): RefreshStatus {
   const skeleton = loading === true || (loading === 'refresh' && !hasRows);
   const refreshing = loading === 'refresh' && !skeleton;
-  const requestedAt = useRef<number | null>(null);
+  const requested = useRef(false);
   const refreshingNow = useRef(false);
   const [announcing, setAnnouncing] = useState(false);
 
   useEffect(() => {
     refreshingNow.current = refreshing;
-    const requested = requestedAt.current;
-    requestedAt.current = null;
-    setAnnouncing(refreshing && requested != null && Date.now() - requested <= REQUEST_WINDOW_MS);
+    const followsRequest = requested.current;
+    requested.current = false;
+    setAnnouncing(refreshing && followsRequest);
   }, [refreshing]);
 
   const markRequested = useCallback(() => {
     if (refreshingNow.current) setAnnouncing(true);
-    else requestedAt.current = Date.now();
+    else requested.current = true;
   }, []);
 
   return { skeleton, refreshing, announcing: refreshing && announcing, markRequested };

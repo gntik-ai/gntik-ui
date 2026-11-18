@@ -383,7 +383,7 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                   <Viewer
                     kind="block"
                     id="data-table--refresh-loading"
-                    title="Data table · refresh loading and empty states"
+                    title={t('table.example.refresh.viewer')}
                     file="../../../packages/blocks/src/tables/DataTable/examples/refresh-loading.tsx"
                     height={height}
                   />

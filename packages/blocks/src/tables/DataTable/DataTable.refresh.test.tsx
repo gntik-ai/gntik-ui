@@ -82,6 +82,20 @@ describe('DataTable loading="refresh"', () => {
     expect(screen.getByRole('status')).toBeEmptyDOMElement();
   });
 
+  it('still announces a refresh that arrives long after the table-emitted request', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    try {
+      const user = userEvent.setup({ advanceTimers: () => {} });
+      const { rerender } = render(<DataTable {...server} loading={false} onPageChange={() => {}} />);
+      await user.click(screen.getByRole('button', { name: 'Next page' }));
+      vi.setSystemTime(Date.now() + 5001);
+      rerender(<DataTable {...server} loading="refresh" onPageChange={() => {}} />);
+      expect(screen.getByRole('status')).toHaveTextContent('Updating deployments…');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('does not announce a refresh present on mount', () => {
     render(<DataTable {...server} loading="refresh" />);
     expect(screen.getByRole('status')).toBeEmptyDOMElement();
@@ -250,6 +264,20 @@ describe('DataTable filtered empty states', () => {
 });
 
 describe('refresh-loading example', () => {
+  it('takes every visible and accessible string from the catalog', () => {
+    render(
+      <I18nProvider locale="es">
+        <RefreshLoadingExample pollMs={0} latencyMs={0} />
+      </I18nProvider>,
+    );
+    expect(screen.getByRole('textbox', { name: 'Buscar despliegues' })).toHaveAttribute(
+      'placeholder',
+      'Buscar despliegues',
+    );
+    expect(screen.getByRole('checkbox', { name: 'Espacio de trabajo vacío' })).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: /Solicitudes/ })).toBeInTheDocument();
+  });
+
   it('keeps rows while the next page loads, announces it and shows the empty states', async () => {
     const user = userEvent.setup();
     const { container } = render(<RefreshLoadingExample pollMs={0} latencyMs={600} />);

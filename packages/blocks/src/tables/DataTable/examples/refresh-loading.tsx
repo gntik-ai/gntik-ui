@@ -1,15 +1,15 @@
-import { Checkbox, Input } from '@gntik-ai/ui';
-import { useEffect, useState } from 'react';
+import { Checkbox, Input, useI18n } from '@gntik-ai/ui';
+import { useEffect, useMemo, useState } from 'react';
 import { FirstRunEmpty, NoResultsEmpty } from '../../../feedback/EmptyStates/EmptyStates';
 import { DataTable, type DataTableQuery } from '../DataTable';
 import type { DataTableColumn, SortState } from '../data-table-utils';
 import { generateDeployments, type DeploymentRow } from '../fixtures';
 
 const catalog = generateDeployments(95);
-const columns: Array<DataTableColumn<DeploymentRow>> = [
-  { id: 'name', header: 'Name', accessor: (row) => row.name, sortable: true },
-  { id: 'region', header: 'Region', accessor: (row) => row.region, sortable: true },
-  { id: 'requests', header: 'Requests', accessor: (row) => row.requests, sortable: true, align: 'right' },
+const columnDefs: Array<Omit<DataTableColumn<DeploymentRow>, 'header'>> = [
+  { id: 'name', accessor: (row) => row.name, sortable: true },
+  { id: 'region', accessor: (row) => row.region, sortable: true },
+  { id: 'requests', accessor: (row) => row.requests, sortable: true, align: 'right' },
 ];
 interface Page {
   rows: DeploymentRow[];
@@ -21,7 +21,7 @@ function readPage(query: DataTableQuery, search: string, empty: boolean): Page {
   const matching = empty ? [] : catalog.filter((row) => row.name.includes(search.trim().toLowerCase()));
   const { sort } = query;
   if (sort) {
-    const sortColumn = columns.find((column) => column.id === sort.columnId);
+    const sortColumn = columnDefs.find((column) => column.id === sort.columnId);
     matching.sort((a, b) => {
       const left = sortColumn?.accessor?.(a);
       const right = sortColumn?.accessor?.(b);
@@ -49,6 +49,15 @@ export default function RefreshLoadingExample({
   /** Simulated response time in ms. */
   latencyMs?: number;
 }) {
+  const { t } = useI18n();
+  const columns = useMemo<Array<DataTableColumn<DeploymentRow>>>(
+    () =>
+      columnDefs.map((column) => ({
+        ...column,
+        header: t(`table.example.refresh.${column.id as 'name' | 'region' | 'requests'}` as const),
+      })),
+    [t],
+  );
   const [query, setQuery] = useState<DataTableQuery>({
     page: 1,
     pageSize: 10,
@@ -80,8 +89,8 @@ export default function RefreshLoadingExample({
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-4">
         <Input
-          aria-label="Search deployments"
-          placeholder="Search deployments"
+          aria-label={t('table.example.refresh.search')}
+          placeholder={t('table.example.refresh.search')}
           value={search}
           onChange={(event) => {
             setSearch(event.target.value);
@@ -89,10 +98,10 @@ export default function RefreshLoadingExample({
           }}
           className="max-w-xs"
         />
-        <Checkbox label="Empty workspace" checked={empty} onCheckedChange={setEmpty} />
+        <Checkbox label={t('table.example.refresh.emptyWorkspace')} checked={empty} onCheckedChange={setEmpty} />
       </div>
       <DataTable
-        caption="Deployments"
+        caption={t('table.example.refresh.caption')}
         selectionMode="none"
         columns={columns}
         getRowId={(row) => row.id}
@@ -108,7 +117,9 @@ export default function RefreshLoadingExample({
         loading={fetching ? 'refresh' : false}
         filtered={search.trim() !== ''}
         emptyState={<FirstRunEmpty onAction={() => setEmpty(false)} />}
-        noResultsState={<NoResultsEmpty query={search.trim()} entity="deployments" filterCount={0} />}
+        noResultsState={
+          <NoResultsEmpty query={search.trim()} entity={t('table.example.refresh.entity')} filterCount={0} />
+        }
       />
     </div>
   );
