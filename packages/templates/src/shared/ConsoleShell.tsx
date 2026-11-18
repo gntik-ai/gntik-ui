@@ -14,6 +14,7 @@ import {
   useNavigation,
   type BreadcrumbItem,
   type NavGroup,
+  type NavItem,
   type SidebarLayoutProps,
   type UserMenuUser,
   type Workspace,
@@ -36,6 +37,8 @@ export interface ConsoleShellProps
   navLabel?: string;
   /** Href of the current page, marks the active nav item; defaults to the NavigationProvider's active menu item. */
   currentHref?: string;
+  /** Called with the clicked nav item, from the sidebar and the mobile drawer; the drawer closes first. */
+  onNavigate?: (item: NavItem) => void;
   /** Topbar trail; defaults to the NavigationProvider's active page. `null` hides it. */
   breadcrumbs?: BreadcrumbItem[] | null;
   workspaces?: Workspace[] | null;
@@ -52,13 +55,14 @@ export interface ConsoleShellProps
  * Templates fill it with a Page; products swap the nav, workspaces, user, usage meter, help
  * link and user-menu items. Inside a NavigationProvider, an omitted `nav`, `currentHref` or
  * `breadcrumbs` comes from the route tree; explicit props always win, and without a provider the
- * defaults are unchanged.
+ * defaults are unchanged. A nav click closes the mobile drawer and then calls `onNavigate`.
  */
 export function ConsoleShell({
   children,
   nav: navProp,
   navLabel,
   currentHref: currentHrefProp,
+  onNavigate,
   breadcrumbs: breadcrumbsProp,
   workspaces,
   currentWorkspaceId,
@@ -106,8 +110,17 @@ export function ConsoleShell({
             {...contextProps}
           />
         )}
-        sidebar={({ collapsed }) => (
-          <AppSidebarNav groups={nav} label={navLabel} currentHref={currentHref} collapsed={collapsed} />
+        sidebar={({ collapsed, closeDrawer }) => (
+          <AppSidebarNav
+            groups={nav}
+            label={navLabel}
+            currentHref={currentHref}
+            collapsed={collapsed}
+            onNavigate={(item) => {
+              closeDrawer();
+              onNavigate?.(item);
+            }}
+          />
         )}
         sidebarFooter={({ collapsed }) => (
           <AppSidebarFooter

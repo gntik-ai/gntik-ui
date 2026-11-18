@@ -13035,7 +13035,7 @@ export default function Route() {
 
 ### Sidebar shell (`shell-sidebar`)
 
-Console starter: app sidebar, topbar and an empty Page. ConsoleShell shares optional tenant selection (tenantPlaceholder), empty workspace menus (workspaceEmptyText), navigation naming (navLabel), a named busy region, account-menu content and a brand slot. userMenuShowTheme=false hides the footer Theme item; a defined topbar.user overrides only the topbar account, with null hiding it.
+Console starter: app sidebar, topbar and an empty Page. ConsoleShell shares optional tenant selection (tenantPlaceholder), empty workspace menus (workspaceEmptyText), navigation naming (navLabel), a named busy region, account-menu content and a brand slot. userMenuShowTheme=false hides the footer Theme item; a defined topbar.user overrides only the topbar account, with null hiding it. A nav click closes the mobile drawer and calls the optional onNavigate with the clicked item.
 
 - Package: `@gntik-ai/templates` · export `ShellSidebarPage` · group Shells · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/shell-sidebar/template.meta.ts
