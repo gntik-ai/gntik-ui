@@ -52,6 +52,21 @@ describe('FilterBar queryDebounceMs', () => {
     expect(onQueryChange).toHaveBeenCalledTimes(1);
   });
 
+  it('offers Clear all while a query is pending even without filter chips', () => {
+    vi.useFakeTimers();
+    const onQueryChange = vi.fn();
+    render(<FilterBar queryDebounceMs={250} defaultFilters={[]} onQueryChange={onQueryChange} />);
+    expect(screen.queryByRole('button', { name: 'Clear all' })).toBeNull();
+    type('ru');
+    wait(100);
+    fireEvent.click(screen.getByRole('button', { name: 'Clear all' }));
+    expect(onQueryChange).toHaveBeenCalledTimes(1);
+    expect(onQueryChange).toHaveBeenCalledWith('');
+    expect(box()).toHaveValue('');
+    wait(500);
+    expect(onQueryChange).toHaveBeenCalledTimes(1);
+  });
+
   it('clears at once with Escape', () => {
     vi.useFakeTimers();
     const onQueryChange = vi.fn();

@@ -138,7 +138,7 @@ export function FilterBar({
     search.replace('');
   };
   const labelOf = (id: string) => fields.find((f) => f.id === id)?.label ?? id;
-  const hasAny = filters.length > 0 || query !== '';
+  const hasAny = filters.length > 0 || search.text !== '';
 
   return (
     <div
