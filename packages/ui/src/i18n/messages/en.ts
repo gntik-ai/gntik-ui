@@ -13,6 +13,7 @@ import { switchEn } from './switch-messages';
 import { qrCodeEn } from './qr-code-messages';
 import { logViewerEn } from './log-viewer-messages';
 import { commandPaletteEn } from './command-palette-messages';
+import { sliderMarksEn } from './slider-marks-messages';
 import { sliderInputEn } from './slider-input-messages';
 import { formActionsEn } from './form-action-messages';
 import { dateRangeExamplesEn } from './date-range-example-messages';
@@ -50,6 +51,7 @@ export const en = {
   ...schemaFormEn,
   ...textareaEn,
   ...sliderInputEn,
+  ...sliderMarksEn,
   ...switchEn,
   ...qrCodeEn,
   ...logViewerEn,
