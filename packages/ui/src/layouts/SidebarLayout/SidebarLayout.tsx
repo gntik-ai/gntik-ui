@@ -228,11 +228,7 @@ export function SidebarLayout({
             id={mainId}
             tabIndex={mainOverflows ? 0 : -1}
             aria-label={mainOverflows ? mainLabel : undefined}
-            className={cn(
-              s.main(),
-              mainOverflows &&
-                'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
-            )}
+            className={cn(s.main(), mainOverflows ? 'focus-ring-inset' : 'focus:outline-none')}
           >
             {children}
           </main>

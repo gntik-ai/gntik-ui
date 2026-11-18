@@ -16,6 +16,9 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     await page.getByRole('button', { name: /^Theme:/ }).focus();
     await page.keyboard.press('Tab');
     await expect(main).toBeFocused();
+    await expect(main).toHaveCSS('outline-style', 'solid');
+    await expect(main).toHaveCSS('outline-width', '2px');
+    await expect(main).toHaveCSS('outline-offset', '-2px');
     await page.keyboard.press('ArrowDown');
     await expect.poll(() => main.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
 
