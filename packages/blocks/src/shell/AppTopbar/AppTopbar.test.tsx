@@ -38,52 +38,53 @@ describe('AppTopbar', () => {
     );
     expect(container.querySelectorAll('button')).toHaveLength(0);
   });
-});
 
-it('cycles only through the supplied theme options', async () => {
-  const user = userEvent.setup();
-  render(
-    <ThemeProvider storageKey={null} defaultMode="dark">
-      <AppTopbar themeOptions={THEME_OPTIONS.slice(0, 2)} />
-    </ThemeProvider>,
-  );
-  await user.click(screen.getByRole('button', { name: 'Theme: Dark. Switch to Light' }));
-  expect(screen.getByRole('button', { name: 'Theme: Light. Switch to Dark' })).toBeInTheDocument();
-  expect(document.documentElement).not.toHaveClass('dark', 'high_contrast');
-  await user.click(screen.getByRole('button', { name: 'Theme: Light. Switch to Dark' }));
-  expect(document.documentElement).toHaveClass('dark');
-});
-
-it('renders exactly the supplied segmented theme options', () => {
-  render(<AppTopbar theme="segmented" themeOptions={THEME_OPTIONS.slice(0, 2)} />);
-  const group = screen.getByRole('group', { name: 'Theme' });
-  expect(within(group).getAllByRole('button')).toHaveLength(2);
-  expect(within(group).getByRole('button', { name: 'Light' })).toBeInTheDocument();
-  expect(within(group).getByRole('button', { name: 'Dark' })).toBeInTheDocument();
-});
-
-it.each([
-  ['en', ['Dark', 'High contrast', 'System', 'Light', 'Dark']],
-  ['es', ['Oscuro', 'Alto contraste', 'Sistema', 'Claro', 'Oscuro']],
-])('keeps the four localized default modes (%s)', async (locale, labels) => {
-  const user = userEvent.setup();
-  render(
-    <I18nProvider locale={locale}>
+  it('cycles only through the supplied theme options', async () => {
+    const user = userEvent.setup();
+    render(
       <ThemeProvider storageKey={null} defaultMode="dark">
-        <AppTopbar />
-      </ThemeProvider>
-    </I18nProvider>,
-  );
-  for (let i = 0; i < 4; i++) {
-    const label =
-      locale === 'es'
-        ? `Tema: ${labels[i]}. Cambiar a ${labels[i + 1]}`
-        : `Theme: ${labels[i]}. Switch to ${labels[i + 1]}`;
-    await user.click(screen.getByRole('button', { name: label }));
-  }
-});
+        <AppTopbar themeOptions={THEME_OPTIONS.slice(0, 2)} />
+      </ThemeProvider>,
+    );
+    await user.click(screen.getByRole('button', { name: 'Theme: Dark. Switch to Light' }));
+    expect(screen.getByRole('button', { name: 'Theme: Light. Switch to Dark' })).toBeInTheDocument();
+    expect(document.documentElement).not.toHaveClass('dark');
+    expect(document.documentElement).not.toHaveClass('high_contrast');
+    await user.click(screen.getByRole('button', { name: 'Theme: Light. Switch to Dark' }));
+    expect(document.documentElement).toHaveClass('dark');
+  });
 
-it('keeps all four default segmented toggles', () => {
-  render(<AppTopbar theme="segmented" />);
-  expect(within(screen.getByRole('group', { name: 'Theme' })).getAllByRole('button')).toHaveLength(4);
+  it('renders exactly the supplied segmented theme options', () => {
+    render(<AppTopbar theme="segmented" themeOptions={THEME_OPTIONS.slice(0, 2)} />);
+    const group = screen.getByRole('group', { name: 'Theme' });
+    expect(within(group).getAllByRole('button')).toHaveLength(2);
+    expect(within(group).getByRole('button', { name: 'Light' })).toBeInTheDocument();
+    expect(within(group).getByRole('button', { name: 'Dark' })).toBeInTheDocument();
+  });
+
+  it.each([
+    ['en', ['Dark', 'High contrast', 'System', 'Light', 'Dark']],
+    ['es', ['Oscuro', 'Alto contraste', 'Sistema', 'Claro', 'Oscuro']],
+  ])('keeps the four localized default modes (%s)', async (locale, labels) => {
+    const user = userEvent.setup();
+    render(
+      <I18nProvider locale={locale}>
+        <ThemeProvider storageKey={null} defaultMode="dark">
+          <AppTopbar />
+        </ThemeProvider>
+      </I18nProvider>,
+    );
+    for (let i = 0; i < 4; i++) {
+      const label =
+        locale === 'es'
+          ? `Tema: ${labels[i]}. Cambiar a ${labels[i + 1]}`
+          : `Theme: ${labels[i]}. Switch to ${labels[i + 1]}`;
+      await user.click(screen.getByRole('button', { name: label }));
+    }
+  });
+
+  it('keeps all four default segmented toggles', () => {
+    render(<AppTopbar theme="segmented" />);
+    expect(within(screen.getByRole('group', { name: 'Theme' })).getAllByRole('button')).toHaveLength(4);
+  });
 });

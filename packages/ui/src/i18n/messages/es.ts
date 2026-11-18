@@ -1,3 +1,4 @@
+import { layoutEs } from './layout-messages';
 import { tableFiltersEs } from './table-filter-messages';
 import { detailRowsEs } from './detail-row-messages';
 import { refreshExampleEs } from './refresh-example-messages';
@@ -334,21 +335,7 @@ export const es: Messages = {
   // Accessible label examples
   'labelPrecedence.visible': 'Enviarme correos',
   'labelPrecedence.accessible': 'Enviarme correos sobre novedades',
-  'skip.main': 'Saltar al contenido principal',
-  'skip.content': 'Saltar al contenido',
-  'skip.canvas': 'Saltar al lienzo',
-  'skip.document': 'Saltar al documento',
-  'skip.signIn': 'Saltar al formulario de acceso',
-  'skip.step': 'Saltar al paso',
-  'nav.navigation': 'Navegación',
-  'nav.openNavigation': 'Abrir navegación',
-  'nav.closeNavigation': 'Cerrar navegación',
-  'nav.mainContent': 'Contenido principal',
-  'nav.sidebar': 'Barra lateral',
-  'nav.expandSidebar': 'Expandir barra lateral',
-  'nav.collapseSidebar': 'Contraer barra lateral',
-  'nav.onThisPage': 'En esta página',
-  'nav.pageActions': 'Acciones de la página',
+  ...layoutEs,
   'breadcrumbs.label': 'Ruta de navegación',
   'breadcrumbs.expand': '{count, plural, one {Mostrar # nivel más} other {Mostrar # niveles más}}',
   'pagination.label': 'Paginación',

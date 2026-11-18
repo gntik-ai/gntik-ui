@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '../../../components/Button';
 import { SidebarLayout } from '../SidebarLayout';
 
-export default function ScrollableMain() {
+export default function SidebarLayoutScrollableMain() {
   const [long, setLong] = useState(true);
   return (
     <div className="h-[320px] overflow-hidden rounded-lg border border-border">

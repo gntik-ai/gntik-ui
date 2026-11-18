@@ -162,11 +162,16 @@ export function SidebarLayout({
           resize.observe(child);
         }
       }
+      // Child sizes are handled by ResizeObserver; only root replacements and bare text need mutations.
+      mutations.disconnect();
+      mutations.observe(main, { childList: true });
+      for (const child of main.childNodes) {
+        if (child.nodeType === Node.TEXT_NODE) mutations.observe(child, { characterData: true });
+      }
       check();
     };
-    observeContent();
     const mutations = new MutationObserver(observeContent);
-    mutations.observe(main, { childList: true, subtree: true, characterData: true });
+    observeContent();
     return () => {
       resize.disconnect();
       mutations.disconnect();

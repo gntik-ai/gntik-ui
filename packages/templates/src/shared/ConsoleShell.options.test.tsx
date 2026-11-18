@@ -115,42 +115,43 @@ describe('ConsoleShell main and topbar options', () => {
       vi.restoreAllMocks();
     }
   });
-});
 
-it.each([undefined, <span key="brand">Console identity</span>])(
-  'forwards two theme options through the topbar (brand: %s)',
-  async (brand) => {
+  it.each([undefined, <span key="brand">Console identity</span>])(
+    'forwards two theme options through the topbar (brand: %s)',
+    async (brand) => {
+      const user = userEvent.setup();
+      render(
+        <ThemeProvider storageKey={null} defaultMode="dark">
+          <ConsoleShell brand={brand} topbar={{ themeOptions: THEME_OPTIONS.slice(0, 2) }}>
+            Content
+          </ConsoleShell>
+        </ThemeProvider>,
+      );
+      const banner = within(screen.getByRole('banner'));
+      await user.click(banner.getByRole('button', { name: 'Theme: Dark. Switch to Light' }));
+      expect(document.documentElement).not.toHaveClass('dark');
+      expect(document.documentElement).not.toHaveClass('high_contrast');
+      await user.click(banner.getByRole('button', { name: 'Theme: Light. Switch to Dark' }));
+      expect(document.documentElement).toHaveClass('dark');
+    },
+  );
+
+  it('keeps the four localized default theme modes through ConsoleShell', async () => {
     const user = userEvent.setup();
     render(
-      <ThemeProvider storageKey={null} defaultMode="dark">
-        <ConsoleShell brand={brand} topbar={{ themeOptions: THEME_OPTIONS.slice(0, 2) }}>
-          Content
-        </ConsoleShell>
-      </ThemeProvider>,
+      <I18nProvider locale="es">
+        <ThemeProvider storageKey={null} defaultMode="dark">
+          <ConsoleShell>Content</ConsoleShell>
+        </ThemeProvider>
+      </I18nProvider>,
     );
-    const banner = within(screen.getByRole('banner'));
-    await user.click(banner.getByRole('button', { name: 'Theme: Dark. Switch to Light' }));
-    expect(document.documentElement).not.toHaveClass('dark', 'high_contrast');
-    await user.click(banner.getByRole('button', { name: 'Theme: Light. Switch to Dark' }));
-    expect(document.documentElement).toHaveClass('dark');
-  },
-);
-
-it('keeps the four localized default theme modes through ConsoleShell', async () => {
-  const user = userEvent.setup();
-  render(
-    <I18nProvider locale="es">
-      <ThemeProvider storageKey={null} defaultMode="dark">
-        <ConsoleShell>Content</ConsoleShell>
-      </ThemeProvider>
-    </I18nProvider>,
-  );
-  for (const name of [
-    'Tema: Oscuro. Cambiar a Alto contraste',
-    'Tema: Alto contraste. Cambiar a Sistema',
-    'Tema: Sistema. Cambiar a Claro',
-    'Tema: Claro. Cambiar a Oscuro',
-  ]) {
-    await user.click(within(screen.getByRole('banner')).getByRole('button', { name }));
-  }
+    for (const name of [
+      'Tema: Oscuro. Cambiar a Alto contraste',
+      'Tema: Alto contraste. Cambiar a Sistema',
+      'Tema: Sistema. Cambiar a Claro',
+      'Tema: Claro. Cambiar a Oscuro',
+    ]) {
+      await user.click(within(screen.getByRole('banner')).getByRole('button', { name }));
+    }
+  });
 });

@@ -1,0 +1,36 @@
+/** Skip-link and layout landmark labels. */
+export const layoutEn = {
+  'skip.main': 'Skip to main content',
+  'skip.content': 'Skip to content',
+  'skip.canvas': 'Skip to canvas',
+  'skip.document': 'Skip to document',
+  'skip.signIn': 'Skip to sign-in form',
+  'skip.step': 'Skip to step',
+  'nav.navigation': 'Navigation',
+  'nav.openNavigation': 'Open navigation',
+  'nav.closeNavigation': 'Close navigation',
+  'nav.mainContent': 'Main content',
+  'nav.sidebar': 'Sidebar',
+  'nav.expandSidebar': 'Expand sidebar',
+  'nav.collapseSidebar': 'Collapse sidebar',
+  'nav.onThisPage': 'On this page',
+  'nav.pageActions': 'Page actions',
+} as const;
+
+export const layoutEs = {
+  'skip.main': 'Saltar al contenido principal',
+  'skip.content': 'Saltar al contenido',
+  'skip.canvas': 'Saltar al lienzo',
+  'skip.document': 'Saltar al documento',
+  'skip.signIn': 'Saltar al formulario de acceso',
+  'skip.step': 'Saltar al paso',
+  'nav.navigation': 'Navegación',
+  'nav.openNavigation': 'Abrir navegación',
+  'nav.closeNavigation': 'Cerrar navegación',
+  'nav.mainContent': 'Contenido principal',
+  'nav.sidebar': 'Barra lateral',
+  'nav.expandSidebar': 'Expandir barra lateral',
+  'nav.collapseSidebar': 'Contraer barra lateral',
+  'nav.onThisPage': 'En esta página',
+  'nav.pageActions': 'Acciones de la página',
+} satisfies Record<keyof typeof layoutEn, string>;

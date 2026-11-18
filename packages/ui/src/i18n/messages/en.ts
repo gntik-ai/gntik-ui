@@ -1,3 +1,4 @@
+import { layoutEn } from './layout-messages';
 import { tableFiltersEn } from './table-filter-messages';
 import { detailRowsEn } from './detail-row-messages';
 import { refreshExampleEn } from './refresh-example-messages';
@@ -296,24 +297,11 @@ export const en = {
   'common.unread': 'Unread:',
   'common.results': '{count, plural, one {# result} other {# results}}',
   'common.trend': 'Trend',
-  // Accessible labels, skip links, landmarks and pagination
+  // Accessible label examples
   'labelPrecedence.visible': 'Email me',
   'labelPrecedence.accessible': 'Email me about updates',
-  'skip.main': 'Skip to main content',
-  'skip.content': 'Skip to content',
-  'skip.canvas': 'Skip to canvas',
-  'skip.document': 'Skip to document',
-  'skip.signIn': 'Skip to sign-in form',
-  'skip.step': 'Skip to step',
-  'nav.navigation': 'Navigation',
-  'nav.openNavigation': 'Open navigation',
-  'nav.closeNavigation': 'Close navigation',
-  'nav.mainContent': 'Main content',
-  'nav.sidebar': 'Sidebar',
-  'nav.expandSidebar': 'Expand sidebar',
-  'nav.collapseSidebar': 'Collapse sidebar',
-  'nav.onThisPage': 'On this page',
-  'nav.pageActions': 'Page actions',
+  ...layoutEn,
+  // Breadcrumbs and pagination
   'breadcrumbs.label': 'Breadcrumb',
   'breadcrumbs.expand': '{count, plural, one {Show # more level} other {Show # more levels}}',
   'pagination.label': 'Pagination',
