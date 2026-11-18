@@ -1,5 +1,7 @@
 import { Bookmark, ChevronDown } from '@gntik-ai/icons';
 import {
+  type QueryGroup,
+  type QueryNode,
   Button,
   Dialog,
   DialogBody,
@@ -28,6 +30,7 @@ import type { SortState } from './data-table-utils';
 export interface DataTableViewState {
   /** Opaque filter state of the page's toolbar (see the table's `filters` / `onFiltersChange`). */
   filters?: unknown;
+  filterModel?: QueryGroup;
   sort?: SortState | null;
   hiddenColumns?: readonly string[];
   columnWidths?: ColumnWidths;
@@ -42,9 +45,17 @@ export interface DataTableView {
   state: DataTableViewState;
 }
 
+// Query ids identify editor nodes; they do not change a view's filter meaning.
+function normalizedFilter(node: QueryNode): unknown {
+  return node.type === 'condition'
+    ? { type: node.type, field: node.field, operator: node.operator, value: node.value ?? null }
+    : { type: node.type, combinator: node.combinator, children: node.children.map(normalizedFilter) };
+}
+
 const norm = (s: DataTableViewState) =>
   JSON.stringify({
     filters: s.filters ?? null,
+    filterModel: s.filterModel?.children.length ? normalizedFilter(s.filterModel) : null,
     sort: s.sort ?? null,
     hiddenColumns: [...(s.hiddenColumns ?? [])].sort(),
     columnWidths: Object.fromEntries(Object.entries(s.columnWidths ?? {}).sort(([a], [b]) => a.localeCompare(b))),

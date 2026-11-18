@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'beta',
   description:
-    'Visual filter editor: nested AND/OR groups of field / operator / value conditions. Typed fields (text, number, enum, date, boolean) offer their operators and value editor (Input, NumberInput, Select / MultiSelect, DatePicker, ranges for "between"); add and remove conditions and groups up to `maxDepth`. The value is a serialisable tree; `queryToString(tree)` makes it human-readable and `evaluateQuery(tree, record)` tests a record. Inverted numeric or date "between" ranges show an inline error and are ignored by evaluation. Before sending a query to a backend, check each condition with `isConditionComplete` and `isConditionValid`; validation preserves the entered values.',
+    'Visual filter editor: nested AND/OR groups of field / operator / value conditions. Typed fields (text, number, enum, date, boolean) offer their operators and value editor (Input, NumberInput, Select / MultiSelect, DatePicker, ranges for "between"); add and remove conditions and groups up to `maxDepth`. The public newQueryId() helper creates node ids in event handlers (see the DataTable header-filters example). The value is a serialisable tree; `queryToString(tree)` makes it human-readable and `evaluateQuery(tree, record)` tests a record. Inverted numeric or date "between" ranges show an inline error and are ignored by evaluation. Before sending a query to a backend, check each condition with `isConditionComplete` and `isConditionValid`; validation preserves the entered values.',
   primitive: 'Select, MultiSelect, Input, NumberInput, DatePicker, ToggleGroup, Button',
   pattern: 'nested groups of form controls',
   keyboard: [

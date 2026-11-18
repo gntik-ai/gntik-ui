@@ -1,3 +1,6 @@
+import type { QueryCondition } from '@gntik-ai/ui';
+import { HeaderFilter } from './header-filter';
+import type { DataTableFilterValue } from './data-table-utils';
 import { ArrowDown, ArrowUp, ChevronsUpDown } from '@gntik-ai/icons';
 import { cn, InfoTip, nextSortDirection, TableHead, tableVariants, type SortDirection } from '@gntik-ai/ui';
 import { stickyTint, type CellLayout } from './column-sizing';
@@ -8,6 +11,8 @@ import { ColumnResizeHandle } from './resize-handle';
 export interface DataTableHeadCellProps<T> {
   labels?: Partial<DataTableLabels>;
   column: DataTableColumn<T>;
+  filterCondition?: QueryCondition;
+  onFilterApply?: (value: DataTableFilterValue | null) => void;
   sortDirection: SortDirection;
   onSortChange: (direction: Exclude<SortDirection, 'none'>) => void;
   layout?: CellLayout;
@@ -21,6 +26,8 @@ export interface DataTableHeadCellProps<T> {
  */
 export function DataTableHeadCell<T>({
   column,
+  filterCondition,
+  onFilterApply,
   sortDirection,
   onSortChange,
   layout,
@@ -34,7 +41,7 @@ export function DataTableHeadCell<T>({
   const pinnedClass = layout?.pinned
     ? cn(layout.className, 'z-sticky-pinned', stickyTint(layout, { head: true }), 'bg-card')
     : undefined;
-  if (!resize && !hasDescription) {
+  if (!resize && !hasDescription && !column.filter) {
     return (
       <TableHead
         aria-label={headerName}
@@ -53,7 +60,8 @@ export function DataTableHeadCell<T>({
   const v = tableVariants({ align: align ?? 'left', active: sortDirection !== 'none' });
   const SortIcon =
     sortDirection === 'ascending' ? ArrowUp : sortDirection === 'descending' ? ArrowDown : ChevronsUpDown;
-  const HeaderContent = hasDescription ? 'div' : 'span';
+  const hasControls = hasDescription || column.filter != null;
+  const HeaderContent = hasControls ? 'div' : 'span';
   const resizeHandle = resize && (
     <ColumnResizeHandle
       labels={labels}
@@ -72,18 +80,19 @@ export function DataTableHeadCell<T>({
       style={layout?.style}
       aria-sort={column.sortable ? sortDirection : undefined}
       data-column-id={column.id}
+      data-filtered={filterCondition ? '' : undefined}
     >
       <HeaderContent
         className={cn(
-          hasDescription ? 'flex min-w-0 items-center gap-1 pe-2' : 'block min-w-0 truncate pe-2',
-          align === 'right' && (hasDescription ? 'justify-end' : 'text-end'),
-          align === 'center' && (hasDescription ? 'justify-center' : 'text-center'),
+          hasControls ? 'flex min-w-0 items-center gap-1 pe-2' : 'block min-w-0 truncate pe-2',
+          align === 'right' && (hasControls ? 'justify-end' : 'text-end'),
+          align === 'center' && (hasControls ? 'justify-center' : 'text-center'),
         )}
       >
         {column.sortable ? (
           <button
             type="button"
-            className={cn(v.sortButton(), 'max-w-full', hasDescription && 'min-w-0')}
+            className={cn(v.sortButton(), 'max-w-full', hasControls && 'min-w-0')}
             onClick={() => onSortChange(nextSortDirection(sortDirection))}
           >
             <span className="truncate">{label}</span>
@@ -99,9 +108,18 @@ export function DataTableHeadCell<T>({
             {column.description}
           </InfoTip>
         )}
-        {hasDescription && resizeHandle}
+        {column.filter && onFilterApply && (
+          <HeaderFilter
+            header={column.header}
+            filter={column.filter}
+            condition={filterCondition}
+            onApply={onFilterApply}
+            labels={labels}
+          />
+        )}
+        {hasControls && resizeHandle}
       </HeaderContent>
-      {!hasDescription && resizeHandle}
+      {!hasControls && resizeHandle}
     </TableHead>
   );
 }
