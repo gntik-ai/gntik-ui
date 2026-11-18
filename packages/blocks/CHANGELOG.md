@@ -1,5 +1,23 @@
 # @gntik-ai/blocks
 
+## 0.15.0
+
+### Minor Changes
+
+- 9aa4cba: Allow custom topbar theme options and make overflowing sidebar main content keyboard-focusable with a localized or custom label.
+- d03ac68: Add a DataTable quick filter (quickFilter, defaultQuickFilter, onQuickFilterChange, showQuickFilter, quickFilterDebounceMs and a per-column quickFilter setting) that matches typed terms across columns, reports the term in server mode, and has a built-in debounced and collapsible search field; add opt-in queryDebounceMs on FilterBar and searchDebounceMs on PageToolbar; the audit-log template now searches through the quick filter and exports exactly the rows it shows; add the table.quickFilter and table.quickFilterResults messages in English and Spanish.
+- d730d85: Add DataTable loading="refresh" to keep rows, footer and controls during a refetch with an indeterminate progress bar, aria-busy and a polite Updating status after table requests, plus filtered and noResultsState to tell no results from an empty list; add the table.updating message in English and Spanish.
+- a617fae: Add typed DataTable header filters, saved filter models and optional query filterModel with a new filter cause; export newQueryId and localize filter controls. Preserve saved-view payloads for tables without typed filters.
+
+### Patch Changes
+
+- e552fc6: ConsoleShell closes the mobile navigation drawer when a nav item is clicked and accepts an optional onNavigate callback that receives the clicked item.
+- Updated dependencies [9aa4cba]
+- Updated dependencies [d03ac68]
+- Updated dependencies [d730d85]
+- Updated dependencies [a617fae]
+  - @gntik-ai/ui@0.15.0
+
 ## 0.14.0
 
 ### Minor Changes
