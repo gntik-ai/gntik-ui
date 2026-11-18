@@ -28,7 +28,7 @@ export interface ConsoleShellProps
       AppSidebarFooterProps,
       'usage' | 'helpHref' | 'helpLabel' | 'userMenuItems' | 'userMenuShowTheme' | 'userMenuChildren' | 'onSignOut'
     >,
-    Pick<SidebarLayoutProps, 'sidebarLabel' | 'collapseMode'> {
+    Pick<SidebarLayoutProps, 'sidebarLabel' | 'mainLabel' | 'collapseMode'> {
   /** Page content (usually a <Page>). */
   children: ReactNode;
   /** Sidebar navigation; defaults to the NavigationProvider's groups, else the AppSidebar sample groups. */
@@ -80,6 +80,7 @@ export function ConsoleShell({
   topbar,
   storageKey,
   sidebarLabel,
+  mainLabel,
   collapseMode,
   ...contextProps
 }: ConsoleShellProps) {
@@ -98,6 +99,7 @@ export function ConsoleShell({
         fullScreen
         storageKey={storageKey}
         sidebarLabel={sidebarLabel}
+        mainLabel={mainLabel}
         collapseMode={collapseMode}
         sidebarHeader={({ collapsed }) => (
           <AppSidebarHeader

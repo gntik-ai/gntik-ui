@@ -16,7 +16,7 @@ export const sidebarLayoutVariants = tv({
     topbarContent: 'flex min-w-0 flex-1 items-center gap-2 lg:gap-3',
     menuButton: 'lg:hidden',
     collapseButton: 'hidden lg:inline-flex',
-    main: 'min-h-0 flex-1 overflow-y-auto focus:outline-none',
+    main: 'min-h-0 flex-1 overflow-y-auto',
     drawer: 'bg-chrome',
     drawerHeader: 'px-3',
     drawerBody: 'flex flex-col gap-3 px-3 py-3',

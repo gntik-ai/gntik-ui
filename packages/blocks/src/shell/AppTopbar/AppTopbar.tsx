@@ -7,6 +7,7 @@ import {
   cn,
   type BreadcrumbItem,
   type NotificationItem,
+  type ThemeOption,
   type UserMenuEntry,
   type UserMenuUser,
 } from '@gntik-ai/ui';
@@ -31,6 +32,8 @@ export interface AppTopbarProps {
   onMarkAllRead?: () => void;
   /** Theme control: a one-button cycle, the segmented switcher, or none. */
   theme?: 'cycle' | 'segmented' | null;
+  /** Theme modes offered, in order; defaults to the four localized modes. */
+  themeOptions?: ThemeOption[];
   /** Signed-in user; `null` hides the user menu. */
   user?: UserMenuUser | null;
   userMenuItems?: UserMenuEntry[];
@@ -52,6 +55,7 @@ export function AppTopbar({
   onNotificationSelect,
   onMarkAllRead,
   theme = 'cycle',
+  themeOptions,
   user = appSidebarUser,
   userMenuItems,
   onSignOut,
@@ -74,8 +78,8 @@ export function AppTopbar({
           onMarkAllRead={onMarkAllRead}
         />
       )}
-      {theme === 'cycle' && <ThemeCycleButton />}
-      {theme === 'segmented' && <ThemeSwitcher size="sm" className="hidden md:inline-flex" />}
+      {theme === 'cycle' && <ThemeCycleButton options={themeOptions} />}
+      {theme === 'segmented' && <ThemeSwitcher options={themeOptions} size="sm" className="hidden md:inline-flex" />}
       {user && <UserMenu user={user} items={userMenuItems} onSignOut={onSignOut} />}
     </div>
   );

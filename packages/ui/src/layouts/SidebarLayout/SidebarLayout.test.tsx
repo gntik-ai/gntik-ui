@@ -1,5 +1,8 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { renderToString } from 'react-dom/server';
+import { I18nProvider } from '../../i18n/I18nProvider';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { SidebarLayout } from './SidebarLayout';
 import SidebarLayoutApp from './examples/SidebarLayoutApp';
@@ -97,4 +100,142 @@ describe('SidebarLayout', () => {
     await screen.findByRole('dialog');
     await expectNoAxeViolations();
   });
+});
+
+describe('SidebarLayout scrollable main', () => {
+  let notifyResize: () => void;
+  let contentHeight: number;
+
+  beforeEach(() => {
+    contentHeight = 300;
+    notifyResize = () => {};
+    vi.spyOn(HTMLElement.prototype, 'scrollHeight', 'get').mockImplementation(function (this: HTMLElement) {
+      return this.tagName === 'MAIN' ? contentHeight : 0;
+    });
+    vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockImplementation(function (this: HTMLElement) {
+      return this.tagName === 'MAIN' ? 100 : 0;
+    });
+    vi.stubGlobal(
+      'ResizeObserver',
+      class {
+        constructor(callback: ResizeObserverCallback) {
+          notifyResize = () => callback([], this as unknown as ResizeObserver);
+        }
+        observe() {
+          notifyResize();
+        }
+        unobserve() {}
+        disconnect() {}
+      },
+    );
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
+  it('makes an overflowing main named and reachable with Tab, then removes the stop when it fits', async () => {
+    const user = userEvent.setup();
+    render(
+      <SidebarLayout sidebar={null} collapsible={false}>
+        <p>Static content</p>
+      </SidebarLayout>,
+    );
+    const main = screen.getByRole('main');
+    await waitFor(() => expect(main).toHaveAttribute('tabindex', '0'));
+    expect(main).toHaveAccessibleName('Main content');
+    screen.getByRole('button', { name: 'Open navigation' }).focus();
+    await user.tab();
+    expect(main).toHaveFocus();
+    contentHeight = 101;
+    act(() => notifyResize());
+    await waitFor(() => expect(main).toHaveAttribute('tabindex', '-1'));
+    expect(main).not.toHaveAttribute('aria-label');
+  });
+
+  it.each([
+    ['en', undefined, 'Main content'],
+    ['es', undefined, 'Contenido principal'],
+    ['en', 'Reading area', 'Reading area'],
+    ['es', 'Reading area', 'Reading area'],
+  ])('uses the catalog name or an explicit mainLabel (%s, %s)', async (locale, label, expected) => {
+    render(
+      <I18nProvider locale={locale}>
+        <SidebarLayout sidebar={null} mainLabel={label}>
+          <p>Content</p>
+        </SidebarLayout>
+      </I18nProvider>,
+    );
+    await waitFor(() => expect(screen.getByRole('main')).toHaveAccessibleName(expected));
+  });
+
+  it('keeps a fitting main out of the Tab order while the skip link still focuses it', async () => {
+    contentHeight = 100;
+    const user = userEvent.setup();
+    render(
+      <SidebarLayout sidebar={null} collapsible={false}>
+        <p>Content</p>
+      </SidebarLayout>,
+    );
+    const main = screen.getByRole('main');
+    expect(main).toHaveAttribute('tabindex', '-1');
+    expect(main).not.toHaveAttribute('aria-label');
+    await user.tab();
+    expect(screen.getByRole('link', { name: 'Skip to main content' })).toHaveFocus();
+    await user.keyboard('{Enter}');
+    expect(main).toHaveFocus();
+    screen.getByRole('button', { name: 'Open navigation' }).focus();
+    await user.tab();
+    expect(main).not.toHaveFocus();
+  });
+
+  it('remeasures content replacement even when the main size stays the same', async () => {
+    const { rerender } = render(
+      <SidebarLayout sidebar={null}>
+        <p>Long content</p>
+      </SidebarLayout>,
+    );
+    const main = screen.getByRole('main');
+    expect(main).toHaveAttribute('tabindex', '0');
+    contentHeight = 100;
+    rerender(
+      <SidebarLayout sidebar={null}>
+        <section>Short content</section>
+      </SidebarLayout>,
+    );
+    await waitFor(() => expect(main).toHaveAttribute('tabindex', '-1'));
+    contentHeight = 300;
+    rerender(<SidebarLayout sidebar={null}>Long text without a wrapper</SidebarLayout>);
+    await waitFor(() => expect(main).toHaveAttribute('tabindex', '0'));
+  });
+
+  it('renders the server markup without a tab stop or label', () => {
+    const markup = renderToString(<SidebarLayout sidebar={null}>Content</SidebarLayout>);
+    const container = document.createElement('div');
+    container.innerHTML = markup;
+    expect(container.querySelector('main')).toHaveAttribute('tabindex', '-1');
+    expect(container.querySelector('main')).not.toHaveAttribute('aria-label');
+  });
+
+  it('renders safely without ResizeObserver', () => {
+    vi.stubGlobal('ResizeObserver', undefined);
+    render(<SidebarLayout sidebar={null}>Content</SidebarLayout>);
+    expect(screen.getByRole('main')).toHaveAttribute('tabindex', '-1');
+  });
+
+  it.each(['dark', 'light', 'high_contrast'] as const)(
+    'has no axe violations with overflowing static content (%s)',
+    async (mode) => {
+      render(
+        <ThemeProvider defaultMode={mode} storageKey={null}>
+          <SidebarLayout sidebar={null}>
+            <p>Static content</p>
+          </SidebarLayout>
+        </ThemeProvider>,
+      );
+      await waitFor(() => expect(screen.getByRole('main')).toHaveAttribute('tabindex', '0'));
+      await expectNoAxeViolations();
+    },
+  );
 });

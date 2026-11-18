@@ -1,3 +1,4 @@
+import { layoutEn } from './layout-messages';
 import { tableFiltersEn } from './table-filter-messages';
 import { detailRowsEn } from './detail-row-messages';
 import { refreshExampleEn } from './refresh-example-messages';
@@ -299,21 +300,7 @@ export const en = {
   // Accessible label examples
   'labelPrecedence.visible': 'Email me',
   'labelPrecedence.accessible': 'Email me about updates',
-  // Skip links and landmarks
-  'skip.main': 'Skip to main content',
-  'skip.content': 'Skip to content',
-  'skip.canvas': 'Skip to canvas',
-  'skip.document': 'Skip to document',
-  'skip.signIn': 'Skip to sign-in form',
-  'skip.step': 'Skip to step',
-  'nav.navigation': 'Navigation',
-  'nav.openNavigation': 'Open navigation',
-  'nav.closeNavigation': 'Close navigation',
-  'nav.sidebar': 'Sidebar',
-  'nav.expandSidebar': 'Expand sidebar',
-  'nav.collapseSidebar': 'Collapse sidebar',
-  'nav.onThisPage': 'On this page',
-  'nav.pageActions': 'Page actions',
+  ...layoutEn,
   // Breadcrumbs and pagination
   'breadcrumbs.label': 'Breadcrumb',
   'breadcrumbs.expand': '{count, plural, one {Show # more level} other {Show # more levels}}',
