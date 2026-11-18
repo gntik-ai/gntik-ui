@@ -513,6 +513,7 @@ export const es: Messages = {
   'table.truncatedNote':
     '{count, plural, one {Solo se muestra el primer {formattedCount} {noun}; hay más.} other {Solo se muestran los primeros {formattedCount} {noun}; hay más.}}',
   'table.rowsPerPage': 'Filas por página',
+  'table.updating': 'Actualizando {caption}…',
   'table.pagination': 'Paginación: {noun}',
   ...tableFiltersEs,
   'table.actions': 'Acciones',

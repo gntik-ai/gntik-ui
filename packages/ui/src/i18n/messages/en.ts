@@ -514,6 +514,7 @@ export const en = {
   'table.truncatedNote':
     '{count, plural, one {Only the first {formattedCount} {noun} is shown; more exist.} other {Only the first {formattedCount} {noun} are shown; more exist.}}',
   'table.rowsPerPage': 'Rows per page',
+  'table.updating': 'Updating {caption}…',
   'table.pagination': '{noun} pagination',
   ...tableFiltersEn,
   'table.actions': 'Actions',

@@ -60,6 +60,8 @@ import { RowEditBar } from './row-edit-bar';
 import { useRowEdits } from './use-row-edits';
 import { useDetailRows, useDetailVirtualizationWarning } from './use-detail-rows';
 import { useAutoPageSize } from './use-auto-page-size';
+import { RefreshIndicator } from './refresh-indicator';
+import { useRefreshStatus } from './use-refresh-status';
 
 export type { DataTableLabels } from './labels';
 export type {
@@ -142,6 +144,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   loading = false,
   loadingRows = 5,
   emptyState,
+  noResultsState,
+  filtered = false,
   groupBy,
   groupLabel,
   collapsibleGroups = true,
@@ -332,6 +336,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const sorted = allGroups ? allGroups.flatMap((g) => g.rows) : sortedRows;
   const clientPage = Math.min(Math.max(1, page), Math.max(1, Math.ceil(sorted.length / Math.max(1, pageSize))));
   const pageRows = serverMode ? rows : paginated ? paginate(sorted, clientPage, pageSize) : sorted;
+  const refresh = useRefreshStatus(loading, pageRows.length > 0);
   const deletion = useRowDeletion({
     rows: sorted,
     getRowId,
@@ -356,7 +361,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const header = selectionState(pageIds, selected);
   const queryPage = serverMode ? (controlledPage ?? 1) : clientPage;
   const queryPageSize = serverMode ? (controlledPageSize ?? defaultPageSize) : pageSize;
-  const reportQuery = (cause: DataTableQuery['cause'], next: Partial<DataTableQuery>) =>
+  const reportQuery = (cause: DataTableQuery['cause'], next: Partial<DataTableQuery>) => {
+    refresh.markRequested();
     onQueryChange?.({
       page: queryPage,
       pageSize: queryPageSize,
@@ -366,6 +372,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       ...next,
       cause,
     });
+  };
   // A resize that moves the page finishes in the footer's synchronous changePage
   // callback, so one query follows the legacy callbacks without scheduling or batching.
   const resizingTo = useRef<number | undefined>(undefined);
@@ -441,7 +448,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     getRowLabel: labelOf,
     isRowDisabled,
     rows:
-      !singleMode || loading
+      !singleMode || refresh.skeleton
         ? []
         : pageRows.filter((row) => !effectiveGroupBy || !collapsed.has(groupKeyOf(row, effectiveGroupBy))),
   });
@@ -523,6 +530,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     defaults: defaultState,
     apply: applyState,
   });
+  const updatingText = labels?.updating
+    ? labels.updating(caption)
+    : t('table.updating', { caption: caption.toLowerCase() });
+  const bodySpan =
+    visibleColumns.length + (details ? 1 : 0) + (selectionColumn ? 1 : 0) + (hasActions || deletion.actions ? 1 : 0);
   const showViews = showViewSwitcher ?? (viewsProp != null || defaultViews != null || onViewsChange != null);
 
   const pinning =
@@ -537,12 +549,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     trail: hasActions,
   });
 
-  const items = loading || pageRows.length === 0 ? 0 : flattenBody(pageRows, groupsForBody, collapsed).length;
+  const items = refresh.skeleton || pageRows.length === 0 ? 0 : flattenBody(pageRows, groupsForBody, collapsed).length;
   useDetailVirtualizationWarning(details != null && virtualize === true);
   const virtualOn =
     !details &&
     !singleMode &&
-    !loading &&
+    !refresh.skeleton &&
     (virtualize === true || (virtualize === 'auto' && items > virtualizeThreshold));
   const rowHeight = rowHeightProp ?? ROW_HEIGHT[density];
   useAutoPageSize({
@@ -612,7 +624,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
         <Table
           ref={tableRef}
           tabIndex={selectable && selectAllMatching ? -1 : undefined}
-          aria-busy={loading || undefined}
+          aria-busy={refresh.skeleton || refresh.refreshing || undefined}
           aria-rowcount={virtual ? items + 1 : undefined}
           stickyHeader={virtualOn || autoSizing}
           containerClassName={autoSizing ? 'h-full' : virtualOn ? virtualContainerClassName : undefined}
@@ -650,7 +662,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                       aria-label={labels?.selectAll ?? t('table.selectAllPage')}
                       checked={header.checked}
                       indeterminate={header.indeterminate}
-                      disabled={loading || pageIds.length === 0}
+                      disabled={refresh.skeleton || pageIds.length === 0}
                       onCheckedChange={() => setSelected(toggleAll(pageIds, selected))}
                     />
                   )}
@@ -720,6 +732,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
               labels={labels}
             />
           )}
+          {refresh.refreshing && <RefreshIndicator label={updatingText} span={bodySpan} />}
           <DataTableBody
             details={details}
             labels={labels}
@@ -733,9 +746,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             singleSelection={singleMode ? singleSelection : undefined}
             onToggleRow={(id) => setSelected(toggleOne(id, selected))}
             rowActions={deletion.actions}
-            loading={loading}
+            loading={refresh.skeleton ? true : refresh.refreshing ? 'refresh' : false}
             loadingRows={loadingRows}
             emptyState={emptyState}
+            noResultsState={noResultsState}
+            filtered={filtered}
             groups={groupsForBody}
             collapsedGroups={collapsed}
             collapsibleGroups={collapsibleGroups}
@@ -856,7 +871,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           onSelectAll={selectMatching}
           onClear={() => {
             // Restore focus before clearing removes the strip and its focused button.
-            const target = hideSelectAll || loading || pageIds.length === 0 ? tableRef : pageCheckboxRef;
+            const target = hideSelectAll || refresh.skeleton || pageIds.length === 0 ? tableRef : pageCheckboxRef;
             target.current?.focus();
             clear();
           }}
@@ -889,12 +904,17 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
         tableContent
       )}
       {editMode === 'row' && onRowsSave && <RowEditBar edits={rowEdits} labels={labels} />}
-      {loading && (
+      {refresh.skeleton && (
         <p role="status" className="sr-only">
           {labels?.loading ? labels.loading(caption) : <>Loading {caption.toLowerCase()}…</>}
         </p>
       )}
-      {paginated && !loading && (serverMode || rows.length > 0) && (
+      {refresh.refreshing && (
+        <p role="status" aria-live="polite" className="sr-only">
+          {refresh.announcing ? updatingText : null}
+        </p>
+      )}
+      {paginated && !refresh.skeleton && (serverMode || rows.length > 0) && (
         <PaginationFooter
           labels={labels}
           className={cn('border-t border-border px-4 py-3', autoSizing && 'shrink-0')}

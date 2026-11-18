@@ -199,6 +199,8 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/blocks/src/tables/DataTable/examples/cursor-load-more'),
     'data-table--server-pagination': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/server-pagination'),
+    'data-table--refresh-loading': () =>
+      import('../../../packages/blocks/src/tables/DataTable/examples/refresh-loading'),
     'data-table--client-selection': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/client-selection'),
     'data-table--paginated-single-selection': () =>
