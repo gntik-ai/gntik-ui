@@ -165,7 +165,8 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                     customizes the unselected tenant prompt (default Select tenant); empty lists still use
                     tenantEmptyText. An empty workspaces array with workspaceEmptyText keeps the switcher and shows that
                     message; Create workspace appears only with onCreateWorkspace. Without workspaceEmptyText, empty or
-                    null workspaces keep the Logo/brand fallback.
+                    null workspaces keep the Logo/brand fallback. onNavigate receives the clicked nav item after a nav
+                    click closes the mobile drawer.
                   </p>
                   {[
                     ['tenants', 'Tenants'],
@@ -174,6 +175,7 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                     ['context-region', 'ContextRegion'],
                     ['user-menu-children', 'UserMenuChildren'],
                     ['brand', 'Brand'],
+                    ['navigation', 'Navigation'],
                   ].map(([id, example]) => (
                     <Viewer
                       key={id}

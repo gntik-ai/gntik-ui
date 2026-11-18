@@ -21,6 +21,7 @@ export const doc: ComponentDoc = {
     'usage=null and helpHref="" hide usage and help. navLabel names the navigation landmark (default Main). ' +
     'ConsoleShell forwards these props to both sidebar and mobile drawer and shows brand in the mobile topbar. ' +
     'Its topbar.user overrides the shared user only when defined; null hides that menu, while undefined shares user. ' +
+    'A nav click in ConsoleShell closes the mobile drawer and calls its optional onNavigate with the clicked item. ' +
     'See the Sidebar shell examples for tenant placeholders, empty workspaces and a single account menu.',
   primitive: 'Select, WorkspaceSwitcher, NavList and UserMenu from @gntik-ai/ui',
   pattern: 'Optional named context region, select-only combobox, navigation and account menu',

@@ -1,6 +1,7 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ToastProvider, Toaster } from '@gntik-ai/ui';
+import { expectNoAxeViolations } from '../test/a11y';
 
 describe('Sidebar shell examples', () => {
   it('demonstrates the tenant placeholder, navigation name and optional empty-workspace creation', async () => {
@@ -86,5 +87,22 @@ describe('Sidebar shell examples', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Platform context');
     await user.click(screen.getByRole('button', { name: 'Show empty tenant list' }));
     expect(tenant).toHaveTextContent('No organizations');
+  });
+  it('demonstrates onNavigate updating the current item and closing the mobile drawer', async () => {
+    const { default: Navigation } = await import('./examples/Navigation');
+    const user = userEvent.setup();
+    const { container } = render(<Navigation />);
+    await expectNoAxeViolations(container);
+    await user.click(screen.getByRole('button', { name: 'Open navigation' }));
+    const drawer = await screen.findByRole('dialog', { name: 'Sidebar' });
+    await expectNoAxeViolations();
+    await user.click(within(drawer).getByRole('link', { name: 'Overview' }));
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Sidebar' })).toBeNull());
+    expect(screen.getByRole('status')).toHaveTextContent('Opened Overview');
+    expect(within(screen.getByRole('complementary')).getByRole('link', { name: 'Overview' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+    await expectNoAxeViolations(container);
   });
 });
