@@ -1,7 +1,7 @@
 // @gntik-ai/blocks — tables family.
 export * from './DataTable/DataTable';
 export * from './DataTable/data-table-utils';
-export { quickFilterRows, quickFilterTerms, type QuickFilterOptions } from './DataTable/quick-filter';
+export { quickFilterRows, type QuickFilterOptions } from './DataTable/quick-filter';
 export { ColumnVisibilityMenu, type ColumnVisibilityMenuProps } from './DataTable/column-menu';
 export { DensityToggle, type DensityToggleProps } from './DataTable/density-toggle';
 export {

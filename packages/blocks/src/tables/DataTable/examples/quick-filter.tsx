@@ -4,6 +4,7 @@ import { FilterBar } from '../../FilterBar/FilterBar';
 import { PageToolbar } from '../../../page-chrome/PageToolbar/PageToolbar';
 import { DataTable, type DataTableQuery } from '../DataTable';
 import type { DataTableColumn } from '../data-table-utils';
+import { quickFilterRows } from '../quick-filter';
 
 interface Row {
   id: string;
@@ -64,6 +65,8 @@ export default function QuickFilterExample() {
     ],
     [t],
   );
+  // The same matching as the table, for rows the table does not show: an export or a count kept in step with it.
+  const outside = useMemo(() => quickFilterRows(rows, columns, 'eu', new Set(['tier'])).length, [columns]);
   const [serverTerm, setServerTerm] = useState<string | null>(null);
   const [page, setPage] = useState(4);
   const [toolbarCalls, setToolbarCalls] = useState(0);
@@ -85,6 +88,9 @@ export default function QuickFilterExample() {
           showQuickFilter
           noResultsState={noMatches}
         />
+        <p className="text-[12.5px] text-muted-foreground">
+          {t('table.example.quickFilter.helperCount', { count: outside })}
+        </p>
       </section>
       <section className="space-y-2">
         <h3 className="text-[14px] font-semibold text-foreground">{t('table.example.quickFilter.collapsibleTitle')}</h3>

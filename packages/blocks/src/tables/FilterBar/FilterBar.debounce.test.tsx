@@ -81,6 +81,25 @@ describe('FilterBar queryDebounceMs', () => {
     expect(onQueryChange).not.toHaveBeenCalledWith('ru');
   });
 
+  it('flushes a pending value when a saved view without a query applies', async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const onQueryChange = vi.fn();
+    render(
+      <FilterBar
+        queryDebounceMs={5000}
+        onQueryChange={onQueryChange}
+        views={[{ value: 'v', label: 'Errors', filters: [] }]}
+      />,
+    );
+    type('ru');
+    expect(onQueryChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('combobox', { name: 'Saved view' }));
+    fireEvent.click(await screen.findByRole('option', { name: 'Errors' }));
+    expect(onQueryChange).toHaveBeenCalledTimes(1);
+    expect(onQueryChange).toHaveBeenCalledWith('ru');
+    expect(box()).toHaveValue('ru');
+  });
+
   it('flushes the pending value on unmount', () => {
     vi.useFakeTimers();
     const onQueryChange = vi.fn();

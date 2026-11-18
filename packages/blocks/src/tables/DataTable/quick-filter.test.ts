@@ -84,6 +84,15 @@ describe('quickFilterRows', () => {
     expect(names(quickFilterRows(rows, cellOnly, 'orders', none))).toEqual([]);
   });
 
+  it('does not search a cell-only column even when its quickFilter is true or a matcher', () => {
+    const always: Array<DataTableColumn<Row>> = [
+      { id: 'flag', header: 'Flag', cell: (row) => row.name, quickFilter: true },
+      { id: 'fn', header: 'Fn', cell: (row) => row.name, quickFilter: () => true },
+    ];
+    expect(names(quickFilterRows(rows, always, 'anything', none))).toEqual([]);
+    expect(names(quickFilterRows(rows, always, 'anything', new Set(['flag'])))).toEqual([]);
+  });
+
   it('matches the raw value text as well as the display text', () => {
     const typed: Array<DataTableColumn<Row>> = [
       { id: 'at', header: 'At', accessor: (row) => row.at },

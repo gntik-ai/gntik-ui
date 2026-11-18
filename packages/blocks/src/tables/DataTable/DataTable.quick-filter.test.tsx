@@ -326,6 +326,32 @@ describe('DataTable built-in quick filter field', () => {
     expect(screen.getByText('2 hits')).toBeInTheDocument();
   });
 
+  it('follows a controlled term set and cleared from outside, even back to the earlier value', () => {
+    const onQuickFilterChange = vi.fn();
+    const props = { ...base, rows: many, showQuickFilter: true, onQuickFilterChange };
+    const { rerender } = render(<DataTable {...props} quickFilter="" />);
+    rerender(<DataTable {...props} quickFilter="svc-01" />);
+    expect(field()).toHaveValue('svc-01');
+    rerender(<DataTable {...props} quickFilter="" />);
+    expect(field()).toHaveValue('');
+    expect(onQuickFilterChange).not.toHaveBeenCalled();
+  });
+
+  it('drops a pending typed term when the controlled term is replaced from outside', () => {
+    vi.useFakeTimers();
+    const onQuickFilterChange = vi.fn();
+    const onQueryChange = vi.fn();
+    const props = { ...base, rows: many, showQuickFilter: true, onQuickFilterChange, onQueryChange };
+    const { rerender } = render(<DataTable {...props} quickFilter="" />);
+    fireEvent.change(field(), { target: { value: 'ord' } });
+    act(() => void vi.advanceTimersByTime(100));
+    rerender(<DataTable {...props} quickFilter="svc-01" />);
+    act(() => void vi.advanceTimersByTime(500));
+    expect(field()).toHaveValue('svc-01');
+    expect(onQuickFilterChange).not.toHaveBeenCalled();
+    expect(onQueryChange).not.toHaveBeenCalled();
+  });
+
   it('has no axe violations', async () => {
     const { container } = setup({ rows: two });
     await expectNoAxeViolations(container);

@@ -25,9 +25,10 @@ const rawText = (value: CellValue): string => {
 
 function searchable<T>(column: DataTableColumn<T>, hidden: ReadonlySet<string>) {
   const setting = column.quickFilter;
-  if (setting === false) return false;
+  // A column that only renders `cell` has nothing to search, whatever its setting.
+  if (column.accessor == null || setting === false) return false;
   if (hidden.has(column.id)) return setting === true;
-  return typeof setting === 'function' || column.accessor != null;
+  return true;
 }
 
 /** Collects the searchable text of every row once; reuse it while rows, columns, hidden columns and options hold. */

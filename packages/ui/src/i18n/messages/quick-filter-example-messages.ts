@@ -14,6 +14,8 @@ export const quickFilterExampleEn = {
   'table.example.quickFilter.lastRequest': 'Last server request: {term}',
   'table.example.quickFilter.noRequest': 'none yet',
   'table.example.quickFilter.toolbarCalls': 'Toolbar search callbacks: {count}',
+  'table.example.quickFilter.helperCount':
+    'quickFilterRows finds {count} rows for "eu" outside the table, for an export or a count.',
   'table.example.quickFilter.filterBarCalls': 'Filter bar query callbacks: {count}',
   'table.example.quickFilter.searchPlaceholder': 'Search deployments…',
   'table.example.quickFilter.viewer': 'Data table · quick filter',
@@ -35,6 +37,8 @@ export const quickFilterExampleEs = {
   'table.example.quickFilter.lastRequest': 'Última solicitud al servidor: {term}',
   'table.example.quickFilter.noRequest': 'ninguna todavía',
   'table.example.quickFilter.toolbarCalls': 'Llamadas de búsqueda de la barra: {count}',
+  'table.example.quickFilter.helperCount':
+    'quickFilterRows encuentra {count} filas para "eu" fuera de la tabla, para una exportación o un recuento.',
   'table.example.quickFilter.filterBarCalls': 'Llamadas de consulta de la barra de filtros: {count}',
   'table.example.quickFilter.searchPlaceholder': 'Buscar despliegues…',
   'table.example.quickFilter.viewer': 'Tabla de datos · filtro rápido',

@@ -29,10 +29,11 @@ export function QuickFilter({
   const { t } = useI18n();
   const name = labels?.quickFilter ? labels.quickFilter(caption) : t('table.quickFilter', { caption });
   const [draft, setDraft] = useState(term);
-  const [sync, setSync] = useState({ seen: term, applied: term });
-  // A term changed from outside replaces the draft; one this field applied itself must not clobber later typing.
+  const [sync, setSync] = useState<{ seen: string; applied: string | null }>({ seen: term, applied: null });
+  // A term changed from outside replaces the draft; the echo of one this field applied itself must not clobber later
+  // typing. Either way the change is consumed, so a later outside change back to an older value replaces it again.
   if (term !== sync.seen) {
-    setSync({ seen: term, applied: sync.applied });
+    setSync({ seen: term, applied: null });
     if (term !== sync.applied) setDraft(term);
   }
 
@@ -72,7 +73,9 @@ export function QuickFilter({
           value={draft}
           debounceMs={debounceMs}
           onValueChange={setDraft}
-          onSearch={(value) => {
+          onSearch={(value, source) => {
+            // A debounced search that outlived the draft (replaced from outside meanwhile) is obsolete.
+            if (source === 'type' && value !== draft) return;
             setSync((current) => ({ ...current, applied: value }));
             onApply(value);
           }}

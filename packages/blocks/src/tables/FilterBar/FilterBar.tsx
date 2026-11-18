@@ -128,7 +128,9 @@ export function FilterBar({
     if (!picked) return;
     setView(picked.value);
     setFilters([...picked.filters], true);
+    // A view with a query replaces the pending text; one without leaves the text, so report what is pending now.
     if (picked.query !== undefined) search.replace(picked.query);
+    else search.flush();
     onViewChange?.(picked);
   };
   const clearAll = () => {

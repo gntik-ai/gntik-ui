@@ -26,6 +26,11 @@ describe('DataTable quick filter example', () => {
     }
   });
 
+  it('shows the helper count with the hidden tier column left out', () => {
+    render(<QuickFilterExample />);
+    expect(screen.getByText(/quickFilterRows finds 6 rows for "eu"/)).toBeInTheDocument();
+  });
+
   it('starts the second table as a collapsed search button', () => {
     render(<QuickFilterExample />);
     expect(screen.getByRole('button', { name: 'Search Releases' })).toHaveAttribute('aria-expanded', 'false');
