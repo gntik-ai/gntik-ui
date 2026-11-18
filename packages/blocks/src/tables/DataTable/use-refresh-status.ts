@@ -22,9 +22,10 @@ export function useRefreshStatus(loading: boolean | 'refresh', hasRows: boolean)
   useEffect(() => {
     refreshingNow.current = refreshing;
     const followsRequest = requested.current;
+    // A skeleton cycle fulfils the pending request, so a later caller-only refresh stays silent.
     requested.current = false;
     setAnnouncing(refreshing && followsRequest);
-  }, [refreshing]);
+  }, [refreshing, skeleton]);
 
   const markRequested = useCallback(() => {
     if (refreshingNow.current) setAnnouncing(true);

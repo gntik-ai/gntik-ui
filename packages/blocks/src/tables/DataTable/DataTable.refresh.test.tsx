@@ -82,6 +82,18 @@ describe('DataTable loading="refresh"', () => {
     expect(screen.getByRole('status')).toBeEmptyDOMElement();
   });
 
+  it('keeps a poll silent after a request was fulfilled through a skeleton loading cycle', async () => {
+    const user = userEvent.setup();
+    const onPageChange = vi.fn();
+    const { rerender } = render(<DataTable {...server} loading={false} onPageChange={onPageChange} />);
+    await user.click(screen.getByRole('button', { name: 'Next page' }));
+    rerender(<DataTable {...server} loading onPageChange={onPageChange} />);
+    rerender(<DataTable {...server} page={3} loading={false} onPageChange={onPageChange} />);
+    rerender(<DataTable {...server} page={3} loading="refresh" onPageChange={onPageChange} />);
+    expect(screen.getByRole('table')).toHaveAttribute('aria-busy', 'true');
+    expect(screen.getByRole('status')).toBeEmptyDOMElement();
+  });
+
   it('still announces a refresh that arrives long after the table-emitted request', async () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     try {
@@ -190,7 +202,7 @@ describe('DataTable loading="refresh"', () => {
     expect(onSelectedIdChange).toHaveBeenCalledWith('22');
   });
 
-  it('keeps the virtual window, aria-rowcount and scroll position', () => {
+  it('keeps the virtual window, aria-rowcount and scroll position', async () => {
     const data = generateDeployments(1000);
     const { container, rerender } = render(<DataTable rows={data} paginated={false} loading={false} />);
     const scroller = screen.getByRole('table').parentElement!;
@@ -202,6 +214,8 @@ describe('DataTable loading="refresh"', () => {
       container
         .querySelector('tbody:not([data-virtual-spacer]):not([data-refresh-indicator]) tr')
         ?.getAttribute('aria-rowindex');
+    // The window follows the scroll on a scheduled update: wait for it before refreshing.
+    await waitFor(() => expect(Number(firstIndex())).toBeGreaterThan(200));
     const before = firstIndex();
     rerender(<DataTable rows={data} paginated={false} loading="refresh" />);
     expect(screen.getByRole('table')).toHaveAttribute('aria-rowcount', '1001');

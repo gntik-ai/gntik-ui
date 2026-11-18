@@ -22,6 +22,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     await expect(page.getByRole('progressbar')).toHaveCount(0);
     await expect(next).toBeEnabled();
     const rowCount = await page.getByRole('row').count();
+    const heightBefore = (await page.getByRole('table').boundingBox()).height;
     await page.evaluate(() => {
       window.__holdRefresh = true;
     });
@@ -30,6 +31,8 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     await expect(page.getByRole('table')).toHaveAttribute('aria-busy', 'true');
     await expect(page.getByRole('status').filter({ hasText: 'Updating deployments…' })).toBeVisible();
     await expect(page.getByRole('row')).toHaveCount(rowCount);
+    // The indicator is an overlay: the table keeps its height.
+    expect((await page.getByRole('table').boundingBox()).height).toBe(heightBefore);
     await expect(next).toBeEnabled();
     await page.addScriptTag({ content: AXE });
     const violations = await page.evaluate(async () => {
