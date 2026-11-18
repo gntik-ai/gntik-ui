@@ -1,4 +1,6 @@
 import { useFilterModel, EMPTY_FILTER_MODEL } from './use-filter-model';
+import { QuickFilter } from './quick-filter-field';
+import { useQuickFilter } from './use-quick-filter';
 import {
   Checkbox,
   cn,
@@ -190,6 +192,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   defaultFilterModel,
   onFilterModelChange,
   onFiltersChange,
+  quickFilter,
+  defaultQuickFilter = '',
+  onQuickFilterChange,
+  showQuickFilter = false,
+  quickFilterDebounceMs = 300,
   toolbar,
   csvExport = false,
   onExport,
@@ -197,7 +204,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   labels,
 }: DataTableProps<T>) {
   const caption = captionProp ?? 'Deployments';
-  const { t, formatNumber } = useI18n();
+  const { t, formatNumber, locale } = useI18n();
   const details = useDetailRows({
     renderDetail,
     hasDetail,
@@ -288,7 +295,21 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       } else if (page !== 1) setPage(1);
     },
   });
-  const filteredRows = filtering.rows;
+  const quick = useQuickFilter({
+    value: quickFilter,
+    defaultValue: defaultQuickFilter,
+    onChange: onQuickFilterChange,
+    rows: filtering.rows,
+    columns,
+    hidden: hiddenList,
+    serverMode,
+    locale,
+    booleanLabels: [labels?.booleanTrue ?? t('common.yes'), labels?.booleanFalse ?? t('common.no')],
+    onExternalChange: () => {
+      if (!serverMode && page !== 1) setPage(1);
+    },
+  });
+  const filteredRows = quick.rows;
   const enabledIds = filteredRows.filter((row) => !isRowDisabled?.(row)).map(getRowId);
   const {
     selected,
@@ -301,7 +322,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     selectAllMatching: selectMatching,
     clear,
   } = useMultipleSelection({
-    rowIds: filteredRows.map(getRowId),
+    // Rows the quick filter hides stay selected, so reports keep them.
+    rowIds: filtering.rows.map(getRowId),
     selectedIds,
     defaultSelectedIds,
     onSelectionChange,
@@ -369,6 +391,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       sort,
       filters,
       ...(filtering.model !== EMPTY_FILTER_MODEL ? { filterModel: filtering.model } : {}),
+      ...(quick.term !== '' ? { quickFilter: quick.term } : {}),
       ...next,
       cause,
     });
@@ -416,6 +439,13 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       if (queryPage !== 1) onPageChange?.(1);
     } else if (page !== 1) setPage(1);
     reportQuery('filter', { page: 1, filterModel: next });
+  };
+  const changeQuickFilter = (next: string) => {
+    if (!quick.apply(next)) return;
+    if (serverMode) {
+      if (queryPage !== 1) onPageChange?.(1);
+    } else if (page !== 1) setPage(1);
+    reportQuery('quickFilter', { page: 1, quickFilter: next });
   };
   const toggleGroup = (key: string) => {
     const next = new Set(collapsed);
@@ -598,6 +628,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const showToolbar =
     onRowAdd != null ||
     toolbar != null ||
+    showQuickFilter !== false ||
     showDensityToggle ||
     showColumnMenu ||
     showViews ||
@@ -750,7 +781,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             loadingRows={loadingRows}
             emptyState={emptyState}
             noResultsState={noResultsState}
-            filtered={filtered}
+            filtered={filtered || quick.term.trim() !== ''}
             groups={groupsForBody}
             collapsedGroups={collapsed}
             collapsibleGroups={collapsibleGroups}
@@ -796,6 +827,18 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
         )}
       >
         <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+          {/* Outside the selection swap below, so selecting rows never unmounts the field or its focus. */}
+          {showQuickFilter !== false && (
+            <QuickFilter
+              mode={showQuickFilter}
+              caption={caption}
+              term={quick.term}
+              count={serverMode ? (rowCount ?? rows.length) : filteredRows.length}
+              debounceMs={quickFilterDebounceMs}
+              onApply={changeQuickFilter}
+              labels={labels}
+            />
+          )}
           {/* Matching selection needs a mounted announcer; default tables retain their published surface. */}
           {selectable && (selectAllMatching || (hasSelection && selectionSummary)) && (
             <span

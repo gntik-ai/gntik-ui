@@ -19,7 +19,9 @@ export interface DataTableQuery {
   sort: SortState | null;
   filters: unknown;
   filterModel?: QueryGroup;
-  cause: 'page' | 'pageSize' | 'sort' | 'view' | 'filter';
+  /** The applied quick filter term; present while it is not empty, and as `''` when a request clears it. */
+  quickFilter?: string;
+  cause: 'page' | 'pageSize' | 'sort' | 'view' | 'filter' | 'quickFilter';
 }
 
 export interface DataTableCsvExportOptions {
@@ -220,6 +222,24 @@ interface DataTableCommonProps<T> {
   filters?: unknown;
   /** Called when a view (or a reset) restores filters. */
   onFiltersChange?: (filters: unknown) => void;
+
+  /**
+   * Quick filter term: rows are kept when every whitespace-separated term matches a searchable column
+   * (see `DataTableColumn.quickFilter`), ignoring case and accents. Client mode filters `rows`; server
+   * mode never does and only reports the term. Changing the prop emits no query.
+   */
+  quickFilter?: string;
+  /** Initial uncontrolled term (default ''). */
+  defaultQuickFilter?: string;
+  /** Called with each applied term: after the debounce, on Enter and on clear. */
+  onQuickFilterChange?: (value: string) => void;
+  /**
+   * Renders a search field at the start of the toolbar that stays mounted while rows are selected.
+   * `'collapsible'` starts as a search button that expands the field; a non-empty term keeps it open.
+   */
+  showQuickFilter?: boolean | 'collapsible';
+  /** Milliseconds after the last keystroke before the built-in field applies its text (default 300). */
+  quickFilterDebounceMs?: number;
 
   /** Left side of the toolbar (title, search, FilterBar…). */
   toolbar?: ReactNode;

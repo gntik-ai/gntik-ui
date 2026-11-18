@@ -16,6 +16,7 @@ import {
 } from '@gntik-ai/ui';
 import { Fragment, useState } from 'react';
 import { DEPLOYMENT_DEFAULT_FILTERS, DEPLOYMENT_FILTER_FIELDS, DEPLOYMENT_SAVED_VIEWS } from './fixtures';
+import { useDebouncedText } from './use-debounced-text';
 
 export interface FilterField {
   id: string;
@@ -57,6 +58,11 @@ export interface FilterBarProps {
   query?: string;
   defaultQuery?: string;
   onQueryChange?: (query: string) => void;
+  /**
+   * Milliseconds to wait after the last keystroke before calling `onQueryChange` (default 0: every keystroke).
+   * The input still shows each keystroke at once; Enter, clearing, applying a view and unmount report at once.
+   */
+  queryDebounceMs?: number;
   /** Active filters (controlled). */
   filters?: readonly ActiveFilter[];
   defaultFilters?: readonly ActiveFilter[];
@@ -83,6 +89,7 @@ export function FilterBar({
   query: queryProp,
   defaultQuery = '',
   onQueryChange,
+  queryDebounceMs,
   filters: filtersProp,
   defaultFilters = DEPLOYMENT_DEFAULT_FILTERS,
   onFiltersChange,
@@ -108,6 +115,7 @@ export function FilterBar({
     setInnerQuery(next);
     onQueryChange?.(next);
   };
+  const search = useDebouncedText(query, queryDebounceMs, setQuery);
   const setFilters = (next: ActiveFilter[], keepView = false) => {
     setInnerFilters(next);
     onFiltersChange?.(next);
@@ -120,15 +128,17 @@ export function FilterBar({
     if (!picked) return;
     setView(picked.value);
     setFilters([...picked.filters], true);
-    if (picked.query !== undefined) setQuery(picked.query);
+    // A view with a query replaces the pending text; one without leaves the text, so report what is pending now.
+    if (picked.query !== undefined) search.replace(picked.query);
+    else search.flush();
     onViewChange?.(picked);
   };
   const clearAll = () => {
     setFilters([]);
-    setQuery('');
+    search.replace('');
   };
   const labelOf = (id: string) => fields.find((f) => f.id === id)?.label ?? id;
-  const hasAny = filters.length > 0 || query !== '';
+  const hasAny = filters.length > 0 || search.text !== '';
 
   return (
     <div
@@ -141,8 +151,9 @@ export function FilterBar({
           aria-label={searchLabel}
           size="sm"
           placeholder={placeholder}
-          value={query}
-          onValueChange={(v) => setQuery(String(v))}
+          value={search.text}
+          onValueChange={(v) => search.change(String(v))}
+          onSearch={(_, source) => (source === 'enter' ? search.flush() : undefined)}
           className="w-full sm:max-w-xs"
         />
         <div className="flex flex-wrap items-center gap-2">
