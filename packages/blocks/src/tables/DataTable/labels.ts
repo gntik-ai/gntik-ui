@@ -10,6 +10,10 @@ export interface DataTableLabels extends PaginationFooterLabels {
   filterSearch?: string;
   filterFrom?: string;
   filterTo?: string;
+  /** Quick filter field and collapsed button name; receives the caller caption. */
+  quickFilter?: (caption: string) => string;
+  /** Polite status after a quick filter term applies. */
+  quickFilterResults?: (count: number) => string;
   export?: string;
   exportAll?: (count: number) => string;
   exportPage?: string;

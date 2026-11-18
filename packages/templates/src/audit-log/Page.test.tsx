@@ -89,6 +89,49 @@ describe('AuditLogPage', () => {
     ]);
   });
 
+  it('finds events by actor name, actor email, action and target', { timeout: 15000 }, async () => {
+    render(<AuditLogPage />);
+    const search = screen.getByRole('searchbox', { name: 'Search' });
+    const rowCount = () => within(screen.getByRole('table')).getAllByRole('row').length - 1;
+    for (const [query, expected] of [
+      ['whitfield', 3],
+      ['SAM@example.com', 2],
+      ['api_key', 2],
+      ['web-app', auditEvents.filter((e) => e.target === 'web-app').length],
+    ] as const) {
+      await userEvent.clear(search);
+      await userEvent.type(search, query);
+      await vi.waitFor(() => expect(rowCount()).toBe(expected));
+    }
+  });
+
+  it(
+    'matches every word of a query against some searched field and not against results or times',
+    { timeout: 15000 },
+    async () => {
+      render(<AuditLogPage />);
+      const search = screen.getByRole('searchbox', { name: 'Search' });
+      const rowCount = () => within(screen.getByRole('table')).getAllByRole('row').length - 1;
+      await userEvent.type(search, 'dana project');
+      await vi.waitFor(() => expect(rowCount()).toBe(2));
+      await userEvent.clear(search);
+      await userEvent.type(search, 'succeeded');
+      // The empty result is one message row, with no event rows (and so no Diff buttons) in it.
+      await vi.waitFor(() => expect(screen.queryAllByRole('button', { name: /^View changes/ })).toHaveLength(0));
+    },
+  );
+
+  it('exports exactly the events the table shows', { timeout: 15000 }, async () => {
+    const onExport = vi.fn();
+    render(<AuditLogPage onExport={onExport} />);
+    await userEvent.type(screen.getByRole('searchbox', { name: 'Search' }), 'sam@example.com');
+    const table = screen.getByRole('table');
+    expect(within(table).getAllByRole('row')).toHaveLength(3);
+    await userEvent.click(screen.getAllByRole('button', { name: 'Export CSV' })[0]!);
+    expect(onExport).toHaveBeenCalledTimes(1);
+    expect(onExport.mock.calls[0]![0].map((e: { id: string }) => e.id).sort()).toEqual(['evt_9ed1', 'evt_9f1c']);
+  });
+
   it('filters by field (OR within, AND across) and writes CSV', () => {
     const rows = filterAuditEvents(
       auditEvents,

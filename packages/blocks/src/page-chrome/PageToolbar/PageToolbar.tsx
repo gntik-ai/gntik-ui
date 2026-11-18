@@ -15,6 +15,7 @@ import {
 import { useState, type ReactNode } from 'react';
 import type { PageChromeAction } from '../types';
 import { pageToolbarViews } from './fixtures';
+import { useDebouncedText } from './use-debounced-text';
 
 export interface PageToolbarView {
   value: string;
@@ -28,6 +29,11 @@ export interface PageToolbarProps {
   search?: string;
   defaultSearch?: string;
   onSearchChange?: (value: string) => void;
+  /**
+   * Milliseconds to wait after the last keystroke before calling `onSearchChange` (default 0: every keystroke).
+   * The input still shows each keystroke at once; Enter and unmount report at once, and so does an emptied input.
+   */
+  searchDebounceMs?: number;
   searchLabel?: string;
   searchPlaceholder?: string;
   /**
@@ -53,6 +59,7 @@ export function PageToolbar({
   search,
   defaultSearch = '',
   onSearchChange,
+  searchDebounceMs,
   searchLabel: searchLabelProp,
   searchPlaceholder = 'Search projects…',
   filters,
@@ -70,6 +77,10 @@ export function PageToolbar({
   const [innerSearch, setInnerSearch] = useState(defaultSearch);
   const [innerView, setInnerView] = useState(defaultView ?? views?.[0]?.value ?? '');
   const currentSearch = search ?? innerSearch;
+  const searching = useDebouncedText(currentSearch, searchDebounceMs, (next) => {
+    setInnerSearch(next);
+    onSearchChange?.(next);
+  });
   const currentView = view ?? innerView;
 
   return (
@@ -80,10 +91,10 @@ export function PageToolbar({
           icon={Search}
           aria-label={searchLabel}
           placeholder={searchPlaceholder}
-          value={currentSearch}
-          onChange={(e) => {
-            setInnerSearch(e.target.value);
-            onSearchChange?.(e.target.value);
+          value={searching.text}
+          onChange={(e) => searching.change(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') searching.flush();
           }}
           wrapperClassName="max-w-sm"
         />

@@ -1,11 +1,11 @@
-import { useI18n } from '@gntik-ai/ui';
-import { matchText } from '@gntik-ai/ui';
+import { matchText, useI18n } from '@gntik-ai/ui';
 import {
   DataTable,
   DateRangeFilter,
   FilterBar,
   NoResultsEmpty,
   PageHeader,
+  quickFilterRows,
   type ActiveFilter,
   type DataTableColumn,
   type FilterField,
@@ -56,7 +56,27 @@ const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDat
 const fieldValue = (e: AuditEvent, field: string) =>
   field === 'actor' ? e.actor.name : field === 'resource' ? e.resource : field === 'result' ? e.result : '';
 
-/** Applies the search text, the filter chips (OR within a field, AND across fields) and the date range. */
+/** The actor matches a term by the name shown and by the email, which is not shown. */
+const actorMatches = (e: AuditEvent, term: string, locale?: string) =>
+  [e.actor.name, e.actor.email].some((v) => matchText(v, term, { locale }));
+
+/** The columns the search box looks in: actor (name and email), action and target. */
+const searchColumns = (locale?: string): Array<DataTableColumn<AuditEvent>> => [
+  {
+    id: 'actor',
+    header: 'Actor',
+    accessor: (e) => e.actor.name,
+    quickFilter: (e, term) => actorMatches(e, term, locale),
+  },
+  { id: 'action', header: 'Action', accessor: (e) => e.action },
+  { id: 'target', header: 'Target', accessor: (e) => e.target },
+];
+
+/**
+ * Applies the filter chips (OR within a field, AND across fields), the date range and, when given, a search
+ * text (every word must match the actor, action or target). The page leaves the search text to the table's
+ * quick filter, so it passes an empty query.
+ */
 export function filterAuditEvents(
   events: readonly AuditEvent[],
   query: string,
@@ -64,17 +84,16 @@ export function filterAuditEvents(
   range: DateRange,
   locale?: string,
 ) {
-  const q = query.trim();
   const fields = [...new Set(filters.map((f) => f.field))];
   const from = range.start ? startOfDay(range.start).getTime() : -Infinity;
   const to = range.end ? startOfDay(range.end).getTime() + DAY : Infinity;
-  return events.filter((e) => {
-    if (q && ![e.actor.name, e.actor.email, e.action, e.target].some((v) => matchText(v, q, { locale }))) return false;
+  const inScope = events.filter((e) => {
     if (!fields.every((field) => filters.some((f) => f.field === field && f.value === fieldValue(e, field))))
       return false;
     const t = e.at.getTime();
     return t >= from && t < to;
   });
+  return quickFilterRows(inScope, searchColumns(locale), query, new Set(), { locale });
 }
 
 /** Neutralises leading spreadsheet formula triggers before applying CSV quoting. */
@@ -132,8 +151,10 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
     return { start: new Date(t.getTime() - 6 * DAY), end: t };
   });
   const [diffEvent, setDiffEvent] = useState<AuditEvent | null>(null);
+  const [hiddenColumns, setHiddenColumns] = useState<string[]>(['ip']);
 
-  const rows = filterAuditEvents(events, query, filters, range, locale);
+  // The table searches `rows` itself through its quick filter; chips and dates narrow them first.
+  const rows = filterAuditEvents(events, '', filters, range, locale);
 
   const columns: DataTableColumn<AuditEvent>[] = [
     {
@@ -143,6 +164,7 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
       cell: (e) => <Timestamp value={e.at} format="absolute" className="font-mono text-[12px]" />,
       sortable: true,
       hideable: false,
+      quickFilter: false,
       headClassName: 'w-44',
     },
     {
@@ -159,6 +181,7 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
         </span>
       ),
       sortable: true,
+      quickFilter: (e, term) => actorMatches(e, term, locale),
     },
     { id: 'action', header: 'Action', accessor: (e) => e.action, sortable: true, className: 'font-mono text-[12px]' },
     {
@@ -172,6 +195,7 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
       header: 'IP address',
       accessor: (e) => e.ip,
       defaultHidden: true,
+      quickFilter: false,
       className: 'font-mono text-[12px] text-muted-foreground',
     },
     {
@@ -180,6 +204,7 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
       accessor: (e) => e.result,
       cell: (e) => <StatusTag status={e.result} statuses={auditResultStatuses} />,
       sortable: true,
+      quickFilter: false,
     },
     {
       id: 'changes',
@@ -202,6 +227,9 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
     },
   ];
 
+  // What the table shows for the search text, so the count and the export match it.
+  const shown = [...quickFilterRows(rows, columns, query, new Set(hiddenColumns), { locale })];
+
   return (
     <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref} {...shell}>
       <Page
@@ -219,8 +247,8 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
                 label: 'Export CSV',
                 icon: Download,
                 variant: 'secondary',
-                disabled: rows.length === 0,
-                onClick: () => onExport(rows),
+                disabled: shown.length === 0,
+                onClick: () => onExport(shown),
               },
             ]}
           />
@@ -236,7 +264,7 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
             filters={filters}
             onFiltersChange={setFilters}
             placeholder="Search actor, action or target…"
-            resultCount={rows.length}
+            resultCount={shown.length}
           />
           <DateRangeFilter value={range} onValueChange={setRange} today={today} label="Event date" />
         </div>
@@ -244,6 +272,9 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
           caption="Audit events"
           rows={rows}
           columns={columns}
+          quickFilter={query}
+          hiddenColumns={hiddenColumns}
+          onHiddenColumnsChange={setHiddenColumns}
           getRowLabel={(e) => `${e.action} on ${e.target}`}
           selectable={false}
           defaultSort={{ columnId: 'at', direction: 'descending' }}

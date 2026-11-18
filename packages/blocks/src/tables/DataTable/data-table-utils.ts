@@ -65,6 +65,12 @@ export interface DataTableColumn<T> {
   sortable?: boolean;
   /** Opt-in header editor; accessor results are evaluated using this type. */
   filter?: DataTableColumnFilter;
+  /**
+   * Quick filter: unset searches the column's accessor and display text while it is visible, `true`
+   * also while it is hidden, `false` never, and a function replaces the text match for this column
+   * (it receives the row and one term, and follows the same visibility rule as unset).
+   */
+  quickFilter?: boolean | ((row: T, term: string) => boolean);
   align?: 'left' | 'right' | 'center';
   /** Can be hidden from the column menu (default true). */
   hideable?: boolean;

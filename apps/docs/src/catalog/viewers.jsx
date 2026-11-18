@@ -387,6 +387,28 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                     file="../../../packages/blocks/src/tables/DataTable/examples/refresh-loading.tsx"
                     height={height}
                   />
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">
+                    Quick filter and debounced page inputs
+                  </h4>
+                  <p className="mb-4 text-[13px] leading-relaxed text-muted-foreground">
+                    showQuickFilter adds a search field to the toolbar that stays rendered while rows are selected.
+                    Typing applies after quickFilterDebounceMs (300 by default); Enter applies at once and Escape clears
+                    at once. Every whitespace-separated term must match some searchable column (case and accents
+                    ignored); column.quickFilter opts a column out (false), in while hidden (true) or replaces the text
+                    match with a function. Client tables filter before sorting and paging and return to page 1; server
+                    tables never filter rows and report the term through onQuickFilterChange and onQueryChange (cause
+                    quickFilter) with onPageChange(1). showQuickFilter="collapsible" starts as a search button. A polite
+                    status reads the match count once a term applies. Use either this or filtering the rows yourself,
+                    not both. FilterBar queryDebounceMs and PageToolbar searchDebounceMs delay their callbacks until
+                    typing pauses, with Enter, clearing and unmount reporting at once.
+                  </p>
+                  <Viewer
+                    kind="block"
+                    id="data-table--quick-filter"
+                    title="Data table · quick filter"
+                    file="../../../packages/blocks/src/tables/DataTable/examples/quick-filter.tsx"
+                    height={height}
+                  />
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">CSV export and clipboard</h4>
                   <Viewer
                     kind="block"

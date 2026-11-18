@@ -6,7 +6,7 @@ export const meta: BlockMeta = {
   family: 'tables',
   status: 'beta',
   description:
-    'Search Input, saved views Select, an Add filter Menu with multi-select per field, removable filter chips and Clear all.',
+    'Search Input, saved views Select, an Add filter Menu with multi-select per field, removable filter chips and Clear all. queryDebounceMs (default 0, a call per keystroke) delays onQueryChange until typing pauses; the input shows each keystroke at once, and Enter, clearing (including Clear all), applying a saved view and unmount report at once, while a controlled query changed from outside replaces the draft.',
   labels: [
     { key: 'searchLandmark', type: 'string', state: 'Always: search landmark name' },
     { key: 'searchLabel', type: 'string', state: 'Always: search input accessible name' },
