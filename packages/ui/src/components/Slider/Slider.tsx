@@ -1,3 +1,4 @@
+import { flushSync } from 'react-dom';
 import { Field as BaseField } from '@base-ui/react/field';
 import { NumberInput, type NumberInputProps } from '../NumberInput/NumberInput';
 import { Slider as BaseSlider } from '@base-ui/react/slider';
@@ -12,9 +13,16 @@ import {
   type Ref,
 } from 'react';
 import { cn } from '../../utils/cn';
-import { sliderVariants, sliderInputVariants, type SliderVariantProps } from './slider.variants';
+import { sliderVariants, sliderInputVariants, sliderMarkVariants, type SliderVariantProps } from './slider.variants';
+
+import { markKeyDown } from './slider-marks-keyboard';
+import { normalizeMarks, SliderMarkLabels, type SliderMark } from './SliderMarks';
 
 export interface SliderProps extends Omit<BaseSlider.Root.Props, 'className' | 'children'>, SliderVariantProps {
+  /** Decorative ticks and optional string labels within min and max. */
+  marks?: SliderMark[];
+  /** Restrict thumb keyboard navigation to marks. Pointer dragging still uses step. */
+  restrictToMarks?: boolean;
   /** Pair each thumb with an editable NumberInput; the slider remains the form control. */
   withInput?: boolean;
   /** Paired input presentation. Size defaults to the slider size. */
@@ -37,13 +45,20 @@ export interface SliderProps extends Omit<BaseSlider.Root.Props, 'className' | '
 
 // Base UI exposes the native range input through Thumb's public render children.
 // Preserve its validation props unless the caller explicitly supplies an invalid state.
-function invalidThumbChildren(children: ReactNode, ariaInvalid: ComponentProps<'input'>['aria-invalid']): ReactNode {
+function invalidThumbChildren(
+  children: ReactNode,
+  ariaInvalid: ComponentProps<'input'>['aria-invalid'],
+  decorate?: (props: ComponentProps<'input'>) => ComponentProps<'input'>,
+): ReactNode {
   return Children.map(children, (child) => {
     if (!isValidElement<ComponentProps<'input'>>(child)) return child;
     if (child.type === 'input')
-      return cloneElement(child, { 'aria-invalid': ariaInvalid ?? child.props['aria-invalid'] });
+      return cloneElement(child, {
+        ...decorate?.(child.props),
+        'aria-invalid': ariaInvalid ?? child.props['aria-invalid'],
+      });
     if (child.type === Fragment)
-      return cloneElement(child, {}, invalidThumbChildren(child.props.children, ariaInvalid));
+      return cloneElement(child, {}, invalidThumbChildren(child.props.children, ariaInvalid, decorate));
     return child;
   });
 }
@@ -93,6 +108,8 @@ function snapInput(value: number, min: number, max: number, step: number) {
  */
 export function Slider({
   size,
+  marks,
+  restrictToMarks = false,
   withInput = false,
   inputProps,
   invalid,
@@ -107,22 +124,97 @@ export function Slider({
   defaultValue,
   ...props
 }: SliderProps) {
-  const [internalValue, setInternalValue] = useState(value ?? defaultValue ?? props.min ?? 0);
-  const currentValue = value ?? internalValue;
+  const [internalState, setInternalState] = useState({
+    value: value ?? defaultValue ?? props.min ?? 0,
+    keyboard: false,
+  });
+  const rawValue = value ?? internalState.value;
+  const currentValue = typeof rawValue === 'number' ? rawValue : [...rawValue].sort((a, b) => a - b);
   const v = sliderVariants({ size });
   const count = thumbCount(value, defaultValue);
   const ariaInvalid = ariaInvalidProp ?? (invalid || undefined);
+  const normalizedMarks = normalizeMarks(marks, props.min ?? 0, props.max ?? 100);
+  const hasLabels = normalizedMarks.some((mark) => mark.label !== undefined);
+  const markStyles = sliderMarkVariants();
+  const values = typeof currentValue === 'number' ? [currentValue] : currentValue;
+  const change: NonNullable<SliderProps['onValueChange']> = (next, details) => {
+    props.onValueChange?.(next, details);
+    if (!details.isCanceled && value === undefined) setInternalState((state) => ({ ...state, value: next }));
+  };
   const control = (
-    <BaseSlider.Control className={v.control()}>
+    <BaseSlider.Control className={cn(v.control(), hasLabels && 'mb-6')}>
       <BaseSlider.Track className={v.track()}>
         <BaseSlider.Indicator className={v.indicator()} />
+        {normalizedMarks.map((mark) => (
+          <span
+            key={mark.value}
+            data-slider-mark=""
+            aria-hidden="true"
+            className={markStyles.mark({
+              active:
+                mark.value >= (values.length > 1 ? (values[0] ?? 0) : (props.min ?? 0)) &&
+                mark.value <= (values[values.length - 1] ?? 0),
+            })}
+            style={{
+              insetInlineStart: `${((mark.value - (props.min ?? 0)) / ((props.max ?? 100) - (props.min ?? 0))) * 100}%`,
+            }}
+          />
+        ))}
+        {hasLabels && (
+          <SliderMarkLabels marks={normalizedMarks} values={values} min={props.min ?? 0} max={props.max ?? 100} />
+        )}
         {Array.from({ length: count }, (_, i) => (
           <BaseSlider.Thumb
             key={i}
             index={i}
             aria-label={thumbLabels?.[i] ?? (count === 1 ? ariaLabel : undefined)}
             className={v.thumb()}
-            render={(thumbProps) => <div {...thumbProps}>{invalidThumbChildren(thumbProps.children, ariaInvalid)}</div>}
+            getAriaValueText={
+              normalizedMarks.length
+                ? (formatted, number) => {
+                    const label = normalizedMarks.find((mark) => mark.value === number)?.label;
+                    return label === undefined ? formatted : `${label}, ${formatted}`;
+                  }
+                : undefined
+            }
+            render={(thumbProps) => (
+              <div {...thumbProps}>
+                {invalidThumbChildren(
+                  thumbProps.children,
+                  ariaInvalid,
+                  restrictToMarks && normalizedMarks.length > 0
+                    ? (input) => ({
+                        step: 'any',
+                        onKeyDown: (event) => {
+                          if (
+                            !markKeyDown(
+                              event,
+                              input.onChange,
+                              values,
+                              i,
+                              normalizedMarks.map((mark) => mark.value),
+                              props.minStepsBetweenValues ?? 0,
+                              (dispatch) => {
+                                if (values.length < 2 || !props.minStepsBetweenValues) return dispatch();
+                                // Mark spacing was checked above. Disable only Base UI's numeric
+                                // gap for this synchronous keyboard dispatch; pointer handling
+                                // retains the caller's gap and step, and creates its own details.
+                                flushSync(() => setInternalState((state) => ({ ...state, keyboard: true })));
+                                try {
+                                  dispatch();
+                                } finally {
+                                  flushSync(() => setInternalState((state) => ({ ...state, keyboard: false })));
+                                }
+                              },
+                            )
+                          )
+                            input.onKeyDown?.(event);
+                        },
+                      })
+                    : undefined,
+                )}
+              </div>
+            )}
           />
         ))}
       </BaseSlider.Track>
@@ -131,10 +223,6 @@ export function Slider({
   if (withInput) {
     const inputStyles = sliderInputVariants();
     const values = typeof currentValue === 'number' ? [currentValue] : currentValue;
-    const change: NonNullable<SliderProps['onValueChange']> = (next, details) => {
-      props.onValueChange?.(next, details);
-      if (!details.isCanceled && value === undefined) setInternalValue(next);
-    };
     const updateInput = (next: number | null, index: number, event: Event, commit = false) => {
       const number = values[index];
       if (next === null || number === undefined) return;
@@ -154,6 +242,7 @@ export function Slider({
     return (
       <BaseSlider.Root
         {...props}
+        minStepsBetweenValues={internalState.keyboard ? 0 : props.minStepsBetweenValues}
         value={currentValue}
         onValueChange={change}
         className={cn(v.root(), className)}
@@ -220,9 +309,10 @@ export function Slider({
   return (
     <BaseSlider.Root
       className={cn(v.root(), className)}
-      value={value}
-      defaultValue={defaultValue}
       {...props}
+      minStepsBetweenValues={internalState.keyboard ? 0 : props.minStepsBetweenValues}
+      value={currentValue}
+      onValueChange={change}
       {...(invalid ? { 'data-invalid': true } : {})}
       aria-invalid={ariaInvalid}
     >

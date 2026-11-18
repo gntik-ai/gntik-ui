@@ -4358,6 +4358,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -4603,6 +4607,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -4933,6 +4941,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -5183,6 +5195,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -5427,6 +5443,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -5706,6 +5726,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -5951,6 +5975,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -6264,6 +6292,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -6540,6 +6572,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -7076,6 +7112,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -7383,6 +7423,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -7651,6 +7695,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -8000,6 +8048,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -8275,6 +8327,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -8545,6 +8601,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -8836,6 +8896,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -9093,6 +9157,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -9345,6 +9413,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -9618,6 +9690,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -9876,6 +9952,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -10139,6 +10219,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -10386,6 +10470,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -10643,6 +10731,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -10896,6 +10988,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -11187,6 +11283,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -11447,6 +11547,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -11695,6 +11799,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -11982,6 +12090,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -12227,6 +12339,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -12520,6 +12636,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -12774,6 +12894,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -13019,6 +13143,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -13276,6 +13404,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -13523,6 +13655,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -13786,6 +13922,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -14031,6 +14171,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -14282,6 +14426,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -14614,6 +14762,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -14865,6 +15017,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -15240,6 +15396,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -15531,6 +15691,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -15787,6 +15951,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -16080,6 +16248,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -16337,6 +16509,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -16583,6 +16759,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -16835,6 +17015,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -17084,6 +17268,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -17339,6 +17527,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -17610,6 +17802,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -17860,6 +18056,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -18106,6 +18306,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -18361,6 +18565,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -18649,6 +18857,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -18904,6 +19116,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -19264,6 +19480,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -19518,6 +19738,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -19833,6 +20057,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -20124,6 +20352,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -20378,6 +20610,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -20627,6 +20863,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -20918,6 +21158,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -21038,15 +21282,23 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form. The optional invalid prop exposes aria-invalid on every thumb input and destructive thumb borders; invalid Field works without the prop. Pair invalid with a FieldError or description explaining the allowed values; colour alone is insufficient. Set withInput to pair each thumb with a kit NumberInput on a fixed grid row. Typing within the bounds updates the slider immediately; blur or Enter clamps and snaps to the nearest step from min (1.37 becomes 1.4 with min 0 and step 0.1). Empty or unparsable text restores the current value without a change callback. Range inputs also clamp against neighbouring thumbs and respect minStepsBetweenValues. The slider remains the only named form control; paired inputs are isolated from Field validation and share the slider or thumb name. showValue is hidden while paired. inputProps accepts unit, hideSteppers and size; input size defaults to the slider size (md by default). See SliderWithInput for single, controlled and range examples.",
+      "description": "Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form. The optional invalid prop exposes aria-invalid on every thumb input and destructive thumb borders; invalid Field works without the prop. Pair invalid with a FieldError or description explaining the allowed values; colour alone is insufficient. Set withInput to pair each thumb with a kit NumberInput on a fixed grid row. Typing within the bounds updates the slider immediately; blur or Enter clamps and snaps to the nearest step from min (1.37 becomes 1.4 with min 0 and step 0.1). Empty or unparsable text restores the current value without a change callback. Range inputs also clamp against neighbouring thumbs and respect minStepsBetweenValues. The slider remains the only named form control; paired inputs are isolated from Field validation and share the slider or thumb name. showValue is hidden while paired. inputProps accepts unit, hideSteppers and size; input size defaults to the slider size (md by default). See SliderWithInput for single, controlled and range examples. marks accepts numbers or { value, label?: string } entries; out-of-range marks are ignored. Ticks and labels are decorative, while labelled stops are announced in aria-valuetext. Use about five labels at most on narrow tracks; additional ticks can be unlabelled. restrictToMarks restricts thumb keyboard navigation only, including withInput: arrows, Shift+Arrow and Page keys move to the adjacent mark; Home/End choose the first/last allowed mark. Range minStepsBetweenValues is counted in marks for these keys. Dragging and paired input edits still use the regular step and numeric gap. See SliderMarks for labelled temperature stops and keyboard-restricted replicas.",
       "files": [
         {
           "path": "packages/ui/src/components/Slider/Slider.tsx",
           "target": "components/ui/slider/Slider.tsx"
         },
         {
+          "path": "packages/ui/src/components/Slider/SliderMarks.tsx",
+          "target": "components/ui/slider/SliderMarks.tsx"
+        },
+        {
           "path": "packages/ui/src/components/Slider/index.ts",
           "target": "components/ui/slider/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Slider/slider-marks-keyboard.ts",
+          "target": "components/ui/slider/slider-marks-keyboard.ts"
         },
         {
           "path": "packages/ui/src/components/Slider/slider.variants.ts",
@@ -21254,6 +21506,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -21524,6 +21780,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -21866,6 +22126,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -22145,6 +22409,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -22396,6 +22664,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -22641,6 +22913,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -22895,6 +23171,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -23259,6 +23539,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -23511,6 +23795,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -23776,6 +24064,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -24025,6 +24317,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -24277,6 +24573,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -24522,6 +24822,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -24803,6 +25107,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -25060,6 +25368,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -25385,6 +25697,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -25629,6 +25945,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -25883,6 +26203,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -26145,6 +26469,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -26464,6 +26792,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -26708,6 +27040,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -27085,6 +27421,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -27344,6 +27684,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -27588,6 +27932,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -27844,6 +28192,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -28081,6 +28433,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -28331,6 +28687,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -28578,6 +28938,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -28833,6 +29197,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -29083,6 +29451,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -29327,6 +29699,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -29577,6 +29953,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -29824,6 +30204,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -30081,6 +30465,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -30328,6 +30716,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
@@ -30580,6 +30972,10 @@
           "target": "components/i18n/messages/slider-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",
           "target": "components/i18n/messages/switch-messages.ts"
         },
@@ -30826,6 +31222,10 @@
         {
           "path": "packages/ui/src/i18n/messages/slider-input-messages.ts",
           "target": "components/i18n/messages/slider-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/slider-marks-messages.ts",
+          "target": "components/i18n/messages/slider-marks-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/switch-messages.ts",

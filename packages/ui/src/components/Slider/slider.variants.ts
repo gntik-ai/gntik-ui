@@ -34,3 +34,20 @@ export const sliderInputVariants = tv({
     input: 'w-20',
   },
 });
+
+export const sliderMarkVariants = tv({
+  slots: {
+    mark: 'pointer-events-none absolute top-1/2 -mt-0.5 -ms-0.5 size-1 rounded-full bg-muted-foreground/50 forced-colors:bg-[CanvasText]',
+    markLabels: 'pointer-events-none absolute top-full mt-3 h-4 w-full',
+    markLabel: 'absolute max-w-full truncate text-[11.5px] text-muted-foreground',
+  },
+  variants: {
+    active: {
+      true: {
+        mark: 'bg-primary-foreground/70 forced-colors:bg-[HighlightText]',
+        markLabel: 'font-medium text-foreground',
+      },
+    },
+    edge: { middle: { markLabel: '-translate-x-1/2 rtl:translate-x-1/2' }, start: {}, end: {} },
+  },
+});
