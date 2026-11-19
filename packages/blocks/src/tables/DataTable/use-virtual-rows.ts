@@ -1,10 +1,15 @@
-import { useEffect, useState, type RefObject } from 'react';
+import { useCallback, useEffect, useState, type RefObject } from 'react';
 
 /** The items to render: `[start, end)` of the flattened body, each `rowHeight` px tall. */
 export interface VirtualWindow {
   start: number;
   end: number;
   rowHeight: number;
+}
+
+export interface VirtualRows extends VirtualWindow {
+  /** Update both the DOM scroll position and the rendered window for imperative reveals. */
+  scrollTo: (top: number) => void;
 }
 
 export interface UseVirtualRowsOptions {
@@ -35,6 +40,11 @@ export function windowFor(
   return { start, end, rowHeight: h };
 }
 
+/** Imperative DOM scroll, without smooth animation or synthetic events. */
+export function setScrollTop(element: HTMLElement, top: number) {
+  element.scrollTop = top;
+}
+
 /**
  * Row virtualization for the DataTable: listens to the scroll container of the table and returns
  * the window of items to render, or `undefined` when disabled.
@@ -46,7 +56,7 @@ export function useVirtualRows({
   tableRef,
   viewportHeight,
   overscan = 8,
-}: UseVirtualRowsOptions): VirtualWindow | undefined {
+}: UseVirtualRowsOptions): VirtualRows | undefined {
   const [scroll, setScroll] = useState({ top: 0, height: viewportHeight });
 
   useEffect(() => {
@@ -78,6 +88,16 @@ export function useVirtualRows({
     };
   }, [enabled, tableRef]);
 
+  const scrollTo = useCallback(
+    (top: number) => {
+      const el = tableRef.current?.parentElement;
+      if (!el) return;
+      setScrollTop(el, top);
+      setScroll({ top: el.scrollTop, height: el.clientHeight || viewportHeight });
+    },
+    [tableRef, viewportHeight],
+  );
+
   if (!enabled) return undefined;
-  return windowFor(count, scroll.top, scroll.height, rowHeight, overscan);
+  return { ...windowFor(count, scroll.top, scroll.height, rowHeight, overscan), scrollTo };
 }

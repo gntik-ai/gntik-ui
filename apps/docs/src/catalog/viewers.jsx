@@ -423,6 +423,16 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                     file="../../../packages/blocks/src/tables/DataTable/examples/quick-filter.tsx"
                     height={height}
                   />
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">
+                    {t('table.example.activation.title')}
+                  </h4>
+                  <Viewer
+                    kind="block"
+                    id="data-table--row-activation"
+                    title={t('table.example.activation.title')}
+                    file="../../../packages/blocks/src/tables/DataTable/examples/row-activation.tsx"
+                    height={height}
+                  />
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">{paginationCopy.rowHeaderHeading}</h4>
                   <Viewer
                     kind="block"

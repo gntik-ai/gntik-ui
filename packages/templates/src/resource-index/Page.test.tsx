@@ -295,3 +295,26 @@ describe('ResourceIndexPage URL state', () => {
     expect(add.mock.calls.some(([name]) => name === 'popstate')).toBe(false);
   });
 });
+
+it('opens the detail href from a status cell through the router once', async () => {
+  const navigate = vi.fn();
+  const RouterLink = ({ onClick, ...props }: ComponentPropsWithRef<'a'>) => (
+    <a
+      {...props}
+      onClick={(event) => {
+        onClick?.(event);
+        if (!event.defaultPrevented) navigate(props.href);
+        event.preventDefault();
+      }}
+    />
+  );
+  render(
+    <LinkProvider component={RouterLink}>
+      <ResourceIndexPage getRowHref={(row) => `/deployments/${row.id}`} />
+    </LinkProvider>,
+  );
+  const first = resourceRows[0]!;
+  const row = screen.getByRole('link', { name: first.name }).closest('tr')!;
+  await userEvent.click(within(row).getByText(new RegExp(`^${first.status}$`, 'i')));
+  expect(navigate).toHaveBeenCalledExactlyOnceWith(`/deployments/${first.id}`);
+});
