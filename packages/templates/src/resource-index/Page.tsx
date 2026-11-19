@@ -12,7 +12,7 @@ import {
   type SortState,
 } from '@gntik-ai/blocks';
 import { Archive, Download, Plus, Trash2 } from '@gntik-ai/icons';
-import { Link, Page, Stack, type BreadcrumbItem } from '@gntik-ai/ui';
+import { Page, Stack, type BreadcrumbItem } from '@gntik-ai/ui';
 import { useMemo, useState } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import {
@@ -128,7 +128,10 @@ export default function ResourceIndexPage<T extends object = ResourceRow>({
   const visible = filterResources(rows, query, filters, columns, locale);
   const visibleSelected = selected.filter((id) => visible.some((r) => getRowId(r) === id));
   const tableColumns = useMemo(
-    () => linkColumns(columns, linkColumnId ?? columns[0]?.id, getRowHref, onRowClick),
+    () =>
+      getRowHref || onRowClick
+        ? columns.map((column) => ({ ...column, rowHeader: column.id === (linkColumnId ?? columns[0]?.id) }))
+        : columns,
     [columns, linkColumnId, getRowHref, onRowClick],
   );
 
@@ -187,6 +190,8 @@ export default function ResourceIndexPage<T extends object = ResourceRow>({
             rows={visible}
             columns={tableColumns}
             getRowId={getRowId}
+            getRowHref={getRowHref}
+            onRowClick={onRowClick ? (row) => onRowClick(row) : undefined}
             sort={sort}
             onSortChange={
               syncUrl
@@ -219,35 +224,6 @@ export default function ResourceIndexPage<T extends object = ResourceRow>({
       </Page>
     </ConsoleShell>
   );
-}
-
-/** Wraps the link column's cell in a kit Link (href) or a link-styled button (click only). */
-function linkColumns<T>(
-  columns: ReadonlyArray<DataTableColumn<T>>,
-  columnId: string | undefined,
-  getRowHref: ((row: T) => string) | undefined,
-  onRowClick: ((row: T) => void) | undefined,
-): ReadonlyArray<DataTableColumn<T>> {
-  if (!getRowHref && !onRowClick) return columns;
-  return columns.map((col) => {
-    if (col.id !== columnId) return col;
-    const content = (row: T) => (col.cell ? col.cell(row) : String(col.accessor?.(row) ?? ''));
-    return {
-      ...col,
-      cell: (row: T) => {
-        const onClick = onRowClick ? () => onRowClick(row) : undefined;
-        return getRowHref ? (
-          <Link href={getRowHref(row)} tone="inherit" underline="hover" onClick={onClick}>
-            {content(row)}
-          </Link>
-        ) : (
-          <Link render={<button type="button" />} tone="inherit" underline="hover" onClick={onClick}>
-            {content(row)}
-          </Link>
-        );
-      },
-    };
-  });
 }
 
 function decodeFilters(raw: readonly string[], fields: readonly FilterField[]): ActiveFilter[] {

@@ -1,5 +1,6 @@
 import type { MoreMenuAction, QueryGroup, TableDensity } from '@gntik-ai/ui';
-import type { ReactNode } from 'react';
+import type { MouseEvent, ReactNode, Ref } from 'react';
+import type { DataTableHandle } from './use-scroll-to-row';
 import type { ColumnWidths, PinnedColumns } from './column-sizing';
 import type { DataTableColumn, DataTableGroupBy, DataTableSelectionModel, SortState } from './data-table-utils';
 import type { DataTableCellEditHandler } from './editable-cell';
@@ -38,6 +39,7 @@ export interface DataTableExportRequest {
 }
 
 interface DataTableCommonProps<T> {
+  ref?: Ref<DataTableHandle>;
   /** Opt-in CSV menu. Values are raw, with spreadsheet formula protection. */
   csvExport?: boolean | DataTableCsvExportOptions;
   /** Delegate exports to the consumer; required for server pagination. */
@@ -48,6 +50,14 @@ interface DataTableCommonProps<T> {
   columns?: ReadonlyArray<DataTableColumn<T>>;
   /** Stable row id (defaults to `row.id`). */
   getRowId?: (row: T) => string;
+  /** Destination activated through the row-header link. Undefined destinations stay inert. */
+  getRowHref?: (row: T) => string | undefined;
+  /** Row/header activation; preventDefault cancels href navigation. */
+  onRowClick?: (row: T, event: MouseEvent<HTMLElement>) => void;
+  /** Pointer accelerator: provide another accessible path through the link, callback or actions. */
+  onRowDoubleClick?: (row: T, event: MouseEvent<HTMLTableRowElement>) => void;
+  /** Toggle the selection control on plain row clicks. Ignored with getRowHref or onRowClick. */
+  selectOnRowClick?: boolean;
   /** Row name for selection and menu labels (defaults to the first column's value). */
   getRowLabel?: (row: T) => string;
   /** Table name (screen-reader caption unless `showCaption`). */

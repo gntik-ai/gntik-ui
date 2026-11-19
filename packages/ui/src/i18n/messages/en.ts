@@ -1,3 +1,4 @@
+import { rowActivationEn } from './row-activation-messages';
 import { layoutEn } from './layout-messages';
 import { tableFiltersEn } from './table-filter-messages';
 import { detailRowsEn } from './detail-row-messages';
@@ -512,6 +513,7 @@ export const en = {
   ...detailRowsEn,
   ...refreshExampleEn,
   ...quickFilterExampleEn,
+  ...rowActivationEn,
   'table.rowActions': 'Actions for {label}',
   'table.emptyDescription': 'Nothing matches the current filters.',
   'filters.label': 'Filters',

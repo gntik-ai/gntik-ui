@@ -4,6 +4,7 @@ import {
   Checkbox,
   cn,
   MoreMenu,
+  Link,
   TableCell,
   TableHead,
   TableRow,
@@ -25,6 +26,7 @@ import type { DataTableLabels } from './labels';
 import { RowEditor, RowEditActions } from './row-editor';
 import type { RowEdits } from './use-row-edits';
 import type { DetailRows } from './use-detail-rows';
+import { useRowActivation, type RowActivationProps } from './row-activation';
 import type { SingleSelection } from './single-selection';
 
 /** A group as the body renders it: its rows on the current page plus header data. */
@@ -42,7 +44,7 @@ export interface DataTableBodyGroup<T> {
 }
 
 /** Row rendering shared by the plain, grouped and virtualized bodies. */
-export interface RowContext<T> {
+export interface RowContext<T> extends RowActivationProps<T> {
   details?: DetailRows<T>;
   labels?: Partial<DataTableLabels>;
   columns: ReadonlyArray<DataTableColumn<T>>;
@@ -79,6 +81,10 @@ export function DataTableRow<T>({
   rowHeaderId,
   getRowId,
   getRowLabel,
+  getRowHref,
+  onRowClick,
+  onRowDoubleClick,
+  selectOnRowClick,
   selectable,
   isRowDisabled,
   selected,
@@ -99,6 +105,20 @@ export function DataTableRow<T>({
   const selectionColumn = selectable || singleSelection != null;
   const isSelected = singleSelection ? singleSelection.selectedId === id : selected.has(id);
   const label = getRowLabel(row);
+  const href = getRowHref?.(row);
+  const activation = useRowActivation({
+    row,
+    href,
+    getRowHref,
+    onRowClick,
+    onRowDoubleClick,
+    selectOnRowClick: selectOnRowClick && selectionColumn && !isRowDisabled?.(row),
+    detail:
+      !getRowHref && !onRowClick && details?.onRowClick && details.canExpand(row)
+        ? () => details.toggle(id)
+        : undefined,
+  });
+  const identifyingColumn = columns.find((c) => c.id === rowHeaderId)?.id ?? columns[0]?.id;
   const tint = (l: TableLayout['lead'] | undefined) => stickyTint(l, { selected: selectionColumn && isSelected });
   return (
     <TableRow
@@ -106,21 +126,10 @@ export function DataTableRow<T>({
       aria-rowindex={ariaRowIndex}
       data-row-id={id}
       style={style}
-      onClick={
-        details?.onRowClick && details.canExpand(row)
-          ? (event) => {
-              const target = event.target;
-              if (
-                target instanceof Element &&
-                event.currentTarget.contains(target) &&
-                !target.closest(
-                  'button, a, input, select, textarea, [role="checkbox"], [role="button"], [contenteditable], [data-cell-editor], [data-cell-edit-trigger], [data-detail-interactive]',
-                )
-              )
-                details.toggle(id);
-            }
-          : undefined
-      }
+      className={activation.clickable ? 'cursor-pointer' : undefined}
+      onAuxClick={activation.onAuxClick}
+      onClick={activation.onClick}
+      onDoubleClick={activation.onDoubleClick}
     >
       {selectionColumn && (
         <TableCell className={cn('w-10 pe-0', layout?.lead.className, tint(layout?.lead))} style={layout?.lead.style}>
@@ -217,6 +226,19 @@ export function DataTableRow<T>({
               >
                 {content}
               </EditableCell>
+            ) : c.id === identifyingColumn && href ? (
+              <Link href={href} tone="inherit" underline="hover" data-row-link onClick={activation.onHeaderClick}>
+                {content}
+              </Link>
+            ) : c.id === identifyingColumn && !getRowHref && onRowClick ? (
+              <Link
+                render={<button type="button" />}
+                tone="inherit"
+                underline="hover"
+                onClick={activation.onHeaderClick}
+              >
+                {content}
+              </Link>
             ) : (
               content
             )}

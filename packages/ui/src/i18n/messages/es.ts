@@ -1,3 +1,4 @@
+import { rowActivationEs } from './row-activation-messages';
 import { layoutEs } from './layout-messages';
 import { tableFiltersEs } from './table-filter-messages';
 import { detailRowsEs } from './detail-row-messages';
@@ -512,6 +513,7 @@ export const es: Messages = {
   ...detailRowsEs,
   ...refreshExampleEs,
   ...quickFilterExampleEs,
+  ...rowActivationEs,
   'table.rowActions': 'Acciones de {label}',
   'table.emptyDescription': 'Nada coincide con los filtros actuales.',
   'filters.label': 'Filtros',

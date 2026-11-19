@@ -64,6 +64,10 @@ import { useRowEdits } from './use-row-edits';
 import { useDetailRows, useDetailVirtualizationWarning } from './use-detail-rows';
 import { useAutoPageSize } from './use-auto-page-size';
 import { RefreshIndicator } from './refresh-indicator';
+import { defaultRowId, defaultRowLabel, EMPTY_PINNED, EMPTY_WIDTHS, ROW_HEIGHT } from './data-table-defaults';
+import { useScrollToRow } from './use-scroll-to-row';
+export type { DataTableHandle, ScrollToRowOptions } from './use-scroll-to-row';
+import { useRowActivationWarning } from './row-activation';
 import { useRefreshStatus } from './use-refresh-status';
 
 export type { DataTableLabels } from './labels';
@@ -74,14 +78,6 @@ export type {
   DataTableExportRequest,
 } from './data-table-props';
 
-const defaultRowId = (row: unknown): string => {
-  const id = (row as { id?: unknown }).id;
-  return typeof id === 'string' || typeof id === 'number' ? String(id) : '';
-};
-const EMPTY_PINNED: PinnedColumns = {};
-const EMPTY_WIDTHS: ColumnWidths = {};
-const ROW_HEIGHT: Record<TableDensity, number> = { comfortable: 44, compact: 36 };
-
 /**
  * Generic data table on the kit Table: typed columns, sortable headers (aria-sort), row selection
  * with select-all / indeterminate, column visibility menu, density toggle, row actions, loading
@@ -89,10 +85,15 @@ const ROW_HEIGHT: Record<TableDensity, number> = { comfortable: 44, compact: 36 
  * column resize and pinning, row virtualization, inline cell editing and saved views.
  */
 export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
+  ref,
   rows = DEPLOYMENT_ROWS as unknown as readonly T[],
   columns = DEPLOYMENT_COLUMNS as unknown as ReadonlyArray<DataTableColumn<T>>,
   getRowId = defaultRowId,
   getRowLabel,
+  getRowHref,
+  onRowClick,
+  onRowDoubleClick,
+  selectOnRowClick,
   caption: captionProp,
   showCaption = false,
   selectable: selectableProp = true,
@@ -204,6 +205,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   className,
   labels,
 }: DataTableProps<T>) {
+  useRowActivationWarning({ getRowHref, onRowClick, selectOnRowClick, detailOnRowClick });
   const caption = captionProp ?? 'Deployments';
   const { t, formatNumber, locale } = useI18n();
   const details = useDetailRows({
@@ -344,13 +346,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     pinned,
   );
   const rowHeaderId = rowHeaderColumnId(columns);
-  const labelOf =
-    getRowLabel ??
-    ((row: T) => {
-      const labelColumn = columns.find((c) => c.id === rowHeaderId) ?? columns[0];
-      const value = labelColumn?.accessor?.(row);
-      return value == null ? getRowId(row) : String(value);
-    });
+  const labelOf = getRowLabel ?? defaultRowLabel(columns, rowHeaderId, getRowId);
 
   const [innerCollapsed, setInnerCollapsed] = useState<ReadonlySet<string>>(() => new Set(defaultCollapsedGroups));
   const collapsed: ReadonlySet<string> = collapsedProp ? new Set(collapsedProp) : innerCollapsed;
@@ -603,6 +599,22 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     },
   });
   const virtual = useVirtualRows({ enabled: virtualOn, count: items, rowHeight, tableRef, viewportHeight: 512 });
+  useScrollToRow({
+    ref,
+    tableRef,
+    rows: sorted,
+    getRowId,
+    page: clientPage,
+    pageSize,
+    paginated,
+    serverMode,
+    changePage,
+    groupBy: effectiveGroupBy,
+    collapsed,
+    toggleGroup,
+    items: flattenBody(pageRows, groupsForBody, collapsed),
+    virtual,
+  });
 
   const exportSelectedIds = singleMode
     ? singleSelection.selectedId == null
@@ -773,6 +785,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             columns={visibleColumns}
             rowHeaderId={rowHeaderId}
             getRowId={getRowId}
+            getRowHref={getRowHref}
+            onRowClick={onRowClick}
+            onRowDoubleClick={onRowDoubleClick}
+            selectOnRowClick={selectOnRowClick && !getRowHref && !onRowClick}
             getRowLabel={labelOf}
             selectable={selectable}
             isRowDisabled={isRowDisabled}
