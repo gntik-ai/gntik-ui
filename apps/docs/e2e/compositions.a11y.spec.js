@@ -32,6 +32,7 @@ const cases = [
     { kind: 'block', id: 'flow-builder--use-flow-state-history' },
     { kind: 'block', id: 'comment-thread--rendered-body' },
     { kind: 'block', id: 'data-table--row-header' },
+    { kind: 'block', id: 'data-table--row-activation' },
     { kind: 'template', id: 'workflow-builder--save-graph' },
   ].flatMap((example) => ['dark', 'light', 'high_contrast'].map((theme) => ({ ...example, theme }))),
   ...[
