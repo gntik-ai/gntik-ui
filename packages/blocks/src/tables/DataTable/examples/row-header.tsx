@@ -1,3 +1,4 @@
+import { useI18n } from '@gntik-ai/ui';
 import { DataTable } from '../DataTable';
 import { DEPLOYMENT_COLUMNS, DEPLOYMENT_ROWS, type DeploymentRow } from '../fixtures';
 
@@ -12,9 +13,10 @@ const columns = [
  * `rowHeader: true`: its cells are row headers and the checkbox is named after the deployment.
  */
 export default function RowHeaderDataTable() {
+  const { t } = useI18n();
   return (
     <DataTable<DeploymentRow>
-      caption="Deployments with the name as row header"
+      caption={t('table.example.quickFilter.caption')}
       rows={DEPLOYMENT_ROWS}
       columns={columns}
       paginated={false}

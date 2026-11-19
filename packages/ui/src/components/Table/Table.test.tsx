@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { nextSortDirection } from './table.variants';
 import TableSortable from './examples/TableSortable';
 import TableSelectable from './examples/TableSelectable';
+import TableRowHeader from './examples/TableRowHeader';
 
 const firstColumn = () =>
   within(screen.getAllByRole('rowgroup')[1]!)
@@ -123,8 +124,15 @@ describe('Table', () => {
       <>
         <TableSortable />
         <TableSelectable />
+        <TableRowHeader />
       </>,
     );
     await expectNoAxeViolations();
+  });
+
+  it('the row header example names each row by its deployment', () => {
+    render(<TableRowHeader />);
+    expect(screen.getAllByRole('rowheader').map((h) => h.textContent)[0]).toBe('web-frontend');
+    expect(screen.getAllByRole('rowheader')).toHaveLength(6);
   });
 });
