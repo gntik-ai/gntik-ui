@@ -39,14 +39,19 @@ export function useRowActivation<T>({
   onRowClick,
   onRowDoubleClick,
   selectOnRowClick,
+  disabled,
   detail,
 }: RowActivationProps<T> & {
   row: T;
   href?: string;
+  disabled?: boolean;
   detail?: () => void;
 }) {
   const following = useRef(false);
-  const clickable = !!href || (!getRowHref && !!onRowClick);
+  // Resolve precedence once; a disabled selection row must not fall through to details.
+  const mode = getRowHref || onRowClick ? 'activate' : selectOnRowClick ? 'select' : detail ? 'detail' : 'none';
+  const clickable = mode === 'activate' && (!!href || (!getRowHref && !!onRowClick));
+  const selecting = mode === 'select' && !disabled;
   const activate = (event: MouseEvent<HTMLTableRowElement>) => {
     if (following.current || isInteractiveTarget(event)) return;
     if (event.button !== 0 && event.button !== 1) return;
@@ -64,14 +69,13 @@ export function useRowActivation<T>({
           following.current = false;
         }
       }
-    } else if (event.button === 0 && !getRowHref && !onRowClick) {
-      if (selectOnRowClick)
-        event.currentTarget.querySelector<HTMLElement>('input[type="radio"], [role="checkbox"]')?.click();
-      else detail?.();
+    } else if (event.button === 0) {
+      if (selecting) event.currentTarget.querySelector<HTMLElement>('input[type="radio"], [role="checkbox"]')?.click();
+      else if (mode === 'detail') detail?.();
     }
   };
   return {
-    clickable: clickable || !!selectOnRowClick,
+    clickable: clickable || selecting,
     onHeaderClick: (event: MouseEvent<HTMLElement>) => {
       if (following.current) return;
       if (event.detail > 0 && hasSelection(event.currentTarget.closest('tr') ?? event.currentTarget)) {
@@ -80,7 +84,7 @@ export function useRowActivation<T>({
       }
       onRowClick?.(row, event);
     },
-    onClick: clickable || selectOnRowClick || detail ? activate : undefined,
+    onClick: clickable || selecting || mode === 'detail' ? activate : undefined,
     onAuxClick: href
       ? (event: MouseEvent<HTMLTableRowElement>) => {
           if (event.button === 1) activate(event);

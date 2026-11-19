@@ -112,15 +112,9 @@ export function DataTableRow<T>({
     getRowHref,
     onRowClick,
     onRowDoubleClick,
-    selectOnRowClick: selectOnRowClick && selectionColumn && !isRowDisabled?.(row),
-    detail:
-      !getRowHref &&
-      !onRowClick &&
-      !(selectOnRowClick && selectionColumn) &&
-      details?.onRowClick &&
-      details.canExpand(row)
-        ? () => details.toggle(id)
-        : undefined,
+    selectOnRowClick: selectOnRowClick && selectionColumn,
+    disabled: isRowDisabled?.(row),
+    detail: details?.onRowClick && details.canExpand(row) ? () => details.toggle(id) : undefined,
   });
   const identifyingColumn = columns.find((c) => c.id === rowHeaderId)?.id ?? columns[0]?.id;
   const tint = (l: TableLayout['lead'] | undefined) => stickyTint(l, { selected: selectionColumn && isSelected });

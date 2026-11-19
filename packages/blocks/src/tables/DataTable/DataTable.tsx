@@ -586,6 +586,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     !refresh.skeleton &&
     (virtualize === true || (virtualize === 'auto' && items > virtualizeThreshold));
   const rowHeight = rowHeightProp ?? ROW_HEIGHT[density];
+  const viewportHeight = 512;
   useAutoPageSize({
     enabled: autoSizing,
     viewportRef: autoSizeViewport,
@@ -599,7 +600,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       if (nextPage !== clientPage) changePage(Math.max(1, nextPage));
     },
   });
-  const virtual = useVirtualRows({ enabled: virtualOn, count: items, rowHeight, tableRef, viewportHeight: 512 });
+  const virtual = useVirtualRows({ enabled: virtualOn, count: items, rowHeight, tableRef, viewportHeight });
   useScrollToRow({
     ref,
     tableRef,
@@ -614,6 +615,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     collapsed,
     toggleGroup,
     items: bodyItems,
+    viewportHeight,
+    stickyHeader: virtualOn || autoSizing,
     virtual,
   });
 
@@ -789,7 +792,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             getRowHref={getRowHref}
             onRowClick={onRowClick}
             onRowDoubleClick={onRowDoubleClick}
-            selectOnRowClick={selectOnRowClick && !getRowHref && !onRowClick}
+            selectOnRowClick={selectOnRowClick}
             getRowLabel={labelOf}
             selectable={selectable}
             isRowDisabled={isRowDisabled}

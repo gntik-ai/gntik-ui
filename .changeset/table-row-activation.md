@@ -4,4 +4,4 @@
 '@gntik-ai/ui': patch
 ---
 
-Add accessible DataTable row links, activation, row selection and scroll-to-row handles, with resource-index integration and translated examples.
+Add accessible DataTable row links, activation, row selection and scroll-to-row handles that respect sticky headers, with resource-index integration and translated examples.

@@ -1,6 +1,6 @@
 import { useImperativeHandle, useLayoutEffect, useRef, useState, type Ref, type RefObject } from 'react';
 import type { DataTableBodyItem } from './data-table-body';
-import type { VirtualWindow } from './use-virtual-rows';
+import { setScrollTop, type VirtualRows } from './use-virtual-rows';
 import { groupKeyOf, type DataTableGroupBy } from './data-table-utils';
 
 export interface ScrollToRowOptions {
@@ -18,7 +18,9 @@ interface Options<T> {
   tableRef: RefObject<HTMLTableElement | null>;
   rows: readonly T[];
   items: readonly DataTableBodyItem<T>[];
-  virtual?: VirtualWindow;
+  virtual?: VirtualRows;
+  viewportHeight: number;
+  stickyHeader: boolean;
   getRowId: (row: T) => string;
   page: number;
   pageSize: number;
@@ -33,10 +35,21 @@ interface Options<T> {
 const FOCUSABLE =
   'a[href], button:not([disabled]):not([data-disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([aria-disabled="true"])';
 
-/** Notify the virtual window after an imperative DOM scroll, including in non-layout environments. */
-function scrollContainer(container: HTMLElement, top: number) {
-  container.scrollTop = top;
-  container.dispatchEvent(new Event('scroll'));
+/** Positions a row within the viewport left below the sticky header. */
+function alignedOffset(
+  top: number,
+  height: number,
+  viewport: number,
+  header: number,
+  current: number,
+  align: ScrollToRowOptions['align'],
+) {
+  if (align === 'center') return top - header - (Math.max(0, viewport - header) - height) / 2;
+  if (align === 'start') return top - header;
+  if (align === 'end') return top + height - viewport;
+  if (top < current + header) return top - header;
+  if (top + height > current + viewport) return top + height - viewport;
+  return current;
 }
 
 /** Wait for controlled page/group updates before using the revealed row's DOM. */
@@ -46,6 +59,8 @@ export function useScrollToRow<T>({
   rows,
   items,
   virtual,
+  viewportHeight,
+  stickyHeader,
   getRowId,
   page: currentPage,
   pageSize,
@@ -77,42 +92,78 @@ export function useScrollToRow<T>({
   }));
 
   useLayoutEffect(() => {
+    if (!pending) return;
+    const document = tableRef.current?.ownerDocument;
+    if (!document) return;
+    // A delayed controlled response must not steal focus after the user moves on.
+    const cancel = () => {
+      active.current = null;
+    };
+    document.addEventListener('pointerdown', cancel, true);
+    document.addEventListener('keydown', cancel, true);
+    document.addEventListener('click', cancel, true);
+    return () => {
+      document.removeEventListener('pointerdown', cancel, true);
+      document.removeEventListener('keydown', cancel, true);
+      document.removeEventListener('click', cancel, true);
+    };
+  }, [pending, tableRef]);
+
+  useLayoutEffect(() => {
     if (!pending || active.current !== pending) return;
     const table = tableRef.current;
     const container = table?.parentElement;
     const index = items.findIndex((item) => item.kind === 'row' && getRowId(item.row) === pending.id);
     if (index < 0) return;
-    if (virtual && container) {
+    if (virtual && container && table) {
       const height = virtual.rowHeight;
-      const viewport = container.clientHeight || 512;
-      const top = index * height;
+      const viewport = container.clientHeight || viewportHeight;
+      // tbody's normal-flow origin includes the header and any top caption.
+      // Rects share viewport coordinates, unlike offsetTop across offset parents.
+      const body = table.tBodies[0];
+      const origin = body
+        ? body.getBoundingClientRect().top -
+          container.getBoundingClientRect().top +
+          container.scrollTop -
+          container.clientTop
+        : 0;
+      const header = stickyHeader ? (table.tHead?.offsetHeight ?? 0) : 0;
+      const top = origin + index * height;
       const current = container.scrollTop;
-      const align = pending.options.align ?? 'auto';
-      const offset =
-        align === 'center'
-          ? top - (viewport - height) / 2
-          : align === 'start'
-            ? top
-            : align === 'end'
-              ? top + height - viewport
-              : top < current
-                ? top
-                : top + height > current + viewport
-                  ? top + height - viewport
-                  : current;
-      const next = Math.max(0, Math.min(offset, items.length * height - viewport));
-      if (current !== next) scrollContainer(container, next);
+      const offset = alignedOffset(top, height, viewport, header, current, pending.options.align);
+      const next = Math.max(0, Math.min(offset, origin + items.length * height - viewport));
+      if (current !== next) virtual.scrollTo(next);
     }
     const row =
       table &&
       [...table.querySelectorAll<HTMLTableRowElement>('[data-row-id]')].find((el) => el.dataset.rowId === pending.id);
     if (!row) return;
-    if (!virtual)
+    if (!virtual) {
       row.scrollIntoView?.({
         block: pending.options.align === 'auto' ? 'nearest' : (pending.options.align ?? 'nearest'),
         behavior: 'instant',
       });
+      // Native scrollIntoView does not account for the cells sticking over the row.
+      if (stickyHeader && container && table) {
+        const rect = row.getBoundingClientRect();
+        const top = rect.top - container.getBoundingClientRect().top + container.scrollTop - container.clientTop;
+        setScrollTop(
+          container,
+          Math.max(
+            0,
+            alignedOffset(
+              top,
+              rect.height,
+              container.clientHeight || viewportHeight,
+              table.tHead?.offsetHeight ?? 0,
+              container.scrollTop,
+              pending.options.align,
+            ),
+          ),
+        );
+      }
+    }
     if (pending.options.focus) row.querySelector<HTMLElement>(FOCUSABLE)?.focus({ preventScroll: true });
     active.current = null;
-  }, [pending, tableRef, items, virtual, getRowId]);
+  }, [pending, tableRef, items, virtual, viewportHeight, stickyHeader, getRowId]);
 }
