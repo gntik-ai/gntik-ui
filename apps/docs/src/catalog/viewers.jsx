@@ -423,6 +423,14 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                     file="../../../packages/blocks/src/tables/DataTable/examples/quick-filter.tsx"
                     height={height}
                   />
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">{paginationCopy.rowHeaderHeading}</h4>
+                  <Viewer
+                    kind="block"
+                    id="data-table--row-header"
+                    title={paginationCopy.rowHeaderViewer}
+                    file="../../../packages/blocks/src/tables/DataTable/examples/row-header.tsx"
+                    height={height}
+                  />
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">CSV export and clipboard</h4>
                   <Viewer
                     kind="block"

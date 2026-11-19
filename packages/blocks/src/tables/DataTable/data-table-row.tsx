@@ -46,6 +46,8 @@ export interface RowContext<T> {
   details?: DetailRows<T>;
   labels?: Partial<DataTableLabels>;
   columns: ReadonlyArray<DataTableColumn<T>>;
+  /** Id of the row-header column (resolved from all columns); its cell renders only while visible. */
+  rowHeaderId?: string;
   getRowId: (row: T) => string;
   getRowLabel: (row: T) => string;
   selectable: boolean;
@@ -74,6 +76,7 @@ export function DataTableRow<T>({
   details,
   row,
   columns,
+  rowHeaderId,
   getRowId,
   getRowLabel,
   selectable,
@@ -178,6 +181,7 @@ export function DataTableRow<T>({
         return (
           <TableCell
             key={c.id}
+            rowHeader={c.id === rowHeaderId}
             data-detail-interactive={details && (editable || (rowEdits && isCellEditable(c, row))) ? '' : undefined}
             align={columnAlign(c)}
             style={cl?.style}

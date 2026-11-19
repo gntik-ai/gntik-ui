@@ -205,6 +205,7 @@ export const PREVIEW_LOADERS = {
     'data-table--quick-filter': () => import('../../../packages/blocks/src/tables/DataTable/examples/quick-filter'),
     'data-table--client-selection': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/client-selection'),
+    'data-table--row-header': () => import('../../../packages/blocks/src/tables/DataTable/examples/row-header'),
     'data-table--paginated-single-selection': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/paginated-single-selection'),
     'plan-card--summary-full': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryFull'),

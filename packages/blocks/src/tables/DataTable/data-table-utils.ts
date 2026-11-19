@@ -29,6 +29,17 @@ export function columnAlign<T>(column: DataTableColumn<T>): DataTableColumn<T>['
   return column.align ?? (column.variant === 'numeric' ? 'right' : undefined);
 }
 
+/**
+ * Id of the row-header column: the first column with `rowHeader: true`, else the first column
+ * unless it sets `rowHeader: false`, else none. Resolve from every column, not only the visible ones.
+ */
+export function rowHeaderColumnId<T>(columns: ReadonlyArray<DataTableColumn<T>>): string | undefined {
+  const marked = columns.find((c) => c.rowHeader === true);
+  if (marked) return marked.id;
+  const first = columns[0];
+  return first && first.rowHeader !== false ? first.id : undefined;
+}
+
 /** Draft edited by a header; identity and field are assigned on Apply. */
 export type DataTableFilterValue = Pick<QueryCondition, 'operator' | 'value'>;
 
@@ -81,6 +92,13 @@ export interface DataTableColumn<T> {
    * (secondary text), `numeric` (monospace tabular figures, right-aligned unless `align` is set).
    */
   variant?: DataTableColumnVariant;
+  /**
+   * Row header: body cells of this column render as `th scope="row"` so a screen reader announces
+   * which row a value belongs to. The first column with `true` wins; otherwise the first column
+   * is the row header unless it sets `false`, which turns row headers off. Hidden columns are
+   * never replaced by another one.
+   */
+  rowHeader?: boolean;
   /** Classes for the body cells (merged after the variant's). */
   className?: string;
   /** Classes for the header cell (e.g. a width). */

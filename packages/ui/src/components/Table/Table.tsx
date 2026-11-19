@@ -150,11 +150,14 @@ export interface TableCellProps extends Omit<TdHTMLAttributes<HTMLTableCellEleme
   className?: string;
   ref?: Ref<HTMLTableCellElement>;
   align?: Align;
+  /** Renders a row header (`th scope="row"`) with the same cell styling, in normal font weight. */
+  rowHeader?: boolean;
 }
 
-export function TableCell({ align = 'left', className, ...props }: TableCellProps) {
+export function TableCell({ align = 'left', rowHeader = false, className, ...props }: TableCellProps) {
   const { density } = useContext(TableContext);
-  return <td className={cn(tableVariants({ density, align }).cell(), className)} {...props} />;
+  const classes = cn(tableVariants({ density, align }).cell(), rowHeader && 'font-normal', className);
+  return rowHeader ? <th scope="row" className={classes} {...props} /> : <td className={classes} {...props} />;
 }
 
 export interface TableCaptionProps extends Omit<HTMLAttributes<HTMLTableCaptionElement>, 'className'> {

@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { nextSortDirection } from './table.variants';
 import TableSortable from './examples/TableSortable';
 import TableSelectable from './examples/TableSelectable';
+import TableRowHeader from './examples/TableRowHeader';
 
 const firstColumn = () =>
   within(screen.getAllByRole('rowgroup')[1]!)
@@ -16,6 +17,26 @@ describe('Table', () => {
     expect(nextSortDirection('none')).toBe('ascending');
     expect(nextSortDirection('ascending')).toBe('descending');
     expect(nextSortDirection('descending')).toBe('ascending');
+  });
+
+  it('renders a row header cell as th scope=row with the cell classes and normal weight', () => {
+    render(
+      <Table aria-label="Rows">
+        <TableBody>
+          <TableRow>
+            <TableCell rowHeader align="right" className="font-mono">
+              orders-api
+            </TableCell>
+            <TableCell>eu-west-1</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>,
+    );
+    const header = screen.getByRole('rowheader', { name: 'orders-api' });
+    expect(header.tagName).toBe('TH');
+    expect(header).toHaveAttribute('scope', 'row');
+    expect(header).toHaveClass('border-b', 'px-4', 'text-end', 'font-normal', 'font-mono');
+    expect(screen.getByRole('cell', { name: 'eu-west-1' }).tagName).toBe('TD');
   });
 
   it('exposes a named table with column headers and aria-sort on sortable ones', () => {
@@ -103,8 +124,15 @@ describe('Table', () => {
       <>
         <TableSortable />
         <TableSelectable />
+        <TableRowHeader />
       </>,
     );
     await expectNoAxeViolations();
+  });
+
+  it('the row header example names each row by its deployment', () => {
+    render(<TableRowHeader />);
+    expect(screen.getAllByRole('rowheader').map((h) => h.textContent)[0]).toBe('web-frontend');
+    expect(screen.getAllByRole('rowheader')).toHaveLength(6);
   });
 });

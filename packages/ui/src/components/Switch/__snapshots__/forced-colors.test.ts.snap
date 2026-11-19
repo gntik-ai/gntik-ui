@@ -266,7 +266,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 exports[`forced colours > preserves the base non-forced output at the public variants seam > Table 1`] = `
 {
   "base": "",
-  "body": "[&>tr:last-child>td]:border-b-0",
+  "body": "[&>tr:last-child>td]:border-b-0 [&>tr:last-child>th[scope=row]]:border-b-0",
   "caption": "caption-bottom px-4 py-3 text-start text-[12px] text-muted-foreground",
   "cell": "border-b border-border px-4 align-middle py-3 text-start",
   "container": "relative w-full overflow-auto focus-ring",

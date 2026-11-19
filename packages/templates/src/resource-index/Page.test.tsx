@@ -147,7 +147,7 @@ describe('ResourceIndexPage URL state', () => {
       within(table)
         .getAllByRole('row')
         .slice(1)
-        .map((row) => within(row).getAllByRole('cell')[1]?.textContent),
+        .map((row) => within(row).getByRole('rowheader').textContent),
     ).toEqual(['api zeta', 'api alpha']);
     expect(screen.getByRole('columnheader', { name: /Name/ })).toHaveAttribute('aria-sort', 'descending');
     await userEvent.click(screen.getByRole('button', { name: 'Add filter' }));
@@ -274,7 +274,7 @@ describe('ResourceIndexPage URL state', () => {
       within(screen.getByRole('table', { name: 'Deployments' }))
         .getAllByRole('row')
         .slice(1)
-        .map((row) => within(row).getAllByRole('cell')[1]?.textContent),
+        .map((row) => within(row).getByRole('rowheader').textContent),
     ).toEqual(['api zeta', 'api running', 'api alpha']);
   });
 

@@ -278,7 +278,8 @@ describe('DataTable single selection', () => {
     expect(within(group).getByRole('table', { name: 'Deployments' })).not.toHaveAttribute('role');
     expect(within(group).getAllByRole('row')).toHaveLength(4);
     expect(within(group).getAllByRole('columnheader')).toHaveLength(2);
-    expect(within(group).getAllByRole('cell')).toHaveLength(6);
+    expect(within(group).getAllByRole('cell')).toHaveLength(3);
+    expect(within(group).getAllByRole('rowheader')).toHaveLength(3);
     expect(group.querySelector('table [role]')).toBeNull();
   });
 
@@ -478,7 +479,7 @@ describe('DataTable single selection', () => {
       </>,
     );
     await user.click(screen.getByRole('button', { name: 'Before' }));
-    await user.pointer({ target: screen.getByText('Beta', { selector: 'td' }), keys: '[MouseLeft>]' });
+    await user.pointer({ target: screen.getByText('Beta', { selector: 'th' }), keys: '[MouseLeft>]' });
     for (const radio of screen.getAllByRole('radio')) expect(radio).not.toHaveFocus();
     await user.pointer({ keys: '[/MouseLeft]' });
     expect(screen.getByRole('radio', { name: 'Beta' })).toBeChecked();
