@@ -10,14 +10,14 @@ import { CursorPagerFooter } from './CursorPagerFooter';
 it('lets a consumer navigate its own opaque cursor stack without numbered table pagination', async () => {
   const user = userEvent.setup();
   render(<CursorStack />);
-  expect(screen.getByRole('cell', { name: 'Record A' })).toBeVisible();
+  expect(screen.getByRole('rowheader', { name: 'Record A' })).toBeVisible();
   await user.click(screen.getByRole('button', { name: 'Next page' }));
-  expect(screen.getByRole('cell', { name: 'Record B' })).toBeVisible();
+  expect(screen.getByRole('rowheader', { name: 'Record B' })).toBeVisible();
   await user.click(screen.getByRole('button', { name: 'Next page' }));
-  expect(screen.getByRole('cell', { name: 'Record C' })).toBeVisible();
+  expect(screen.getByRole('rowheader', { name: 'Record C' })).toBeVisible();
   expect(screen.getByRole('button', { name: 'Next page' })).toHaveAttribute('aria-disabled', 'true');
   await user.click(screen.getByRole('button', { name: 'Previous page' }));
-  expect(screen.getByRole('cell', { name: 'Record B' })).toBeVisible();
+  expect(screen.getByRole('rowheader', { name: 'Record B' })).toBeVisible();
   expect(screen.getAllByRole('navigation')).toHaveLength(1);
 });
 

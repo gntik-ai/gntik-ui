@@ -33,7 +33,7 @@ const renderedIds = () =>
   screen
     .getAllByRole('row')
     .slice(1)
-    .map((row) => within(row).getAllByRole('cell')[0]!.textContent);
+    .map((row) => within(row).getByRole('rowheader').textContent);
 const summary = () => document.querySelector('[aria-live="polite"]');
 
 // @ts-expect-error Server pagination needs a known total.

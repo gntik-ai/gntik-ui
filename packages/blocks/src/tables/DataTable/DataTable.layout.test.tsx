@@ -83,7 +83,7 @@ describe('DataTable column pinning', () => {
     expect(headers[0]).toHaveClass('sticky', 'z-sticky-pinned');
     expect(headers[headers.length - 1]).toHaveClass('sticky', 'z-sticky-pinned');
     const firstRow = within(screen.getAllByRole('rowgroup')[1]!).getAllByRole('row')[0]!;
-    expect(within(firstRow).getAllByRole('cell')[1]).toHaveClass('sticky', 'bg-card', 'z-raised');
+    expect(within(firstRow).getByRole('rowheader')).toHaveClass('sticky', 'bg-card', 'z-raised');
     await expectNoAxeViolations(container);
   });
 

@@ -10,7 +10,7 @@ const columns: DataTableColumn<Row>[] = [
   { id: 'value', header: 'Value', accessor: (row) => row.value, sortable: true },
 ];
 const rowsOf = (...values: CellValue[]): Row[] => values.map((value, i) => ({ id: String(i), value }));
-const cellTexts = () => screen.getAllByRole('cell').map((cell) => cell.textContent);
+const cellTexts = () => screen.getAllByRole('rowheader').map((cell) => cell.textContent);
 
 describe('DataTable default cell locale', () => {
   it('reads boolean labels from the Spanish catalog', () => {

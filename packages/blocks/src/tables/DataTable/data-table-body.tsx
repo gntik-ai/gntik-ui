@@ -213,7 +213,11 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
             key={group.key}
             data-group={group.key}
             // Every group but the last keeps the bottom rule of its last row.
-            className={gi < groups.length - 1 ? '[&>tr:last-child>td]:border-b' : undefined}
+            className={
+              gi < groups.length - 1
+                ? '[&>tr:last-child>td]:border-b [&>tr:last-child>th[scope=row]]:border-b'
+                : undefined
+            }
           >
             {header(group, open)}
             {open && group.rows.map((r) => row(r))}

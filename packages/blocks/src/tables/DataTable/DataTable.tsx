@@ -37,6 +37,7 @@ import {
   groupKeyOf,
   groupRows,
   paginate,
+  rowHeaderColumnId,
   selectionState,
   sortRows,
   toggleAll,
@@ -342,11 +343,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     columns.filter((c) => !hidden.has(c.id)),
     pinned,
   );
+  const rowHeaderId = rowHeaderColumnId(columns);
   const labelOf =
     getRowLabel ??
     ((row: T) => {
-      const first = columns[0];
-      const value = first?.accessor?.(row);
+      const labelColumn = columns.find((c) => c.id === rowHeaderId) ?? columns[0];
+      const value = labelColumn?.accessor?.(row);
       return value == null ? getRowId(row) : String(value);
     });
 
@@ -769,6 +771,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             labels={labels}
             rows={pageRows}
             columns={visibleColumns}
+            rowHeaderId={rowHeaderId}
             getRowId={getRowId}
             getRowLabel={labelOf}
             selectable={selectable}

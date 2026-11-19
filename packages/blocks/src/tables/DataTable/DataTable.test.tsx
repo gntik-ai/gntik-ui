@@ -176,7 +176,7 @@ describe('DataTable', () => {
         selectable={false}
       />,
     );
-    expect(screen.getByText('api').closest('td')).not.toHaveClass('font-mono');
+    expect(screen.getByText('api').closest('th')).not.toHaveClass('font-mono');
     expect(screen.getByText('eu-west-1').closest('td')).toHaveClass('font-mono');
     expect(screen.getByText('Paused').closest('td')).toHaveClass('text-muted-foreground');
     const cost = screen.getByText('12').closest('td')!;

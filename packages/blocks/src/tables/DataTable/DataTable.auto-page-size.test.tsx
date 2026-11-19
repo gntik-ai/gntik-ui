@@ -11,7 +11,7 @@ const visibleIds = () =>
   screen
     .getAllByRole('row')
     .slice(1)
-    .map((row) => within(row).getByRole('cell').textContent);
+    .map((row) => within(row).getByRole('rowheader').textContent);
 
 function geometry(initialHeight: number) {
   let height = initialHeight;

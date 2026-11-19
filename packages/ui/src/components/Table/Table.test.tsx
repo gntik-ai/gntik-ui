@@ -18,6 +18,26 @@ describe('Table', () => {
     expect(nextSortDirection('descending')).toBe('ascending');
   });
 
+  it('renders a row header cell as th scope=row with the cell classes and normal weight', () => {
+    render(
+      <Table aria-label="Rows">
+        <TableBody>
+          <TableRow>
+            <TableCell rowHeader align="right" className="font-mono">
+              orders-api
+            </TableCell>
+            <TableCell>eu-west-1</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>,
+    );
+    const header = screen.getByRole('rowheader', { name: 'orders-api' });
+    expect(header.tagName).toBe('TH');
+    expect(header).toHaveAttribute('scope', 'row');
+    expect(header).toHaveClass('border-b', 'px-4', 'text-end', 'font-normal', 'font-mono');
+    expect(screen.getByRole('cell', { name: 'eu-west-1' }).tagName).toBe('TD');
+  });
+
   it('exposes a named table with column headers and aria-sort on sortable ones', () => {
     render(<TableSortable />);
     const table = screen.getByRole('table', { name: 'Deployments in this project, last 30 days.' });

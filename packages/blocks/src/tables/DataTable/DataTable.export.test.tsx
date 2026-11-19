@@ -221,7 +221,7 @@ it.each([
       selectionModel={{ type: selectionModel.type, ids: [...selectionModel.ids] }}
     />,
   );
-  const cell = screen.getByRole('cell', { name: 'Item 15' });
+  const cell = screen.getByRole('rowheader', { name: 'Item 15' });
   expect(fireEvent.keyDown(cell, { key: 'c', ctrlKey: true })).toBe(true);
   expect(writeText).not.toHaveBeenCalled();
   await user.click(screen.getByRole('button', { name: 'Export' }));
@@ -293,7 +293,7 @@ it.each(['ctrlKey', 'metaKey'] as const)(
     const targets = [
       screen.getByRole('checkbox', { name: 'Select Item 95' }),
       screen.getByRole('button', { name: 'Actions for Item 95' }),
-      screen.getByRole('cell', { name: 'Item 95' }),
+      screen.getByRole('rowheader', { name: 'Item 95' }),
     ];
     for (const target of targets) {
       target.setAttribute('tabindex', '0');
@@ -405,7 +405,7 @@ it.each([false, true])('prefers DataTableLabels for every export string (copy re
 
 it('preserves document text selection when copying in a cell', () => {
   render(<DataTable rows={rows} columns={columns} csvExport defaultSelectedIds={['2']} />);
-  const cell = screen.getByRole('cell', { name: 'Item 1' });
+  const cell = screen.getByRole('rowheader', { name: 'Item 1' });
   const selection = window.getSelection()!;
   const range = document.createRange();
   range.selectNodeContents(cell);
@@ -426,7 +426,7 @@ it.each([
   { csvExport: { scopes: ['rows'] as Array<'rows'> }, defaultSelectedIds: ['1'] },
 ])('leaves browser copy alone when selected copying is not enabled: %j', (props) => {
   render(<DataTable rows={rows} columns={columns} {...props} />);
-  expect(fireEvent.keyDown(screen.getByRole('cell', { name: 'Item 1' }), { key: 'c', ctrlKey: true })).toBe(true);
+  expect(fireEvent.keyDown(screen.getByRole('rowheader', { name: 'Item 1' }), { key: 'c', ctrlKey: true })).toBe(true);
   expect(writeText).not.toHaveBeenCalled();
 });
 
