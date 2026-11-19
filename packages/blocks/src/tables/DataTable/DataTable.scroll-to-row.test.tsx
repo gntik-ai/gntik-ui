@@ -8,7 +8,12 @@ const rows = Array.from({ length: 30 }, (_, index) => ({
   group: index < 20 ? 'west' : 'east',
 }));
 const columns = [{ id: 'name', header: 'Deployment', accessor: (row: (typeof rows)[number]) => row.name }];
-afterEach(() => vi.restoreAllMocks());
+const originalScrollIntoView = Object.getOwnPropertyDescriptor(Element.prototype, 'scrollIntoView');
+afterEach(() => {
+  vi.restoreAllMocks();
+  if (originalScrollIntoView) Object.defineProperty(Element.prototype, 'scrollIntoView', originalScrollIntoView);
+  else Reflect.deleteProperty(Element.prototype, 'scrollIntoView');
+});
 
 it('reveals a row on client page 3 and expands its group, while missing ids change nothing', async () => {
   const ref = createRef<DataTableHandle>();
@@ -148,4 +153,22 @@ it('never requests an unloaded server page', () => {
     expect(ref.current!.scrollToRow('id24')).toBe(false);
   });
   expect(onPageChange).not.toHaveBeenCalled();
+});
+
+it('cancels a pending controlled reveal on the next request, including an unknown id', () => {
+  const ref = createRef<DataTableHandle>();
+  const scrollIntoView = vi.fn();
+  Element.prototype.scrollIntoView = scrollIntoView;
+  const props = { ref, rows, columns, onPageChange: vi.fn() };
+  const { rerender } = render(<DataTable {...props} page={1} />);
+  act(() => {
+    expect(ref.current!.scrollToRow('id24', { focus: true })).toBe(true);
+  });
+  act(() => {
+    expect(ref.current!.scrollToRow('missing')).toBe(false);
+  });
+  expect(props.onPageChange).toHaveBeenCalledExactlyOnceWith(3);
+  rerender(<DataTable {...props} page={3} />);
+  expect(scrollIntoView).not.toHaveBeenCalled();
+  expect(screen.getByRole('checkbox', { name: 'Select Deployment 24' })).not.toHaveFocus();
 });

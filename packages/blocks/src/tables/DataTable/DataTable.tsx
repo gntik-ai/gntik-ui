@@ -577,7 +577,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     trail: hasActions,
   });
 
-  const items = refresh.skeleton || pageRows.length === 0 ? 0 : flattenBody(pageRows, groupsForBody, collapsed).length;
+  const bodyItems = flattenBody(pageRows, groupsForBody, collapsed);
+  const items = refresh.skeleton ? 0 : bodyItems.length;
   useDetailVirtualizationWarning(details != null && virtualize === true);
   const virtualOn =
     !details &&
@@ -612,7 +613,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     groupBy: effectiveGroupBy,
     collapsed,
     toggleGroup,
-    items: flattenBody(pageRows, groupsForBody, collapsed),
+    items: bodyItems,
     virtual,
   });
 

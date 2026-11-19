@@ -50,13 +50,13 @@ interface DataTableCommonProps<T> {
   columns?: ReadonlyArray<DataTableColumn<T>>;
   /** Stable row id (defaults to `row.id`). */
   getRowId?: (row: T) => string;
-  /** Destination activated through the row-header link. Undefined destinations stay inert. */
+  /** Destination activated through the non-editable identifying column link. Undefined destinations stay inert. */
   getRowHref?: (row: T) => string | undefined;
-  /** Row/header activation; preventDefault cancels href navigation. */
+  /** Row/header activation, including modifier clicks; preventDefault cancels href navigation. */
   onRowClick?: (row: T, event: MouseEvent<HTMLElement>) => void;
   /** Pointer accelerator: provide another accessible path through the link, callback or actions. */
   onRowDoubleClick?: (row: T, event: MouseEvent<HTMLTableRowElement>) => void;
-  /** Toggle the selection control on plain row clicks. Ignored with getRowHref or onRowClick. */
+  /** Toggle the selection control on plain row clicks. Takes precedence over detail clicks. Ignored with getRowHref or onRowClick. */
   selectOnRowClick?: boolean;
   /** Row name for selection and menu labels (defaults to the first column's value). */
   getRowLabel?: (row: T) => string;

@@ -57,13 +57,15 @@ export function useScrollToRow<T>({
   toggleGroup,
 }: Options<T>) {
   const [pending, setPending] = useState<{ id: string; options: ScrollToRowOptions } | null>(null);
-  const completed = useRef<typeof pending>(null);
+  const active = useRef<typeof pending>(null);
   useImperativeHandle(ref, () => ({
     scrollToRow(id, scrollOptions = {}) {
+      active.current = null;
       const index = rows.findIndex((row) => getRowId(row) === id);
       const row = rows[index];
       if (index < 0 || row === undefined) return false;
-      setPending({ id, options: scrollOptions });
+      active.current = { id, options: scrollOptions };
+      setPending(active.current);
       const page = Math.floor(index / Math.max(1, pageSize)) + 1;
       if (!serverMode && paginated && page !== currentPage) changePage(page);
       if (groupBy) {
@@ -75,7 +77,7 @@ export function useScrollToRow<T>({
   }));
 
   useLayoutEffect(() => {
-    if (!pending || completed.current === pending) return;
+    if (!pending || active.current !== pending) return;
     const table = tableRef.current;
     const container = table?.parentElement;
     const index = items.findIndex((item) => item.kind === 'row' && getRowId(item.row) === pending.id);
@@ -111,6 +113,6 @@ export function useScrollToRow<T>({
         behavior: 'instant',
       });
     if (pending.options.focus) row.querySelector<HTMLElement>(FOCUSABLE)?.focus({ preventScroll: true });
-    completed.current = pending;
+    active.current = null;
   }, [pending, tableRef, items, virtual, getRowId]);
 }

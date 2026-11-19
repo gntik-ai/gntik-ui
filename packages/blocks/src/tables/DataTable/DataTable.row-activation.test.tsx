@@ -312,7 +312,7 @@ it('preserves a text selection ending on the identifying link without navigating
   range.selectNodeContents(link);
   selection.addRange(range);
   fireEvent.mouseUp(link);
-  fireEvent.click(link);
+  fireEvent.click(link, { detail: 1 });
   expect(navigate).not.toHaveBeenCalled();
   expect(onRowClick).not.toHaveBeenCalled();
   expect(selection.toString()).toBe('orders-api');
@@ -363,4 +363,73 @@ it('does not call onRowClick twice when it synchronously rerenders the table bef
   fireEvent.click(screen.getByText('west'));
   expect(navigate).toHaveBeenCalledTimes(1);
   expect(onRowClick).toHaveBeenCalledTimes(1);
+});
+
+it.each(['link-enter', 'button-enter', 'button-space'] as const)(
+  'activates %s from the keyboard while row text remains selected',
+  async (mode) => {
+    const navigate = vi.fn();
+    const onRowClick = vi.fn();
+    function RouterLink({ onClick, ...props }: ComponentPropsWithRef<'a'>) {
+      return (
+        <a
+          {...props}
+          onClick={(event) => {
+            onClick?.(event);
+            if (!event.defaultPrevented) navigate(props.href);
+            event.preventDefault();
+          }}
+        />
+      );
+    }
+    const user = userEvent.setup();
+    render(
+      <LinkProvider component={RouterLink}>
+        <DataTable
+          rows={rows}
+          columns={columns}
+          selectable={false}
+          showColumnMenu={false}
+          showDensityToggle={false}
+          paginated={false}
+          getRowHref={mode === 'link-enter' ? href : undefined}
+          onRowClick={onRowClick}
+        />
+      </LinkProvider>,
+    );
+    await user.tab();
+    const control = screen.getByRole(mode === 'link-enter' ? 'link' : 'button', { name: 'orders-api' });
+    expect(control).toHaveFocus();
+    const range = document.createRange();
+    range.selectNodeContents(control);
+    window.getSelection()!.removeAllRanges();
+    window.getSelection()!.addRange(range);
+    expect(window.getSelection()!.toString()).toBe('orders-api');
+    await user.keyboard(mode === 'button-space' ? ' ' : '{Enter}');
+    expect(onRowClick).toHaveBeenCalledExactlyOnceWith(rows[0], expect.anything());
+    if (mode === 'link-enter') expect(navigate).toHaveBeenCalledExactlyOnceWith('/deployments/orders');
+    else expect(navigate).not.toHaveBeenCalled();
+    expect(window.getSelection()!.toString()).toBe('orders-api');
+  },
+);
+
+it('gives row selection precedence over details even when selection is disabled for the row', async () => {
+  const onSelectionChange = vi.fn();
+  const onExpandedDetailIdsChange = vi.fn();
+  render(
+    <DataTable
+      rows={rows}
+      columns={columns}
+      selectOnRowClick
+      detailOnRowClick
+      renderDetail={() => 'Details'}
+      isRowDisabled={(row) => row.id === 'jobs'}
+      onSelectionChange={onSelectionChange}
+      onExpandedDetailIdsChange={onExpandedDetailIdsChange}
+    />,
+  );
+  await userEvent.click(screen.getByText('west'));
+  await userEvent.click(screen.getByText('east'));
+  expect(onSelectionChange).toHaveBeenCalledExactlyOnceWith(['orders']);
+  expect(onExpandedDetailIdsChange).not.toHaveBeenCalled();
 });

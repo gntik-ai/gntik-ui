@@ -114,7 +114,11 @@ export function DataTableRow<T>({
     onRowDoubleClick,
     selectOnRowClick: selectOnRowClick && selectionColumn && !isRowDisabled?.(row),
     detail:
-      !getRowHref && !onRowClick && details?.onRowClick && details.canExpand(row)
+      !getRowHref &&
+      !onRowClick &&
+      !(selectOnRowClick && selectionColumn) &&
+      details?.onRowClick &&
+      details.canExpand(row)
         ? () => details.toggle(id)
         : undefined,
   });

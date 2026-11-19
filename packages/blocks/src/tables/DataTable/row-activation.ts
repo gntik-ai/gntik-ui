@@ -74,7 +74,7 @@ export function useRowActivation<T>({
     clickable: clickable || !!selectOnRowClick,
     onHeaderClick: (event: MouseEvent<HTMLElement>) => {
       if (following.current) return;
-      if (hasSelection(event.currentTarget.closest('tr') ?? event.currentTarget)) {
+      if (event.detail > 0 && hasSelection(event.currentTarget.closest('tr') ?? event.currentTarget)) {
         event.preventDefault();
         return;
       }
