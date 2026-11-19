@@ -32,12 +32,14 @@ export function NewRow<T>({
   columns,
   selectionColumn,
   detailColumn = false,
+  reorderColumn = false,
   labels,
 }: {
   edits: RowEdits<T>;
   columns: ReadonlyArray<DataTableColumn<T>>;
   selectionColumn: boolean;
   detailColumn?: boolean;
+  reorderColumn?: boolean;
   labels?: Partial<DataTableLabels>;
 }) {
   const { t } = useI18n();
@@ -49,6 +51,7 @@ export function NewRow<T>({
     <TableBody>
       <TableRow data-row-id={edits.newId}>
         {selectionColumn && <TableCell />}
+        {reorderColumn && <TableCell />}
         {detailColumn && <TableCell />}
         {columns.map((column) => (
           <TableCell key={column.id}>

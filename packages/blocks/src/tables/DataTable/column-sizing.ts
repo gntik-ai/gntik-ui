@@ -79,6 +79,7 @@ export interface TableLayout {
   lead: CellLayout;
   /** Optional leading detail toggle column. */
   detail?: CellLayout;
+  reorder?: CellLayout;
   /** Row-actions column (sticky at the end when any column is end-pinned). */
   trail: CellLayout;
   /** Table classes and style (fixed layout and total width when columns are sized). */
@@ -104,6 +105,7 @@ export function tableLayout<T>({
   lead,
   trail,
   detail = false,
+  reorder = false,
 }: {
   columns: ReadonlyArray<DataTableColumn<T>>;
   widths: ColumnWidths;
@@ -112,6 +114,7 @@ export function tableLayout<T>({
   lead: boolean;
   trail: boolean;
   detail?: boolean;
+  reorder?: boolean;
 }): TableLayout {
   const map = new Map<string, CellLayout>();
   const hasStart = columns.some((c) => pinSideOf(c.id, pinned) === 'left');
@@ -124,7 +127,7 @@ export function tableLayout<T>({
   const widthOf = (c: DataTableColumn<T>) => columnWidthOf(c, widths);
   const fixed = (w: number): CSSProperties => ({ width: w, minWidth: w, maxWidth: w });
 
-  let start = (lead ? LEAD_WIDTH : 0) + (detail ? LEAD_WIDTH : 0);
+  let start = (lead ? LEAD_WIDTH : 0) + (reorder ? LEAD_WIDTH : 0) + (detail ? LEAD_WIDTH : 0);
   const startIds = columns.filter((c) => pinSideOf(c.id, pinned) === 'left');
   startIds.forEach((c, i) => {
     const w = widthOf(c);
@@ -152,14 +155,26 @@ export function tableLayout<T>({
     columns.reduce((sum, c) => sum + widthOf(c), 0) +
     (lead ? LEAD_WIDTH : 0) +
     (trail ? TRAIL_WIDTH : 0) +
-    (detail ? LEAD_WIDTH : 0);
+    (detail ? LEAD_WIDTH : 0) +
+    (reorder ? LEAD_WIDTH : 0);
   return {
     columns: map,
     lead: hasStart ? { pinned: 'left', style: { insetInlineStart: 0 }, className: STICKY } : {},
+    ...(reorder
+      ? {
+          reorder: hasStart
+            ? { pinned: 'left' as const, style: { insetInlineStart: lead ? LEAD_WIDTH : 0 }, className: STICKY }
+            : {},
+        }
+      : {}),
     ...(detail
       ? {
           detail: hasStart
-            ? { pinned: 'left' as const, style: { insetInlineStart: lead ? LEAD_WIDTH : 0 }, className: STICKY }
+            ? {
+                pinned: 'left' as const,
+                style: { insetInlineStart: (lead ? LEAD_WIDTH : 0) + (reorder ? LEAD_WIDTH : 0) },
+                className: STICKY,
+              }
             : {},
         }
       : {}),

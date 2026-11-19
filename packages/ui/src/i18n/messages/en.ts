@@ -1,3 +1,4 @@
+import { rowReorderEn } from './row-reorder-messages';
 import { rowActivationEn } from './row-activation-messages';
 import { layoutEn } from './layout-messages';
 import { tableFiltersEn } from './table-filter-messages';
@@ -511,6 +512,7 @@ export const en = {
   ...tableFiltersEn,
   'table.actions': 'Actions',
   ...detailRowsEn,
+  ...rowReorderEn,
   ...refreshExampleEn,
   ...quickFilterExampleEn,
   ...rowActivationEn,

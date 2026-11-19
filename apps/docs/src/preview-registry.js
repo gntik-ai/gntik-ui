@@ -185,6 +185,7 @@ export const PREVIEW_LOADERS = {
     'load-more-footer--cards': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/cards'),
     'data-table--single-selection': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/single-selection'),
+    'data-table--row-reorder': () => import('../../../packages/blocks/src/tables/DataTable/examples/row-reorder'),
     'data-table--editable-rows': () => import('../../../packages/blocks/src/tables/DataTable/examples/editable-rows'),
     'data-table--field-array': () => import('../../../packages/ui/examples/data-table-field-array'),
     'data-table--header-filters': () => import('../../../packages/blocks/src/tables/DataTable/examples/header-filters'),

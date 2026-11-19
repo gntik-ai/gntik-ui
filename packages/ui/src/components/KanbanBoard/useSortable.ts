@@ -81,6 +81,8 @@ export interface UseSortableResult {
   containers: SortableContainer[];
   drag: SortableDrag | null;
   getItemProps: (itemId: string) => SortableItemProps;
+  /** Register a separate drag handle; keep getItemProps on the measured item. */
+  getHandleProps: (itemId: string) => SortableItemProps;
   getContainerProps: (containerId: string) => SortableContainerProps;
   /** Cancels an in-progress drag (e.g. when the data changes underneath). */
   cancel: () => void;
@@ -132,6 +134,7 @@ export function useSortable({
   const { dir } = useI18n();
   const [drag, setDrag] = useState<SortableDrag | null>(null);
   const itemEls = useRef(new Map<string, HTMLElement>());
+  const handleEls = useRef(new Map<string, HTMLElement>());
   const containerEls = useRef(new Map<string, HTMLElement>());
   const preview = useMemo(() => previewSortable(containers, drag), [containers, drag]);
 
@@ -192,7 +195,7 @@ export function useSortable({
     const id = focusTarget ?? lastKeyboardItem.current;
     lastKeyboardItem.current = focusTarget;
     if (!id) return;
-    const el = itemEls.current.get(id);
+    const el = handleEls.current.get(id) ?? itemEls.current.get(id);
     if (el && document.activeElement !== el && (focusTarget || !el.contains(document.activeElement)))
       el.focus({ preventScroll: false });
   });
@@ -223,10 +226,11 @@ export function useSortable({
   useEffect(() => () => pointerCleanup.current?.(), []);
 
   const onPointerDown = useCallback(
-    (itemId: string, event: ReactPointerEvent<HTMLElement>) => {
+    (itemId: string, event: ReactPointerEvent<HTMLElement>, handle = false) => {
       if (disabled || event.button !== 0 || !event.isPrimary || latest.current.drag) return;
       const target = event.target as HTMLElement;
       if (
+        !handle &&
         target !== event.currentTarget &&
         target.closest('a, button, input, select, textarea, [contenteditable="true"]')
       )
@@ -384,6 +388,33 @@ export function useSortable({
     [drag, onKeyDown, onPointerDown],
   );
 
+  const getHandleProps = useCallback(
+    (itemId: string): SortableItemProps => ({
+      ...getItemProps(itemId),
+      ref: (el) => {
+        if (el) handleEls.current.set(itemId, el);
+        return () => {
+          if (el && handleEls.current.get(itemId) === el) handleEls.current.delete(itemId);
+        };
+      },
+      onKeyDown: (e) => {
+        if (!disabled && e.altKey && !latest.current.drag && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+          e.preventDefault();
+          const position = findPosition(latest.current.containers, itemId);
+          const length = latest.current.containers.find((c) => c.id === position?.containerId)?.items.length ?? 0;
+          if (!position) return;
+          const index = Math.min(Math.max(position.index + (e.key === 'ArrowUp' ? -1 : 1), 0), length - 1);
+          if (index === position.index) return;
+          start(itemId, 'keyboard');
+          moveTo({ ...position, index });
+          drop();
+        } else onKeyDown(itemId, e);
+      },
+      onPointerDown: (e) => onPointerDown(itemId, e, true),
+    }),
+    [getItemProps, onPointerDown, onKeyDown, disabled, start, moveTo, drop],
+  );
+
   const getContainerProps = useCallback(
     (containerId: string): SortableContainerProps => ({
       ref: (el) => {
@@ -398,5 +429,5 @@ export function useSortable({
     [drag],
   );
 
-  return { containers: preview, drag, getItemProps, getContainerProps, cancel };
+  return { containers: preview, drag, getItemProps, getHandleProps, getContainerProps, cancel };
 }
