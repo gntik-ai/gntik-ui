@@ -112,6 +112,46 @@ it('leaves the original table DOM unchanged when reordering is absent', () => {
   expect(document.querySelector('[data-live-announcer]')).toBeNull();
 });
 
+it('preserves uncontrolled selection and sorting when reordering is toggled', async () => {
+  const user = userEvent.setup();
+  const props = { rows, columns: [{ ...columns[0]!, sortable: true }] };
+  const { rerender } = render(<DataTable {...props} />);
+  await user.click(screen.getByRole('checkbox', { name: 'Select A' }));
+  await user.click(screen.getByRole('button', { name: 'Name' }));
+  for (const onRowReorder of [vi.fn(), undefined]) {
+    rerender(<DataTable {...props} onRowReorder={onRowReorder} />);
+    expect(screen.getByRole('checkbox', { name: 'Select A' })).toBeChecked();
+    expect(screen.getByRole('columnheader', { name: /Name/ })).toHaveAttribute('aria-sort', 'ascending');
+  }
+});
+
+it('uses the selected tint for the pinned grip cell', async () => {
+  const user = userEvent.setup();
+  render(<DataTable rows={rows} columns={columns} pinnedColumns={{ left: ['id'] }} onRowReorder={vi.fn()} />);
+  const cell = handle('A').closest('td')!;
+  await user.click(screen.getByRole('checkbox', { name: 'Select A' }));
+  expect(cell).toHaveClass('before:bg-primary/8');
+  expect(cell).not.toHaveClass('[tr:hover>&]:before:bg-accent/30');
+  await user.click(screen.getByRole('checkbox', { name: 'Select A' }));
+  expect(cell).toHaveClass('[tr:hover>&]:before:bg-accent/30');
+});
+
+it('lets keyboard users focus unavailable handles and hear the reason without starting a move', async () => {
+  const user = userEvent.setup();
+  const moved = vi.fn();
+  render(
+    <DataTable rows={rows} columns={columns} onRowReorder={moved} sort={{ columnId: 'id', direction: 'ascending' }} />,
+  );
+  screen.getByRole('checkbox', { name: 'Select A' }).focus();
+  await user.tab();
+  expect(handle('A')).toHaveFocus();
+  expect(handle('A')).toHaveAttribute('aria-disabled', 'true');
+  expect(handle('A')).toHaveAccessibleDescription('Clear sorting, grouping and filters to reorder rows.');
+  await user.keyboard(' {ArrowDown} {Alt>}{ArrowDown}{/Alt}');
+  expect(order()).toEqual(['A', 'B', 'C']);
+  expect(moved).not.toHaveBeenCalled();
+});
+
 it('applies moves without mutating the source and supports upward and downward moves', () => {
   expect(reorderRows(rows, { rowId: 'A', fromIndex: 0, toIndex: 2, previousId: 'C', nextId: null })).toEqual([
     rows[1],
@@ -204,7 +244,7 @@ it('cancels a pending pointer press when sorting disables reordering', () => {
   rerender(
     <DataTable rows={rows} columns={columns} onRowReorder={moved} sort={{ columnId: 'id', direction: 'descending' }} />,
   );
-  expect(handle('A')).toBeDisabled();
+  expect(handle('A')).toHaveAttribute('aria-disabled', 'true');
   fireEvent.pointerMove(window, { pointerId: 9, clientX: 20, clientY: 160 });
   expect(handle('A').closest('tr')).not.toHaveAttribute('data-dragging');
   expect(screen.getByRole('status')).toBeEmptyDOMElement();
@@ -271,7 +311,7 @@ it.each([
   render(<DataTable rows={rows} columns={columns} onRowReorder={vi.fn()} {...props} />);
   const handles = screen.getAllByRole('button', { name: /^Reorder / });
   for (const grip of handles) {
-    expect(grip).toBeDisabled();
+    expect(grip).toHaveAttribute('aria-disabled', 'true');
     expect(grip).toHaveAccessibleDescription('Clear sorting, grouping and filters to reorder rows.');
   }
 });

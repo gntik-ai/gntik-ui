@@ -5,6 +5,25 @@ import { LiveAnnouncer, useAnnounce } from './LiveAnnouncer';
 import LiveAnnouncerSave from './examples/LiveAnnouncerSave';
 
 describe('LiveAnnouncer', () => {
+  it('can enable its regions without remounting children', async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(
+      <LiveAnnouncer enabled={false}>
+        <LiveAnnouncerSave />
+      </LiveAnnouncer>,
+    );
+    // The nested example owns its announcer; the outer disabled provider adds no regions.
+    expect(screen.getAllByRole('status')).toHaveLength(1);
+    await user.click(screen.getByRole('button', { name: 'Save draft' }));
+    rerender(
+      <LiveAnnouncer enabled>
+        <LiveAnnouncerSave />
+      </LiveAnnouncer>,
+    );
+    expect(screen.getByText('Saved 1 times')).toBeInTheDocument();
+    expect(screen.getAllByRole('status')).toHaveLength(2);
+  });
+
   it('renders a polite status region and an assertive region', () => {
     render(<LiveAnnouncer />);
     const status = screen.getByRole('status');

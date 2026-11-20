@@ -16,7 +16,7 @@ it('applies routing priority moves with a locked fallback and keeps filtering av
   const search = screen.getByRole('searchbox');
   await user.keyboard('{Enter}');
   expect(search).toHaveValue('orders');
-  expect(screen.getByRole('button', { name: 'Reorder orders-api' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'Reorder orders-api' })).toHaveAttribute('aria-disabled', 'true');
 });
 
 it.each(['dark', 'light', 'high_contrast'])('has no axe violations in %s', async (theme) => {

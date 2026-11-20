@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useI18n } from '../../../i18n';
 import { Button } from '../../Button';
 import { LiveAnnouncer, useAnnounce } from '../LiveAnnouncer';
 
@@ -22,8 +23,13 @@ function SaveDraft() {
 }
 
 export default function LiveAnnouncerSave() {
+  const { t } = useI18n();
+  const [enabled, setEnabled] = useState(true);
   return (
-    <LiveAnnouncer>
+    <LiveAnnouncer enabled={enabled}>
+      <Button variant="secondary" aria-pressed={enabled} onClick={() => setEnabled((current) => !current)}>
+        {t('common.notifications')}
+      </Button>
       <SaveDraft />
     </LiveAnnouncer>
   );

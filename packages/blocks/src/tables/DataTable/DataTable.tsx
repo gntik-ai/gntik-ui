@@ -380,7 +380,8 @@ function DataTableContent<T = (typeof DEPLOYMENT_ROWS)[number]>({
     pageRows,
     getRowId,
     getRowLabel: labelOf,
-    onRowReorder: reorderDisabled ? undefined : onRowReorder,
+    onRowReorder,
+    disabled: reorderDisabled,
   });
   const reorder = onRowReorder
     ? { sortable: rowOrder, disabled: reorderDisabled, isRowReorderable, hintId: reorderHintId }

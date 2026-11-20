@@ -16,7 +16,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     await page.keyboard.press('Space');
     await expect(handle).toBeFocused();
     await expect(page.getByRole('rowheader').nth(1)).toHaveText('orders-api');
-    await expect(page.getByRole('status')).toHaveText('orders-api dropped at position 2 of 4.');
+    await expect(page.locator('[data-live-announcer="polite"]')).toHaveText('orders-api dropped at position 2 of 4.');
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
     const violations = await page.evaluate(async () => {

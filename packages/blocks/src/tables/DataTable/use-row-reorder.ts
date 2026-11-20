@@ -1,5 +1,5 @@
 import { useAnnounce, useI18n, useSortable, type SortableDrag, type SortableMove } from '@gntik-ai/ui';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import type { DataTableRowMove } from './data-table-props';
 
 export function useRowReorder<T>({
@@ -8,18 +8,24 @@ export function useRowReorder<T>({
   getRowId,
   getRowLabel,
   onRowReorder,
+  disabled = false,
 }: {
   rows: readonly T[];
   pageRows: readonly T[];
   getRowId: (row: T) => string;
   getRowLabel: (row: T) => string;
   onRowReorder?: (move: DataTableRowMove) => void;
+  disabled?: boolean;
 }) {
   const { t } = useI18n();
   const announce = useAnnounce();
   const picked = useRef<{ label: string; position: number; total: number } | null>(null);
-  const pageIds = pageRows.map(getRowId);
-  const indexes = new Map(rows.map((row, index) => [getRowId(row), index]));
+  const enabled = !!onRowReorder;
+  const pageIds = useMemo(() => (enabled ? pageRows.map(getRowId) : []), [enabled, pageRows, getRowId]);
+  const indexes = useMemo(
+    () => new Map(enabled ? rows.map((row, index) => [getRowId(row), index]) : []),
+    [enabled, rows, getRowId],
+  );
   const message = (
     key: 'table.rowPickedUp' | 'table.rowMoved' | 'table.rowDropped' | 'table.rowMoveCancelled',
     drag: SortableDrag,
@@ -51,23 +57,30 @@ export function useRowReorder<T>({
   const sortable = useSortable({
     containers: [{ id: 'page', items: pageIds }],
     onMove: commit,
-    disabled: !onRowReorder,
+    disabled: !enabled || disabled,
     onDragStart: (drag) => message('table.rowPickedUp', drag),
     onDragOver: (drag) => message('table.rowMoved', drag),
     onDragEnd: (drag) => message('table.rowDropped', drag),
     onDragCancel: (drag) => message('table.rowMoveCancelled', drag, true),
   });
+  const { cancel } = sortable;
+  const pageKey = pageIds.join('\0');
   const previous = useRef(rows);
-  const previousPage = useRef(pageIds.join('\0'));
+  const previousPage = useRef(pageKey);
   useEffect(() => {
-    if (!onRowReorder || previous.current !== rows || previousPage.current !== pageIds.join('\0')) sortable.cancel();
+    if (!enabled || disabled || previous.current !== rows || previousPage.current !== pageKey) cancel();
     previous.current = rows;
-    previousPage.current = pageIds.join('\0');
-  }, [rows, pageIds, sortable, onRowReorder]);
-  const byId = new Map(pageRows.map((row) => [getRowId(row), row]));
+    previousPage.current = pageKey;
+  }, [rows, pageKey, cancel, enabled, disabled]);
+  const byId = useMemo(
+    () => new Map(enabled ? pageRows.map((row) => [getRowId(row), row]) : []),
+    [enabled, pageRows, getRowId],
+  );
   return {
     ...sortable,
-    rows: sortable.containers[0]!.items.map((id) => byId.get(id)!).filter((row) => row !== undefined),
+    rows: enabled
+      ? sortable.containers[0]!.items.map((id) => byId.get(id)).filter((row): row is T => row !== undefined)
+      : pageRows,
   };
 }
 

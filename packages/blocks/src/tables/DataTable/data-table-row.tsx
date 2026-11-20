@@ -157,7 +157,16 @@ export function DataTableRow<T>({
           )}
         </TableCell>
       )}
-      {reorder && <ReorderCell row={row} id={id} label={label} reorder={reorder} layout={layout?.reorder} />}
+      {reorder && (
+        <ReorderCell
+          row={row}
+          id={id}
+          label={label}
+          reorder={reorder}
+          layout={layout?.reorder}
+          selected={selectionColumn && isSelected}
+        />
+      )}
       {details && (
         <TableCell
           className={cn('w-10 px-1 py-0', layout?.detail?.className, tint(layout?.detail))}
