@@ -194,3 +194,16 @@ export function stickyTint(
   if (head) return `${base} before:bg-secondary/30`;
   return `${base} ${selected ? 'before:bg-primary/8' : '[tr:hover>&]:before:bg-accent/30'}`;
 }
+
+const HEAD_LAYER = 'before:pointer-events-none before:absolute before:inset-0 before:z-behind before:bg-secondary/30';
+
+/**
+ * Header cell classes of an opt-in sticky header: opaque cells that keep the header tint under their
+ * content. In page mode they pin below `--data-table-sticky-top`; Table pins bounded headers itself.
+ * Pinned cells already carry the tint, stay above the other header cells and top-align like them.
+ */
+export function stickyHeadClass(mode: 'page' | 'bounded', layout: CellLayout | undefined): string | undefined {
+  const top = mode === 'page' ? 'top-[var(--data-table-sticky-top)]' : undefined;
+  if (layout?.pinned) return top;
+  return [mode === 'page' && 'sticky z-sticky bg-card', top, HEAD_LAYER].filter(Boolean).join(' ');
+}

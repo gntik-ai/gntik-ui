@@ -1,18 +1,15 @@
 import { AutoSizeBody } from './auto-size-body';
 import { useRowReorder, useReorderVirtualizationWarning } from './use-row-reorder';
-import { ReorderHeader, ReorderAnnouncer } from './row-reorder';
-import { SpecialHead } from './special-head';
+import { ReorderAnnouncer } from './row-reorder';
+import { DataTableHeaderRow } from './special-head';
 import { useFilterModel, EMPTY_FILTER_MODEL } from './use-filter-model';
 import { QuickFilter } from './quick-filter-field';
 import { useQuickFilter } from './use-quick-filter';
 import {
-  Checkbox,
   cn,
   DensityProvider,
   Table,
   TableCaption,
-  TableHeader,
-  TableRow,
   type TableDensity,
   type QueryGroup,
   useDensity,
@@ -65,6 +62,7 @@ import { useAutoPageSize } from './use-auto-page-size';
 import { RefreshIndicator } from './refresh-indicator';
 import { defaultRowId, defaultRowLabel, EMPTY_PINNED, EMPTY_WIDTHS, ROW_HEIGHT } from './data-table-defaults';
 import { useScrollToRow } from './use-scroll-to-row';
+import { StickyModeProvider, useStickyHeader } from './use-sticky-header';
 export type { DataTableHandle, ScrollToRowOptions } from './use-scroll-to-row';
 import { useRowActivationWarning } from './row-activation';
 import { useRefreshStatus } from './use-refresh-status';
@@ -181,6 +179,9 @@ function DataTableContent<T = (typeof DEPLOYMENT_ROWS)[number]>({
   virtualizeThreshold = 100,
   rowHeight: rowHeightProp,
   virtualContainerClassName = 'max-h-[32rem]',
+  stickyHeader = false,
+  stickyHeaderOffset = 0,
+  maxHeight,
   onCellEdit,
   editMode = 'cell',
   editingRowIds,
@@ -638,6 +639,14 @@ function DataTableContent<T = (typeof DEPLOYMENT_ROWS)[number]>({
     },
   });
   const virtual = useVirtualRows({ enabled: virtualOn, count: items, rowHeight, tableRef, viewportHeight });
+  const sticky = useStickyHeader({
+    stickyHeader,
+    offset: stickyHeaderOffset,
+    maxHeight,
+    virtual: virtualOn,
+    autoSizing,
+    tableRef,
+  });
   useScrollToRow({
     ref,
     tableRef,
@@ -653,7 +662,8 @@ function DataTableContent<T = (typeof DEPLOYMENT_ROWS)[number]>({
     toggleGroup,
     items: bodyItems,
     viewportHeight,
-    stickyHeader: virtualOn || autoSizing,
+    stickyHeader: virtualOn || autoSizing || sticky.bounded,
+    pageHeader: sticky.mode === 'page',
     virtual,
   });
 
@@ -723,14 +733,15 @@ function DataTableContent<T = (typeof DEPLOYMENT_ROWS)[number]>({
           tabIndex={selectable && selectAllMatching ? -1 : undefined}
           aria-busy={refresh.skeleton || refresh.refreshing || undefined}
           aria-rowcount={virtual ? items + 1 : undefined}
-          stickyHeader={virtualOn || autoSizing}
-          containerClassName={autoSizing ? 'h-full' : virtualOn ? virtualContainerClassName : undefined}
-          containerLabel={virtualOn ? caption : labels?.scrollRegion}
+          stickyHeader={virtualOn || autoSizing || sticky.bounded}
+          containerClassName={autoSizing ? 'h-full' : virtualOn ? virtualContainerClassName : sticky.containerClassName}
+          containerLabel={virtualOn || sticky.bounded ? caption : labels?.scrollRegion}
           // Keep resize handles inside single-mode and expandable cells. Overflow at
           // the final column adds a scroll stop and moves sticky detail panels past
           // their containing cell at the end of the horizontal scroll range.
           className={cn(
             layout.tableClassName,
+            sticky.tableClassName,
             selectable && selectAllMatching && 'focus-visible:outline-2 focus-visible:outline-focus-ring',
             (singleMode || details != null) && '[&_[data-column-resizer]]:end-0 [&_[data-column-resizer]]:justify-end',
           )}
@@ -738,51 +749,44 @@ function DataTableContent<T = (typeof DEPLOYMENT_ROWS)[number]>({
           data-virtualized={virtualOn || undefined}
         >
           <TableCaption srOnly={!showCaption}>{caption}</TableCaption>
-          <TableHeader>
-            <TableRow className="hover:bg-transparent" aria-rowindex={virtual ? 1 : undefined}>
-              {selectionColumn && (
-                <SpecialHead layout={layout.lead} className="w-10 pe-0">
-                  {(singleMode || hideSelectAll) && (
-                    <span className="sr-only">{labels?.selection ?? t('table.selection')}</span>
-                  )}
-                  {selectable && !hideSelectAll && (
-                    <Checkbox
-                      ref={pageCheckboxRef}
-                      aria-label={labels?.selectAll ?? t('table.selectAllPage')}
-                      checked={header.checked}
-                      indeterminate={header.indeterminate}
-                      disabled={refresh.skeleton || pageIds.length === 0}
-                      onCheckedChange={() => setSelected(toggleAll(pageIds, selected))}
-                    />
-                  )}
-                </SpecialHead>
-              )}
-              {reorder && <ReorderHeader layout={layout.reorder} />}
-              {details && (
-                <SpecialHead layout={layout.detail} className="w-10">
-                  <span className="sr-only">{labels?.details ?? t('table.details')}</span>
-                </SpecialHead>
-              )}
-              <DataTableColumnHeads
-                columns={visibleColumns}
-                layout={layout}
-                labels={labels}
-                sort={sort}
-                sortingEnabled={sortingEnabled}
-                onSortChange={changeSort}
-                model={filtering.model}
-                onFilterApply={(id, value) => changeFilter(filtering.edit(id, value))}
-                widths={widths}
-                resizable={resizable}
-                onResize={resizeColumn}
-              />
-              {hasActions && (
-                <SpecialHead layout={layout.trail} className="w-12">
-                  <span className="sr-only">{labels?.actions ?? t('table.actions')}</span>
-                </SpecialHead>
-              )}
-            </TableRow>
-          </TableHeader>
+          <DataTableHeaderRow
+            layout={layout}
+            labels={labels}
+            checkboxRef={pageCheckboxRef}
+            selection={
+              selectionColumn
+                ? {
+                    named: singleMode || hideSelectAll,
+                    checkbox:
+                      selectable && !hideSelectAll
+                        ? {
+                            ...header,
+                            disabled: refresh.skeleton || pageIds.length === 0,
+                            onToggle: () => setSelected(toggleAll(pageIds, selected)),
+                          }
+                        : undefined,
+                  }
+                : undefined
+            }
+            reorder={!!reorder}
+            detail={details != null}
+            actions={hasActions}
+            rowIndex={virtual ? 1 : undefined}
+          >
+            <DataTableColumnHeads
+              columns={visibleColumns}
+              layout={layout}
+              labels={labels}
+              sort={sort}
+              sortingEnabled={sortingEnabled}
+              onSortChange={changeSort}
+              model={filtering.model}
+              onFilterApply={(id, value) => changeFilter(filtering.edit(id, value))}
+              widths={widths}
+              resizable={resizable}
+              onResize={resizeColumn}
+            />
+          </DataTableHeaderRow>
           {onRowAdd && newRowPosition === 'top' && newRow}
           {refresh.refreshing && <RefreshIndicator label={updatingText} span={bodySpan} />}
           <DataTableBody
@@ -830,8 +834,10 @@ function DataTableContent<T = (typeof DEPLOYMENT_ROWS)[number]>({
 
   return (
     <div
+      {...sticky.cardProps}
       className={cn(
-        'overflow-hidden rounded-xl border border-border bg-card shadow-sm',
+        sticky.cardClassName,
+        'rounded-xl border border-border bg-card shadow-sm',
         autoSizing && 'flex h-full min-h-0 flex-col',
         className,
       )}
@@ -956,7 +962,7 @@ function DataTableContent<T = (typeof DEPLOYMENT_ROWS)[number]>({
         </span>
       )}
       <AutoSizeBody enabled={autoSizing} viewportRef={autoSizeViewport}>
-        {tableContent}
+        <StickyModeProvider value={sticky.mode}>{tableContent}</StickyModeProvider>
       </AutoSizeBody>
       {editMode === 'row' && onRowsSave && <RowEditBar edits={rowEdits} labels={labels} />}
       {refresh.skeleton && (

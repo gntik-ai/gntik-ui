@@ -307,6 +307,20 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                 <>
                   <Viewer
                     kind="block"
+                    id="data-table--sticky-header"
+                    title={t('table.example.stickyViewer')}
+                    file="../../../packages/blocks/src/tables/DataTable/examples/sticky-header.tsx"
+                    height={1100}
+                  />
+                  <Viewer
+                    kind="block"
+                    id="data-table--sticky-header-stacked"
+                    title={t('table.example.stickyStackedViewer')}
+                    file="../../../packages/blocks/src/tables/DataTable/examples/sticky-header-stacked.tsx"
+                    height={520}
+                  />
+                  <Viewer
+                    kind="block"
                     id="data-table--row-reorder"
                     title={t('table.example.rowReorderViewer')}
                     file="../../../packages/blocks/src/tables/DataTable/examples/row-reorder.tsx"

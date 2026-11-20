@@ -211,6 +211,27 @@ interface DataTableCommonProps<T> {
   virtualContainerClassName?: string;
 
   /**
+   * Pins the header row of a non-virtual table (default false). It stays `stickyHeaderOffset` below the
+   * top of the nearest scrolling ancestor while the rows scroll under it. A table wider than its
+   * container instead scrolls in a bounded, focusable region so its horizontal scrollbar stays on
+   * screen. Virtualized and `autoPageSize` tables keep their own bounded body and ignore it.
+   */
+  stickyHeader?: boolean;
+  /**
+   * Distance of the pinned header from the top of the scroller, written to `--data-table-sticky-top`
+   * (default 0; a number means px, a string any CSS length such as `3.5rem`). SidebarLayout scrolls
+   * its main area below the topbar, so 0 fits; StackedLayout scrolls under its 60 px header, so use 60.
+   */
+  stickyHeaderOffset?: number | string;
+  /**
+   * Bounds the table body to this height (a number means px, a string any CSS length) in a focusable
+   * scroll region named by the caption with the header pinned at its top. Every row stays mounted.
+   * Takes precedence over `stickyHeader`, overrides `virtualContainerClassName` on virtualized tables
+   * and is ignored by `autoPageSize`.
+   */
+  maxHeight?: number | string;
+
+  /**
    * Inline editing of `editable` columns. Return nothing to accept (and update `rows`), or a
    * message (or throw) to reject: the message is shown inline under the editor.
    */
