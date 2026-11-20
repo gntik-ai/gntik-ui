@@ -11,6 +11,8 @@ const noop: Announce = () => {};
 
 export interface LiveAnnouncerProps {
   children?: ReactNode;
+  /** Mount announcement regions without remounting children. Defaults to true. */
+  enabled?: boolean;
   /** Classes for the (screen-reader only) region. */
   className?: string;
 }
@@ -20,7 +22,7 @@ export interface LiveAnnouncerProps {
  * reorder, background saves). Renders polite and assertive `aria-live` regions and gives its
  * subtree `useAnnounce()`. Repeating the same message re-announces it.
  */
-export function LiveAnnouncer({ children, className }: LiveAnnouncerProps) {
+export function LiveAnnouncer({ children, className, enabled = true }: LiveAnnouncerProps) {
   const [polite, setPolite] = useState('');
   const [assertive, setAssertive] = useState('');
   const announce = useCallback<Announce>((message, politeness = 'polite') => {
@@ -31,14 +33,18 @@ export function LiveAnnouncer({ children, className }: LiveAnnouncerProps) {
   }, []);
   const region = cn(liveAnnouncerVariants(), className);
   return (
-    <AnnounceContext.Provider value={announce}>
+    <AnnounceContext.Provider value={enabled ? announce : null}>
       {children}
-      <div role="status" aria-live="polite" aria-atomic="true" className={region} data-live-announcer="polite">
-        {polite}
-      </div>
-      <div aria-live="assertive" aria-atomic="true" className={region} data-live-announcer="assertive">
-        {assertive}
-      </div>
+      {enabled && (
+        <>
+          <div role="status" aria-live="polite" aria-atomic="true" className={region} data-live-announcer="polite">
+            {polite}
+          </div>
+          <div aria-live="assertive" aria-atomic="true" className={region} data-live-announcer="assertive">
+            {assertive}
+          </div>
+        </>
+      )}
     </AnnounceContext.Provider>
   );
 }

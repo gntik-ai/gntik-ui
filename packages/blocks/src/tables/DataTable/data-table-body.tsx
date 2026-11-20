@@ -87,6 +87,7 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
   const selectionColumn = selectable || singleSelection != null;
   const span =
     columns.length +
+    (props.reorder ? 1 : 0) +
     (props.details ? 1 : 0) +
     (selectionColumn ? 1 : 0) +
     (props.hasRowActions || rowActions || props.rowEdits ? 1 : 0);
@@ -99,6 +100,11 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
             {selectionColumn && (
               <TableCell className="w-10">
                 <Skeleton className="size-4 rounded-[4px]" />
+              </TableCell>
+            )}
+            {props.reorder && (
+              <TableCell className="w-10">
+                <Skeleton className="size-4" />
               </TableCell>
             )}
             {props.details && (
@@ -203,7 +209,8 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
     );
   }
 
-  if (!groups) return <TableBody>{rows.map((r) => row(r))}</TableBody>;
+  if (!groups)
+    return <TableBody {...props.reorder?.sortable.getContainerProps('page')}>{rows.map((r) => row(r))}</TableBody>;
   return (
     <>
       {groups.map((group, gi) => {

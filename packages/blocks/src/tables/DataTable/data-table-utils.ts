@@ -1,3 +1,4 @@
+import type { DataTableRowMove } from './data-table-props';
 import type { QueryCondition } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import type { DataTableEditValue, DataTableRenderEditor } from './row-edit-types';
@@ -272,4 +273,13 @@ export function groupRows<T>(
     else groups.set(key, [row]);
   }
   return [...groups].filter(([, list]) => list.length > 0).map(([key, list]) => ({ key, rows: list }));
+}
+
+/** Apply a committed move without mutating the supplied rows. */
+export function reorderRows<T>(rows: readonly T[], move: DataTableRowMove): T[] {
+  const next = [...rows];
+  if (move.fromIndex < 0 || move.fromIndex >= next.length) return next;
+  const [row] = next.splice(move.fromIndex, 1);
+  next.splice(Math.min(Math.max(move.toIndex, 0), next.length), 0, row!);
+  return next;
 }

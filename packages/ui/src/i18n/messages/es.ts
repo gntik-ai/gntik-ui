@@ -1,3 +1,4 @@
+import { rowReorderEs } from './row-reorder-messages';
 import { rowActivationEs } from './row-activation-messages';
 import { layoutEs } from './layout-messages';
 import { tableFiltersEs } from './table-filter-messages';
@@ -511,6 +512,7 @@ export const es: Messages = {
   ...tableFiltersEs,
   'table.actions': 'Acciones',
   ...detailRowsEs,
+  ...rowReorderEs,
   ...refreshExampleEs,
   ...quickFilterExampleEs,
   ...rowActivationEs,

@@ -38,7 +38,20 @@ export interface DataTableExportRequest {
   filters: unknown;
 }
 
+/** Indexes refer to the supplied rows; toIndex is measured after removing the moved row. */
+export interface DataTableRowMove {
+  rowId: string;
+  fromIndex: number;
+  toIndex: number;
+  previousId: string | null;
+  nextId: string | null;
+}
+
 interface DataTableCommonProps<T> {
+  /** Opt-in handle column. The caller applies the committed move to rows. */
+  onRowReorder?: (move: DataTableRowMove) => void;
+  /** Locks only this row's handle; other rows can move past it. */
+  isRowReorderable?: (row: T) => boolean;
   ref?: Ref<DataTableHandle>;
   /** Opt-in CSV menu. Values are raw, with spreadsheet formula protection. */
   csvExport?: boolean | DataTableCsvExportOptions;

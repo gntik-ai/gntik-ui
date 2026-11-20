@@ -7,6 +7,7 @@ export const meta: BlockMeta = {
   status: 'beta',
   description:
     'Typed data table with sorting, selection, pagination and saved views. ' +
+    'Opt-in onRowReorder(move: DataTableRowMove) adds a grip handle after selection and before details. isRowReorderable(row) locks individual handles; other rows can move past them. Space picks up, arrows and Home/End preview, Space/Enter drop, Escape/Tab cancel, and Alt+ArrowUp/ArrowDown commit a single step. Pointer dragging starts past 5px or a 250ms touch hold; links, checkboxes and actions remain independent. The caller applies the move with reorderRows(rows, move). Indexes refer to supplied rows; toIndex is the insertion index after removal. previousId/nextId describe the final neighbours, including adjacent pages; moves stay within the current client page. Sorting, grouping, quick filters, filterModel and external filters disable handles with an explanation. Data changes cancel a drag. Reordering disables virtualization; virtualize=true warns once in development. The nearest LiveAnnouncer announces pickup, move, drop and cancellation using the en/es table.reorder, reorderRow, reorderInstructions, reorderUnavailable, rowPickedUp, rowMoved, rowDropped and rowMoveCancelled catalog keys. See examples/row-reorder.tsx for routing priorities, a locked fallback, pinned columns and filters. ' +
     'Optional column.filter adds a sibling header popover with draft edits, Apply/Enter, Clear and Escape discard with focus return. Types: enum (in, searchable or more than eight options shows search), text (contains), number (gte/lte for one bound, inclusive between for two), date (inclusive between via DateRangePicker), boolean (Any/Yes/No), custom (render receives value, setValue, apply, clear; drafts hold operator/value). Active headers have data-filtered and an accessible filtered suffix. Header tab order is sort, help, filter, resize. filterModel/defaultFilterModel/onFilterModelChange use QueryGroup; header edits replace all top-level conditions for a column in an and-group and preserve nested groups. Client evaluation uses column accessors and locale before sorting/grouping/paging; totals, selection and CSV use filtered rows. A model change requests page 1 and clears all-matching selection. Server mode renders supplied rows and emits one onQueryChange with filterModel and cause filter. Other query causes keep their payloads when the feature is unused. Saved views capture filterModel; older views restore defaultFilterModel. DataTableLabels supports filterColumn, filtered, applyFilter, filterAny, clearFilter, filterSearch, filterFrom and filterTo. See examples/header-filters.tsx for every editor, controlled state, views and server requests; newQueryId from the UI package is called only in event handlers. ' +
     'Opt-in renderDetail(row) adds a leading toggle and a full-width detail region, mounted only while expanded. hasDetail(row) limits eligibility. Use expandedDetailIds/onExpandedDetailIdsChange for controlled expansion or defaultExpandedDetailIds for initial state; ids persist across pages and sorting. detailExpandMode defaults to multiple; choose single for heavy panels. detailOnRowClick defaults to false and excludes controls, links and editor cells. Toggle buttons support Enter and Space, keep focus, and Tab continues through row controls into the panel. Details disable virtualization; virtualize=true warns in development, while auto stays off. Prefer pagination for large tables. Inline panels keep list context for payloads and errors; use a Drawer for longer independent workflows. See examples/expandable-rows.tsx for eligible failed rows, single mode, row clicks, initial expansion, controlled multiple panels and pinned/resizable columns. ' +
     'Opt-in editMode="row" edits every editable cell together. Edit focuses the first editor; Enter saves, Escape cancels and Tab moves without saving. Use editingRowIds/onEditingRowIdsChange or defaultEditingRowIds for multiple rows. Drafts are keyed by row id in DataTable and survive paging, sorting and virtualization. onRowSave receives {row, rowId, values, previous}; void/true accepts, false/string rejects with a row alert, and {fieldErrors} marks and describes each invalid editor. Thrown errors keep the draft. Column validate runs before row and cell callbacks. ' +
@@ -184,6 +185,8 @@ export const meta: BlockMeta = {
   ] satisfies Array<{ key: keyof DataTableLabels; type: string; state: string }>,
   registryDependencies: [
     'info-tip',
+    'kanban-board',
+    'live-announcer',
     'sticky-action-bar',
     'confirm-destructive',
     'popover',
@@ -194,6 +197,8 @@ export const meta: BlockMeta = {
   ],
   uses: [
     'Table',
+    'IconButton',
+    'LiveAnnouncer',
     'Link',
     'InfoTip',
     'Checkbox',

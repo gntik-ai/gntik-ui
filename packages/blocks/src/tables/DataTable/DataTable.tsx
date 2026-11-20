@@ -1,3 +1,7 @@
+import { AutoSizeBody } from './auto-size-body';
+import { useRowReorder, useReorderVirtualizationWarning } from './use-row-reorder';
+import { ReorderHeader, ReorderAnnouncer } from './row-reorder';
+import { SpecialHead } from './special-head';
 import { useFilterModel, EMPTY_FILTER_MODEL } from './use-filter-model';
 import { QuickFilter } from './quick-filter-field';
 import { useQuickFilter } from './use-quick-filter';
@@ -7,12 +11,10 @@ import {
   DensityProvider,
   Table,
   TableCaption,
-  TableHead,
   TableHeader,
   TableRow,
   type TableDensity,
   type QueryGroup,
-  type QueryCondition,
   useDensity,
   useI18n,
 } from '@gntik-ai/ui';
@@ -21,13 +23,10 @@ import { PaginationFooter } from '../PaginationFooter/PaginationFooter';
 import { ColumnVisibilityMenu } from './column-menu';
 import {
   clampColumnWidth,
-  columnWidthOf,
   orderColumns,
   pinSideOf,
   setColumnPin,
-  stickyTint,
   tableLayout,
-  widthBounds,
   type ColumnWidths,
   type PinnedColumns,
 } from './column-sizing';
@@ -48,7 +47,7 @@ import {
 } from './data-table-utils';
 import { DensityToggle } from './density-toggle';
 import { DEPLOYMENT_COLUMNS, DEPLOYMENT_ROWS } from './fixtures';
-import { DataTableHeadCell } from './header-cell';
+import { DataTableColumnHeads } from './header-cell';
 import { SelectionGroup, useSingleSelection, useSingleSelectionWarnings } from './single-selection';
 import { SelectionStrip } from './selection-strip';
 import { useControllable, useTableViews } from './use-table-views';
@@ -73,6 +72,7 @@ import { useRefreshStatus } from './use-refresh-status';
 export type { DataTableLabels } from './labels';
 export type {
   DataTableProps,
+  DataTableRowMove,
   DataTableQuery,
   DataTableCsvExportOptions,
   DataTableExportRequest,
@@ -84,7 +84,15 @@ export type {
  * and empty states, client-side sort + pagination, optional collapsible row groups (`groupBy`),
  * column resize and pinning, row virtualization, inline cell editing and saved views.
  */
-export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
+export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>(props: DataTableProps<T>) {
+  return (
+    <ReorderAnnouncer enabled={!!props.onRowReorder}>
+      <DataTableContent {...props} />
+    </ReorderAnnouncer>
+  );
+}
+
+function DataTableContent<T = (typeof DEPLOYMENT_ROWS)[number]>({
   ref,
   rows = DEPLOYMENT_ROWS as unknown as readonly T[],
   columns = DEPLOYMENT_COLUMNS as unknown as ReadonlyArray<DataTableColumn<T>>,
@@ -117,6 +125,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   bulkActions,
   selectionSummary = true,
   rowActions,
+  onRowReorder,
+  isRowReorderable,
   renderDetail,
   hasDetail,
   expandedDetailIds,
@@ -356,6 +366,26 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const sorted = allGroups ? allGroups.flatMap((g) => g.rows) : sortedRows;
   const clientPage = Math.min(Math.max(1, page), Math.max(1, Math.ceil(sorted.length / Math.max(1, pageSize))));
   const pageRows = serverMode ? rows : paginated ? paginate(sorted, clientPage, pageSize) : sorted;
+  const reorderDisabled =
+    !!sort ||
+    !!effectiveGroupBy ||
+    filtered ||
+    quick.term.trim() !== '' ||
+    filtering.model.children.length > 0 ||
+    filters != null ||
+    loading === true;
+  const reorderHintId = useId();
+  const rowOrder = useRowReorder({
+    rows,
+    pageRows,
+    getRowId,
+    getRowLabel: labelOf,
+    onRowReorder,
+    disabled: reorderDisabled,
+  });
+  const reorder = onRowReorder
+    ? { sortable: rowOrder, disabled: reorderDisabled, isRowReorderable, hintId: reorderHintId }
+    : undefined;
   const refresh = useRefreshStatus(loading, pageRows.length > 0);
   const deletion = useRowDeletion({
     rows: sorted,
@@ -562,7 +592,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     ? labels.updating(caption)
     : t('table.updating', { caption: caption.toLowerCase() });
   const bodySpan =
-    visibleColumns.length + (details ? 1 : 0) + (selectionColumn ? 1 : 0) + (hasActions || deletion.actions ? 1 : 0);
+    visibleColumns.length +
+    (reorder ? 1 : 0) +
+    (details ? 1 : 0) +
+    (selectionColumn ? 1 : 0) +
+    (hasActions || deletion.actions ? 1 : 0);
   const showViews = showViewSwitcher ?? (viewsProp != null || defaultViews != null || onViewsChange != null);
 
   const pinning =
@@ -574,13 +608,16 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     sized: resizable || widthsProp != null || defaultColumnWidths !== EMPTY_WIDTHS,
     lead: selectionColumn,
     detail: details != null,
+    reorder: !!reorder,
     trail: hasActions,
   });
 
   const bodyItems = flattenBody(pageRows, groupsForBody, collapsed);
   const items = refresh.skeleton ? 0 : bodyItems.length;
-  useDetailVirtualizationWarning(details != null && virtualize === true);
+  useDetailVirtualizationWarning(!reorder && details != null && virtualize === true);
+  useReorderVirtualizationWarning(!!reorder && virtualize === true);
   const virtualOn =
+    !reorder &&
     !details &&
     !singleMode &&
     !refresh.skeleton &&
@@ -667,6 +704,17 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     : (labels?.pageSelected?.(pageIds.length) ?? t('table.pageSelected', { count: formatNumber(pageIds.length) }));
   const selectionCount = labels?.selectionCount ? labels.selectionCount(selectedCount) : <>{selectedCount} selected</>;
 
+  const newRow = (
+    <NewRow
+      edits={rowEdits}
+      columns={visibleColumns}
+      selectionColumn={selectionColumn}
+      detailColumn={details != null}
+      reorderColumn={!!reorder}
+      labels={labels}
+    />
+  );
+
   const tableContent = (
     <SelectionGroup single={singleMode} legend={legend} aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>
       <DensityProvider density={density}>
@@ -693,15 +741,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           <TableHeader>
             <TableRow className="hover:bg-transparent" aria-rowindex={virtual ? 1 : undefined}>
               {selectionColumn && (
-                <TableHead
-                  className={cn(
-                    'w-10 pe-0',
-                    layout.lead.className,
-                    layout.lead.pinned && 'z-sticky-pinned bg-card',
-                    stickyTint(layout.lead, { head: true }),
-                  )}
-                  style={layout.lead.style}
-                >
+                <SpecialHead layout={layout.lead} className="w-10 pe-0">
                   {(singleMode || hideSelectAll) && (
                     <span className="sr-only">{labels?.selection ?? t('table.selection')}</span>
                   )}
@@ -715,77 +755,41 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                       onCheckedChange={() => setSelected(toggleAll(pageIds, selected))}
                     />
                   )}
-                </TableHead>
+                </SpecialHead>
               )}
+              {reorder && <ReorderHeader layout={layout.reorder} />}
               {details && (
-                <TableHead
-                  className={cn(
-                    'w-10',
-                    layout.detail?.className,
-                    layout.detail?.pinned && 'z-sticky-pinned bg-card',
-                    stickyTint(layout.detail, { head: true }),
-                  )}
-                  style={layout.detail?.style}
-                >
+                <SpecialHead layout={layout.detail} className="w-10">
                   <span className="sr-only">{labels?.details ?? t('table.details')}</span>
-                </TableHead>
+                </SpecialHead>
               )}
-              {visibleColumns.map((c) => {
-                const bounds = widthBounds(c);
-                return (
-                  <DataTableHeadCell
-                    labels={labels}
-                    key={c.id}
-                    column={sortingEnabled ? c : { ...c, sortable: false }}
-                    layout={layout.columns.get(c.id)}
-                    sortDirection={sortingEnabled && sort?.columnId === c.id ? sort.direction : 'none'}
-                    onSortChange={(dir) => changeSort(c.id, dir)}
-                    filterCondition={filtering.model.children.find(
-                      (node): node is QueryCondition => node.type === 'condition' && node.field === c.id,
-                    )}
-                    onFilterApply={(value) => changeFilter(filtering.edit(c.id, value))}
-                    resize={
-                      resizable && c.resizable !== false
-                        ? {
-                            width: columnWidthOf(c, widths),
-                            min: bounds.min,
-                            max: bounds.max,
-                            onResize: (w) => resizeColumn(c, w),
-                          }
-                        : undefined
-                    }
-                  />
-                );
-              })}
+              <DataTableColumnHeads
+                columns={visibleColumns}
+                layout={layout}
+                labels={labels}
+                sort={sort}
+                sortingEnabled={sortingEnabled}
+                onSortChange={changeSort}
+                model={filtering.model}
+                onFilterApply={(id, value) => changeFilter(filtering.edit(id, value))}
+                widths={widths}
+                resizable={resizable}
+                onResize={resizeColumn}
+              />
               {hasActions && (
-                <TableHead
-                  className={cn(
-                    'w-12',
-                    layout.trail.className,
-                    layout.trail.pinned && 'z-sticky-pinned bg-card',
-                    stickyTint(layout.trail, { head: true }),
-                  )}
-                  style={layout.trail.style}
-                >
+                <SpecialHead layout={layout.trail} className="w-12">
                   <span className="sr-only">{labels?.actions ?? t('table.actions')}</span>
-                </TableHead>
+                </SpecialHead>
               )}
             </TableRow>
           </TableHeader>
-          {onRowAdd && newRowPosition === 'top' && (
-            <NewRow
-              edits={rowEdits}
-              columns={visibleColumns}
-              selectionColumn={selectionColumn}
-              detailColumn={details != null}
-              labels={labels}
-            />
-          )}
+          {onRowAdd && newRowPosition === 'top' && newRow}
           {refresh.refreshing && <RefreshIndicator label={updatingText} span={bodySpan} />}
           <DataTableBody
             details={details}
             labels={labels}
-            rows={pageRows}
+            rows={reorder ? rowOrder.rows : pageRows}
+            reorder={reorder}
             columns={visibleColumns}
             rowHeaderId={rowHeaderId}
             getRowId={getRowId}
@@ -818,15 +822,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             editHintId={anyEditable ? editHintId : undefined}
             virtual={virtual}
           />
-          {onRowAdd && newRowPosition === 'bottom' && (
-            <NewRow
-              edits={rowEdits}
-              columns={visibleColumns}
-              selectionColumn={selectionColumn}
-              detailColumn={details != null}
-              labels={labels}
-            />
-          )}
+          {onRowAdd && newRowPosition === 'bottom' && newRow}
         </Table>
       </DensityProvider>
     </SelectionGroup>
@@ -943,6 +939,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           }}
         />
       )}
+      {reorder && (
+        <span id={reorderHintId} className="sr-only">
+          {t(reorderDisabled ? 'table.reorderUnavailable' : 'table.reorderInstructions')}
+        </span>
+      )}
       {deletion.dialog}
       {exportApi.enabled && (
         <span role="status" aria-live="polite" className="sr-only">
@@ -954,21 +955,9 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           {labels?.editHint ?? 'Press Enter or F2 to edit.'}
         </span>
       )}
-      {autoSizing ? (
-        <div className="min-h-0 flex-1">
-          {/* A zero-width percentage-height probe has no intrinsic height. In a content-sized
-              parent it stays zero, so row count cannot feed back into the measurement. */}
-          <div
-            ref={autoSizeViewport}
-            data-auto-page-size-viewport
-            aria-hidden
-            className="pointer-events-none float-left h-full w-0"
-          />
-          {tableContent}
-        </div>
-      ) : (
-        tableContent
-      )}
+      <AutoSizeBody enabled={autoSizing} viewportRef={autoSizeViewport}>
+        {tableContent}
+      </AutoSizeBody>
       {editMode === 'row' && onRowsSave && <RowEditBar edits={rowEdits} labels={labels} />}
       {refresh.skeleton && (
         <p role="status" className="sr-only">

@@ -1,3 +1,4 @@
+import { ReorderCell, type RowReorder } from './row-reorder';
 import { ChevronRight } from '@gntik-ai/icons';
 import {
   Button,
@@ -46,6 +47,7 @@ export interface DataTableBodyGroup<T> {
 /** Row rendering shared by the plain, grouped and virtualized bodies. */
 export interface RowContext<T> extends RowActivationProps<T> {
   details?: DetailRows<T>;
+  reorder?: RowReorder<T>;
   labels?: Partial<DataTableLabels>;
   columns: ReadonlyArray<DataTableColumn<T>>;
   /** Id of the row-header column (resolved from all columns); its cell renders only while visible. */
@@ -76,6 +78,7 @@ export interface DataTableRowProps<T> extends RowContext<T> {
 export function DataTableRow<T>({
   labels,
   details,
+  reorder,
   row,
   columns,
   rowHeaderId,
@@ -120,11 +123,17 @@ export function DataTableRow<T>({
   const tint = (l: TableLayout['lead'] | undefined) => stickyTint(l, { selected: selectionColumn && isSelected });
   return (
     <TableRow
+      ref={reorder?.sortable.getItemProps(id).ref}
+      data-dragging={reorder?.sortable.drag?.itemId === id ? '' : undefined}
       selected={selectionColumn && isSelected}
       aria-rowindex={ariaRowIndex}
       data-row-id={id}
       style={style}
-      className={activation.clickable ? 'cursor-pointer' : undefined}
+      className={cn(
+        activation.clickable && 'cursor-pointer',
+        reorder?.sortable.drag?.itemId === id &&
+          'relative bg-card shadow-sm transition-shadow motion-reduce:transition-none',
+      )}
       onAuxClick={activation.onAuxClick}
       onClick={activation.onClick}
       onDoubleClick={activation.onDoubleClick}
@@ -147,6 +156,16 @@ export function DataTableRow<T>({
             />
           )}
         </TableCell>
+      )}
+      {reorder && (
+        <ReorderCell
+          row={row}
+          id={id}
+          label={label}
+          reorder={reorder}
+          layout={layout?.reorder}
+          selected={selectionColumn && isSelected}
+        />
       )}
       {details && (
         <TableCell

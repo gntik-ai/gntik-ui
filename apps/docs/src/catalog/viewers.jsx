@@ -307,6 +307,13 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                 <>
                   <Viewer
                     kind="block"
+                    id="data-table--row-reorder"
+                    title={t('table.example.rowReorderViewer')}
+                    file="../../../packages/blocks/src/tables/DataTable/examples/row-reorder.tsx"
+                    height={600}
+                  />
+                  <Viewer
+                    kind="block"
                     id="data-table--expandable-rows"
                     title={t('table.example.expandableRowsViewer')}
                     file="../../../packages/blocks/src/tables/DataTable/examples/expandable-rows.tsx"

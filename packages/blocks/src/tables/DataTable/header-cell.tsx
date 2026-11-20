@@ -1,10 +1,17 @@
-import type { QueryCondition } from '@gntik-ai/ui';
+import type { QueryCondition, QueryGroup } from '@gntik-ai/ui';
 import { HeaderFilter } from './header-filter';
 import type { DataTableFilterValue } from './data-table-utils';
 import { ArrowDown, ArrowUp, ChevronsUpDown } from '@gntik-ai/icons';
 import { cn, InfoTip, nextSortDirection, TableHead, tableVariants, type SortDirection } from '@gntik-ai/ui';
-import { stickyTint, type CellLayout } from './column-sizing';
-import { columnAlign, type DataTableColumn } from './data-table-utils';
+import {
+  columnWidthOf,
+  widthBounds,
+  stickyTint,
+  type CellLayout,
+  type ColumnWidths,
+  type TableLayout,
+} from './column-sizing';
+import { columnAlign, type DataTableColumn, type SortState } from './data-table-utils';
 import type { DataTableLabels } from './labels';
 import { ColumnResizeHandle } from './resize-handle';
 
@@ -122,4 +129,59 @@ export function DataTableHeadCell<T>({
       {!hasControls && resizeHandle}
     </TableHead>
   );
+}
+
+/** Column header wiring shared by every table rendering mode. */
+export function DataTableColumnHeads<T>({
+  columns,
+  layout,
+  labels,
+  sort,
+  sortingEnabled,
+  onSortChange,
+  model,
+  onFilterApply,
+  widths,
+  resizable,
+  onResize,
+}: {
+  columns: ReadonlyArray<DataTableColumn<T>>;
+  layout: TableLayout;
+  labels?: Partial<DataTableLabels>;
+  sort: SortState | null;
+  sortingEnabled: boolean;
+  onSortChange: (id: string, direction: SortState['direction']) => void;
+  model: QueryGroup;
+  onFilterApply: (id: string, value: DataTableFilterValue | null) => void;
+  widths: ColumnWidths;
+  resizable: boolean;
+  onResize: (column: DataTableColumn<T>, width: number) => void;
+}) {
+  return columns.map((column) => {
+    const bounds = widthBounds(column);
+    return (
+      <DataTableHeadCell
+        key={column.id}
+        labels={labels}
+        column={sortingEnabled ? column : { ...column, sortable: false }}
+        layout={layout.columns.get(column.id)}
+        sortDirection={sortingEnabled && sort?.columnId === column.id ? sort.direction : 'none'}
+        onSortChange={(direction) => onSortChange(column.id, direction)}
+        filterCondition={model.children.find(
+          (node): node is QueryCondition => node.type === 'condition' && node.field === column.id,
+        )}
+        onFilterApply={(value) => onFilterApply(column.id, value)}
+        resize={
+          resizable && column.resizable !== false
+            ? {
+                width: columnWidthOf(column, widths),
+                min: bounds.min,
+                max: bounds.max,
+                onResize: (width) => onResize(column, width),
+              }
+            : undefined
+        }
+      />
+    );
+  });
 }

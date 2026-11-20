@@ -187,3 +187,43 @@ describe('DataTable virtualization', () => {
     expect(windowFor(100, 44 * 98, 440, 44, 5)).toEqual({ start: 93, end: 100, rowHeight: 44 });
   });
 });
+
+describe('DataTable reorder column layout', () => {
+  it.each([true, false])('aligns selection=%s, grip, detail and pinned columns', (selection) => {
+    const layout = tableLayout({
+      columns: [{ id: 'id', header: 'Name', width: 180 }],
+      widths: {},
+      pinned: { left: ['id'] },
+      sized: true,
+      lead: selection,
+      reorder: true,
+      detail: true,
+      trail: false,
+    });
+    const offset = selection ? 40 : 0;
+    expect(layout.reorder?.style).toEqual({ insetInlineStart: offset });
+    expect(layout.detail?.style).toEqual({ insetInlineStart: offset + 40 });
+    expect(layout.columns.get('id')?.style).toMatchObject({ width: 180, insetInlineStart: offset + 80 });
+    expect(layout.tableStyle).toEqual({ width: 260 + offset, minWidth: '100%' });
+  });
+
+  it('renders the handle before the detail column with matching header and cell offsets', () => {
+    render(
+      <DataTable
+        onRowReorder={vi.fn()}
+        renderDetail={() => 'Details'}
+        resizable
+        defaultPinnedColumns={{ left: ['name'] }}
+      />,
+    );
+    const header = screen.getByRole('columnheader', { name: 'Reorder' });
+    expect(header).toHaveStyle({ insetInlineStart: '40px' });
+    expect(screen.getByRole('columnheader', { name: 'Details' })).toHaveStyle({ insetInlineStart: '80px' });
+    expect(screen.getByRole('columnheader', { name: /Deployment/ })).toHaveStyle({ insetInlineStart: '120px' });
+    const grip = screen.getAllByRole('button', { name: /^Reorder / })[0]!;
+    expect(grip.closest('td')).toHaveStyle({ insetInlineStart: '40px' });
+    expect(grip.closest('td')?.nextElementSibling).toContainElement(
+      screen.getAllByRole('button', { name: /^Details for / })[0]!,
+    );
+  });
+});
