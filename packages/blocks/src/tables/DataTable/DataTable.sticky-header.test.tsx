@@ -1,4 +1,4 @@
-import { act, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { createRef } from 'react';
 import { DataTable, type DataTableHandle } from './DataTable';
 import { generateDeployments } from './fixtures';
@@ -248,6 +248,90 @@ describe('DataTable maxHeight', () => {
     render(<DataTable rows={many} paginated={false} maxHeight={320} />);
     expect(screen.getByRole('table')).toHaveAttribute('data-virtualized');
     expect(container().style.maxHeight).toBe('320px');
+  });
+});
+
+const groupHeadings = () => [...document.querySelectorAll<HTMLElement>('tr[data-group-header] th')];
+
+describe('DataTable sticky header: grouped rows', () => {
+  it('keeps group headings out of the sticky layer in a bounded body, under the pinned column headers', () => {
+    mockGeometry();
+    render(<DataTable rows={rows} paginated={false} maxHeight={320} groupBy="region" />);
+    const groups = groupHeadings();
+    expect(groups.length).toBeGreaterThan(0);
+    for (const heading of groups) expect(heading).toHaveClass('static');
+    expect(screen.getByRole('columnheader', { name: /Region/ })).toHaveClass('sticky', 'top-0');
+  });
+
+  it('keeps the group headings of a virtualized table sticky as today', () => {
+    mockGeometry();
+    render(<DataTable rows={generateDeployments(200)} paginated={false} groupBy="region" virtualize />);
+    const groups = groupHeadings();
+    expect(groups.length).toBeGreaterThan(0);
+    for (const heading of groups) {
+      expect(heading).toHaveClass('sticky');
+      expect(heading).not.toHaveClass('static');
+    }
+  });
+});
+
+describe('DataTable sticky header: focus not obscured', () => {
+  /** Run the correction at once: the browser has scrolled by the time the next frame runs. */
+  beforeEach(() => {
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) => {
+      callback(0);
+      return 0;
+    });
+  });
+
+  function pinHeader(table: HTMLTableElement, bottom: number) {
+    vi.spyOn(table.tHead!.querySelector('th')!, 'getBoundingClientRect').mockReturnValue(
+      new DOMRect(0, bottom - 40, 800, 40),
+    );
+  }
+
+  it('scrolls the page scroller until a focused row clears the pinned header', () => {
+    mockGeometry();
+    render(
+      <Scroller>
+        <DataTable rows={rows} stickyHeader />
+      </Scroller>,
+    );
+    const scroller = screen.getByTestId('scroller');
+    scroller.scrollTop = 300;
+    pinHeader(screen.getByRole('table') as HTMLTableElement, 40);
+    const row = screen.getAllByRole('row')[3]!;
+    vi.spyOn(row, 'getBoundingClientRect').mockReturnValue(new DOMRect(0, 28, 800, 49));
+    fireEvent.focusIn(within(row).getByRole('checkbox'));
+    expect(scroller.scrollTop).toBe(288);
+  });
+
+  it('scrolls the bounded container, not the page, in a bounded body', () => {
+    mockGeometry();
+    render(<DataTable rows={rows} paginated={false} maxHeight={320} />);
+    const region = container();
+    region.scrollTop = 200;
+    pinHeader(screen.getByRole('table') as HTMLTableElement, 40);
+    const row = screen.getAllByRole('row')[2]!;
+    vi.spyOn(row, 'getBoundingClientRect').mockReturnValue(new DOMRect(0, 16, 800, 49));
+    fireEvent.focusIn(within(row).getByRole('checkbox'));
+    expect(region.scrollTop).toBe(176);
+  });
+
+  it('leaves the scroll position alone when the row is already below the header', () => {
+    mockGeometry();
+    render(
+      <Scroller>
+        <DataTable rows={rows} stickyHeader />
+      </Scroller>,
+    );
+    const scroller = screen.getByTestId('scroller');
+    scroller.scrollTop = 300;
+    pinHeader(screen.getByRole('table') as HTMLTableElement, 40);
+    const row = screen.getAllByRole('row')[3]!;
+    vi.spyOn(row, 'getBoundingClientRect').mockReturnValue(new DOMRect(0, 40, 800, 49));
+    fireEvent.focusIn(within(row).getByRole('checkbox'));
+    expect(scroller.scrollTop).toBe(300);
   });
 });
 

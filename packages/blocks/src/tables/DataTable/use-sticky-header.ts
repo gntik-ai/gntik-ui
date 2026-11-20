@@ -5,6 +5,7 @@ import {
   useRef,
   useState,
   type CSSProperties,
+  type FocusEvent,
   type RefObject,
 } from 'react';
 import { stickyHeadClass, type CellLayout } from './column-sizing';
@@ -22,6 +23,11 @@ export const StickyModeProvider = StickyModeContext.Provider;
 export function useStickyHeadClass(layout?: CellLayout): string | undefined {
   const mode = useContext(StickyModeContext);
   return mode === 'none' ? undefined : stickyHeadClass(mode, layout);
+}
+
+/** Group headings stay in the flow in the bounded modes: only the column headers pin there. */
+export function useGroupHeadClass(): string | undefined {
+  return useContext(StickyModeContext) === 'none' ? undefined : 'static';
 }
 
 const SCROLLING = /^(auto|scroll|overlay)$/;
@@ -78,7 +84,12 @@ export interface StickyHeader {
   /** Overflow classes of the card: today's `overflow-hidden`, or a clip that is not a scroll container. */
   cardClassName: string;
   /** Props of the card: ref, `data-sticky-header` and the CSS variables. */
-  cardProps: { ref: RefObject<HTMLDivElement | null>; 'data-sticky-header'?: StickyMode; style?: CSSProperties };
+  cardProps: {
+    ref: RefObject<HTMLDivElement | null>;
+    'data-sticky-header'?: StickyMode;
+    style?: CSSProperties;
+    onFocus?: (event: FocusEvent<HTMLDivElement>) => void;
+  };
   tableClassName?: string;
   containerClassName?: string;
 }
@@ -156,6 +167,22 @@ export function useStickyHeader({
   }, [bound, table]);
 
   const sticky = mode !== 'none';
+  // scroll-margin-top asks the browser to clear the header, but it aligns the focused control, so the
+  // row's own padding can still sit under it. Once the browser has scrolled, lift the row clear.
+  const revealRow = (event: FocusEvent<HTMLDivElement>) => {
+    const target = event.target;
+    const view = target.ownerDocument.defaultView;
+    const row = target.closest('tbody tr');
+    if (!view || !row || !table?.contains(row)) return;
+    view.requestAnimationFrame(() => {
+      const pinned = table.tHead?.querySelector('th')?.getBoundingClientRect().bottom;
+      const hidden = pinned === undefined ? 0 : pinned - row.getBoundingClientRect().top;
+      if (hidden <= 0.5) return;
+      const scroller = mode === 'bounded' ? table.parentElement : scrollParent(table);
+      if (scroller) scroller.scrollTop -= hidden;
+      else view.scrollBy(0, -hidden);
+    });
+  };
   return {
     mode,
     bounded: mode === 'bounded',
@@ -163,6 +190,7 @@ export function useStickyHeader({
     cardProps: {
       ref: cardRef,
       'data-sticky-header': sticky ? mode : undefined,
+      onFocus: sticky ? revealRow : undefined,
       style: sticky
         ? ({
             '--data-table-sticky-top': length(offset),

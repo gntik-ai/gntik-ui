@@ -23,11 +23,13 @@ it('offsets the header of the stacked layout by its 60 px bar', () => {
   }
 });
 
-it.each(['dark', 'light', 'high_contrast'])('has no axe violations in %s', async (theme) => {
-  document.documentElement.className = theme;
-  for (const Example of [StickyHeaderExample, StickyHeaderStackedExample]) {
-    const { container, unmount } = render(<Example />);
+describe.each([
+  ['sidebar layout and maxHeight', StickyHeaderExample],
+  ['stacked layout', StickyHeaderStackedExample],
+])('%s example', (_name, Example) => {
+  it.each(['dark', 'light', 'high_contrast'])('has no axe violations in %s', async (theme) => {
+    document.documentElement.className = theme;
+    const { container } = render(<Example />);
     await expectNoAxeViolations(container);
-    unmount();
-  }
+  });
 });
