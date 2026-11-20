@@ -190,6 +190,28 @@ it('cancels and announces when the lifted row disappears from the supplied rows'
   expect(screen.getByRole('status')).toHaveTextContent('Move cancelled. C returned to position 3.');
 });
 
+it('cancels a pending pointer press when sorting disables reordering', () => {
+  const moved = vi.fn();
+  const { rerender } = render(<DataTable rows={rows} columns={columns} onRowReorder={moved} />);
+  fireEvent.pointerDown(handle('A'), {
+    button: 0,
+    isPrimary: true,
+    pointerId: 9,
+    pointerType: 'mouse',
+    clientX: 20,
+    clientY: 20,
+  });
+  rerender(
+    <DataTable rows={rows} columns={columns} onRowReorder={moved} sort={{ columnId: 'id', direction: 'descending' }} />,
+  );
+  expect(handle('A')).toBeDisabled();
+  fireEvent.pointerMove(window, { pointerId: 9, clientX: 20, clientY: 160 });
+  expect(handle('A').closest('tr')).not.toHaveAttribute('data-dragging');
+  expect(screen.getByRole('status')).toBeEmptyDOMElement();
+  fireEvent.pointerUp(window, { pointerId: 9 });
+  expect(moved).not.toHaveBeenCalled();
+});
+
 it.each([
   [
     'en',

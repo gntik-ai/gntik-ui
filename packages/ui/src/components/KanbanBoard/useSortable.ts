@@ -136,6 +136,7 @@ export function useSortable({
   const itemEls = useRef(new Map<string, HTMLElement>());
   const handleEls = useRef(new Map<string, HTMLElement>());
   const containerEls = useRef(new Map<string, HTMLElement>());
+  const pointerCleanup = useRef<(() => void) | null>(null);
   const preview = useMemo(() => previewSortable(containers, drag), [containers, drag]);
 
   // Latest values for window listeners and stable callbacks.
@@ -181,6 +182,7 @@ export function useSortable({
   }, []);
 
   const cancel = useCallback(() => {
+    pointerCleanup.current?.();
     const current = latest.current.drag;
     if (!current) return;
     latest.current.drag = null;
@@ -222,7 +224,6 @@ export function useSortable({
     return { containerId: best.id, index };
   }, []);
 
-  const pointerCleanup = useRef<(() => void) | null>(null);
   useEffect(() => () => pointerCleanup.current?.(), []);
 
   const onPointerDown = useCallback(
