@@ -15,6 +15,7 @@ import {
 } from '@gntik-ai/ui';
 import type { CSSProperties, ReactNode } from 'react';
 import { stickyTint, type TableLayout } from './column-sizing';
+import { useGroupHeadClass } from './use-sticky-header';
 import {
   COLUMN_VARIANT_CLASSES,
   columnAlign,
@@ -316,6 +317,7 @@ export function GroupHeaderRow<T>({
   style,
 }: GroupHeaderRowProps<T>) {
   const { t } = useI18n();
+  const stickyClass = useGroupHeadClass();
   const state = selectionState(group.selectableIds, selected);
   const count = group.ids.length;
   const heading = (
@@ -340,7 +342,7 @@ export function GroupHeaderRow<T>({
           />
         </TableCell>
       )}
-      <TableHead scope="rowgroup" colSpan={span} className={cn(groupHeadClass, collapsible && 'ps-2')}>
+      <TableHead scope="rowgroup" colSpan={span} className={cn(groupHeadClass, collapsible && 'ps-2', stickyClass)}>
         {collapsible ? (
           <button
             type="button"

@@ -1,6 +1,7 @@
 import { useImperativeHandle, useLayoutEffect, useRef, useState, type Ref, type RefObject } from 'react';
 import type { DataTableBodyItem } from './data-table-body';
 import { setScrollTop, type VirtualRows } from './use-virtual-rows';
+import { scrollParent } from './use-sticky-header';
 import { groupKeyOf, type DataTableGroupBy } from './data-table-utils';
 
 export interface ScrollToRowOptions {
@@ -21,6 +22,8 @@ interface Options<T> {
   virtual?: VirtualRows;
   viewportHeight: number;
   stickyHeader: boolean;
+  /** The header pins to the page's scroller instead of the table container. */
+  pageHeader?: boolean;
   getRowId: (row: T) => string;
   page: number;
   pageSize: number;
@@ -61,6 +64,7 @@ export function useScrollToRow<T>({
   virtual,
   viewportHeight,
   stickyHeader,
+  pageHeader = false,
   getRowId,
   page: currentPage,
   pageSize,
@@ -163,7 +167,18 @@ export function useScrollToRow<T>({
         );
       }
     }
+    // The page scrolls, not the container: lift the row out from under the header pinned to the scroller.
+    if (pageHeader && !virtual && table?.tHead) {
+      // Only the header cells are pinned: the thead box itself scrolls away with the page.
+      const pinned = table.tHead.querySelector('th')?.getBoundingClientRect().bottom ?? 0;
+      const hidden = pinned - row.getBoundingClientRect().top;
+      const scroller = scrollParent(table.closest('[data-sticky-header]') ?? table);
+      if (hidden > 0) {
+        if (scroller) setScrollTop(scroller, scroller.scrollTop - hidden);
+        else row.ownerDocument.defaultView?.scrollBy(0, -hidden);
+      }
+    }
     if (pending.options.focus) row.querySelector<HTMLElement>(FOCUSABLE)?.focus({ preventScroll: true });
     active.current = null;
-  }, [pending, tableRef, items, virtual, viewportHeight, stickyHeader, getRowId]);
+  }, [pending, tableRef, items, virtual, viewportHeight, stickyHeader, pageHeader, getRowId]);
 }

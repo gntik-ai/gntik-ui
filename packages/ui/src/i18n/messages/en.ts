@@ -1,4 +1,5 @@
 import { rowReorderEn } from './row-reorder-messages';
+import { stickyHeaderEn } from './sticky-header-messages';
 import { rowActivationEn } from './row-activation-messages';
 import { layoutEn } from './layout-messages';
 import { tableFiltersEn } from './table-filter-messages';
@@ -513,6 +514,7 @@ export const en = {
   'table.actions': 'Actions',
   ...detailRowsEn,
   ...rowReorderEn,
+  ...stickyHeaderEn,
   ...refreshExampleEn,
   ...quickFilterExampleEn,
   ...rowActivationEn,

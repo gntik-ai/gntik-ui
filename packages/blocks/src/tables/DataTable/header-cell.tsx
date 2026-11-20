@@ -14,6 +14,7 @@ import {
 import { columnAlign, type DataTableColumn, type SortState } from './data-table-utils';
 import type { DataTableLabels } from './labels';
 import { ColumnResizeHandle } from './resize-handle';
+import { useStickyHeadClass } from './use-sticky-header';
 
 export interface DataTableHeadCellProps<T> {
   labels?: Partial<DataTableLabels>;
@@ -45,9 +46,10 @@ export function DataTableHeadCell<T>({
   const hasDescription = column.description != null;
   const headerName = hasDescription || column.renderHeader ? column.header : undefined;
   const label = column.renderHeader ? column.renderHeader() : column.header;
+  const stickyClass = useStickyHeadClass(layout);
   const pinnedClass = layout?.pinned
-    ? cn(layout.className, 'z-sticky-pinned', stickyTint(layout, { head: true }), 'bg-card')
-    : undefined;
+    ? cn(layout.className, 'z-sticky-pinned', stickyTint(layout, { head: true }), 'bg-card', stickyClass)
+    : stickyClass;
   if (!resize && !hasDescription && !column.filter) {
     return (
       <TableHead
