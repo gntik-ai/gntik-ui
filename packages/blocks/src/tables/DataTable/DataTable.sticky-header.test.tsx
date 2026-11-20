@@ -110,7 +110,7 @@ describe('DataTable sticky header: page mode', () => {
     expect(selection).toHaveClass('top-[var(--data-table-sticky-top)]', 'z-sticky-pinned');
   });
 
-  it('gives body rows a scroll margin of the offset plus the measured header height', () => {
+  it('gives body rows a scroll margin of the offset, the measured header height and a cell padding', () => {
     mockGeometry({ headHeight: 44 });
     render(
       <Scroller>
@@ -118,7 +118,7 @@ describe('DataTable sticky header: page mode', () => {
       </Scroller>,
     );
     expect(card().style.getPropertyValue('--data-table-scroll-margin')).toBe(
-      'calc(var(--data-table-sticky-top) + 44px)',
+      'calc(var(--data-table-sticky-top) + 44px + 0.75rem)',
     );
     expect(screen.getByRole('table').className).toContain('scroll-mt-[var(--data-table-scroll-margin)]');
   });

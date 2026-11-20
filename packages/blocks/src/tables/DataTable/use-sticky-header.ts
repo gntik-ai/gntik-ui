@@ -25,7 +25,12 @@ export function useStickyHeadClass(layout?: CellLayout): string | undefined {
 }
 
 const SCROLLING = /^(auto|scroll|overlay)$/;
-/** Rows, and the controls inside them, scroll to below the pinned header when focused (WCAG 2.4.11). */
+/**
+ * Rows, and the controls inside them, scroll to below the pinned header when focused (WCAG 2.4.11).
+ * The browser aligns the focused control, not its row, so the margin adds a cell's vertical padding
+ * (comfortable density, 0.75rem) to keep the whole row clear of the header.
+ */
+const CELL_PADDING = '0.75rem';
 const SCROLL_MARGIN = '[&_tbody_*]:scroll-mt-[var(--data-table-scroll-margin)]';
 
 const length = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
@@ -161,7 +166,7 @@ export function useStickyHeader({
       style: sticky
         ? ({
             '--data-table-sticky-top': length(offset),
-            '--data-table-scroll-margin': `calc(var(--data-table-sticky-top) + ${measures.head}px)`,
+            '--data-table-scroll-margin': `calc(var(--data-table-sticky-top) + ${measures.head}px + ${CELL_PADDING})`,
           } as CSSProperties)
         : undefined,
     },
