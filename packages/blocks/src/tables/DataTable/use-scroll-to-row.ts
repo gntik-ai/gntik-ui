@@ -169,7 +169,9 @@ export function useScrollToRow<T>({
     }
     // The page scrolls, not the container: lift the row out from under the header pinned to the scroller.
     if (pageHeader && !virtual && table?.tHead) {
-      const hidden = table.tHead.getBoundingClientRect().bottom - row.getBoundingClientRect().top;
+      // Only the header cells are pinned: the thead box itself scrolls away with the page.
+      const pinned = table.tHead.querySelector('th')?.getBoundingClientRect().bottom ?? 0;
+      const hidden = pinned - row.getBoundingClientRect().top;
       const scroller = scrollParent(table.closest('[data-sticky-header]') ?? table);
       if (hidden > 0) {
         if (scroller) setScrollTop(scroller, scroller.scrollTop - hidden);

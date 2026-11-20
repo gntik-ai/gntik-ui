@@ -205,5 +205,6 @@ const HEAD_LAYER = 'before:pointer-events-none before:absolute before:inset-0 be
 export function stickyHeadClass(mode: 'page' | 'bounded', layout: CellLayout | undefined): string | undefined {
   const top = mode === 'page' ? 'top-[var(--data-table-sticky-top)]' : undefined;
   if (layout?.pinned) return top;
-  return [mode === 'page' && 'sticky z-sticky bg-card', top, HEAD_LAYER].filter(Boolean).join(' ');
+  // `sticky` is repeated in bounded mode: cells with controls add `relative`, which would replace Table's own.
+  return ['sticky z-sticky bg-card', top, HEAD_LAYER].filter(Boolean).join(' ');
 }

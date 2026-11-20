@@ -14,9 +14,12 @@ const box = async (locator) => {
   return rect;
 };
 
+/** Only the header cells are sticky: thead and its row stay in normal flow, so measure a column header. */
+const headCell = (table) => table.getByRole('columnheader').first();
+
 /** Shift+Tab from the first fully visible row to the checkbox above it, which must land below the header. */
 async function expectFocusBelowHeader(page, table) {
-  const head = table.locator('thead');
+  const head = headCell(table);
   const rows = table.locator('tbody tr');
   const first = await rows.evaluateAll(
     (all, bottom) => {
@@ -48,9 +51,7 @@ test('page mode pins the header under the topbar and keeps focus below it', asyn
   await main.evaluate((el) => {
     el.scrollTop = 800;
   });
-  await expect
-    .poll(async () => Math.abs((await box(table.locator('thead tr'))).y - (await box(main)).y))
-    .toBeLessThan(1);
+  await expect.poll(async () => Math.abs((await box(headCell(table))).y - (await box(main)).y)).toBeLessThan(1);
   const cell = table.getByRole('columnheader').first();
   expect(await cell.evaluate((el) => getComputedStyle(el).backgroundColor)).not.toMatch(/rgba|transparent/);
   await expectFocusBelowHeader(page, table);
@@ -66,9 +67,7 @@ test('maxHeight bounds the body, pins the header and keeps focus below it', asyn
   await region.evaluate((el) => {
     el.scrollTop = 400;
   });
-  await expect
-    .poll(async () => Math.abs((await box(table.locator('thead tr'))).y - (await box(region)).y))
-    .toBeLessThan(1);
+  await expect.poll(async () => Math.abs((await box(headCell(table))).y - (await box(region)).y)).toBeLessThan(1);
   await expectFocusBelowHeader(page, table);
 });
 
@@ -79,12 +78,8 @@ test('stacked layout: header pins 60px down and a wide table scrolls in a bounde
   await root.evaluate((el) => {
     el.scrollTop = 400;
   });
-  await expect
-    .poll(async () => Math.abs((await box(table.locator('thead tr'))).y - ((await box(root)).y + 60)))
-    .toBeLessThan(1);
-  expect((await box(page.getByRole('banner'))).y + 60).toBeLessThanOrEqual(
-    (await box(table.locator('thead tr'))).y + 1,
-  );
+  await expect.poll(async () => Math.abs((await box(headCell(table))).y - ((await box(root)).y + 60))).toBeLessThan(1);
+  expect((await box(page.getByRole('banner'))).y + 60).toBeLessThanOrEqual((await box(headCell(table))).y + 1);
 
   const wide = page.getByRole('region', { name: 'Audit events' });
   await expect(wide.locator('xpath=ancestor::*[@data-sticky-header][1]')).toHaveAttribute(

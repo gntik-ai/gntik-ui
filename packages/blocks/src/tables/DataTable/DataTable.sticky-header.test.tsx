@@ -213,6 +213,15 @@ describe('DataTable maxHeight', () => {
     expect(screen.getByRole('columnheader', { name: /Region/ })).toHaveClass('sticky', 'top-0', 'bg-card');
   });
 
+  it('keeps resizable headers sticky in the bounded body', () => {
+    mockGeometry();
+    render(<DataTable rows={rows} paginated={false} maxHeight={320} resizable />);
+    const head = screen.getByRole('columnheader', { name: /Region/ });
+    expect(head.querySelector('[role="separator"]')).not.toBeNull();
+    expect(head).toHaveClass('sticky', 'top-0', 'bg-card');
+    expect(head).not.toHaveClass('relative');
+  });
+
   it('accepts a CSS length and takes precedence over page mode', () => {
     mockGeometry({ tableWidth: 800, containerWidth: 900 });
     render(<DataTable rows={rows} stickyHeader maxHeight="20rem" />);
@@ -269,7 +278,7 @@ describe('DataTable sticky header: scroll to row', () => {
     const scroller = screen.getByTestId('scroller');
     scroller.scrollTop = 100;
     const table = screen.getByRole('table') as HTMLTableElement;
-    vi.spyOn(table.tHead!, 'getBoundingClientRect').mockReturnValue(new DOMRect(0, 0, 800, 40));
+    vi.spyOn(table.tHead!.querySelector('th')!, 'getBoundingClientRect').mockReturnValue(new DOMRect(0, 0, 800, 40));
     const first = screen.getAllByRole('row')[1]!;
     vi.spyOn(first, 'getBoundingClientRect').mockReturnValue(new DOMRect(0, 10, 800, 40));
     act(() => {
