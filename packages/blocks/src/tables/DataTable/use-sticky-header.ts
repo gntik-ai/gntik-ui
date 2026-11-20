@@ -93,11 +93,17 @@ export function useStickyHeader({
 }: UseStickyHeaderOptions): StickyHeader {
   const cardRef = useRef<HTMLDivElement>(null);
   const [measures, setMeasures] = useState<Measures>({ wide: false, viewport: 0, head: 0 });
+  const [table, setTable] = useState<HTMLTableElement | null>(null);
   const free = !virtual && !autoSizing;
   const measuring = free && (stickyHeader || maxHeight != null);
 
+  // The table (and its container) is remounted when its wrapper changes, e.g. SelectionGroup when
+  // `selectionMode` flips: follow the mounted node so the observers and the bound are reattached.
   useLayoutEffect(() => {
-    const table = tableRef.current;
+    if (tableRef.current !== table) setTable(tableRef.current);
+  });
+
+  useLayoutEffect(() => {
     const container = table?.parentElement;
     const card = cardRef.current;
     if (!measuring || !table || !container || !card) return;
@@ -121,7 +127,7 @@ export function useStickyHeader({
       observer?.disconnect();
       view?.removeEventListener('resize', read);
     };
-  }, [measuring, tableRef]);
+  }, [measuring, table]);
 
   const mode: StickyMode =
     !free || !(stickyHeader || maxHeight != null) ? 'none' : maxHeight != null || measures.wide ? 'bounded' : 'page';
@@ -136,13 +142,13 @@ export function useStickyHeader({
 
   // Table gives its container no style prop, so the height is set on the element itself.
   useLayoutEffect(() => {
-    const container = tableRef.current?.parentElement;
+    const container = table?.parentElement;
     if (!container || !bound) return;
     container.style.setProperty('max-height', bound);
     return () => {
       container.style.removeProperty('max-height');
     };
-  }, [bound, tableRef]);
+  }, [bound, table]);
 
   const sticky = mode !== 'none';
   return {

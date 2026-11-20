@@ -229,6 +229,19 @@ describe('DataTable maxHeight', () => {
     expect(root()).toHaveAttribute('data-sticky-header', 'bounded');
   });
 
+  it('keeps the bound and the observers when selectionMode replaces the container', () => {
+    const geometry = mockGeometry();
+    const { rerender } = render(<DataTable rows={rows} paginated={false} maxHeight={320} caption="Audit" />);
+    const before = container();
+    expect(before.style.maxHeight).toBe('320px');
+    rerender(<DataTable rows={rows} paginated={false} maxHeight={320} caption="Audit" selectionMode="single" />);
+    expect(container()).not.toBe(before);
+    expect(container().style.maxHeight).toBe('320px');
+    expect(geometry.observers.some((observer) => observer.observe.mock.calls.some(([el]) => el === container()))).toBe(
+      true,
+    );
+  });
+
   it('overrides the max-h-[32rem] default of a virtualized table', () => {
     mockGeometry();
     const many = generateDeployments(200);
