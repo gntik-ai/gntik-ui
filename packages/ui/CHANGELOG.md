@@ -1,5 +1,18 @@
 # @gntik-ai/ui
 
+## 0.16.0
+
+### Minor Changes
+
+- 9d4e623: BREAKING: DataTable now renders the identifying column's body cells as row headers (`th scope="row"`, role `rowheader`) instead of `td` (role `cell`) by default, so consumer tests that query `cell` for that column must query `rowheader`; set `rowHeader: false` on the first column to keep `td`, or `rowHeader: true` on another column to pick it. The default row label now follows the row-header column. `TableCell` gains a `rowHeader` prop.
+- 4216c15: Add opt-in DataTable row reordering with accessible grip handles, pointer and keyboard controls, localized announcements, and a LiveAnnouncer enabled option that preserves child state.
+- c95cec0: Add labelled Slider marks and optional keyboard navigation between uneven stops while preserving continuous pointer dragging.
+
+### Patch Changes
+
+- d8e1d27: Add opt-in DataTable `stickyHeader`, `stickyHeaderOffset` and `maxHeight` props that pin the header of non-virtual tables to the page or a bounded body, with focus kept below the pinned header.
+- 5997aea: Add accessible DataTable row links, activation, row selection and scroll-to-row handles that respect sticky headers, with resource-index integration and translated examples.
+
 ## 0.15.0
 
 ### Minor Changes

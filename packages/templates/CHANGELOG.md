@@ -1,5 +1,19 @@
 # @gntik-ai/templates
 
+## 0.16.0
+
+### Patch Changes
+
+- 5997aea: Add accessible DataTable row links, activation, row selection and scroll-to-row handles that respect sticky headers, with resource-index integration and translated examples.
+- Updated dependencies [9d4e623]
+- Updated dependencies [4216c15]
+- Updated dependencies [d8e1d27]
+- Updated dependencies [c95cec0]
+- Updated dependencies [5997aea]
+  - @gntik-ai/blocks@0.16.0
+  - @gntik-ai/ui@0.16.0
+  - @gntik-ai/chat@0.16.0
+
 ## 0.15.0
 
 ### Minor Changes
